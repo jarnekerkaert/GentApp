@@ -95,6 +95,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DataModel\Branch.cs" />
+    <Compile Include="DataModel\BranchType.cs" />
+    <Compile Include="DataModel\Company.cs" />
+    <Compile Include="DataModel\CompanyType.cs" />
+    <Compile Include="DataModel\RoleType.cs" />
     <Compile Include="DataModel\User.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
