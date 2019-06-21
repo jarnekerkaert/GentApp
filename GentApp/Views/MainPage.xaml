@@ -8,9 +8,5 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <StackPanel>
-        <CommandBar>
-            <AppBarButton Icon="Add" Label="Add"></AppBarButton>
-        </CommandBar>
-    </StackPanel>
+    
 </Page>
