@@ -8,6 +8,6 @@ namespace GentApp.DataModel
 {
     class User
     {
-
+        public String firstname { get; set; }
     }
 }
