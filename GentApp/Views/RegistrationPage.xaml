@@ -43,7 +43,7 @@
                     Margin="10,0,10,0"
                     Background="DodgerBlue"
                     Foreground="White"
-                    Click="RegisterClient_Click"/>
+                   />
 
                 <Button
                     x:Name="registerCompany"
@@ -53,7 +53,7 @@
                     Foreground="White"
                     Width="120"
                     Margin="10,0,10,0"
-                    Click="RegisterCompany_Click"/>
+                   />
             </StackPanel>
         </StackPanel>
     </Grid>

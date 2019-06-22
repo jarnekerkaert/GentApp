@@ -37,19 +37,6 @@ namespace GentApp
       Windows.UI.Xaml.Controls.NavigationView sender,
       NavigationViewItemInvokedEventArgs args)
         {
-            //if(args.InvokedItem != null)
-            //{
-            //    switch (args.InvokedItem)
-            //    {
-            //        case "Companies":
-            //            ContentFrame.Navigate(typeof(CompaniesPage));
-            //            break;
-
-            //        case "Register a company":
-            //            ContentFrame.Navigate(typeof(RegisterCompanyPage));
-            //            break;
-            //    }
-            //}
             if (args.IsSettingsInvoked == true)
             {
                 NavView_Navigate("settings");
@@ -113,9 +100,11 @@ namespace GentApp
             }
         }
 
-        private void NavView_SelectionChanged_1(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        private void NavView_Loaded(object sender, RoutedEventArgs e)
         {
-
+            // NavView doesn't load any page by default, so load home page.
+            NavView.SelectedItem = NavView.MenuItems[0];
+            ContentFrame.Navigate(typeof(CompaniesPage));
         }
     }
 }

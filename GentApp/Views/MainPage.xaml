@@ -13,6 +13,7 @@
                         ItemInvoked="NavView_OnItemInvoked"
                         SelectionChanged="NavView_SelectionChanged"
                         BackRequested="NavView_OnBackRequested"
+                        Loaded="NavView_Loaded"
                         Header="Welcome to GentApp!" >
             <NavigationView.MenuItems>
                 <NavigationViewItem Tag="Companies_Page" Content="Companies" x:Name="Companies" Icon="List" />
