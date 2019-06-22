@@ -17,7 +17,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace GentApp.Views
 {
-    public sealed partial class RegisterCompanyPage : UserControl
+    public sealed partial class RegisterCompanyPage : Page
     {
         public RegisterCompanyPage()
         {

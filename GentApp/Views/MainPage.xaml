@@ -8,16 +8,20 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid >
+    <Grid>
         <NavigationView x:Name="NavView" 
-                       BackRequested="NavView_BackRequested" >
+                        ItemInvoked="NavView_OnItemInvoked"
+                        SelectionChanged="NavView_SelectionChanged"
+                        BackRequested="NavView_OnBackRequested"
+                        Header="Welcome to GentApp!" >
             <NavigationView.MenuItems>
-                <NavigationViewItem Content="Companies" x:Name="Companies" Icon="List" />
-                <NavigationViewItem Content="Register a company" x:Name="RegisterCompany" Icon="Add" />
-                <NavigationViewItem Content="Details of your company" x:Name="DetailsCompany" Icon="Edit" />
-                <NavigationViewItem Content="Logout" x:Name="Logout" Icon="Import"/>
+                <NavigationViewItem Tag="Companies_Page" Content="Companies" x:Name="Companies" Icon="List" />
+                <NavigationViewItem Tag="RegisterCompany_Page" Content="Register a company" x:Name="RegisterCompany" Icon="Add" />
+                <NavigationViewItem Tag="DetailsCompany_Page" Content="Details of your company" x:Name="DetailsCompany" Icon="Edit" />
+                <NavigationViewItem Tag="Logout" Content="Logout" x:Name="Logout" Icon="Import"/>
             </NavigationView.MenuItems>
         </NavigationView>
+        <Frame x:Name="ContentFrame"></Frame>
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
@@ -28,12 +32,11 @@
                     </VisualState.StateTriggers>
 
                     <VisualState.Setters>
-                        <Setter Target="NavigationViewControl.PaneDisplayMode" Value="Top"/>
+                        <Setter Target="NavView.PaneDisplayMode" Value="Top"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
     </Grid>
-
 
 </Page>
