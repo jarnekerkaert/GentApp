@@ -29,13 +29,13 @@ namespace GentApp.Views
             InitializeComponent();
         }
 
-        void Register_Client(object sender, RoutedEventArgs args)
+        void RegisterClient_Click(object sender, RoutedEventArgs e)
         {
             sendToast("Register", "Client");
-            Frame.Navigate(typeof(MainPage));
+            Frame.Navigate(typeof(RegisterClientPage));
         }
 
-        void Register_Company(object sender, RoutedEventArgs args)
+        void RegisterCompany_Click(object sender, RoutedEventArgs e)
         {
             sendToast("Register", "Company");
             Frame.Navigate(typeof(MainPage));

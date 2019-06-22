@@ -9,48 +9,52 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <RelativePanel>
-       
-        <Windows10FallCreatorsUpdate:NavigationView
-            x:Name="navigation"
-            RelativePanel.AlignLeftWithPanel="True"/>
-        
+    <Grid 
+        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+        VerticalAlignment="Center">
+
         <StackPanel
-            x:Name="buttonPanel"
-            RelativePanel.Below="navigation"
-            RelativePanel.AlignLeftWithPanel="True"
-            RelativePanel.AlignRightWithPanel="True"
-            RelativePanel.AlignBottomWithPanel="True"
-            VerticalAlignment="Center">
+            Orientation="Vertical">
 
-            <TextBlock
-            Text="Register"
-            TextAlignment="Center"
-            FontSize="30"
-            Margin="0,20,0,20"/>
-            
-            <Button
-            x:Name="registerClient"
-            Content="Client"
-            FontSize="20"
-            Background="DeepSkyBlue"
-            Foreground="White"
-            Width="{Binding ActualWidth, ElementName=buttonPanel}"
-            HorizontalAlignment="Center"
-            Margin="10"
-            Click="Register_Client"/>
+            <TextBlock 
+                Text="Register"
+                FontSize="36" 
+                Margin="4,20" 
+                TextAlignment="Center"/>
 
-            <Button
-            x:Name="registerCompany"
-            Content="Company"
-            FontSize="20"
-            Background="DeepSkyBlue"
-            Foreground="White"
-            Width="{Binding ActualWidth, ElementName=buttonPanel}"
-            HorizontalAlignment="Center"
-            Margin="10"
-            Click="Register_Company"/>
-            
+            <TextBlock 
+                Text="Choose as who to register"
+                Margin="0,0,0,20"
+                TextWrapping="Wrap"
+                Width="300"
+                TextAlignment="Center"
+                VerticalAlignment="Center" 
+                FontSize="16"/>
+
+            <StackPanel
+                Orientation="Horizontal"
+                HorizontalAlignment="Center">
+                
+                <Button
+                    x:Name="registerClient"
+                    Content="Client"
+                    FontSize="20"
+                    Width="120"
+                    Margin="10,0,10,0"
+                    Background="DodgerBlue"
+                    Foreground="White"
+                    Click="RegisterClient_Click"/>
+
+                <Button
+                    x:Name="registerCompany"
+                    Content="Company"
+                    FontSize="20"
+                    Background="DodgerBlue"
+                    Foreground="White"
+                    Width="120"
+                    Margin="10,0,10,0"
+                    Click="RegisterCompany_Click"/>
+            </StackPanel>
         </StackPanel>
-    </RelativePanel>
+    </Grid>
 </Page>
