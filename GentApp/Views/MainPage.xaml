@@ -20,8 +20,14 @@
                 <NavigationViewItem Tag="DetailsCompany_Page" Content="Details of your company" x:Name="DetailsCompany" Icon="Edit" />
                 <NavigationViewItem Tag="Logout" Content="Logout" x:Name="Logout" Icon="Import"/>
             </NavigationView.MenuItems>
+            <Frame x:Name="ContentFrame">
+                <Frame.ContentTransitions>
+                    <TransitionCollection>
+                        <NavigationThemeTransition/>
+                    </TransitionCollection>
+                </Frame.ContentTransitions>
+            </Frame>
         </NavigationView>
-        <Frame x:Name="ContentFrame"></Frame>
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>

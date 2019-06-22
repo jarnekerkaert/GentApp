@@ -28,7 +28,6 @@ namespace GentApp
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private NavigationViewItem _lastItem;
         public MainPage()
         {
             this.InitializeComponent();
@@ -88,9 +87,8 @@ namespace GentApp
         private readonly List<(string Tag, Type Page)> _pages = new List<(string Tag, Type Page)>
         {
             ("Companies", typeof(CompaniesPage)),
-            ("Companies_Page", typeof(CompaniesPage)),
-            ("RegisterCompany_Page", typeof(RegisterCompanyPage)),
-            ("RegisterCompany", typeof(RegisterCompanyPage))
+            ("Register a company", typeof(RegisterCompanyPage)),
+            ("Details of your company", typeof(CompanyDetailsPage))
         };
 
         private void NavView_OnBackRequested(
