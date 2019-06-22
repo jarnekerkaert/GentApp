@@ -75,7 +75,8 @@ namespace GentApp
         {
             ("Companies", typeof(CompaniesPage)),
             ("Register a company", typeof(RegisterCompanyPage)),
-            ("Details of your company", typeof(CompanyDetailsPage))
+            ("Details of your company", typeof(CompanyDetailsPage)),
+            ("Logout",typeof(LoginPage))
         };
 
         private void NavView_OnBackRequested(

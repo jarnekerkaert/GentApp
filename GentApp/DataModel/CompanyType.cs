@@ -8,6 +8,6 @@ namespace GentApp.DataModel
 {
     enum CompanyType
     {
-        SHORT, MEDIUM, BIG
+        SMALL, MEDIUM, BIG
     }
 }

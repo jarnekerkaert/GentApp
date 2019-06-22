@@ -7,8 +7,23 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     >
+    
 
-    <Grid>
-        <TextBlock>Companies:</TextBlock>
-    </Grid>
+    <ScrollViewer>
+        <StackPanel>
+            <TextBlock>Companies:</TextBlock>
+            <ListView ItemsSource="{Binding Companies}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <TextBlock FontSize="30" Text="{Binding Name}" />
+                            <TextBlock FontSize="20" Text="{Binding Address}" />
+                            <TextBlock FontSize="14" Text="{Binding Openingsuren}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+
+            </ListView>
+        </StackPanel>
+    </ScrollViewer>
 </Page>
