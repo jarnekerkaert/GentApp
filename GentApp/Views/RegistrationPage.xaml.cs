@@ -15,7 +15,7 @@ using Windows.UI.Xaml.Navigation;
 using Windows.UI.Notifications;
 using Microsoft.Toolkit.Uwp.Notifications; // Notifications library
 using Microsoft.QueryStringDotNET; // QueryString.NET
-
+using Windows.ApplicationModel.Activation;
 
 namespace GentApp.Views
 {
@@ -24,6 +24,7 @@ namespace GentApp.Views
     /// </summary>
     public sealed partial class RegistrationPage : Page
     {
+
         public RegistrationPage()
         {
             InitializeComponent();
