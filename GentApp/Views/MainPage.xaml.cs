@@ -26,5 +26,33 @@ namespace GentApp
         {
             this.InitializeComponent();
         }
+
+        private void NavView_BackRequested(NavigationView sender,
+                                   NavigationViewBackRequestedEventArgs args)
+        {
+            On_BackRequested();
+        }
+
+        private void BackInvoked(KeyboardAccelerator sender,
+                                 KeyboardAcceleratorInvokedEventArgs args)
+        {
+            On_BackRequested();
+            args.Handled = true;
+        }
+
+        private bool On_BackRequested()
+        {
+            if (!Frame.CanGoBack)
+                return false;
+
+            // Don't go back if the nav pane is overlayed.
+            if (NavView.IsPaneOpen &&
+                (NavView.DisplayMode == NavigationViewDisplayMode.Compact ||
+                 NavView.DisplayMode == NavigationViewDisplayMode.Minimal))
+                return false;
+
+            Frame.GoBack();
+            return true;
+        }
     }
 }
