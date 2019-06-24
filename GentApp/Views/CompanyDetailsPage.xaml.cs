@@ -1,4 +1,5 @@
-﻿using GentApp.ViewModels;
+﻿using GentApp.DataModel;
+using GentApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,7 +25,8 @@ namespace GentApp.Views
         {
             this.InitializeComponent();
 			ViewModel = new CompaniesViewModel();
-			this.DataContext = ViewModel.MySelectedCompany;
+			//this.DataContext = ViewModel.MySelectedCompany;
+			this.DataContext = DummyDataSource.Companies[0];
 		}
 
 		public CompaniesViewModel ViewModel { get; set; }

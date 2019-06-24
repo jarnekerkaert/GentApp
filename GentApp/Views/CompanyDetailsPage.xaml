@@ -4,13 +4,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:local="using:GentApp.DataModel"
+	xmlns:local="using:GentApp.ViewModels"
 	mc:Ignorable="d">
 
-	<StackPanel DataContext="{Binding ViewModel.MySelectedCompany}">
-        <TextBlock>Details of company:</TextBlock>
-		<TextBlock Text="Name:"></TextBlock>
-		<TextBlock Text="{Binding Name}"/>
-
+	<StackPanel>
+		<TextBlock Margin="0,50,0,50" HorizontalAlignment="Center">Details of company:</TextBlock>
+		
+		<TextBlock FontWeight="Bold">Name:</TextBlock>
+		<TextBlock Text="{Binding Name}"></TextBlock>
+		<TextBlock FontWeight="Bold">Address:</TextBlock>
+		<TextBlock Text="{Binding Address}"></TextBlock>
+		<TextBlock FontWeight="Bold">Opening hours:</TextBlock>
+		<TextBlock Text="{Binding OpeningHours}"></TextBlock>
 	</StackPanel>
 </Page>

@@ -35,6 +35,7 @@ namespace GentApp.Views
 		{
 			var selectedCompany = e.ClickedItem as Company;
 			ViewModel.MySelectedCompany = selectedCompany;
+			// MySelectedCompany opslaan door middel van command?
 			//Frame.Navigate(typeof(CompanyDetailsPage));
 		}
 	}
