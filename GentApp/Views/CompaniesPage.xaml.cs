@@ -22,21 +22,26 @@ namespace GentApp.Views
 {
     public sealed partial class CompaniesPage : Page
     {
-        public CompaniesPage()
+		public ObservableCollection<Company> Companies { get; set; }
+		public CompaniesPage()
         {
             this.InitializeComponent();
 			//this.DataContext = new CompaniesViewModel();
-			ViewModel = new CompaniesViewModel();
+			Companies = MainPage.ViewModel.Companies; 
+			//ViewModel = new CompaniesViewModel();
 		}
 
-		public CompaniesViewModel ViewModel { get; set; }
+		//public CompaniesViewModel ViewModel { get; set; }
 
 		private void ListView_ItemClick(object sender, ItemClickEventArgs e)
 		{
 			var selectedCompany = e.ClickedItem as Company;
-			ViewModel.MySelectedCompany = selectedCompany;
+			MainPage.ViewModel.MySelectedCompany = selectedCompany;
+			Console.WriteLine("test");
 			// MySelectedCompany opslaan door middel van command?
-			//Frame.Navigate(typeof(CompanyDetailsPage));
+			// TODO: veranderen via NavView zoals in Buildcast ipv Frame.Navigate
+			Frame.Navigate(typeof(CompanyDetailsPage));
+			
 		}
 	}
 }

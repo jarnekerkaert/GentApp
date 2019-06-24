@@ -24,9 +24,10 @@ namespace GentApp.Views
         public CompanyDetailsPage()
         {
             this.InitializeComponent();
-			ViewModel = new CompaniesViewModel();
+			//ViewModel = new CompaniesViewModel();
+			this.DataContext = MainPage.ViewModel.MySelectedCompany;
 			//this.DataContext = ViewModel.MySelectedCompany;
-			this.DataContext = DummyDataSource.Companies[0];
+			//this.DataContext = DummyDataSource.Companies[0];
 		}
 
 		public CompaniesViewModel ViewModel { get; set; }

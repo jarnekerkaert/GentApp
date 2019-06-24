@@ -1,4 +1,5 @@
-﻿using GentApp.Views;
+﻿using GentApp.ViewModels;
+using GentApp.Views;
 using Microsoft.QueryStringDotNET;
 using Microsoft.Toolkit.Uwp.Notifications;
 using System;
@@ -31,9 +32,12 @@ namespace GentApp
         public MainPage()
         {
             this.InitializeComponent();
-        }
+			ViewModel = new CompaniesViewModel();
+		}
 
-        private void NavView_OnItemInvoked(
+		public static CompaniesViewModel ViewModel { get; set; }
+
+		private void NavView_OnItemInvoked(
       Windows.UI.Xaml.Controls.NavigationView sender,
       NavigationViewItemInvokedEventArgs args)
         {

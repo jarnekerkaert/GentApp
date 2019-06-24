@@ -13,7 +13,7 @@
         <StackPanel>
 			<TextBlock>Companies:</TextBlock>
 
-			<ListView ItemsSource="{x:Bind ViewModel.Companies}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick" x:Name="companiesListView">
+			<ListView ItemsSource="{x:Bind Companies}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick" x:Name="companiesListView">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="local:Company">
                         <StackPanel>
