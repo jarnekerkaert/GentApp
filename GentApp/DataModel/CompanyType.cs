@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GentApp.DataModel
 {
-    enum CompanyType
+    public enum CompanyType
     {
         SMALL, MEDIUM, BIG
     }

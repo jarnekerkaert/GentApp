@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GentApp.DataModel
 {
-    enum BranchType
+    public enum BranchType
     {
         RESTAURANT, CAFE, SHOESSTORE
     }

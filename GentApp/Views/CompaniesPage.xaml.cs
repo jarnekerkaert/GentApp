@@ -1,6 +1,8 @@
-﻿using GentApp.ViewModels;
+﻿using GentApp.DataModel;
+using GentApp.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -23,7 +25,17 @@ namespace GentApp.Views
         public CompaniesPage()
         {
             this.InitializeComponent();
-            this.DataContext = new CompaniesViewModel();
-        }
-    }
+			//this.DataContext = new CompaniesViewModel();
+			ViewModel = new CompaniesViewModel();
+		}
+
+		public CompaniesViewModel ViewModel { get; set; }
+
+		private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+		{
+			var selectedCompany = e.ClickedItem as Company;
+			ViewModel.MySelectedCompany = selectedCompany;
+			//Frame.Navigate(typeof(CompanyDetailsPage));
+		}
+	}
 }

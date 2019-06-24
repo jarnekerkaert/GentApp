@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GentApp.DataModel
 {
-    class Branch
+    public class Branch
     {
         private string _name;
         private BranchType type;

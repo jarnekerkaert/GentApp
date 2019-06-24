@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GentApp.DataModel
 {
-    enum RoleType
+    public enum RoleType
     {
         ANONYMOUS, USER, ENTREPRENEUR
     }

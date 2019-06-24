@@ -9,9 +9,10 @@ using System.Threading.Tasks;
 
 namespace GentApp.ViewModels
 {
-    class CompaniesViewModel
+    public class CompaniesViewModel
     {
         public ObservableCollection<Company> Companies { get; set; }
+		public Company MySelectedCompany { get; set; }
         public RelayCommand SaveCompanyCommand { get; set; }
         public CompaniesViewModel()
         {

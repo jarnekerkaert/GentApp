@@ -2,28 +2,35 @@
     x:Class="GentApp.Views.CompaniesPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:GentApp.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
+	xmlns:local="using:GentApp.DataModel"
+	mc:Ignorable="d"
     >
     
 
     <ScrollViewer>
         <StackPanel>
-            <TextBlock>Companies:</TextBlock>
-            <ListView ItemsSource="{Binding Companies}">
+			<TextBlock>Companies:</TextBlock>
+
+			<ListView ItemsSource="{x:Bind ViewModel.Companies}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick" x:Name="companiesListView">
                 <ListView.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="local:Company">
                         <StackPanel>
-                            <TextBlock FontSize="30" Text="{Binding Name}" />
-                            <TextBlock FontSize="20" Text="{Binding Address}" />
-                            <TextBlock FontSize="14" Text="{Binding Openingsuren}" />
-                        </StackPanel>
+                            <TextBlock FontSize="18" Text="{x:Bind Name}" />
+							<TextBlock FontSize="10" Text="{x:Bind Address}" />
+						</StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
 
             </ListView>
-        </StackPanel>
+
+			<StackPanel DataContext="{Binding SelectedItem, ElementName=companiesListView}"
+            Margin="0,24,0,0">
+				<TextBlock Text="{Binding Name}"/>
+				<TextBlock Text="{Binding Address}" />
+				<TextBlock Text="{Binding Openingsuren}" />
+			</StackPanel>
+		</StackPanel>
     </ScrollViewer>
 </Page>
