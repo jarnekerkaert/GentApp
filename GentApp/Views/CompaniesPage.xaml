@@ -19,23 +19,16 @@
 			</StackPanel>
 
 			<ListView ItemsSource="{x:Bind Companies}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick" x:Name="companiesListView">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="local:Company">
-                        <StackPanel>
-                            <TextBlock FontSize="18" Text="{x:Bind Name}" />
+				<ListView.ItemTemplate>
+					<DataTemplate x:DataType="local:Company">
+						<StackPanel>
+							<TextBlock FontSize="18" Text="{x:Bind Name}" />
 							<TextBlock FontSize="10" Text="{x:Bind Address}" />
 						</StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+					</DataTemplate>
+				</ListView.ItemTemplate>
 
-            </ListView>
-
-			<StackPanel DataContext="{Binding SelectedItem, ElementName=companiesListView}"
-            Margin="0,24,0,0">
-				<TextBlock Text="{Binding Name}"/>
-				<TextBlock Text="{Binding Address}" />
-				<TextBlock Text="{Binding OpeningHours}" />
-			</StackPanel>
+			</ListView>
 
 		</StackPanel>
     </ScrollViewer>

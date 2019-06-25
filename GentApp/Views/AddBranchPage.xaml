@@ -8,8 +8,17 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <TextBlock>Add a branch to your company</TextBlock>
+    <StackPanel>
+        <TextBlock HorizontalAlignment="Center" Margin="0,20,0,60">Add a branch to your company</TextBlock>
 
-    </Grid>
+		<TextBlock HorizontalAlignment="Center">Name:</TextBlock>
+		<TextBox Width="200"></TextBox>
+		<TextBlock HorizontalAlignment="Center">Type:</TextBlock>
+		<TextBox Width="200"></TextBox>
+		<TextBlock HorizontalAlignment="Center">Address:</TextBlock>
+		<TextBox Width="200"></TextBox>
+		<TextBlock HorizontalAlignment="Center">Opening Hours:</TextBlock>
+		<TextBox Width="200"></TextBox>
+		<Button Content="Add Branch" Command="{Binding SaveBranchCommand}" CommandParameter="TestParameter" HorizontalAlignment="Center" Margin="0,30,0,0" />
+	</StackPanel>
 </Page>

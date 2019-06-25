@@ -27,5 +27,6 @@ namespace GentApp.Views
 			this.InitializeComponent();
 			this.DataContext = MainPage.ViewModel.MyCompany;
 		}
+
 	}
 }

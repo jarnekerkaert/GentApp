@@ -2,6 +2,7 @@
 using GentApp.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -21,11 +22,14 @@ namespace GentApp.Views
 {
     public sealed partial class CompanyDetailsPage : Page
     {
-        public CompanyDetailsPage()
+		public ObservableCollection<Branch> Branches { get; set; }
+
+		public CompanyDetailsPage()
         {
             this.InitializeComponent();
 			//ViewModel = new CompaniesViewModel();
 			this.DataContext = MainPage.ViewModel.MySelectedCompany;
+			Branches = MainPage.ViewModel.Branches;
 			//this.DataContext = DummyDataSource.Companies[0];
 		}
 

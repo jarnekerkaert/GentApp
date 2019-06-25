@@ -25,6 +25,8 @@ namespace GentApp.Views
         public AddBranchPage()
         {
             this.InitializeComponent();
+			this.DataContext = MainPage.ViewModel;
         }
-    }
+
+	}
 }

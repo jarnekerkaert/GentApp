@@ -13,7 +13,8 @@ namespace GentApp.ViewModels
     public class CompaniesViewModel : INotifyPropertyChanged
 	{
         public ObservableCollection<Company> Companies { get; set; }
-		//public Company MySelectedCompany { get; set; }
+		public ObservableCollection<Branch> Branches { get; set; }
+
 		private Company mySelectedCompany;
 		public Company MySelectedCompany
 		{
@@ -41,11 +42,15 @@ namespace GentApp.ViewModels
 		}
 
 		public RelayCommand SaveCompanyCommand { get; set; }
-        public CompaniesViewModel()
+		public RelayCommand SaveBranchCommand { get; set; }
+
+		public CompaniesViewModel()
         {
             Companies = new ObservableCollection<Company>(DummyDataSource.Companies);
+			Branches = new ObservableCollection<Branch>(DummyDataSource.Branches);
 			MyCompany = DummyDataSource.Companies[2];
             SaveCompanyCommand = new RelayCommand((p) => SaveCompany(p));
+			SaveBranchCommand = new RelayCommand((p) => SaveBranch(p));
         }
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -56,10 +61,19 @@ namespace GentApp.ViewModels
             {
                 Name = p.ToString(),
                 Address = "Dummy adres",
-                OpeningHours = "24/7",
-                Type = CompanyType.MEDIUM
-            });
+                OpeningHours = "24/7"
+			});
         }
+
+		private void SaveBranch(object p)
+		{
+			this.Branches.Add(new Branch()
+			{
+				Name = p.ToString(),
+				Address = "Dummy adres",
+				OpeningHours = "24/7"
+			});
+		}
 
 		private void NotifyPropertyChanged(String propertyName) {
 			if (null != PropertyChanged)

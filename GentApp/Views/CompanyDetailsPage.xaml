@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:local="using:GentApp.ViewModels"
+	xmlns:local1="using:GentApp.DataModel"
 	mc:Ignorable="d">
 
 	<StackPanel>
@@ -16,5 +17,18 @@
 		<TextBlock Text="{Binding Address, TargetNullValue='Empty'}"></TextBlock>
 		<TextBlock FontWeight="Bold">Opening hours:</TextBlock>
 		<TextBlock Text="{Binding OpeningHours, TargetNullValue='Empty'}"></TextBlock>
+
+		<TextBlock Margin="0,50,0,0">Branches:</TextBlock>
+		<ListView ItemsSource="{x:Bind Branches}">
+			<ListView.ItemTemplate>
+				<DataTemplate x:DataType="local1:Branch">
+					<StackPanel>
+						<TextBlock FontSize="18" Text="{x:Bind Name}" />
+						<TextBlock FontSize="10" Text="{x:Bind Address}" />
+					</StackPanel>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+
+		</ListView>
 	</StackPanel>
 </Page>

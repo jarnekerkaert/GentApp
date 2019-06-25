@@ -1,6 +1,8 @@
-﻿using GentApp.ViewModels;
+﻿using GentApp.DataModel;
+using GentApp.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -23,11 +25,14 @@ namespace GentApp.Views
 	/// </summary>
 	public sealed partial class MyCompanyPage : Page
 	{
+		public ObservableCollection<Branch> Branches { get; set; }
+
 		public MyCompanyPage()
 		{
 			this.InitializeComponent();
 			//ViewModel = new CompaniesViewModel();
 			this.DataContext = MainPage.ViewModel.MyCompany;
+			Branches = MainPage.ViewModel.Branches;
 			//this.DataContext = ViewModel.MySelectedCompany;
 			//this.DataContext = DummyDataSource.Companies[0];
 		}
@@ -38,5 +43,10 @@ namespace GentApp.Views
 		}
 
 		//public CompaniesViewModel ViewModel { get; set; }
+		private void AddIcon_Tapped(object sender, TappedRoutedEventArgs e)
+		{
+			// navigationservice, navigate to add a branch
+			Frame.Navigate(typeof(AddBranchPage));
+		}
 	}
 }
