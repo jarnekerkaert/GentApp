@@ -27,10 +27,24 @@ namespace GentApp.ViewModels
 			}
 		}
 
-        public RelayCommand SaveCompanyCommand { get; set; }
+		private Company myCompany;
+		public Company MyCompany
+		{
+			get { return myCompany; }
+			set
+			{
+				if (value != myCompany)
+				{
+					myCompany = value; NotifyPropertyChanged("MyCompany");
+				}
+			}
+		}
+
+		public RelayCommand SaveCompanyCommand { get; set; }
         public CompaniesViewModel()
         {
             Companies = new ObservableCollection<Company>(DummyDataSource.Companies);
+			MyCompany = DummyDataSource.Companies[2];
             SaveCompanyCommand = new RelayCommand((p) => SaveCompany(p));
         }
 

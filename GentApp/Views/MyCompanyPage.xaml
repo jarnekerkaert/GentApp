@@ -1,20 +1,22 @@
 ﻿<Page
-    x:Class="GentApp.Views.CompanyDetailsPage"
+    x:Class="GentApp.Views.MyCompanyPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:local="using:GentApp.ViewModels"
-	mc:Ignorable="d">
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
 	<StackPanel>
-		<TextBlock Margin="0,50,0,50" HorizontalAlignment="Center">Details of company:</TextBlock>
-		
+		<TextBlock Margin="0,50,0,50" HorizontalAlignment="Center">Details of your company:</TextBlock>
+
 		<TextBlock FontWeight="Bold">Name:</TextBlock>
 		<TextBlock Text="{Binding Name, TargetNullValue='Empty'}"></TextBlock>
 		<TextBlock FontWeight="Bold">Address:</TextBlock>
 		<TextBlock Text="{Binding Address, TargetNullValue='Empty'}"></TextBlock>
 		<TextBlock FontWeight="Bold">Opening hours:</TextBlock>
 		<TextBlock Text="{Binding OpeningHours, TargetNullValue='Empty'}"></TextBlock>
+
+		<SymbolIcon Symbol="Edit" IsTapEnabled="True" Tapped="SymbolIcon_Tapped"></SymbolIcon>
 	</StackPanel>
 </Page>

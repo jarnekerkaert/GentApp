@@ -79,7 +79,7 @@ namespace GentApp
         {
             ("Companies", typeof(CompaniesPage)),
             ("Add a branch", typeof(AddBranchPage)),
-            ("Details of your company", typeof(CompanyDetailsPage)),
+            ("Your Company", typeof(MyCompanyPage)),
             ("Logout",typeof(LoginPage))
         };
 

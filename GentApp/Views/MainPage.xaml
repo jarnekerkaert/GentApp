@@ -17,7 +17,7 @@
                         Header="Welcome to GentApp!" >
             <NavigationView.MenuItems>
                 <NavigationViewItem Tag="Companies_Page" Content="Companies" x:Name="Companies" Icon="List" />
-                <NavigationViewItem Tag="DetailsCompany_Page" Content="Details of your company" x:Name="DetailsCompany" Icon="Edit" />
+                <NavigationViewItem Tag="MyCompany_Page" Content="Your Company" x:Name="MyCompany" Icon="Edit" />
                 <NavigationViewItem Tag="AddBranch_Page" Content="Add a branch" x:Name="AddBranch" Icon="Add" />
                 <NavigationViewItem Tag="Logout" Content="Logout" x:Name="Logout" Icon="Import"/>
             </NavigationView.MenuItems>
