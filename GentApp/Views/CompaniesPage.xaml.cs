@@ -27,9 +27,12 @@ namespace GentApp.Views
         {
             this.InitializeComponent();
 			//this.DataContext = new CompaniesViewModel();
-			Companies = MainPage.ViewModel.Companies; 
+			Companies = MainPage.ViewModel.Companies;
+			var _enumval = Enum.GetValues(typeof(BranchType));
+			companyTypeComboBox.ItemsSource = _enumval;
 			//ViewModel = new CompaniesViewModel();
 		}
+		//ObservableCollection<CompanyType> CompanyTypes = new ObservableCollection<CompanyType>();
 
 		//public CompaniesViewModel ViewModel { get; set; }
 

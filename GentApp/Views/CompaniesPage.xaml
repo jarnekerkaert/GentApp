@@ -13,6 +13,11 @@
         <StackPanel>
 			<TextBlock>Companies:</TextBlock>
 
+			<StackPanel Orientation="Horizontal">
+				<ComboBox x:Name="companyTypeComboBox" Width="200" PlaceholderText="Filter by sort" />
+				<AutoSuggestBox PlaceholderText="Search a company" QueryIcon="Find" Width="200" />
+			</StackPanel>
+
 			<ListView ItemsSource="{x:Bind Companies}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick" x:Name="companiesListView">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="local:Company">

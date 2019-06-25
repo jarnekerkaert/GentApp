@@ -8,6 +8,6 @@ namespace GentApp.DataModel
 {
     public enum BranchType
     {
-        RESTAURANT, CAFE, SHOESSTORE
+        NONE, RESTAURANT, CAFE, SHOESSTORE, STORE, OTHER
     }
 }
