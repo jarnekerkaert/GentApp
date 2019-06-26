@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GentApp.DataModel
+﻿namespace GentApp.Models
 {
-    class Company
+    public class Company
     {
         public string Name { get; set; }
         public string Address { get; set; }
@@ -14,16 +8,21 @@ namespace GentApp.DataModel
         public CompanyType Type { get; set; }
         public int Id { get; set; }
 
-        public Company(string name, string address, CompanyType type, string openingsuren)
+		public Company() {
+
+		}
+
+        public Company(string name, string address, CompanyType type)
         {
             Name = name;
             Address = address;
             Type = type;
-            Openingsuren = openingsuren;
         }
 
-        public Company()
+        public Company(string openingsuren, string name)
         {
+            Openingsuren = openingsuren;
+            Name = name;
         }
     }
 }
