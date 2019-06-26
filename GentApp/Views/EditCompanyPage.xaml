@@ -10,11 +10,15 @@
 	<StackPanel>
 		<TextBlock Margin="0,50,0,50" HorizontalAlignment="Center">Edit your company:</TextBlock>
 
-		<TextBlock FontWeight="Bold">Name:</TextBlock>
-		<TextBox Text="{Binding Name, TargetNullValue='Empty', Mode=TwoWay}"></TextBox>
-		<TextBlock FontWeight="Bold">Address:</TextBlock>
-		<TextBox Text="{Binding Address, TargetNullValue='Empty', Mode=TwoWay}"></TextBox>
-		<TextBlock FontWeight="Bold">Opening hours:</TextBlock>
-		<TextBox Text="{Binding OpeningHours, TargetNullValue='Empty', Mode=TwoWay}"></TextBox>
+		<TextBox Width="200" x:Name="Name" Header= "Name" MaxLength="300" InputScope="Text" Text="{Binding Name}"></TextBox>
+		<TextBlock x:Name="NameValidationErrorTextBlock" HorizontalAlignment="Center"
+                Foreground="Red" />
+		<TextBox Width="200" x:Name="Address" Header= "Address" MaxLength="300" InputScope="Text" Text="{Binding Address}"></TextBox>
+		<TextBlock x:Name="AddressValidationErrorTextBlock" HorizontalAlignment="Center"
+                Foreground="Red" />
+		<TextBox Width="200" x:Name="OpeningHours" Header= "Opening hours" MaxLength="300" InputScope="Text" Text="{Binding OpeningHours}"></TextBox>
+		<TextBlock x:Name="OpeningHoursValidationErrorTextBlock" HorizontalAlignment="Center"
+                Foreground="Red" />
+		<SymbolIcon Symbol="Save" IsTapEnabled="True" Tapped="SymbolIcon_Tapped" Margin="0,20,0,0"/>
 	</StackPanel>
 </Page>
