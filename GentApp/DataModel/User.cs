@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GentApp.DataModel
 {
-    class User
+    public class User
     {
         private int _id;
         private string _firstname;

@@ -1,4 +1,5 @@
-﻿using GentApp.Views;
+﻿using GentApp.ViewModels;
+using GentApp.Views;
 using Microsoft.QueryStringDotNET;
 using Microsoft.Toolkit.Uwp.Notifications;
 using System;
@@ -18,22 +19,19 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
-
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
-
 namespace GentApp
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainPage : Page
     {
         public MainPage()
         {
             this.InitializeComponent();
-        }
+			ViewModel = new CompaniesViewModel();
+		}
 
-        private void NavView_OnItemInvoked(
+		public static CompaniesViewModel ViewModel { get; set; }
+
+		private void NavView_OnItemInvoked(
       Windows.UI.Xaml.Controls.NavigationView sender,
       NavigationViewItemInvokedEventArgs args)
         {
@@ -74,8 +72,8 @@ namespace GentApp
         private readonly List<(string Tag, Type Page)> _pages = new List<(string Tag, Type Page)>
         {
             ("Companies", typeof(CompaniesPage)),
-            ("Register a company", typeof(RegisterCompanyPage)),
-            ("Details of your company", typeof(CompanyDetailsPage)),
+            ("Add a branch", typeof(AddBranchPage)),
+            ("Your Company", typeof(MyCompanyPage)),
             ("Logout",typeof(LoginPage))
         };
 

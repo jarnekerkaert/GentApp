@@ -1,0 +1,24 @@
+﻿<Page
+    x:Class="GentApp.Views.EditCompanyPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+	<StackPanel>
+		<TextBlock Margin="0,50,0,50" HorizontalAlignment="Center">Edit your company:</TextBlock>
+
+		<TextBox Width="200" x:Name="Name" Header= "Name" MaxLength="300" InputScope="Text" Text="{Binding Name}"></TextBox>
+		<TextBlock x:Name="NameValidationErrorTextBlock" HorizontalAlignment="Center"
+                Foreground="Red" />
+		<TextBox Width="200" x:Name="Address" Header= "Address" MaxLength="300" InputScope="Text" Text="{Binding Address}"></TextBox>
+		<TextBlock x:Name="AddressValidationErrorTextBlock" HorizontalAlignment="Center"
+                Foreground="Red" />
+		<TextBox Width="200" x:Name="OpeningHours" Header= "Opening hours" MaxLength="300" InputScope="Text" Text="{Binding OpeningHours}"></TextBox>
+		<TextBlock x:Name="OpeningHoursValidationErrorTextBlock" HorizontalAlignment="Center"
+                Foreground="Red" />
+		<SymbolIcon Symbol="Save" IsTapEnabled="True" Tapped="SymbolIcon_Tapped" Margin="0,20,0,0"/>
+	</StackPanel>
+</Page>

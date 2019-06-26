@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GentApp.DataModel
 {
-    class Company
+    public class Company
     {
         public string Name { get; set; }
         public string Address { get; set; }
@@ -14,7 +14,7 @@ namespace GentApp.DataModel
         public CompanyType Type { get; set; }
         public int Id { get; set; }
 
-        public Company(string name, string address, CompanyType type, string openingsuren)
+		public Company(string name, string address, string openingHours)
         {
             Name = name;
             Address = address;

@@ -1,6 +1,8 @@
-﻿using GentApp.ViewModels;
+﻿using GentApp.DataModel;
+using GentApp.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -14,16 +16,28 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
-
 namespace GentApp.Views
 {
     public sealed partial class CompaniesPage : Page
     {
-        public CompaniesPage()
+		public ObservableCollection<Company> Companies { get; set; }
+		public CompaniesPage()
         {
             this.InitializeComponent();
-            this.DataContext = new CompaniesViewModel();
-        }
-    }
+			//this.DataContext = new CompaniesViewModel();
+			Companies = MainPage.ViewModel.Companies;
+			var _enumval = Enum.GetValues(typeof(BranchType));
+			companyTypeComboBox.ItemsSource = _enumval;
+			//ViewModel = new CompaniesViewModel();
+		}
+
+		//public CompaniesViewModel ViewModel { get; set; }
+
+		private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+		{
+			var selectedCompany = e.ClickedItem as Company;
+			MainPage.ViewModel.MySelectedCompany = selectedCompany;
+			Frame.Navigate(typeof(CompanyDetailsPage));
+		}
+	}
 }

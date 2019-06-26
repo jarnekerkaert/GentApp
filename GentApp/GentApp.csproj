@@ -98,20 +98,31 @@
     <Compile Include="DataModel\Branch.cs" />
     <Compile Include="DataModel\BranchType.cs" />
     <Compile Include="DataModel\Company.cs" />
-    <Compile Include="DataModel\CompanyType.cs" />
     <Compile Include="DataModel\DummyDataSource.cs" />
     <Compile Include="DataModel\RoleType.cs" />
     <Compile Include="DataModel\User.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
     <Compile Include="ViewModels\CompaniesViewModel.cs" />
+    <Compile Include="Views\AddBranchPage.xaml.cs">
+      <DependentUpon>AddBranchPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BranchDetailsPage.xaml.cs">
+      <DependentUpon>BranchDetailsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CompaniesPage.xaml.cs">
       <DependentUpon>CompaniesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CompanyDetailsPage.xaml.cs">
       <DependentUpon>CompanyDetailsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EditCompanyPage.xaml.cs">
+      <DependentUpon>EditCompanyPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MyCompanyPage.xaml.cs">
+      <DependentUpon>MyCompanyPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RegisterCompanyPage.xaml.cs">
       <DependentUpon>RegisterCompanyPage.xaml</DependentUpon>
@@ -145,6 +156,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Views\AddBranchPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BranchDetailsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CompaniesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -153,9 +172,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\EditCompanyPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\LoginPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MyCompanyPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\RegisterCompanyPage.xaml">
       <SubType>Designer</SubType>

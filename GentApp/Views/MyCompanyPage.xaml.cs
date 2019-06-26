@@ -18,15 +18,26 @@ using Windows.UI.Xaml.Navigation;
 
 namespace GentApp.Views
 {
-    public sealed partial class CompanyDetailsPage : Page
-    {
+	public sealed partial class MyCompanyPage : Page
+	{
 		public ObservableCollection<Branch> Branches { get; set; }
 
-		public CompanyDetailsPage()
-        {
-            this.InitializeComponent();
-			this.DataContext = MainPage.ViewModel.MySelectedCompany;
+		public MyCompanyPage()
+		{
+			this.InitializeComponent();
+			this.DataContext = MainPage.ViewModel.MyCompany;
 			Branches = MainPage.ViewModel.Branches;
+		}
+
+		private void SymbolIcon_Tapped(object sender, TappedRoutedEventArgs e)
+		{
+			Frame.Navigate(typeof(EditCompanyPage));
+		}
+
+		private void AddIcon_Tapped(object sender, TappedRoutedEventArgs e)
+		{
+			// navigationservice, navigate to add a branch
+			Frame.Navigate(typeof(AddBranchPage));
 		}
 
 		private void ListView_ItemClick(object sender, ItemClickEventArgs e)
