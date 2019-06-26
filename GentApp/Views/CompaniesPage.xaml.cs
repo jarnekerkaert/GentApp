@@ -16,8 +16,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
-
 namespace GentApp.Views
 {
     public sealed partial class CompaniesPage : Page
@@ -32,7 +30,6 @@ namespace GentApp.Views
 			companyTypeComboBox.ItemsSource = _enumval;
 			//ViewModel = new CompaniesViewModel();
 		}
-		//ObservableCollection<CompanyType> CompanyTypes = new ObservableCollection<CompanyType>();
 
 		//public CompaniesViewModel ViewModel { get; set; }
 
@@ -40,11 +37,7 @@ namespace GentApp.Views
 		{
 			var selectedCompany = e.ClickedItem as Company;
 			MainPage.ViewModel.MySelectedCompany = selectedCompany;
-			Console.WriteLine("test");
-			// MySelectedCompany opslaan door middel van command?
-			// TODO: veranderen via NavView zoals in Buildcast ipv Frame.Navigate
 			Frame.Navigate(typeof(CompanyDetailsPage));
-			
 		}
 	}
 }

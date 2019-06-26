@@ -16,13 +16,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace GentApp.Views
 {
-	/// <summary>
-	/// An empty page that can be used on its own or navigated to within a Frame.
-	/// </summary>
 	public sealed partial class MyCompanyPage : Page
 	{
 		public ObservableCollection<Branch> Branches { get; set; }
@@ -30,11 +25,8 @@ namespace GentApp.Views
 		public MyCompanyPage()
 		{
 			this.InitializeComponent();
-			//ViewModel = new CompaniesViewModel();
 			this.DataContext = MainPage.ViewModel.MyCompany;
 			Branches = MainPage.ViewModel.Branches;
-			//this.DataContext = ViewModel.MySelectedCompany;
-			//this.DataContext = DummyDataSource.Companies[0];
 		}
 
 		private void SymbolIcon_Tapped(object sender, TappedRoutedEventArgs e)
@@ -42,11 +34,18 @@ namespace GentApp.Views
 			Frame.Navigate(typeof(EditCompanyPage));
 		}
 
-		//public CompaniesViewModel ViewModel { get; set; }
 		private void AddIcon_Tapped(object sender, TappedRoutedEventArgs e)
 		{
 			// navigationservice, navigate to add a branch
 			Frame.Navigate(typeof(AddBranchPage));
+		}
+
+		private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+		{
+			var selectedBranch = e.ClickedItem as Branch;
+			MainPage.ViewModel.MySelectedBranch = selectedBranch;
+			Frame.Navigate(typeof(BranchDetailsPage));
+
 		}
 	}
 }

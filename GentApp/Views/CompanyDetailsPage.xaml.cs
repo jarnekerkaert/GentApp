@@ -16,8 +16,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
-
 namespace GentApp.Views
 {
     public sealed partial class CompanyDetailsPage : Page
@@ -27,13 +25,9 @@ namespace GentApp.Views
 		public CompanyDetailsPage()
         {
             this.InitializeComponent();
-			//ViewModel = new CompaniesViewModel();
 			this.DataContext = MainPage.ViewModel.MySelectedCompany;
 			Branches = MainPage.ViewModel.Branches;
-			//this.DataContext = DummyDataSource.Companies[0];
 		}
-
-		//public CompaniesViewModel ViewModel { get; set; }
 
 		private void ListView_ItemClick(object sender, ItemClickEventArgs e)
 		{
