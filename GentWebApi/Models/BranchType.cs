@@ -4,10 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GentApp.Models
-{
-    enum BranchType
-    {
-        RESTAURANT, CAFE, SHOESSTORE
-    }
+namespace GentApp.Models {
+	public enum BranchType {
+		RESTAURANT, CAFE, SHOESSTORE
+	}
 }

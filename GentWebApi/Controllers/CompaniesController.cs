@@ -6,6 +6,7 @@ using GentApp.Models;
 using GentWebApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GentAppWebApi.Controllers {
 
@@ -26,7 +27,8 @@ namespace GentAppWebApi.Controllers {
 		// GET: api/Companies
 		[HttpGet]
 		public IEnumerable<Company> Get() {
-			return _context.Companies;
+			return _context.Companies
+				.Include(c => c.Branches);
 		}
 
 		// GET: api/Companies/5
@@ -47,8 +49,8 @@ namespace GentAppWebApi.Controllers {
 			_context.Companies.Update(company);
 		}
 
-		// DELETE: api/ApiWithActions/5
-		[HttpDelete("{id}")]
+		// DELETE: api/Companies
+		[HttpDelete]
 		public void Delete([FromBody] Company company) {
 			_context.Companies.Remove(company);
 		}
