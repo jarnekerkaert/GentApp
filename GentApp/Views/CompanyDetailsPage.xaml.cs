@@ -34,5 +34,13 @@ namespace GentApp.Views
 		}
 
 		//public CompaniesViewModel ViewModel { get; set; }
+
+		private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+		{
+			var selectedBranch = e.ClickedItem as Branch;
+			MainPage.ViewModel.MySelectedBranch = selectedBranch;
+			Frame.Navigate(typeof(BranchDetailsPage));
+
+		}
 	}
 }

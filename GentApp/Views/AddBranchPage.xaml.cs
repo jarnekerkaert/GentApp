@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GentApp.DataModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -26,7 +27,26 @@ namespace GentApp.Views
         {
             this.InitializeComponent();
 			this.DataContext = MainPage.ViewModel;
-        }
+			var _enumval = Enum.GetValues(typeof(BranchType)).Cast<BranchType>().ToList();
+			_enumval.Remove(BranchType.NONE);
+			Type.ItemsSource = _enumval;
+		}
 
+		private void SaveButton_Click(object sender, RoutedEventArgs e)
+		{
+			// TODO: validation for the other properties
+			var comboBoxItem = Type.SelectedValue;
+			if (comboBoxItem != null)
+			{
+				BranchType selectedType = (BranchType) comboBoxItem;
+				Branch newBranch = new Branch() { Name = Name.Text, Address = Address.Text, OpeningHours = OpeningHours.Text, Type = selectedType };
+				MainPage.ViewModel.SaveBranch(newBranch);
+			}
+		}
+
+		private void CancelButton_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
 	}
 }

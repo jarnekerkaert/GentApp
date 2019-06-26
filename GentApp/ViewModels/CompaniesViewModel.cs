@@ -41,6 +41,19 @@ namespace GentApp.ViewModels
 			}
 		}
 
+		private Branch mySelectedBranch;
+		public Branch MySelectedBranch
+		{
+			get { return mySelectedBranch; }
+			set
+			{
+				if (value != mySelectedBranch)
+				{
+					mySelectedBranch = value; NotifyPropertyChanged("MySelectedBranch");
+				}
+			}
+		}
+
 		public RelayCommand SaveCompanyCommand { get; set; }
 		public RelayCommand SaveBranchCommand { get; set; }
 
@@ -67,12 +80,18 @@ namespace GentApp.ViewModels
 
 		private void SaveBranch(object p)
 		{
-			this.Branches.Add(new Branch()
-			{
-				Name = p.ToString(),
-				Address = "Dummy adres",
-				OpeningHours = "24/7"
-			});
+			//this.Branches.Add(new Branch()
+			//{
+			//	Name = p.ToString(),
+			//	Address = "Dummy adres",
+			//	OpeningHours = "24/7"
+			//});
+			this.Branches.Add(p as Branch);
+		}
+
+		public void SaveBranch(Branch newBranch)
+		{
+			this.Branches.Add(newBranch);
 		}
 
 		private void NotifyPropertyChanged(String propertyName) {

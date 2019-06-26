@@ -11,14 +11,14 @@
     <StackPanel>
         <TextBlock HorizontalAlignment="Center" Margin="0,20,0,60">Add a branch to your company</TextBlock>
 
-		<TextBlock HorizontalAlignment="Center">Name:</TextBlock>
-		<TextBox Width="200"></TextBox>
-		<TextBlock HorizontalAlignment="Center">Type:</TextBlock>
-		<TextBox Width="200"></TextBox>
-		<TextBlock HorizontalAlignment="Center">Address:</TextBlock>
-		<TextBox Width="200"></TextBox>
-		<TextBlock HorizontalAlignment="Center">Opening Hours:</TextBlock>
-		<TextBox Width="200"></TextBox>
-		<Button Content="Add Branch" Command="{Binding SaveBranchCommand}" CommandParameter="TestParameter" HorizontalAlignment="Center" Margin="0,30,0,0" />
+		<TextBox Width="200" x:Name="Name" Header= "Name" MaxLength="300" InputScope="Text"></TextBox>
+		<ComboBox x:Name="Type" PlaceholderText="Type" Width="200" HorizontalAlignment="Center" Margin="0,20,0,20" />
+		<TextBox Width="200" x:Name="Address" Header= "Address" MaxLength="300" InputScope="Text"></TextBox>
+		<TextBox Width="200" x:Name="OpeningHours" Header= "Opening Hours" MaxLength="300" InputScope="Text"></TextBox>
+		<!--<Button Content="Add Branch" Command="{Binding SaveBranchCommand}" CommandParameter="TestParameter" HorizontalAlignment="Center" Margin="0,30,0,0" />-->
+		<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+			<Button Content="Save" Margin="0,0,20,0" Click="SaveButton_Click"/>
+			<Button Content="Cancel" Click="CancelButton_Click"/>
+		</StackPanel>
 	</StackPanel>
 </Page>

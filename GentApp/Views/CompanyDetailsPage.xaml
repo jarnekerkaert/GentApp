@@ -19,7 +19,7 @@
 		<TextBlock Text="{Binding OpeningHours, TargetNullValue='Empty'}"></TextBlock>
 
 		<TextBlock Margin="0,50,0,0">Branches:</TextBlock>
-		<ListView ItemsSource="{x:Bind Branches}">
+		<ListView ItemsSource="{x:Bind Branches}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick" x:Name="branchesListView">
 			<ListView.ItemTemplate>
 				<DataTemplate x:DataType="local1:Branch">
 					<StackPanel>
