@@ -11,22 +11,23 @@
 	<StackPanel>
 		<TextBlock HorizontalAlignment="Center" Margin="0,20,0,60">Add a branch to your company</TextBlock>
 
-		<TextBox Width="200" x:Name="Name" Header= "Name" MaxLength="300" InputScope="Text"></TextBox>
+		<TextBox Width="200" x:Name="Name" Header= "Name" MaxLength="300" InputScope="Text" PlaceholderText="Name"></TextBox>
 		<TextBlock x:Name="NameValidationErrorTextBlock" HorizontalAlignment="Center"
                 Foreground="Red" />
-		<ComboBox x:Name="Type" PlaceholderText="Type" Width="200" HorizontalAlignment="Center" Margin="0,20,0,20" />
+		<TextBlock Text="Type of company:" HorizontalAlignment="Center" Width="200" />
+		<ComboBox x:Name="Type" PlaceholderText="Type" Width="200" HorizontalAlignment="Center" Margin="0,20,0,0" />
 		<TextBlock x:Name="TypeValidationErrorTextBlock" HorizontalAlignment="Center" Margin="0,10,0,0"
                 Foreground="Red" />
-		<TextBox Width="200" x:Name="Address" Header= "Address" MaxLength="300" InputScope="Text"></TextBox>
+		<TextBox Width="200" x:Name="Address" Header= "Address" MaxLength="300" InputScope="Text" PlaceholderText="Address"></TextBox>
 		<TextBlock x:Name="AddressValidationErrorTextBlock" HorizontalAlignment="Center"
                 Foreground="Red" />
-		<TextBox Width="200" x:Name="OpeningHours" Header= "Opening Hours" MaxLength="300" InputScope="Text"></TextBox>
+		<TextBox Width="200" x:Name="OpeningHours" Header= "Opening Hours" MaxLength="300" InputScope="Text" PlaceholderText="24/7"></TextBox>
 		<TextBlock x:Name="OpeningHoursValidationErrorTextBlock" HorizontalAlignment="Center"
                 Foreground="Red" />
 		<!--<Button Content="Add Branch" Command="{Binding SaveBranchCommand}" CommandParameter="TestParameter" HorizontalAlignment="Center" Margin="0,30,0,0" />-->
 		<StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
-			<Button Content="Save" Margin="0,0,20,0" Click="SaveButton_Click" x:Name="saveBranchBtn"/>
 			<Button Content="Cancel" Click="CancelButton_Click"/>
+			<Button Content="Save" Margin="0,0,20,0" Click="SaveButton_Click" x:Name="saveBranchBtn"/>
 		</StackPanel>
 	</StackPanel>
 </Page>
