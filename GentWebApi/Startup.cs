@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using GentApp.Models;
 
 namespace GentWebApi {
 	public class Startup {
@@ -26,6 +27,11 @@ namespace GentWebApi {
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 			services.AddDbContext<GentDbContext>(opt =>
 				opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+
+			services.AddDefaultIdentity<User>()
+				.AddEntityFrameworkStores<GentDbContext>();
+
+
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +45,7 @@ namespace GentWebApi {
 			}
 
 			app.UseHttpsRedirection();
+			app.UseAuthentication();
 			app.UseMvc();
 		}
 	}
