@@ -44,7 +44,7 @@ namespace GentApp.Views
 		{
 			var selectedBranch = e.ClickedItem as Branch;
 			MainPage.ViewModel.MySelectedBranch = selectedBranch;
-			Frame.Navigate(typeof(BranchDetailsPage));
+			Frame.Navigate(typeof(EditBranchPage));
 
 		}
 	}

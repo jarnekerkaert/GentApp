@@ -94,12 +94,28 @@ namespace GentApp.ViewModels
 			this.Branches.Add(newBranch);
 		}
 
-		public void EditCompany(int companyId, Company updatedCompany)
+		public void EditCompany(string name, string address, string openingHours)
 		{
-			var oldCompany = Companies.Where(x => x.Id == companyId).First();
-			oldCompany.Name = updatedCompany.Name;
-			oldCompany.Address = updatedCompany.Address;
-			oldCompany.OpeningHours = updatedCompany.OpeningHours;
+			// var oldCompany = Companies.Where(x => x.Id == companyId).First();
+			var oldCompany = MyCompany;
+			if (oldCompany != null)
+			{
+				oldCompany.Name = name;
+				oldCompany.Address = address;
+				oldCompany.OpeningHours = openingHours;
+			}
+		}
+
+		public void EditBranch(string name, string address, string openingHours, BranchType type)
+		{
+			var oldBranch = MySelectedBranch;
+			if(oldBranch != null)
+			{
+				oldBranch.Name = name;
+				oldBranch.Address = address;
+				oldBranch.OpeningHours = openingHours;
+				oldBranch.Type = type;
+			}
 		}
 
 		private void NotifyPropertyChanged(String propertyName) {
