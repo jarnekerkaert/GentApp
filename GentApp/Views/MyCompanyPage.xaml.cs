@@ -1,11 +1,13 @@
-﻿using GentApp.DataModel;
-using GentApp.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+
+using GentApp.DataModel;
+using GentApp.ViewModels;
+
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;

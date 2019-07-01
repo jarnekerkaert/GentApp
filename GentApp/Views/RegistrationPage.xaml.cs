@@ -3,8 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+
+using Microsoft.QueryStringDotNET; // QueryString.NET
+using Microsoft.Toolkit.Uwp.Notifications; // Notifications library
+
+using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Notifications;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -12,10 +18,6 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using Windows.UI.Notifications;
-using Microsoft.Toolkit.Uwp.Notifications; // Notifications library
-using Microsoft.QueryStringDotNET; // QueryString.NET
-using Windows.ApplicationModel.Activation;
 
 namespace GentApp.Views
 {
@@ -33,42 +35,13 @@ namespace GentApp.Views
         void Register_Client(object sender, RoutedEventArgs args)
         {
             //sendToast("Register", "Client");
-            Frame.Navigate(typeof(MainPage));
+            Frame.Navigate(typeof(RegisterClientPage));
         }
 
         void Register_Company(object sender, RoutedEventArgs args)
         {
             //sendToast("Register", "Company");
-            Frame.Navigate(typeof(MainPage));
+            Frame.Navigate(typeof(RegisterCompanyPage));
         }
-
-        private void sendToast(String title, String content)
-        {
-            ToastContent toastContent = new ToastContent() {
-                Visual = new ToastVisual() {
-                    BindingGeneric = new ToastBindingGeneric() {
-                        Children =
-                        {
-                            new AdaptiveText() {
-                            Text = "Register"
-                            },
-                            new AdaptiveText()
-                            {
-                              Text = "Company"
-                            }
-                        }
-                    }
-                },
-                Actions = new ToastActionsCustom(),
-
-                Launch = new QueryString()
-                {
-                    {"action", "register" },
-                    {"id", "id" }
-                }.ToString()
-            };
-
-            ToastNotificationManager.CreateToastNotifier().Show(new ToastNotification(toastContent.GetXml()));
-        }
-    }
+	}
 }

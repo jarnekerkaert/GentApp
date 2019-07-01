@@ -6,6 +6,7 @@
     <ApplicationIcon />
     <OutputType>WinExe</OutputType>
     <StartupObject />
+    <UserSecretsId>987fb48c-0ada-4053-b202-f58875bc54d7</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

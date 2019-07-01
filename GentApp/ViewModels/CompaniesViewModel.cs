@@ -1,7 +1,4 @@
-﻿using GentApp.DataModel;
-using GentApp.Helpers;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -9,6 +6,11 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+
+using GentApp.DataModel;
+using GentApp.Helpers;
+
+using Newtonsoft.Json;
 
 namespace GentApp.ViewModels
 {
@@ -25,7 +27,8 @@ namespace GentApp.ViewModels
 			{
 				if (value != mySelectedCompany)
 				{
-					mySelectedCompany = value; NotifyPropertyChanged("MySelectedCompany");
+					mySelectedCompany = value;
+					NotifyPropertyChanged("MySelectedCompany");
 				}
 			}
 		}
@@ -38,7 +41,8 @@ namespace GentApp.ViewModels
 			{
 				if (value != myCompany)
 				{
-					myCompany = value; NotifyPropertyChanged("MyCompany");
+					myCompany = value;
+					NotifyPropertyChanged("MyCompany");
 				}
 			}
 		}
@@ -51,7 +55,8 @@ namespace GentApp.ViewModels
 			{
 				if (value != mySelectedBranch)
 				{
-					mySelectedBranch = value; NotifyPropertyChanged("MySelectedBranch");
+					mySelectedBranch = value;
+					NotifyPropertyChanged("MySelectedBranch");
 				}
 			}
 		}

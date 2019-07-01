@@ -1,10 +1,12 @@
-﻿using GentWebApi.Models;
-using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
+using GentWebApi.Models;
+
+using Microsoft.AspNetCore.Identity;
 
 namespace GentApp.Models
 {
@@ -14,12 +16,10 @@ namespace GentApp.Models
 
         }
 
-        public User(string username)
-        {
-			UserName = username;
-        }
+        public User(string userName)
+			: base(userName) {
+		}
 		
-		public string Username { get; set; }
         public string Firstname { get; set; }
 		public string Lastname { get; set; }
 		public string CompanyId { get; set; }
