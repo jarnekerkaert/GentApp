@@ -127,6 +127,12 @@
     <Compile Include="Views\MyCompanyPage.xaml.cs">
       <DependentUpon>MyCompanyPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MyEventsPage.xaml.cs">
+      <DependentUpon>MyEventsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MyPromotionsPage.xaml.cs">
+      <DependentUpon>MyPromotionsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\RegisterCompanyPage.xaml.cs">
       <DependentUpon>RegisterCompanyPage.xaml</DependentUpon>
     </Compile>
@@ -188,6 +194,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\MyCompanyPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MyEventsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MyPromotionsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

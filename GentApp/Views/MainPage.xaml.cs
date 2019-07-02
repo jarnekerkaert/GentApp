@@ -69,11 +69,13 @@ namespace GentApp
             }
         }
 
-        private readonly List<(string Tag, Type Page)> _pages = new List<(string Tag, Type Page)>
-        {
-            ("Companies", typeof(CompaniesPage)),
-            ("Add a branch", typeof(AddBranchPage)),
-            ("Your Company", typeof(MyCompanyPage)),
+		private readonly List<(string Tag, Type Page)> _pages = new List<(string Tag, Type Page)>
+		{
+			("Companies", typeof(CompaniesPage)),
+			("Your Company", typeof(MyCompanyPage)),
+			("Add a branch", typeof(AddBranchPage)),
+			("Manage promotions", typeof(MyPromotionsPage)),
+			("Manage events", typeof(MyEventsPage)),
             ("Logout",typeof(LoginPage))
         };
 
