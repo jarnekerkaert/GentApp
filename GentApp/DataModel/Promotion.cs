@@ -13,6 +13,8 @@ namespace GentApp.DataModel
 		private DateTime _endDate;
 		private string _title;
 		private string _description;
+		private int _branchId;
+		//private int _companyId;
 		private string _couponId;
 
 		public int Id { get => _id; set => _id = value; }
@@ -21,6 +23,7 @@ namespace GentApp.DataModel
 		public string Title { get => _title; set => _title = value; }
 		public string Description { get => _description; set => _description = value; }
 		public string CouponId { get => _couponId; set => _couponId = value; }
+		public int BranchId { get => _branchId; set => _branchId = value; }
 
 		public Promotion(int id, DateTime startDate, DateTime endDate, string title, string description)
 		{

@@ -30,7 +30,6 @@
 			</ListView.ItemTemplate>
 
 		</ListView>
-
-		<TextBlock Margin="0,60,0,0">Add a promotion</TextBlock>
+		<SymbolIcon Symbol="Add" IsTapEnabled="True" Tapped="AddIcon_Tapped"></SymbolIcon>
 	</StackPanel>
 </Page>

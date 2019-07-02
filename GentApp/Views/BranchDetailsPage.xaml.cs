@@ -22,5 +22,6 @@ namespace GentApp.Views
 			this.InitializeComponent();
 			this.DataContext = MainPage.BranchesViewModel.MySelectedBranch;
 		}
+
 	}
 }
