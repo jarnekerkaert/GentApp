@@ -38,7 +38,9 @@ namespace GentApp.Views
 
 		private void PromotionsListView_ItemClick(object sender, ItemClickEventArgs e)
 		{
-
+			var selectedPromotion = e.ClickedItem as Promotion;
+			MainPage.BranchViewModel.MySelectedPromotion = selectedPromotion;
+			Frame.Navigate(typeof(EditPromotionPage));
 		}
 
 		private void AddIcon_Tapped(object sender, TappedRoutedEventArgs e)

@@ -127,6 +127,9 @@
     <Compile Include="Views\EditCompanyPage.xaml.cs">
       <DependentUpon>EditCompanyPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EditPromotionPage.xaml.cs">
+      <DependentUpon>EditPromotionPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
@@ -196,6 +199,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EditCompanyPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditPromotionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

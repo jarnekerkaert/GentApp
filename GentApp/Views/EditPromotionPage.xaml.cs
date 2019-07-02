@@ -1,5 +1,4 @@
-﻿using GentApp.DataModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,24 +13,20 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace GentApp.Views
 {
-	/// <summary>
-	/// An empty page that can be used on its own or navigated to within a Frame.
-	/// </summary>
-	public sealed partial class AddPromotionPage : Page
+
+	public sealed partial class EditPromotionPage : Page
 	{
-		public AddPromotionPage()
+		public EditPromotionPage()
 		{
 			this.InitializeComponent();
-			horStackPanel.DataContext = MainPage.BranchesViewModel.MySelectedBranch;
-			this.DataContext = MainPage.BranchViewModel;
-
+			this.DataContext = MainPage.BranchViewModel.MySelectedPromotion;
+			StartDatePicker.Date = MainPage.BranchViewModel.MySelectedPromotion.StartDate;
+			EndDatePicker.Date = MainPage.BranchViewModel.MySelectedPromotion.EndDate;
 		}
 
-		private void SavePromotionBtn_Click(object sender, RoutedEventArgs e)
+		private void SymbolIcon_Tapped(object sender, TappedRoutedEventArgs e)
 		{
 			TitleValidationErrorTextBlock.Text = "";
 			DescriptionValidationErrorTextBlock.Text = "";
@@ -52,7 +47,7 @@ namespace GentApp.Views
 			}
 			else if (Title.Text.Length > 200)
 			{
-				TitleValidationErrorTextBlock.Text = "The maximum length of this field is 200 characters.";
+				TitleValidationErrorTextBlock.Text = "The maximum length of this field is 600 characters.";
 				isValid = false;
 			}
 			if (Description.Text == "")
@@ -62,7 +57,7 @@ namespace GentApp.Views
 			}
 			else if (Description.Text.Length > 200)
 			{
-				DescriptionValidationErrorTextBlock.Text = "The maximum length of this field is 200 characters.";
+				DescriptionValidationErrorTextBlock.Text = "The maximum length of this field is 1000 characters.";
 				isValid = false;
 			}
 			if (!StartDatePicker.Date.HasValue)
@@ -77,8 +72,7 @@ namespace GentApp.Views
 			}
 			if (isValid == true)
 			{
-				Promotion newPromotion = new Promotion() { Title = Title.Text, Description = Description.Text, StartDate = StartDatePicker.Date.Value.DateTime, EndDate = EndDatePicker.Date.Value.DateTime };
-				MainPage.BranchViewModel.AddPromotion(newPromotion);
+				MainPage.BranchViewModel.EditPromotion(Title.Text, Description.Text, StartDatePicker.Date.Value.DateTime, EndDatePicker.Date.Value.DateTime);
 				Frame.Navigate(typeof(MyPromotionsPage));
 			}
 		}
