@@ -1,6 +1,7 @@
 ﻿using GentApp.DataModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -24,15 +25,14 @@ namespace GentApp.Views
 	public sealed partial class MyPromotionsPage : Page
 	{
 		public Company MyCompany { get; set; }
-		public List<Promotion> Promotions { get; set; }
-
+		public ObservableCollection<Promotion> Promotions { get; set; }
 
 		public MyPromotionsPage()
 		{
 			this.InitializeComponent();
 			MyCompany = MainPage.CompaniesViewModel.MyCompany;
 			horStackPanel.DataContext = MyCompany;
-			Promotions = DummyDataSource.Promotions;
+			Promotions = MainPage.BranchViewModel.Promotions;
 			AmountPromotionsTextBlock.Text = Promotions.Count.ToString();
 		}
 

@@ -79,7 +79,7 @@ namespace GentApp.Views
 			{
 				BranchType selectedType = (BranchType)comboBoxItem;
 				Branch newBranch = new Branch() { Name = Name.Text, Address = Address.Text, OpeningHours = OpeningHours.Text, Type = selectedType };
-				MainPage.BranchesViewModel.SaveBranch(newBranch);
+				MainPage.BranchesViewModel.AddBranch(newBranch);
 				// TODO: navigate through navigationService
 				// TODO: send notification
 				Frame.Navigate(typeof(MyCompanyPage));

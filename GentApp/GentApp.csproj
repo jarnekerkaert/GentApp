@@ -104,6 +104,7 @@
     <Compile Include="DataModel\User.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
     <Compile Include="ViewModels\BranchesViewModel.cs" />
+    <Compile Include="ViewModels\BranchViewModel.cs" />
     <Compile Include="ViewModels\CompaniesViewModel.cs" />
     <Compile Include="Views\AddBranchPage.xaml.cs">
       <DependentUpon>AddBranchPage.xaml</DependentUpon>

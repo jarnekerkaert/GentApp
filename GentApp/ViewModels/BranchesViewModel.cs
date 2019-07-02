@@ -35,7 +35,7 @@ namespace GentApp.ViewModels
 			//SaveBranchCommand = new RelayCommand((p) => SaveBranch(p as Branch));
 		}
 
-		public void SaveBranch(Branch newBranch)
+		public void AddBranch(Branch newBranch)
 		{
 			this.Branches.Add(newBranch);
 		}
