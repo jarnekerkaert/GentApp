@@ -30,7 +30,7 @@ namespace GentApp.Views
 		public MyPromotionsPage()
 		{
 			this.InitializeComponent();
-			MyCompany = MainPage.ViewModel.MyCompany;
+			MyCompany = MainPage.CompaniesViewModel.MyCompany;
 			horStackPanel.DataContext = MyCompany;
 			Promotions = DummyDataSource.Promotions;
 			AmountPromotionsTextBlock.Text = Promotions.Count.ToString();

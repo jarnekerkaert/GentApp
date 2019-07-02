@@ -22,7 +22,7 @@ namespace GentApp.Views
         public AddBranchPage()
         {
             this.InitializeComponent();
-			this.DataContext = MainPage.ViewModel;
+			this.DataContext = MainPage.CompaniesViewModel;
 			var _enumval = Enum.GetValues(typeof(BranchType)).Cast<BranchType>().ToList();
 			_enumval.Remove(BranchType.NONE);
 			Type.ItemsSource = _enumval;
@@ -79,7 +79,7 @@ namespace GentApp.Views
 			{
 				BranchType selectedType = (BranchType)comboBoxItem;
 				Branch newBranch = new Branch() { Name = Name.Text, Address = Address.Text, OpeningHours = OpeningHours.Text, Type = selectedType };
-				MainPage.ViewModel.SaveBranch(newBranch);
+				MainPage.BranchesViewModel.SaveBranch(newBranch);
 				// TODO: navigate through navigationService
 				// TODO: send notification
 				Frame.Navigate(typeof(MyCompanyPage));

@@ -25,14 +25,14 @@ namespace GentApp.Views
 		public CompanyDetailsPage()
         {
             this.InitializeComponent();
-			this.DataContext = MainPage.ViewModel.MySelectedCompany;
-			Branches = MainPage.ViewModel.Branches;
+			this.DataContext = MainPage.CompaniesViewModel.MySelectedCompany;
+			Branches = MainPage.BranchesViewModel.Branches;
 		}
 
 		private void ListView_ItemClick(object sender, ItemClickEventArgs e)
 		{
 			var selectedBranch = e.ClickedItem as Branch;
-			MainPage.ViewModel.MySelectedBranch = selectedBranch;
+			MainPage.BranchesViewModel.MySelectedBranch = selectedBranch;
 			Frame.Navigate(typeof(BranchDetailsPage));
 
 		}

@@ -26,10 +26,13 @@ namespace GentApp
         public MainPage()
         {
             this.InitializeComponent();
-			ViewModel = new CompaniesViewModel();
+			CompaniesViewModel = new CompaniesViewModel();
+			BranchesViewModel = new BranchesViewModel();
 		}
 
-		public static CompaniesViewModel ViewModel { get; set; }
+		public static CompaniesViewModel CompaniesViewModel { get; set; }
+		public static BranchesViewModel BranchesViewModel { get; set; }
+
 
 		private void NavView_OnItemInvoked(
       Windows.UI.Xaml.Controls.NavigationView sender,

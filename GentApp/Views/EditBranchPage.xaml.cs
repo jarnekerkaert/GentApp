@@ -26,11 +26,11 @@ namespace GentApp.Views
 		public EditBranchPage()
 		{
 			this.InitializeComponent();
-			this.DataContext = MainPage.ViewModel.MySelectedBranch;
+			this.DataContext = MainPage.BranchesViewModel.MySelectedBranch;
 			var _enumval = Enum.GetValues(typeof(BranchType)).Cast<BranchType>().ToList();
 			_enumval.Remove(BranchType.NONE);
 			Type.ItemsSource = _enumval;
-			Type.SelectedItem = MainPage.ViewModel.MySelectedBranch.Type;
+			Type.SelectedItem = MainPage.BranchesViewModel.MySelectedBranch.Type;
 		}
 
 		private void SymbolIcon_Tapped(object sender, TappedRoutedEventArgs e)
@@ -84,7 +84,7 @@ namespace GentApp.Views
 			if (isValid == true)
 			{
 				BranchType selectedType = (BranchType)comboBoxItem;
-				MainPage.ViewModel.EditBranch(Name.Text, Address.Text, OpeningHours.Text, selectedType);
+				MainPage.BranchesViewModel.EditBranch(Name.Text, Address.Text, OpeningHours.Text, selectedType);
 				Frame.Navigate(typeof(MyCompanyPage));
 			}
 		}

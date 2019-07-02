@@ -25,7 +25,7 @@ namespace GentApp.Views
         {
             this.InitializeComponent();
 			//this.DataContext = new CompaniesViewModel();
-			Companies = MainPage.ViewModel.Companies;
+			Companies = MainPage.CompaniesViewModel.Companies;
 			var _enumval = Enum.GetValues(typeof(BranchType));
 			companyTypeComboBox.ItemsSource = _enumval;
 			//ViewModel = new CompaniesViewModel();
@@ -36,7 +36,7 @@ namespace GentApp.Views
 		private void ListView_ItemClick(object sender, ItemClickEventArgs e)
 		{
 			var selectedCompany = e.ClickedItem as Company;
-			MainPage.ViewModel.MySelectedCompany = selectedCompany;
+			MainPage.CompaniesViewModel.MySelectedCompany = selectedCompany;
 			Frame.Navigate(typeof(CompanyDetailsPage));
 		}
 	}

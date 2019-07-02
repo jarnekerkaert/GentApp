@@ -20,7 +20,7 @@ namespace GentApp.Views
 		public BranchDetailsPage()
 		{
 			this.InitializeComponent();
-			this.DataContext = MainPage.ViewModel.MySelectedBranch;
+			this.DataContext = MainPage.BranchesViewModel.MySelectedBranch;
 		}
 	}
 }

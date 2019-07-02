@@ -41,29 +41,13 @@ namespace GentApp.ViewModels
 			}
 		}
 
-		private Branch mySelectedBranch;
-		public Branch MySelectedBranch
-		{
-			get { return mySelectedBranch; }
-			set
-			{
-				if (value != mySelectedBranch)
-				{
-					mySelectedBranch = value; NotifyPropertyChanged("MySelectedBranch");
-				}
-			}
-		}
-
 		public RelayCommand SaveCompanyCommand { get; set; }
-		public RelayCommand SaveBranchCommand { get; set; }
 
 		public CompaniesViewModel()
         {
             Companies = new ObservableCollection<Company>(DummyDataSource.Companies);
-			Branches = new ObservableCollection<Branch>(DummyDataSource.Branches);
 			MyCompany = DummyDataSource.Companies[2];
             SaveCompanyCommand = new RelayCommand((p) => SaveCompany(p));
-			SaveBranchCommand = new RelayCommand((p) => SaveBranch(p));
         }
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -78,22 +62,6 @@ namespace GentApp.ViewModels
 			});
         }
 
-		private void SaveBranch(object p)
-		{
-			//this.Branches.Add(new Branch()
-			//{
-			//	Name = p.ToString(),
-			//	Address = "Dummy adres",
-			//	OpeningHours = "24/7"
-			//});
-			this.Branches.Add(p as Branch);
-		}
-
-		public void SaveBranch(Branch newBranch)
-		{
-			this.Branches.Add(newBranch);
-		}
-
 		public void EditCompany(string name, string address, string openingHours)
 		{
 			// var oldCompany = Companies.Where(x => x.Id == companyId).First();
@@ -103,18 +71,6 @@ namespace GentApp.ViewModels
 				oldCompany.Name = name;
 				oldCompany.Address = address;
 				oldCompany.OpeningHours = openingHours;
-			}
-		}
-
-		public void EditBranch(string name, string address, string openingHours, BranchType type)
-		{
-			var oldBranch = MySelectedBranch;
-			if(oldBranch != null)
-			{
-				oldBranch.Name = name;
-				oldBranch.Address = address;
-				oldBranch.OpeningHours = openingHours;
-				oldBranch.Type = type;
 			}
 		}
 

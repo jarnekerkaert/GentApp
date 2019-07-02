@@ -25,8 +25,8 @@ namespace GentApp.Views
 		public MyCompanyPage()
 		{
 			this.InitializeComponent();
-			this.DataContext = MainPage.ViewModel.MyCompany;
-			Branches = MainPage.ViewModel.Branches;
+			this.DataContext = MainPage.CompaniesViewModel.MyCompany;
+			Branches = MainPage.BranchesViewModel.Branches;
 		}
 
 		private void SymbolIcon_Tapped(object sender, TappedRoutedEventArgs e)
@@ -43,7 +43,7 @@ namespace GentApp.Views
 		private void ListView_ItemClick(object sender, ItemClickEventArgs e)
 		{
 			var selectedBranch = e.ClickedItem as Branch;
-			MainPage.ViewModel.MySelectedBranch = selectedBranch;
+			MainPage.BranchesViewModel.MySelectedBranch = selectedBranch;
 			Frame.Navigate(typeof(EditBranchPage));
 
 		}
