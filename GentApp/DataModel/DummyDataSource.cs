@@ -21,5 +21,12 @@ namespace GentApp.DataModel
 			new Branch(){Id=5, Name="Branch B", Address="straat 2", Type=BranchType.SHOESSTORE, OpeningHours="SOMS"},
 			new Branch(){Id=6, Name="Branch C", Address="straat3", Type=BranchType.OTHER, OpeningHours="NOOIT"}
 		};
+
+		public static List<Promotion> Promotions { get; set; } = new List<Promotion>()
+		{
+			new Promotion(){Id=7, StartDate=DateTime.Now, EndDate = DateTime.Now, Title = "Big promotion for July!", Description = "Buy one item and get a second for free - only during July" },
+			new Promotion(){Id=8, StartDate=DateTime.Now, EndDate = DateTime.Now, Title = "Big promotion for August!", Description = "Buy two items and get a third for free - only during August" },
+			new Promotion(){Id=9, StartDate=DateTime.Now, EndDate = DateTime.Now, Title = "Big promotion for September!", Description = "Buy three items and get a fourth for free - only during September" }
+		};
 	}
 }

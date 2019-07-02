@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GentApp.DataModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,9 +23,22 @@ namespace GentApp.Views
 	/// </summary>
 	public sealed partial class MyPromotionsPage : Page
 	{
+		public Company MyCompany { get; set; }
+		public List<Promotion> Promotions { get; set; }
+
+
 		public MyPromotionsPage()
 		{
 			this.InitializeComponent();
+			MyCompany = MainPage.ViewModel.MyCompany;
+			horStackPanel.DataContext = MyCompany;
+			Promotions = DummyDataSource.Promotions;
+			AmountPromotionsTextBlock.Text = Promotions.Count.ToString();
+		}
+
+		private void PromotionsListView_ItemClick(object sender, ItemClickEventArgs e)
+		{
+
 		}
 	}
 }
