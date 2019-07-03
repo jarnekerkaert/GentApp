@@ -91,13 +91,19 @@ namespace GentApp.Views
 
 		private async void DeleteIcon_Tapped(object sender, TappedRoutedEventArgs e)
 		{
-			DeleteBranchDialog deleteBranchDialog = new DeleteBranchDialog();
+			ContentDialog deleteBranchDialog = new ContentDialog()
+			{
+				Title = "Delete a branch",
+				Content = "Are you sure you want to delete this branch?",
+				PrimaryButtonText = "Yes",
+				SecondaryButtonText = "No"
+			};
 			ContentDialogResult result = await deleteBranchDialog.ShowAsync();
 			if (result == ContentDialogResult.Primary) {
 				MainPage.BranchesViewModel.DeleteBranch();
 				Frame.Navigate(typeof(MyCompanyPage));
 			}
-			//else if(result == ContentDialogResult.Secondary){ /* else do Secondary logic */}
+			//else if(result == ContentDialogResult.Secondary){ /* ... */}
 		}
 	}
 }

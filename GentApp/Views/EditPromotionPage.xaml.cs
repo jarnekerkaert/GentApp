@@ -76,5 +76,23 @@ namespace GentApp.Views
 				Frame.Navigate(typeof(MyPromotionsPage));
 			}
 		}
+
+		private async void DeleteIcon_Tapped(object sender, TappedRoutedEventArgs e)
+		{
+			ContentDialog deletePromotionDialog = new ContentDialog()
+			{
+				Title = "Delete a promotion",
+				Content = "Are you sure you want to delete this promotion?",
+				PrimaryButtonText = "Yes",
+				SecondaryButtonText = "No"
+			};
+			ContentDialogResult result = await deletePromotionDialog.ShowAsync();
+			if (result == ContentDialogResult.Primary)
+			{
+				MainPage.BranchViewModel.DeletePromotion();
+				Frame.Navigate(typeof(MyPromotionsPage));
+			}
+			//else if(result == ContentDialogResult.Secondary){ /* ... */}
+		}
 	}
 }

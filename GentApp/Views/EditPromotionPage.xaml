@@ -33,6 +33,9 @@
                 Foreground="Red" />
 		<TextBlock x:Name="DateValidationErrorTextBlock" HorizontalAlignment="Center"
                 Foreground="Red" />
-		<SymbolIcon Symbol="Save" IsTapEnabled="True" Tapped="SymbolIcon_Tapped" Margin="0,20,0,0"/>
+		<StackPanel Orientation="Horizontal" Margin="0,20,0,0" HorizontalAlignment="Center">
+			<SymbolIcon Symbol="Delete" IsTapEnabled="False" Tapped="DeleteIcon_Tapped" Margin="0,0,30,0" />
+			<SymbolIcon Symbol="Save" IsTapEnabled="True" Tapped="SymbolIcon_Tapped"/>
+		</StackPanel>
 	</StackPanel>
 </Page>

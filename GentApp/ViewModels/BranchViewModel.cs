@@ -50,6 +50,11 @@ namespace GentApp.ViewModels
 			}
 		}
 
+		public void DeletePromotion()
+		{
+			this.Promotions.Remove(MySelectedPromotion);
+		}
+
 		private void NotifyPropertyChanged(String propertyName)
 		{
 			if (null != PropertyChanged)
