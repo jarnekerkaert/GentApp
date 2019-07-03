@@ -26,6 +26,9 @@
 		<TextBox Width="200" x:Name="OpeningHours" Header= "Opening hours" MaxLength="300" InputScope="Text" Text="{Binding OpeningHours}"></TextBox>
 		<TextBlock x:Name="OpeningHoursValidationErrorTextBlock" HorizontalAlignment="Center"
                 Foreground="Red" />
-		<SymbolIcon Symbol="Save" IsTapEnabled="True" Tapped="SymbolIcon_Tapped" Margin="0,20,0,0"/>
+		<StackPanel Orientation="Horizontal" Margin="0,20,0,0" HorizontalAlignment="Center">
+			<SymbolIcon Symbol="Delete" IsTapEnabled="False" Tapped="DeleteIcon_Tapped" Margin="0,0,30,0" />
+			<SymbolIcon Symbol="Save" IsTapEnabled="True" Tapped="SymbolIcon_Tapped"/>
+		</StackPanel>
 	</StackPanel>
 </Page>

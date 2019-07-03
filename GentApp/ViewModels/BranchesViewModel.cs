@@ -63,6 +63,11 @@ namespace GentApp.ViewModels
 			}
 		}
 
+		public void DeleteBranch()
+		{
+			this.Branches.Remove(MySelectedBranch);
+		}
+
 		private void NotifyPropertyChanged(String propertyName)
 		{
 			if (null != PropertyChanged)

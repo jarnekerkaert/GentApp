@@ -88,5 +88,16 @@ namespace GentApp.Views
 				Frame.Navigate(typeof(MyCompanyPage));
 			}
 		}
+
+		private async void DeleteIcon_Tapped(object sender, TappedRoutedEventArgs e)
+		{
+			DeleteBranchDialog deleteBranchDialog = new DeleteBranchDialog();
+			ContentDialogResult result = await deleteBranchDialog.ShowAsync();
+			if (result == ContentDialogResult.Primary) {
+				MainPage.BranchesViewModel.DeleteBranch();
+				Frame.Navigate(typeof(MyCompanyPage));
+			}
+			//else if(result == ContentDialogResult.Secondary){ /* else do Secondary logic */}
+		}
 	}
 }

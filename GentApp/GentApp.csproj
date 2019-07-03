@@ -121,6 +121,9 @@
     <Compile Include="Views\CompanyDetailsPage.xaml.cs">
       <DependentUpon>CompanyDetailsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\DeleteBranchDialog.xaml.cs">
+      <DependentUpon>DeleteBranchDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EditBranchPage.xaml.cs">
       <DependentUpon>EditBranchPage.xaml</DependentUpon>
     </Compile>
@@ -191,6 +194,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CompanyDetailsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DeleteBranchDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
