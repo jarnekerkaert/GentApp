@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
-namespace GentApp.DataModel {
-	public class Company {
+namespace GentApp.Models
+{
+    public class Company
+    {
 		public string Name { get; set; }
 		public string Address { get; set; }
 		public string OpeningHours { get; set; }
 		public int Id { get; set; }
-		public IEnumerable<Branch> branches { get; set; }
+		public IEnumerable<Branch> Branches { get; set; }
 
 		public Company(string name, string address, string openingHours) {
 			Name = name;
@@ -19,7 +17,6 @@ namespace GentApp.DataModel {
 		}
 
 		public Company() {
-
 		}
-	}
+    }
 }

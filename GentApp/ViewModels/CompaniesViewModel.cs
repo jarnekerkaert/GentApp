@@ -1,10 +1,12 @@
 ﻿using GentApp.DataModel;
 using GentApp.Helpers;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -54,7 +56,7 @@ namespace GentApp.ViewModels
 
 		private void SaveCompany(object p)
         {
-            this.Companies.Add(new Company()
+            Companies.Add(new Company()
             {
                 Name = p.ToString(),
                 Address = "Dummy adres",
