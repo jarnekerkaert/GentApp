@@ -48,11 +48,20 @@ namespace GentApp.ViewModels
 		public CompaniesViewModel()
         {
             Companies = new ObservableCollection<Company>(DummyDataSource.Companies);
+			loadCompanies();
 			MyCompany = DummyDataSource.Companies[2];
             SaveCompanyCommand = new RelayCommand((p) => SaveCompany(p));
         }
 
 		public event PropertyChangedEventHandler PropertyChanged;
+
+		private async void loadCompanies()
+		{
+			HttpClient client = new HttpClient();
+			var json = await client.GetStringAsync(new Uri("http://localhost:50957/api/companies"));
+			var list = JsonConvert.DeserializeObject<ObservableCollection<Company>>(json);
+			Companies = list;
+		}
 
 		private void SaveCompany(object p)
         {

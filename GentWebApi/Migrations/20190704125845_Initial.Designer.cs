@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GentWebApi.Migrations
 {
     [DbContext(typeof(GentDbContext))]
-    [Migration("20190626135932_Initial")]
+    [Migration("20190704125845_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,28 @@ namespace GentWebApi.Migrations
                 .HasAnnotation("ProductVersion", "2.1.11-servicing-32099")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            modelBuilder.Entity("GentApp.Models.Branch", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Address");
+
+                    b.Property<int>("CompanyId");
+
+                    b.Property<string>("Name");
+
+                    b.Property<string>("OpeningHours");
+
+                    b.Property<int>("Type");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.ToTable("Branch");
+                });
+
             modelBuilder.Entity("GentApp.Models.Company", b =>
                 {
                     b.Property<int>("Id")
@@ -29,13 +51,19 @@ namespace GentWebApi.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<string>("Openingsuren");
-
-                    b.Property<int>("Type");
+                    b.Property<string>("OpeningHours");
 
                     b.HasKey("Id");
 
                     b.ToTable("Companies");
+                });
+
+            modelBuilder.Entity("GentApp.Models.Branch", b =>
+                {
+                    b.HasOne("GentApp.Models.Company")
+                        .WithMany("Branches")
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
