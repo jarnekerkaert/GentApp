@@ -1,10 +1,12 @@
 ﻿using GentApp.DataModel;
 using GentApp.Helpers;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -51,7 +53,7 @@ namespace GentApp.ViewModels
 		//	this.Branches.Add(p as Branch);
 		//}
 
-		public void EditBranch(string name, string address, string openingHours, BranchType type)
+		public async void EditBranch(string name, string address, string openingHours, BranchType type)
 		{
 			var oldBranch = MySelectedBranch;
 			if (oldBranch != null)
@@ -61,6 +63,10 @@ namespace GentApp.ViewModels
 				oldBranch.OpeningHours = openingHours;
 				oldBranch.Type = type;
 			}
+
+			//var branchJson = JsonConvert.SerializeObject(oldBranch);
+			//HttpClient client = new HttpClient();
+			//var res = await client.PutAsync("http://localhost:63187/api/branches/" + MainPage.BranchesViewModel.MySelectedBranch.Id, new StringContent(branchJson, System.Text.Encoding.UTF8, "application/json"));
 		}
 
 		public void DeleteBranch()

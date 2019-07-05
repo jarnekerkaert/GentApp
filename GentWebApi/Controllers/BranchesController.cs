@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using GentApp.Models;
 using GentWebApi.Models;
@@ -30,6 +32,22 @@ namespace GentWebApi.Controllers
 		public IEnumerable<Promotion> GetPromotions(int id)
 		{
 			return _context.Promotions.Where(p => p.BranchId == id);
+		}
+
+		// PUT: api/branches/2
+		[HttpPut("{id}")]
+		public HttpResponseMessage Put(int id, [FromBody] Branch branch)
+		{
+			if (this.ModelState.IsValid)
+			{
+				_context.Branches.Update(branch);
+				_context.SaveChanges();
+				return new HttpResponseMessage(HttpStatusCode.OK);
+			}
+			else
+			{
+				return new HttpResponseMessage(HttpStatusCode.BadRequest);
+			}
 		}
 	}
 }
