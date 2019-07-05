@@ -44,7 +44,7 @@ namespace GentApp.ViewModels {
 				SendToast("Register", "Success");
 				log.Info("Register success");
 			} catch(Exception e) {
-				SendToast("Register", e.ToString());
+				SendToast("Register", e.Message);
 				log.Error("ERROR " + e.ToString());
 			}
 		}

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using GentApp.Models;
 
 using GentWebApi.Models;
-
+using MetroLog;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +19,7 @@ namespace GentWebApi.Controllers {
 	public class AccountController : ControllerBase {
 		private UserManager<User> _userManager;
 		private SignInManager<User> _signInManager;
+		private ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<AccountController>();
 
 		public AccountController(UserManager<User> userManager, SignInManager<User> signInManager) {
 			_userManager = userManager;
@@ -55,7 +56,8 @@ namespace GentWebApi.Controllers {
 				return Created(locationHeader, user);
 			}
 
-			return GetErrorResult(result);
+			log.Error(result.Errors.FirstOrDefault().Description);
+			return BadRequest(result.Errors.FirstOrDefault().Description);
 		}
 
 		// PUT: api/Account/5
@@ -66,20 +68,6 @@ namespace GentWebApi.Controllers {
 		// DELETE: api/ApiWithActions/5
 		[HttpDelete("{id}")]
 		public void Delete(int id) {
-		}
-
-		private IActionResult GetErrorResult(IdentityResult result) {
-			if ( !result.Succeeded ) {
-
-				if ( ModelState.IsValid ) {
-					// No ModelState errors are available to send, so just return an empty BadRequest.
-					return BadRequest("bad");
-				}
-
-				return BadRequest(ModelState);
-			}
-
-			return null;
 		}
 	}
 }

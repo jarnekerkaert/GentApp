@@ -105,6 +105,7 @@
     <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
     <Compile Include="Services\AccountService.cs" />
+    <Compile Include="Services\CompanyService.cs" />
     <Compile Include="ViewModels\AccountViewModel.cs" />
     <Compile Include="ViewModels\CompaniesViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />

@@ -9,15 +9,19 @@ using System.Threading.Tasks;
 
 using GentApp.DataModel;
 using GentApp.Helpers;
-
+using GentApp.Services;
+using MetroLog;
 using Newtonsoft.Json;
 
 namespace GentApp.ViewModels
 {
     public class CompaniesViewModel : INotifyPropertyChanged
 	{
-        public ObservableCollection<Company> Companies { get; set; }
+		private ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<CompaniesViewModel>();
+		public ObservableCollection<Company> Companies { get; set; }
 		public ObservableCollection<Branch> Branches { get; set; }
+
+		private readonly CompanyService companyService = new CompanyService();
 
 		private Company mySelectedCompany;
 		public Company MySelectedCompany
@@ -66,12 +70,16 @@ namespace GentApp.ViewModels
 
 		public CompaniesViewModel()
         {
-            Companies = new ObservableCollection<Company>(DummyDataSource.Companies);
+            RetrieveCompanies();
 			Branches = new ObservableCollection<Branch>(DummyDataSource.Branches);
 			MyCompany = DummyDataSource.Companies[2];
             SaveCompanyCommand = new RelayCommand((p) => SaveCompany(p));
 			SaveBranchCommand = new RelayCommand((p) => SaveBranch(p));
         }
+
+		public async void RetrieveCompanies() {
+			Companies = new ObservableCollection<Company>(await companyService.GetAll());
+		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -93,12 +101,12 @@ namespace GentApp.ViewModels
 			//	Address = "Dummy adres",
 			//	OpeningHours = "24/7"
 			//});
-			this.Branches.Add(p as Branch);
+			Branches.Add(p as Branch);
 		}
 
 		public void SaveBranch(Branch newBranch)
 		{
-			this.Branches.Add(newBranch);
+			Branches.Add(newBranch);
 		}
 
 		public void EditCompany(int companyId, Company updatedCompany)
@@ -110,8 +118,7 @@ namespace GentApp.ViewModels
 		}
 
 		private void NotifyPropertyChanged(String propertyName) {
-			if (null != PropertyChanged)
-				PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }

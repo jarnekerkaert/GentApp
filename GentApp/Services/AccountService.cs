@@ -12,7 +12,7 @@ namespace GentApp.Services
 {
     public class AccountService
     {
-		private readonly string apiUrl= "http://localhost:50957/api";
+		private readonly string apiUrl= "http://localhost:50957/api/account";
 		private HttpClient HttpClient;
 
 		public AccountService() {
@@ -20,7 +20,7 @@ namespace GentApp.Services
 		}
 
 		public async Task Register(RegisterModel content) {
-			using ( var request = new HttpRequestMessage(HttpMethod.Post, apiUrl + "/account") ) {
+			using ( var request = new HttpRequestMessage(HttpMethod.Post, apiUrl) ) {
 				var json = JsonConvert.SerializeObject(content);
 				using ( var stringContent = new StringContent(json, Encoding.UTF8, "application/json") ) {
 					request.Content = stringContent;
@@ -35,8 +35,7 @@ namespace GentApp.Services
 		}
 
 		public async Task<string> GetUser() {
-			HttpClient.DefaultRequestHeaders.UserAgent.Clear();
-			HttpResponseMessage response = await HttpClient.GetAsync(apiUrl + "/account");
+			HttpResponseMessage response = await HttpClient.GetAsync(apiUrl);
 			return response.Content.ToString();
 		}
 	}
