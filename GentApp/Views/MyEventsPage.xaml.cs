@@ -13,15 +13,18 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
+// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
+
 namespace GentApp.Views
 {
-	public sealed partial class BranchDetailsPage : Page
+	/// <summary>
+	/// An empty page that can be used on its own or navigated to within a Frame.
+	/// </summary>
+	public sealed partial class MyEventsPage : Page
 	{
-		public BranchDetailsPage()
+		public MyEventsPage()
 		{
 			this.InitializeComponent();
-			this.DataContext = MainPage.BranchesViewModel.MySelectedBranch;
 		}
-
 	}
 }

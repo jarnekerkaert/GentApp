@@ -18,8 +18,10 @@
             <NavigationView.MenuItems>
                 <NavigationViewItem Tag="Companies_Page" Content="Companies" x:Name="Companies" Icon="List" />
                 <NavigationViewItem Tag="MyCompany_Page" Content="Your Company" x:Name="MyCompany" Icon="Edit" />
-                <NavigationViewItem Tag="AddBranch_Page" Content="Add a branch" x:Name="AddBranch" Icon="Add" />
-                <NavigationViewItem Tag="Logout" Content="Logout" x:Name="Logout" Icon="Import"/>
+				<NavigationViewItem Tag="AddBranch_Page" Content="Add a branch" x:Name="AddBranch" Icon="Add" />
+				<NavigationViewItem Tag="Promotions_Page" Content="Manage promotions" x:Name="Promotions" Icon="Emoji2" />
+				<NavigationViewItem Tag="Events_Page" Content="Manage events" x:Name="Events" Icon="Calendar" />
+				<NavigationViewItem Tag="Logout" Content="Logout" x:Name="Logout" Icon="Import"/>
             </NavigationView.MenuItems>
             <Frame x:Name="ContentFrame">
                 <Frame.ContentTransitions>

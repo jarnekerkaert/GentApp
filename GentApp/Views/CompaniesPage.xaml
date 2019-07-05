@@ -18,6 +18,8 @@
 				<AutoSuggestBox PlaceholderText="Search a company" QueryIcon="Find" Width="200" />
 			</StackPanel>
 
+			<ProgressRing x:Name="progressCompanies" HorizontalAlignment="Left" Margin="5,10,0,0" />
+
 			<ListView ItemsSource="{x:Bind Companies}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick" x:Name="companiesListView">
 				<ListView.ItemTemplate>
 					<DataTemplate x:DataType="local:Company">

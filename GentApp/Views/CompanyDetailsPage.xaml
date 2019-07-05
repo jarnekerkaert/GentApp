@@ -18,6 +18,8 @@
 		<TextBlock FontWeight="Bold">Opening hours:</TextBlock>
 		<TextBlock Text="{Binding OpeningHours, TargetNullValue='Empty'}"></TextBlock>
 
+		<ProgressRing x:Name="progressBranches" HorizontalAlignment="Left" Margin="5,10,0,0" />
+
 		<TextBlock Margin="0,50,0,0">Branches:</TextBlock>
 		<ListView ItemsSource="{x:Bind Branches}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick" x:Name="branchesListView">
 			<ListView.ItemTemplate>

@@ -1,0 +1,35 @@
+﻿<Page
+    x:Class="GentApp.Views.MyPromotionsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:local="using:GentApp.DataModel"
+	mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+	<StackPanel>
+		<StackPanel Orientation="Horizontal" x:Name="horStackPanel">
+			<TextBlock Text="Manage the promotions of "></TextBlock>
+			<TextBlock Text="{Binding Name}"></TextBlock>
+			<TextBlock Text=":" />
+		</StackPanel>
+		<StackPanel Orientation="Horizontal">
+			<TextBlock>Amount:</TextBlock>
+			<TextBlock x:Name="AmountPromotionsTextBlock"></TextBlock>
+		</StackPanel>
+		<TextBlock x:Name="NoPromotionsTextBlock"></TextBlock>
+		<TextBlock>Your current promotions:</TextBlock>
+		<ListView ItemsSource="{x:Bind Promotions}" IsItemClickEnabled="True" ItemClick="PromotionsListView_ItemClick" x:Name="promotionsListView">
+			<ListView.ItemTemplate>
+				<DataTemplate x:DataType="local:Promotion">
+					<StackPanel>
+						<TextBlock Text="{x:Bind Title}" />
+					</StackPanel>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+
+		</ListView>
+		<SymbolIcon Symbol="Add" IsTapEnabled="True" Tapped="AddIcon_Tapped"></SymbolIcon>
+	</StackPanel>
+</Page>
