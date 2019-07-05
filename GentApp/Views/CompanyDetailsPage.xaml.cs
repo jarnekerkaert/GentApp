@@ -1,10 +1,12 @@
 ﻿using GentApp.DataModel;
 using GentApp.ViewModels;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -25,6 +27,7 @@ namespace GentApp.Views
 		public CompanyDetailsPage()
         {
             this.InitializeComponent();
+			RetrieveBranches();
 			this.DataContext = MainPage.CompaniesViewModel.MySelectedCompany;
 			Branches = MainPage.BranchesViewModel.Branches;
 		}
@@ -35,6 +38,17 @@ namespace GentApp.Views
 			MainPage.BranchesViewModel.MySelectedBranch = selectedBranch;
 			Frame.Navigate(typeof(BranchDetailsPage));
 
+		}
+
+		private async void RetrieveBranches()
+		{
+			HttpClient client = new HttpClient();
+			progressBranches.IsActive = true;
+			var json = await client.GetStringAsync(new Uri("http://localhost:50957/api/companies/" + MainPage.CompaniesViewModel.MySelectedCompany.Id +"/branches"));
+			var list = JsonConvert.DeserializeObject<ObservableCollection<Branch>>(json);
+			branchesListView.ItemsSource = list;
+			progressBranches.IsActive = false;
+			MainPage.BranchesViewModel.Branches = list;
 		}
 	}
 }

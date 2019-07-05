@@ -37,7 +37,7 @@ namespace GentWebApi.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.ToTable("Branch");
+                    b.ToTable("Branches");
                 });
 
             modelBuilder.Entity("GentApp.Models.Company", b =>

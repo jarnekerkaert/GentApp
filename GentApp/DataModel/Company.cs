@@ -17,7 +17,7 @@ namespace GentApp.DataModel {
 		public int Id { get => _id; set => _id = value; }
 		public string OpeningHours { get => _openingHours; set => _openingHours = value; }
 
-		public IEnumerable<Branch> branches { get; set; }
+		public IEnumerable<Branch> Branches { get; set; }
 
 		public Company(string name, string address, string openingHours) {
 			Name = name;

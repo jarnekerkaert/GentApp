@@ -40,7 +40,7 @@ namespace GentApp.Views
 			Frame.Navigate(typeof(CompanyDetailsPage));
 		}
 
-		public async void RetrieveCompanies()
+		private async void RetrieveCompanies()
 		{
 			HttpClient client = new HttpClient();
 			progressCompanies.IsActive = true;

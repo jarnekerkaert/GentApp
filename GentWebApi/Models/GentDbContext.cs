@@ -12,5 +12,8 @@ namespace GentWebApi.Models {
 		}
 
 		public DbSet<Company> Companies { get; set; }
+
+		public DbSet<Branch> Branches { get; set; }
+
 	}
 }
