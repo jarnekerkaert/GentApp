@@ -60,7 +60,15 @@ namespace GentAppWebApi.Controllers {
 		public IEnumerable<Branch> GetBranches(int id)
 		{
 			//return _context.Companies.Find(id).Branches;
+			//return _context.Branches.Where(b => b.CompanyId == id).Include(b => b.Promotions);
 			return _context.Branches.Where(b => b.CompanyId == id);
 		}
+
+		//// GET: api/companies/5/promotions
+		//[HttpGet("{id}/promotions", Name = "GetPromotions")]
+		//public IEnumerable<Promotion> GetPromotions(int id)
+		//{
+		//	return _context.Promotions.Where(b => b.CompanyId == id);
+		//}
 	}
 }

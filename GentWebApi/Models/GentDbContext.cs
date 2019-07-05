@@ -15,5 +15,7 @@ namespace GentWebApi.Models {
 
 		public DbSet<Branch> Branches { get; set; }
 
+		public DbSet<Promotion> Promotions { get; set; }
+
 	}
 }

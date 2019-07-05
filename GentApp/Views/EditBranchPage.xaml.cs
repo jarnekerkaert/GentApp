@@ -105,5 +105,10 @@ namespace GentApp.Views
 			}
 			//else if(result == ContentDialogResult.Secondary){ /* ... */}
 		}
+
+		private void Promotions_Click(object sender, RoutedEventArgs e)
+		{
+			Frame.Navigate(typeof(BranchPromotionsPage));
+		}
 	}
 }

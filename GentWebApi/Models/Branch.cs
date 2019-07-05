@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GentWebApi.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ namespace GentApp.Models {
 		public string Address { get; set; }
 		public BranchType Type { get; set; }
 		public string OpeningHours { get; set; }
+		public IEnumerable<Promotion> Promotions { get; set; }
 
 		public Branch() {
 		}
