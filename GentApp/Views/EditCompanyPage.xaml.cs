@@ -21,7 +21,7 @@ namespace GentApp.Views
 		public EditCompanyPage()
 		{
 			this.InitializeComponent();
-			this.DataContext = MainPage.ViewModel.MyCompany;
+			this.DataContext = MainPage.CompaniesViewModel.MyCompany;
 		}
 
 		private void SymbolIcon_Tapped(object sender, TappedRoutedEventArgs e)
@@ -64,10 +64,8 @@ namespace GentApp.Views
 			}
 			if (isValid == true)
 			{
-				MainPage.ViewModel.MyCompany.Name = Name.Text;
-				MainPage.ViewModel.MyCompany.Address = Address.Text;
-				MainPage.ViewModel.MyCompany.OpeningHours = OpeningHours.Text;
-				//MainPage.ViewModel.EditCompany(MainPage.ViewModel.MyCompany.Id, )
+				MainPage.CompaniesViewModel.EditCompany(Name.Text, Address.Text, OpeningHours.Text);
+				Frame.Navigate(typeof(MyCompanyPage));
 			}
 		}
 	}

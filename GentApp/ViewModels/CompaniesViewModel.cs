@@ -66,7 +66,6 @@ namespace GentApp.ViewModels
 		}
 
 		public RelayCommand SaveCompanyCommand { get; set; }
-		public RelayCommand SaveBranchCommand { get; set; }
 
 		public CompaniesViewModel()
         {
@@ -74,7 +73,6 @@ namespace GentApp.ViewModels
 			Branches = new ObservableCollection<Branch>(DummyDataSource.Branches);
 			MyCompany = DummyDataSource.Companies[2];
             SaveCompanyCommand = new RelayCommand((p) => SaveCompany(p));
-			SaveBranchCommand = new RelayCommand((p) => SaveBranch(p));
         }
 
 		public async void RetrieveCompanies() {
@@ -82,6 +80,14 @@ namespace GentApp.ViewModels
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
+
+		public async void RetrieveCompanies()
+		{
+			HttpClient client = new HttpClient();
+			var json = await client.GetStringAsync(new Uri("http://localhost:50957/api/companies"));
+			var list = JsonConvert.DeserializeObject<ObservableCollection<Company>>(json);
+			Companies = list;
+		}
 
 		private void SaveCompany(object p)
         {
@@ -93,28 +99,20 @@ namespace GentApp.ViewModels
 			});
         }
 
-		private void SaveBranch(object p)
+		public void EditCompany(string name, string address, string openingHours)
 		{
-			//this.Branches.Add(new Branch()
-			//{
-			//	Name = p.ToString(),
-			//	Address = "Dummy adres",
-			//	OpeningHours = "24/7"
-			//});
-			Branches.Add(p as Branch);
+			// var oldCompany = Companies.Where(x => x.Id == companyId).First();
+			var oldCompany = MyCompany;
+			if (oldCompany != null)
+			{
+				oldCompany.Name = name;
+				oldCompany.Address = address;
+				oldCompany.OpeningHours = openingHours;
+			}
 		}
 
-		public void SaveBranch(Branch newBranch)
-		{
+		public void SaveBranch(Branch newBranch) {
 			Branches.Add(newBranch);
-		}
-
-		public void EditCompany(int companyId, Company updatedCompany)
-		{
-			var oldCompany = Companies.Where(x => x.Id == companyId).First();
-			oldCompany.Name = updatedCompany.Name;
-			oldCompany.Address = updatedCompany.Address;
-			oldCompany.OpeningHours = updatedCompany.OpeningHours;
 		}
 
 		private void NotifyPropertyChanged(String propertyName) {

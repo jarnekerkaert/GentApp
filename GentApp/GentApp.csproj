@@ -100,10 +100,13 @@
     <Compile Include="DataModel\Company.cs" />
     <Compile Include="DataModel\DTO\RegisterModel.cs" />
     <Compile Include="DataModel\DummyDataSource.cs" />
+    <Compile Include="DataModel\Promotion.cs" />
     <Compile Include="DataModel\RoleType.cs" />
     <Compile Include="DataModel\User.cs" />
     <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
+    <Compile Include="ViewModels\BranchesViewModel.cs" />
+    <Compile Include="ViewModels\BranchViewModel.cs" />
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\CompanyService.cs" />
     <Compile Include="ViewModels\AccountViewModel.cs" />
@@ -112,8 +115,14 @@
     <Compile Include="Views\AddBranchPage.xaml.cs">
       <DependentUpon>AddBranchPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\AddPromotionPage.xaml.cs">
+      <DependentUpon>AddPromotionPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\BranchDetailsPage.xaml.cs">
       <DependentUpon>BranchDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BranchPromotionsPage.xaml.cs">
+      <DependentUpon>BranchPromotionsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CompaniesPage.xaml.cs">
       <DependentUpon>CompaniesPage.xaml</DependentUpon>
@@ -121,14 +130,26 @@
     <Compile Include="Views\CompanyDetailsPage.xaml.cs">
       <DependentUpon>CompanyDetailsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EditBranchPage.xaml.cs">
+      <DependentUpon>EditBranchPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EditCompanyPage.xaml.cs">
       <DependentUpon>EditCompanyPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditPromotionPage.xaml.cs">
+      <DependentUpon>EditPromotionPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MyCompanyPage.xaml.cs">
       <DependentUpon>MyCompanyPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MyEventsPage.xaml.cs">
+      <DependentUpon>MyEventsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MyPromotionsPage.xaml.cs">
+      <DependentUpon>MyPromotionsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RegisterClientPage.xaml.cs">
       <DependentUpon>RegisterClientPage.xaml</DependentUpon>
@@ -169,9 +190,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\AddPromotionPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\BranchDetailsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BranchPromotionsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\CompaniesPage.xaml">
       <SubType>Designer</SubType>
@@ -181,7 +210,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\EditBranchPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\EditCompanyPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditPromotionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -196,6 +233,14 @@
     <Page Include="Views\RegisterClientPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MyEventsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MyPromotionsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\RegisterCompanyPage.xaml">
       <SubType>Designer</SubType>

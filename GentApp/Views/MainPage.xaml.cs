@@ -29,10 +29,14 @@ namespace GentApp
         public MainPage()
         {
             this.InitializeComponent();
-			ViewModel = new CompaniesViewModel();
+			CompaniesViewModel = new CompaniesViewModel();
+			BranchesViewModel = new BranchesViewModel();
+			BranchViewModel = new BranchViewModel();
 		}
 
-		public static CompaniesViewModel ViewModel { get; set; }
+		public static CompaniesViewModel CompaniesViewModel { get; set; }
+		public static BranchesViewModel BranchesViewModel { get; set; }
+		public static BranchViewModel BranchViewModel { get; set; }
 
 		private void NavView_OnItemInvoked(
       Windows.UI.Xaml.Controls.NavigationView sender,
@@ -72,11 +76,13 @@ namespace GentApp
             }
         }
 
-        private readonly List<(string Tag, Type Page)> _pages = new List<(string Tag, Type Page)>
-        {
-            ("Companies", typeof(CompaniesPage)),
-            ("Add a branch", typeof(AddBranchPage)),
-            ("Your Company", typeof(MyCompanyPage)),
+		private readonly List<(string Tag, Type Page)> _pages = new List<(string Tag, Type Page)>
+		{
+			("Companies", typeof(CompaniesPage)),
+			("Your Company", typeof(MyCompanyPage)),
+			("Add a branch", typeof(AddBranchPage)),
+			("Manage promotions", typeof(MyPromotionsPage)),
+			("Manage events", typeof(MyEventsPage)),
             ("Logout",typeof(LoginPage))
         };
 
