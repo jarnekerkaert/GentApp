@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace GentWebApi.Models {
-	public class GentDbContext : IdentityDbContext<User> {
+	public class GentDbContext : DbContext {
 		public GentDbContext(DbContextOptions<GentDbContext> options)
 				: base(options) {
 		}
@@ -19,6 +19,8 @@ namespace GentWebApi.Models {
 		public DbSet<Branch> Branches { get; set; }
 
 		public DbSet<Promotion> Promotions { get; set; }
+
+		public DbSet<User> Users { get; set; }
 
 	}
 }

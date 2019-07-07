@@ -81,14 +81,6 @@ namespace GentApp.ViewModels
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		public async void RetrieveCompanies()
-		{
-			HttpClient client = new HttpClient();
-			var json = await client.GetStringAsync(new Uri("http://localhost:50957/api/companies"));
-			var list = JsonConvert.DeserializeObject<ObservableCollection<Company>>(json);
-			Companies = list;
-		}
-
 		private void SaveCompany(object p)
         {
             Companies.Add(new Company()
@@ -115,7 +107,7 @@ namespace GentApp.ViewModels
 			Branches.Add(newBranch);
 		}
 
-		private void NotifyPropertyChanged(String propertyName) {
+		private void NotifyPropertyChanged(string propertyName) {
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}

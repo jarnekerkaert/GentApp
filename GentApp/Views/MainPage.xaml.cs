@@ -28,7 +28,7 @@ namespace GentApp
     {
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 			CompaniesViewModel = new CompaniesViewModel();
 			BranchesViewModel = new BranchesViewModel();
 			BranchViewModel = new BranchViewModel();
@@ -70,7 +70,7 @@ namespace GentApp
             var preNavPageType = ContentFrame.CurrentSourcePageType;
 
             // Only navigate if the selected page isn't currently loaded.
-            if (!(_page is null) && !Type.Equals(preNavPageType, _page))
+            if (!(_page is null) && !Equals(preNavPageType, _page))
             {
                 ContentFrame.Navigate(_page, null, null);
             }

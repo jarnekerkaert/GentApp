@@ -10,6 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\AccountController.cs" />
+    <Compile Remove="Models\UserRole.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MetroLog" Version="1.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />

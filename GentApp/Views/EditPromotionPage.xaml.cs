@@ -20,8 +20,8 @@ namespace GentApp.Views
 	{
 		public EditPromotionPage()
 		{
-			this.InitializeComponent();
-			this.DataContext = MainPage.BranchViewModel.MySelectedPromotion;
+			InitializeComponent();
+			DataContext = MainPage.BranchViewModel.MySelectedPromotion;
 			StartDatePicker.Date = MainPage.BranchViewModel.MySelectedPromotion.StartDate;
 			EndDatePicker.Date = MainPage.BranchViewModel.MySelectedPromotion.EndDate;
 		}

@@ -10,19 +10,20 @@ using Microsoft.AspNetCore.Identity;
 
 namespace GentApp.Models
 {
-    public class User : IdentityUser
+    public class User
     {
         public User(){
 
         }
 
-        public User(string userName)
-			: base(userName) {
+        public User(string firstName) {
+			Firstname = firstName;
 		}
 		
+		public string Id { get; set; }
         public string Firstname { get; set; }
 		public string Lastname { get; set; }
-		public string CompanyId { get; set; }
-		internal UserRole Role { get; set; }
+		public Company Company { get; set; }
+		internal RoleType Role { get; set; }
 	}
 }

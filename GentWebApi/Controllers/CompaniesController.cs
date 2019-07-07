@@ -21,10 +21,6 @@ namespace GentAppWebApi.Controllers {
 
 		public CompaniesController(GentDbContext context) {
 			_context = context;
-			if (_context.Companies.Count() == 0) {
-				_context.Companies.Add(new Company { Name = "TasteIt" });
-				_context.SaveChanges();
-			}
 		}
 
 		// GET: api/Companies
@@ -36,14 +32,30 @@ namespace GentAppWebApi.Controllers {
 
 		// GET: api/Companies/5
 		[HttpGet("{id}", Name = "Get")]
-		public ActionResult<Company> Get(int id) {
-			return _context.Companies.Find(id);
+		public ActionResult<Company> Get(string id) {
+			if ( ModelState.IsValid ) {
+				return _context
+				.Companies
+				.Find(id);
+			}
+			else {
+				return NotFound();
+			}
 		}
 
 		// POST: api/Companies
 		[HttpPost]
-		public void Post([FromBody] Company company) {
-			_context.Companies.Add(company);
+		public IActionResult Post([FromBody] Company company) {
+			if ( ModelState.IsValid ) {
+				_context
+				.Companies
+				.Add(company);
+				_context.SaveChanges();
+				return Created(company.Id, company);
+			}
+			else {
+				return BadRequest();
+			}
 		}
 
 		// PUT: api/Companies/5
@@ -57,21 +69,5 @@ namespace GentAppWebApi.Controllers {
 		public void Delete([FromBody] Company company) {
 			_context.Companies.Remove(company);
 		}
-
-		// GET: api/companies/5/branches
-		[HttpGet("{id}/branches", Name = "GetBranches")]
-		public IEnumerable<Branch> GetBranches(int id)
-		{
-			//return _context.Companies.Find(id).Branches;
-			//return _context.Branches.Where(b => b.CompanyId == id).Include(b => b.Promotions);
-			return _context.Branches.Where(b => b.CompanyId == id);
-		}
-
-		//// GET: api/companies/5/promotions
-		//[HttpGet("{id}/promotions", Name = "GetPromotions")]
-		//public IEnumerable<Promotion> GetPromotions(int id)
-		//{
-		//	return _context.Promotions.Where(b => b.CompanyId == id);
-		//}
 	}
 }

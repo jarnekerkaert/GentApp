@@ -31,14 +31,14 @@ namespace GentWebApi {
 			services.AddDbContext<GentDbContext>(opt =>
 				opt.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
-			services.AddDefaultIdentity<User>(o => {
-				o.Password.RequireDigit = false;
-				o.Password.RequireLowercase = false;
-				o.Password.RequireNonAlphanumeric = false;
-				o.Password.RequireUppercase = false;
-				o.Password.RequiredLength = 2;
-			})
-				.AddEntityFrameworkStores<GentDbContext>();
+			//services.AddDefaultIdentity<User>(o => {
+			//	o.Password.RequireDigit = false;
+			//	o.Password.RequireLowercase = false;
+			//	o.Password.RequireNonAlphanumeric = false;
+			//	o.Password.RequireUppercase = false;
+			//	o.Password.RequiredLength = 2;
+			//})
+			//	.AddEntityFrameworkStores<GentDbContext>();
 
 		}
 
@@ -53,7 +53,7 @@ namespace GentWebApi {
 			}
 
 			//app.UseHttpsRedirection();
-			app.UseAuthentication();
+			//app.UseAuthentication();
 			app.UseMvc();
 		}
 	}

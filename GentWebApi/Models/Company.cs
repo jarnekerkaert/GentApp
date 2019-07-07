@@ -7,7 +7,7 @@ namespace GentApp.Models
 		public string Name { get; set; }
 		public string Address { get; set; }
 		public string OpeningHours { get; set; }
-		public int Id { get; set; }
+		public string Id { get; set; }
 		public IEnumerable<Branch> Branches { get; set; }
 
 		public Company(string name, string address, string openingHours) {

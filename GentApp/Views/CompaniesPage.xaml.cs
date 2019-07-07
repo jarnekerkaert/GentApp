@@ -29,12 +29,9 @@ namespace GentApp.Views
 		public ObservableCollection<Company> Companies { get; set; }
 		public CompaniesPage()
         {
-            this.InitializeComponent();
-			RetrieveCompanies();
-			//MainPage.CompaniesViewModel.RetrieveCompanies();
+            InitializeComponent();
 			var _enumval = Enum.GetValues(typeof(BranchType));
 			companyTypeComboBox.ItemsSource = _enumval;
-			//Companies = MainPage.CompaniesViewModel.Companies;
 		}
 
 		private void ListView_ItemClick(object sender, ItemClickEventArgs e)
@@ -42,17 +39,6 @@ namespace GentApp.Views
 			var selectedCompany = e.ClickedItem as Company;
 			MainPage.CompaniesViewModel.MySelectedCompany = selectedCompany;
 			Frame.Navigate(typeof(CompanyDetailsPage));
-		}
-
-		private async void RetrieveCompanies()
-		{
-			HttpClient client = new HttpClient();
-			progressCompanies.IsActive = true;
-			var json = await client.GetStringAsync(new Uri("http://localhost:50957/api/companies"));
-			var list = JsonConvert.DeserializeObject<ObservableCollection<Company>>(json);
-			companiesListView.ItemsSource = list;
-			progressCompanies.IsActive = false;
-			MainPage.CompaniesViewModel.Companies = list;
 		}
 	}
 }

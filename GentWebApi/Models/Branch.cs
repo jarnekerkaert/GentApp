@@ -10,9 +10,9 @@ namespace GentApp.Models {
 	public class Branch
 	{
 		[Required]
-		public int Id { get; set; }
+		public string Id { get; set; }
 		[Required]
-		public int CompanyId { get; set; }
+		public string CompanyId { get; set; }
 		[Required]
 		public string Name { get; set; }
 		[Required]
@@ -24,7 +24,7 @@ namespace GentApp.Models {
 		public Branch() {
 		}
 
-		public Branch(string name, BranchType type, int Id, int companyId, string address, string openingHours) {
+		public Branch(string name, BranchType type, string id, string companyId, string address, string openingHours) {
 			Name = name;
 			Type = type;
 			CompanyId = companyId;

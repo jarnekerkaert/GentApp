@@ -28,10 +28,13 @@ namespace GentApp.ViewModels
 			//Register your services used here
 			SimpleIoc.Default.Register<INavigationService, NavigationService>();
 			SimpleIoc.Default.Register<AccountViewModel>();
-
+			SimpleIoc.Default.Register<CompaniesViewModel>();
+			SimpleIoc.Default.Register<BranchesViewModel>();
 		}
 
 		public AccountViewModel AccountViewModelInstance => ServiceLocator.Current.GetInstance<AccountViewModel>();
+		public CompaniesViewModel CompaniesViewModelInstance => ServiceLocator.Current.GetInstance<CompaniesViewModel>();
+		public BranchesViewModel BranchesViewModelInstance => ServiceLocator.Current.GetInstance<BranchesViewModel>();
 
 		// <summary>
 		// The cleanup.

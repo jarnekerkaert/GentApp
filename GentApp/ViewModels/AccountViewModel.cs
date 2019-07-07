@@ -6,7 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GentApp.DataModel;
-using GentApp.DataModel.DTO;
 using GentApp.Helpers;
 using GentApp.Services;
 using MetroLog;
@@ -31,14 +30,6 @@ namespace GentApp.ViewModels {
 		}
 
 		public async void Register() {
-			//string resultMessage = "";
-			//try {
-			//	await accountService.Register(RegisterModel);
-			//	SendToast("Register Client", resultMessage);
-			//} catch ( Exception e ) {
-			//	ErrorMessage = resultMessage;
-			//	SendToast("Register Client", ErrorMessage);
-			//}
 			try {
 				await accountService.Register(RegisterModel);
 				SendToast("Register", "Success");
