@@ -20,9 +20,8 @@ namespace GentWebApi.Controllers {
 		// GET api/<controller>/5
 		[HttpGet("{id}")]
 		public ActionResult<User> Get(string id) {
-			if ( ModelState.IsValid ) {
-				return _context
-				.Users
+			if (ModelState.IsValid) {
+				return _context.Users
 				.Find(id);
 			}
 			else {
@@ -33,10 +32,10 @@ namespace GentWebApi.Controllers {
 		// POST api/<controller>
 		[HttpPost]
 		public IActionResult Post([FromBody] User value) {
-			if ( ModelState.IsValid ) {
-				_context
-				.Users
+			if (ModelState.IsValid) {
+				_context.Users
 				.Add(value);
+				_context.SaveChanges();
 				return Ok();
 			}
 			else {
@@ -46,12 +45,30 @@ namespace GentWebApi.Controllers {
 
 		// PUT api/<controller>/5
 		[HttpPut("{id}")]
-		public void Put(int id, [FromBody]string value) {
+		public IActionResult Put([FromBody]User value) {
+			if (ModelState.IsValid) {
+				_context.Users
+					.Update(value);
+				_context.SaveChanges();
+				return Ok();
+			}
+			else {
+				return NotFound();
+			}
 		}
 
 		// DELETE api/<controller>/5
 		[HttpDelete("{id}")]
-		public void Delete(int id) {
+		public IActionResult Delete(User user) {
+			if (ModelState.IsValid) {
+				_context.Users
+					.Remove(user);
+				_context.SaveChanges();
+				return Ok();
+			}
+			else {
+				return NotFound();
+			}
 		}
 	}
 }

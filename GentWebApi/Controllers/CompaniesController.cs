@@ -33,10 +33,8 @@ namespace GentAppWebApi.Controllers {
 		// GET: api/Companies/5
 		[HttpGet("{id}", Name = "Get")]
 		public ActionResult<Company> Get(string id) {
-			if ( ModelState.IsValid ) {
-				return _context
-				.Companies
-				.Find(id);
+			if (ModelState.IsValid) {
+				return _context.Companies.Find(id);
 			}
 			else {
 				return NotFound();
@@ -46,9 +44,8 @@ namespace GentAppWebApi.Controllers {
 		// POST: api/Companies
 		[HttpPost]
 		public IActionResult Post([FromBody] Company company) {
-			if ( ModelState.IsValid ) {
-				_context
-				.Companies
+			if (ModelState.IsValid) {
+				_context.Companies
 				.Add(company);
 				_context.SaveChanges();
 				return Created(company.Id, company);
@@ -60,14 +57,28 @@ namespace GentAppWebApi.Controllers {
 
 		// PUT: api/Companies/5
 		[HttpPut("{id}")]
-		public void Put(int id, [FromBody] Company company) {
-			_context.Companies.Update(company);
+		public IActionResult Put([FromBody] Company company) {
+			if (ModelState.IsValid) {
+				_context.Companies.Update(company);
+				_context.SaveChanges();
+				return Ok();
+			}
+			else {
+				return NotFound();
+			}
 		}
 
 		// DELETE: api/Companies
 		[HttpDelete]
-		public void Delete([FromBody] Company company) {
-			_context.Companies.Remove(company);
+		public IActionResult Delete([FromBody] Company company) {
+			if (ModelState.IsValid) {
+				_context.Companies.Remove(company);
+				_context.SaveChanges();
+				return Ok();
+			}
+			else {
+				return NotFound();
+			}
 		}
 	}
 }

@@ -22,6 +22,12 @@ namespace GentWebApi.Controllers
 			_context = context;
 		}
 
+		// GET api/branches
+		[HttpGet("{id}")]
+		public ActionResult<IEnumerable<Branch>> Get() {
+			return _context.Branches;
+		}
+
 		// GET api/branches/2
 		[HttpGet("{id}")]
 		public ActionResult<Branch> Get(string id) {
@@ -37,7 +43,7 @@ namespace GentWebApi.Controllers
 
 		// PUT: api/branches/2
 		[HttpPut("{id}")]
-		public IActionResult Put(string id, [FromBody] Branch branch)
+		public IActionResult Put([FromBody] Branch branch)
 		{
 			if (ModelState.IsValid)
 			{
@@ -47,7 +53,7 @@ namespace GentWebApi.Controllers
 			}
 			else
 			{
-				return BadRequest();
+				return NotFound();
 			}
 		}
 	}
