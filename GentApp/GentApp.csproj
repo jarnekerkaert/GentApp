@@ -106,6 +106,7 @@
     <Compile Include="DataModel\RoleType.cs" />
     <Compile Include="DataModel\User.cs" />
     <Compile Include="Services\AccountService.cs" />
+    <Compile Include="Services\BranchService.cs" />
     <Compile Include="ViewModels\BranchesViewModel.cs" />
     <Compile Include="ViewModels\BranchViewModel.cs" />
     <Compile Include="Services\CompanyService.cs" />

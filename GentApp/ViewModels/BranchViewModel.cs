@@ -1,9 +1,11 @@
 ﻿using GentApp.DataModel;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -38,7 +40,7 @@ namespace GentApp.ViewModels
 			this.Promotions.Add(newPromotion);
 		}
 
-		public void EditPromotion(string title, string description, DateTime startdate, DateTime enddate)
+		public async void EditPromotion(string title, string description, DateTime startdate, DateTime enddate)
 		{
 			var oldPromotion = MySelectedPromotion;
 			if (oldPromotion != null)
@@ -48,6 +50,10 @@ namespace GentApp.ViewModels
 				oldPromotion.StartDate = startdate;
 				oldPromotion.EndDate = enddate;
 			}
+
+			var promotionJson = JsonConvert.SerializeObject(oldPromotion);
+			HttpClient client = new HttpClient();
+			var res = await client.PutAsync("http://localhost:50957/api/branches/" + MainPage.BranchesViewModel.MySelectedBranch.Id + "/promotions", new StringContent(promotionJson, System.Text.Encoding.UTF8, "application/json"));
 		}
 
 		public void DeletePromotion()

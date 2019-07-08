@@ -1,5 +1,7 @@
 ﻿using GentApp.DataModel;
 using GentApp.Helpers;
+using GentApp.Services;
+using MetroLog;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -14,6 +16,10 @@ namespace GentApp.ViewModels
 {
 	public class BranchesViewModel : INotifyPropertyChanged
 	{
+		private ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<BranchesViewModel>();
+
+		private readonly BranchService branchService = new BranchService();
+
 		public event PropertyChangedEventHandler PropertyChanged;
 		public ObservableCollection<Branch> Branches { get; set; }
 		//public RelayCommand SaveBranchCommand { get; set; }
@@ -33,8 +39,13 @@ namespace GentApp.ViewModels
 
 		public BranchesViewModel()
 		{
-			Branches = new ObservableCollection<Branch>(DummyDataSource.Branches);
+			//Branches = new ObservableCollection<Branch>(DummyDataSource.Branches);
 			//SaveBranchCommand = new RelayCommand((p) => SaveBranch(p as Branch));
+		}
+
+		public async void RetrieveBranchesOfCompany(string id)
+		{
+			Branches = new ObservableCollection<Branch>(await branchService.GetBranches(id));
 		}
 
 		public void AddBranch(Branch newBranch)
@@ -64,9 +75,9 @@ namespace GentApp.ViewModels
 				oldBranch.Type = type;
 			}
 
-			//var branchJson = JsonConvert.SerializeObject(oldBranch);
-			//HttpClient client = new HttpClient();
-			//var res = await client.PutAsync("http://localhost:50957/api/branches/" + MainPage.BranchesViewModel.MySelectedBranch.Id, new StringContent(branchJson, System.Text.Encoding.UTF8, "application/json"));
+			var branchJson = JsonConvert.SerializeObject(oldBranch);
+			HttpClient client = new HttpClient();
+			var res = await client.PutAsync("http://localhost:50957/api/branches/" + MainPage.BranchesViewModel.MySelectedBranch.Id, new StringContent(branchJson, System.Text.Encoding.UTF8, "application/json"));
 		}
 
 		public void DeleteBranch()

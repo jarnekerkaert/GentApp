@@ -33,10 +33,12 @@ namespace GentAppWebApi.Controllers {
 		// GET: api/Companies/5
 		[HttpGet("{id}", Name = "Get")]
 		public ActionResult<Company> Get(string id) {
-			if (ModelState.IsValid) {
+			if (_context.Companies.Find(id) != null)
+			{
 				return _context.Companies.Find(id);
 			}
-			else {
+			else
+			{
 				return NotFound();
 			}
 		}

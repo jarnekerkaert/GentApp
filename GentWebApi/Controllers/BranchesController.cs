@@ -31,12 +31,12 @@ namespace GentWebApi.Controllers
 		// GET api/branches/2
 		[HttpGet("{id}")]
 		public ActionResult<Branch> Get(string id) {
-			if ( ModelState.IsValid ) {
-				return _context
-				.Branches
-				.Find(id);
+			if (_context.Branches.Find(id) != null)
+			{
+				return _context.Branches.Find(id);
 			}
-			else {
+			else
+			{
 				return NotFound();
 			}
 		}
