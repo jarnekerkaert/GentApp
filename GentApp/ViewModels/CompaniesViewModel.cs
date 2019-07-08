@@ -19,19 +19,17 @@ namespace GentApp.ViewModels
 	{
 		private ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<CompaniesViewModel>();
 		public ObservableCollection<Company> Companies { get; set; }
-		public ObservableCollection<Branch> Branches { get; set; }
 
 		private readonly CompanyService companyService = new CompanyService();
 
-		private Company mySelectedCompany;
-		public Company MySelectedCompany
-		{
-			get { return mySelectedCompany; }
+		private Company selectedCompany;
+		public Company SelectedCompany {
+			get { return selectedCompany; }
 			set
 			{
-				if (value != mySelectedCompany)
+				if (value != selectedCompany)
 				{
-					mySelectedCompany = value;
+					selectedCompany = value;
 					NotifyPropertyChanged("MySelectedCompany");
 				}
 			}
@@ -70,9 +68,8 @@ namespace GentApp.ViewModels
 		public CompaniesViewModel()
         {
             RetrieveCompanies();
-			Branches = new ObservableCollection<Branch>(DummyDataSource.Branches);
 			MyCompany = DummyDataSource.Companies[2];
-            SaveCompanyCommand = new RelayCommand((p) => SaveCompany(p));
+            SaveCompanyCommand = new RelayCommand(SaveCompany);
         }
 
 		public async void RetrieveCompanies() {
@@ -103,8 +100,9 @@ namespace GentApp.ViewModels
 			}
 		}
 
-		public void SaveBranch(Branch newBranch) {
-			Branches.Add(newBranch);
+		public async void SaveBranch(Branch newBranch) {
+			SelectedCompany.Branches.Add(newBranch);
+			await companyService.Save(SelectedCompany);
 		}
 
 		private void NotifyPropertyChanged(string propertyName) {

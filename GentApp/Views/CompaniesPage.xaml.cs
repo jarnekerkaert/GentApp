@@ -9,9 +9,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
 
-using GentApp.DataModel;
-using GentApp.ViewModels;
-
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -26,18 +23,15 @@ namespace GentApp.Views
 {
     public sealed partial class CompaniesPage : Page
     {
-		public ObservableCollection<Company> Companies { get; set; }
 		public CompaniesPage()
         {
             InitializeComponent();
-			var _enumval = Enum.GetValues(typeof(BranchType));
-			companyTypeComboBox.ItemsSource = _enumval;
+			companyTypeComboBox.ItemsSource = Enum.GetValues(typeof(BranchType));
 		}
 
 		private void ListView_ItemClick(object sender, ItemClickEventArgs e)
 		{
-			var selectedCompany = e.ClickedItem as Company;
-			MainPage.CompaniesViewModel.MySelectedCompany = selectedCompany;
+			MainPage.CompaniesViewModel.MySelectedCompany = e.ClickedItem as Company;
 			Frame.Navigate(typeof(CompanyDetailsPage));
 		}
 	}
