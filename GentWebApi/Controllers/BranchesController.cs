@@ -41,10 +41,30 @@ namespace GentWebApi.Controllers
 			}
 		}
 
+		// POST: api/branches
+		[HttpPost]
+		public IActionResult Post([FromBody] Branch branch)
+		{
+			if (ModelState.IsValid)
+			{
+				_context.Branches.Add(branch);
+				_context.SaveChanges();
+				return Created(branch.Id, branch);
+			}
+			else
+			{
+				return BadRequest();
+			}
+		}
+
 		// PUT: api/branches/2
 		[HttpPut("{id}")]
-		public IActionResult Put([FromBody] Branch branch)
+		public IActionResult Put([FromBody] Branch branch, string id)
 		{
+			//if (_context.Branches.Find(id) == null)
+			//{
+			//	return NotFound();
+			//}
 			if (ModelState.IsValid)
 			{
 				_context.Branches.Update(branch);
@@ -62,6 +82,22 @@ namespace GentWebApi.Controllers
 		public IEnumerable<Promotion> GetPromotions(string id)
 		{
 			return _context.Promotions.Where(p => p.Branch.Id.Equals(id));
+		}
+
+		// DELETE: api/branches
+		[HttpDelete]
+		public IActionResult Delete([FromBody] Branch branch)
+		{
+			if (_context.Branches.Contains(branch))
+			{
+				_context.Branches.Remove(branch);
+				_context.SaveChanges();
+				return Ok();
+			}
+			else
+			{
+				return NotFound();
+			}
 		}
 	}
 }

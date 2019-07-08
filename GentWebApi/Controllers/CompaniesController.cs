@@ -73,7 +73,7 @@ namespace GentAppWebApi.Controllers {
 		// DELETE: api/Companies
 		[HttpDelete]
 		public IActionResult Delete([FromBody] Company company) {
-			if (ModelState.IsValid) {
+			if (_context.Companies.Contains(company)) {
 				_context.Companies.Remove(company);
 				_context.SaveChanges();
 				return Ok();
