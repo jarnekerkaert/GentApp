@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-
+using GalaSoft.MvvmLight.Ioc;
 using GentApp.DataModel;
 using GentApp.ViewModels;
 
@@ -27,8 +27,8 @@ namespace GentApp.Views
 		public MyCompanyPage()
 		{
 			InitializeComponent();
-			DataContext = MainPage.CompaniesViewModel.MyCompany;
-			Branches = MainPage.BranchesViewModel.Branches;
+			DataContext = SimpleIoc.Default.GetInstance<CompaniesViewModel>().MyCompany;
+			Branches = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches;
 		}
 
 		private void SymbolIcon_Tapped(object sender, TappedRoutedEventArgs e)
@@ -44,8 +44,7 @@ namespace GentApp.Views
 
 		private void ListView_ItemClick(object sender, ItemClickEventArgs e)
 		{
-			var selectedBranch = e.ClickedItem as Branch;
-			MainPage.BranchesViewModel.MySelectedBranch = selectedBranch;
+			SimpleIoc.Default.GetInstance<BranchesViewModel>().MySelectedBranch = e.ClickedItem as Branch;
 			Frame.Navigate(typeof(EditBranchPage));
 
 		}

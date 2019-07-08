@@ -27,11 +27,10 @@
 			<ProgressRing x:Name="progressCompanies" HorizontalAlignment="Left" Margin="5,10,0,0" />
 
 			<ListView ItemsSource="{Binding Path=Companies}" 
-					  SelectedItem="{Binding Path=SelectedCompany, Mode=TwoWay}"
-					  ItemClick="Companies_Click">
+					  SelectedItem="{Binding Path=SelectedCompany, Mode=TwoWay}">
 				<interactivity:Interaction.Behaviors>
 					<core:EventTriggerBehavior EventName="SelectionChanged">
-						<core:InvokeCommandAction Command="{Binding Path=ItemSelectedCommand}" />
+						<core:InvokeCommandAction Command="{Binding Path=CompanySelectedCommand}" />
 					</core:EventTriggerBehavior>
 				</interactivity:Interaction.Behaviors>
 				<ListView.ItemTemplate>
@@ -42,9 +41,7 @@
 						</StackPanel>
 					</DataTemplate>
 				</ListView.ItemTemplate>
-
 			</ListView>
-
 		</StackPanel>
     </ScrollViewer>
 </Page>

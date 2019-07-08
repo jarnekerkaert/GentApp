@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Ioc;
+using GentApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,7 +23,7 @@ namespace GentApp.Views
 		public EditCompanyPage()
 		{
 			InitializeComponent();
-			DataContext = MainPage.CompaniesViewModel.SelectedCompany;
+			DataContext = SimpleIoc.Default.GetInstance<CompaniesViewModel>().SelectedCompany;
 		}
 
 		private void SymbolIcon_Tapped(object sender, TappedRoutedEventArgs e)
@@ -64,7 +66,7 @@ namespace GentApp.Views
 			}
 			if (isValid)
 			{
-				MainPage.CompaniesViewModel.EditCompany(Name.Text, Address.Text, OpeningHours.Text);
+				SimpleIoc.Default.GetInstance<CompaniesViewModel>().EditCompany(Name.Text, Address.Text, OpeningHours.Text);
 				Frame.Navigate(typeof(MyCompanyPage));
 			}
 		}

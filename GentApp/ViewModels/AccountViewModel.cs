@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using GentApp.DataModel;
 using GentApp.Helpers;
 using GentApp.Services;
@@ -14,7 +15,7 @@ using Microsoft.Toolkit.Uwp.Notifications;
 using Windows.UI.Notifications;
 
 namespace GentApp.ViewModels {
-	public class AccountViewModel : ViewModelBase, INotifyPropertyChanged {
+	public class AccountViewModel : ViewModelBase {
 		private ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<AccountViewModel>();
 
 		public AccountService accountService;
@@ -22,21 +23,25 @@ namespace GentApp.ViewModels {
 		public RegisterModel RegisterModel { get; set; }
 		public string ErrorMessage { get; set; }
 
-		public RelayCommand RegisterCommand { get; set; }
-
 		public AccountViewModel() {
 			accountService = new AccountService();
-			RegisterCommand = new RelayCommand((u) => Register());
 		}
 
-		public async void Register() {
-			try {
-				await accountService.Register(RegisterModel);
-				SendToast("Register", "Success");
-				log.Info("Register success");
-			} catch(Exception e) {
-				SendToast("Register", e.Message);
-				log.Error("ERROR " + e.ToString());
+		private RelayCommand _registerCommand;
+
+		public RelayCommand RegisterCommand {
+			get {
+				return _registerCommand = new RelayCommand(async () => {
+					try {
+						await accountService.Register(RegisterModel);
+						SendToast("Register", "Success");
+						log.Info("Register success");
+					}
+					catch (Exception e) {
+						SendToast("Register", e.Message);
+						log.Error("ERROR " + e.ToString());
+					}
+				});
 			}
 		}
 

@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using GentApp.DataModel;
 using GentApp.Helpers;
 using GentApp.Services;
 using MetroLog;
-using Newtonsoft.Json;
 
 namespace GentApp.ViewModels {
 	public class CompaniesViewModel : ViewModelBase {
 		private readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<CompaniesViewModel>();
 		private readonly CompanyService companyService = new CompanyService();
+		private readonly INavigationService _navigationService;
+
+		public CompaniesViewModel(INavigationService navigationService) {
+			_navigationService = navigationService;
+			MyCompany = DummyDataSource.Companies[2];
+		}
 
 		private ObservableCollection<Company> _companies;
 		public ObservableCollection<Company> Companies {
@@ -56,36 +55,31 @@ namespace GentApp.ViewModels {
 			}
 		}
 
-		public RelayCommand SaveCompanyCommand { get; set; }
+		private RelayCommand _saveCompanyCommand;
+
+		public RelayCommand SaveCompanyCommand {
+			get {
+				return _saveCompanyCommand = new RelayCommand(() => Companies.Add(new Company() {
+					Name = SelectedCompany.Name,
+					Address = "Dummy adres",
+					OpeningHours = "24/7"
+				}));
+			}
+		}
 
 		private RelayCommand _companySelectedCommand;
 
 		public RelayCommand CompanySelectedCommand {
 			get {
-				_companySelectedCommand = new RelayCommand((_) => log.Info(SelectedCompany.Name + " selected"));
-				return _companySelectedCommand;
+				return _companySelectedCommand = new RelayCommand(() => _navigationService.NavigateTo("CompanyDetailsPage"));
 			}
 		}
+		private RelayCommand _branchSelectedCommand;
 
-		public RelayCommand BranchSelectedCommand { get; set; }
-
-
-		public CompaniesViewModel() {
-			RetrieveCompanies();
-			MyCompany = DummyDataSource.Companies[2];
-			SaveCompanyCommand = new RelayCommand(SaveCompany);
-		}
-
-		public async void RetrieveCompanies() {
-			Companies = new ObservableCollection<Company>(await companyService.GetAll());
-		}
-
-		private void SaveCompany(object p) {
-			Companies.Add(new Company() {
-				Name = p.ToString(),
-				Address = "Dummy adres",
-				OpeningHours = "24/7"
-			});
+		public RelayCommand BranchSelectedCommand {
+			get {
+				return _branchSelectedCommand = new RelayCommand(() => _navigationService.NavigateTo("BranchDetailsPage"));
+			}
 		}
 
 		public void EditCompany(string name, string address, string openingHours) {
@@ -107,7 +101,7 @@ namespace GentApp.ViewModels {
 
 		public RelayCommand LoadCommand {
 			get {
-				return _loadCommand ?? (_loadCommand = new RelayCommand(async (_) => Companies = new ObservableCollection<Company>(await companyService.GetAll())));
+				return _loadCommand ?? (_loadCommand = new RelayCommand(async () => Companies = new ObservableCollection<Company>(await companyService.GetAll())));
 			}
 		}
 	}
