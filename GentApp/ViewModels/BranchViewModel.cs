@@ -13,6 +13,8 @@ namespace GentApp.ViewModels
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
 
+
+
 		public ObservableCollection<Promotion> Promotions { get; set; }
 
 		private Promotion mySelectedPromotion;

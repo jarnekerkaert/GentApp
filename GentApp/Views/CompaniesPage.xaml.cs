@@ -28,10 +28,8 @@ namespace GentApp.Views
             InitializeComponent();
 			companyTypeComboBox.ItemsSource = Enum.GetValues(typeof(BranchType));
 		}
-
-		private void ListView_ItemClick(object sender, ItemClickEventArgs e)
-		{
-			MainPage.CompaniesViewModel.MySelectedCompany = e.ClickedItem as Company;
+		
+		private void Companies_Click(object sender, ItemClickEventArgs e) {
 			Frame.Navigate(typeof(CompanyDetailsPage));
 		}
 	}

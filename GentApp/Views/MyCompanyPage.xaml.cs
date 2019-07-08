@@ -26,8 +26,8 @@ namespace GentApp.Views
 
 		public MyCompanyPage()
 		{
-			this.InitializeComponent();
-			this.DataContext = MainPage.CompaniesViewModel.MyCompany;
+			InitializeComponent();
+			DataContext = MainPage.CompaniesViewModel.MyCompany;
 			Branches = MainPage.BranchesViewModel.Branches;
 		}
 
