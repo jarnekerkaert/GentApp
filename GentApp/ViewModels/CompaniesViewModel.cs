@@ -1,7 +1,4 @@
-﻿using GentApp.DataModel;
-using GentApp.Helpers;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -10,22 +7,30 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
+using GentApp.DataModel;
+using GentApp.Helpers;
+using GentApp.Services;
+using MetroLog;
+using Newtonsoft.Json;
+
 namespace GentApp.ViewModels
 {
     public class CompaniesViewModel : INotifyPropertyChanged
 	{
-        public ObservableCollection<Company> Companies { get; set; }
-		public ObservableCollection<Branch> Branches { get; set; }
+		private ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<CompaniesViewModel>();
+		public ObservableCollection<Company> Companies { get; set; }
 
-		private Company mySelectedCompany;
-		public Company MySelectedCompany
-		{
-			get { return mySelectedCompany; }
+		private readonly CompanyService companyService = new CompanyService();
+
+		private Company selectedCompany;
+		public Company SelectedCompany {
+			get { return selectedCompany; }
 			set
 			{
-				if (value != mySelectedCompany)
+				if (value != selectedCompany)
 				{
-					mySelectedCompany = value; NotifyPropertyChanged("MySelectedCompany");
+					selectedCompany = value;
+					NotifyPropertyChanged("MySelectedCompany");
 				}
 			}
 		}
@@ -38,7 +43,22 @@ namespace GentApp.ViewModels
 			{
 				if (value != myCompany)
 				{
-					myCompany = value; NotifyPropertyChanged("MyCompany");
+					myCompany = value;
+					NotifyPropertyChanged("MyCompany");
+				}
+			}
+		}
+
+		private Branch mySelectedBranch;
+		public Branch MySelectedBranch
+		{
+			get { return mySelectedBranch; }
+			set
+			{
+				if (value != mySelectedBranch)
+				{
+					mySelectedBranch = value;
+					NotifyPropertyChanged("MySelectedBranch");
 				}
 			}
 		}
@@ -47,20 +67,16 @@ namespace GentApp.ViewModels
 
 		public CompaniesViewModel()
         {
-            Companies = new ObservableCollection<Company>(DummyDataSource.Companies);
+            RetrieveCompanies();
 			MyCompany = DummyDataSource.Companies[2];
-            SaveCompanyCommand = new RelayCommand((p) => SaveCompany(p));
+            SaveCompanyCommand = new RelayCommand(SaveCompany);
         }
 
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		public async void RetrieveCompanies()
-		{
-			HttpClient client = new HttpClient();
-			var json = await client.GetStringAsync(new Uri("http://localhost:50957/api/companies"));
-			var list = JsonConvert.DeserializeObject<ObservableCollection<Company>>(json);
-			Companies = list;
+		public async void RetrieveCompanies() {
+			Companies = new ObservableCollection<Company>(await companyService.GetAll());
 		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
 
 		private void SaveCompany(object p)
         {
@@ -84,9 +100,13 @@ namespace GentApp.ViewModels
 			}
 		}
 
-		private void NotifyPropertyChanged(String propertyName) {
-			if (null != PropertyChanged)
-				PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+		public async void SaveBranch(Branch newBranch) {
+			SelectedCompany.Branches.Add(newBranch);
+			await companyService.Save(SelectedCompany);
+		}
+
+		private void NotifyPropertyChanged(string propertyName) {
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }

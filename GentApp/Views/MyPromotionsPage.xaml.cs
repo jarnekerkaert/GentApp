@@ -29,7 +29,7 @@ namespace GentApp.Views
 
 		public MyPromotionsPage()
 		{
-			this.InitializeComponent();
+			InitializeComponent();
 			MyCompany = MainPage.CompaniesViewModel.MyCompany;
 			horStackPanel.DataContext = MyCompany;
 			Promotions = MainPage.BranchViewModel.Promotions;

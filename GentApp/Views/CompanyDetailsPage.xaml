@@ -4,26 +4,26 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:local="using:GentApp.ViewModels"
-	xmlns:local1="using:GentApp.DataModel"
-	mc:Ignorable="d">
+	xmlns:local="using:GentApp.DataModel"
+	mc:Ignorable="d"
+	DataContext="{Binding CompaniesViewModelInstance, Source={StaticResource Locator}}">
 
 	<StackPanel>
 		<TextBlock Margin="0,50,0,50" HorizontalAlignment="Center">Details of company:</TextBlock>
 		
 		<TextBlock FontWeight="Bold">Name:</TextBlock>
-		<TextBlock Text="{Binding Name, TargetNullValue='Empty'}"></TextBlock>
+		<TextBlock Text="{Binding SelectedCompany.Name, TargetNullValue='Empty'}"></TextBlock>
 		<TextBlock FontWeight="Bold">Address:</TextBlock>
-		<TextBlock Text="{Binding Address, TargetNullValue='Empty'}"></TextBlock>
+		<TextBlock Text="{Binding SelectedCompany.Address, TargetNullValue='Empty'}"></TextBlock>
 		<TextBlock FontWeight="Bold">Opening hours:</TextBlock>
-		<TextBlock Text="{Binding OpeningHours, TargetNullValue='Empty'}"></TextBlock>
+		<TextBlock Text="{Binding SelectedCompany.OpeningHours, TargetNullValue='Empty'}"></TextBlock>
 
 		<ProgressRing x:Name="progressBranches" HorizontalAlignment="Left" Margin="5,10,0,0" />
 
 		<TextBlock Margin="0,50,0,0">Branches:</TextBlock>
-		<ListView ItemsSource="{x:Bind Branches}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick" x:Name="branchesListView">
+		<ListView ItemsSource="{Binding SelectedCompany.Branches}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick" x:Name="branchesListView">
 			<ListView.ItemTemplate>
-				<DataTemplate x:DataType="local1:Branch">
+				<DataTemplate x:DataType="local:Branch">
 					<StackPanel>
 						<TextBlock FontSize="18" Text="{x:Bind Name}" />
 						<TextBlock FontSize="10" Text="{x:Bind Address}" />

@@ -6,9 +6,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:local="using:GentApp.DataModel"
 	mc:Ignorable="d"
-    >
+    DataContext="{Binding CompaniesViewModelInstance, Source={StaticResource Locator}}">
     
-
     <ScrollViewer>
         <StackPanel>
 			<TextBlock>Companies:</TextBlock>
@@ -20,7 +19,7 @@
 
 			<ProgressRing x:Name="progressCompanies" HorizontalAlignment="Left" Margin="5,10,0,0" />
 
-			<ListView ItemsSource="{x:Bind Companies}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick" x:Name="companiesListView">
+			<ListView ItemsSource="{Binding Companies}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick" x:Name="companiesListView">
 				<ListView.ItemTemplate>
 					<DataTemplate x:DataType="local:Company">
 						<StackPanel>

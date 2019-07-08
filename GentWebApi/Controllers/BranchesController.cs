@@ -20,33 +20,40 @@ namespace GentWebApi.Controllers
 		public BranchesController(GentDbContext context)
 		{
 			_context = context;
-			if (_context.Branches.Count() == 0)
-			{
-				_context.Branches.Add(new Branch { Name = "TasteIt" });
-				_context.SaveChanges();
-			}
 		}
 
-		// GET: api/branches/2/promotions
-		[HttpGet("{id}/promotions", Name = "GetPromotions")]
-		public IEnumerable<Promotion> GetPromotions(int id)
-		{
-			return _context.Promotions.Where(p => p.BranchId == id);
+		// GET api/branches
+		[HttpGet("{id}")]
+		public ActionResult<IEnumerable<Branch>> Get() {
+			return _context.Branches;
+		}
+
+		// GET api/branches/2
+		[HttpGet("{id}")]
+		public ActionResult<Branch> Get(string id) {
+			if ( ModelState.IsValid ) {
+				return _context
+				.Branches
+				.Find(id);
+			}
+			else {
+				return NotFound();
+			}
 		}
 
 		// PUT: api/branches/2
 		[HttpPut("{id}")]
-		public HttpResponseMessage Put(int id, [FromBody] Branch branch)
+		public IActionResult Put([FromBody] Branch branch)
 		{
-			if (this.ModelState.IsValid)
+			if (ModelState.IsValid)
 			{
 				_context.Branches.Update(branch);
 				_context.SaveChanges();
-				return new HttpResponseMessage(HttpStatusCode.OK);
+				return Ok();
 			}
 			else
 			{
-				return new HttpResponseMessage(HttpStatusCode.BadRequest);
+				return NotFound();
 			}
 		}
 	}

@@ -16,19 +16,22 @@ namespace GentWebApi.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "2.1.11-servicing-32099")
+                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             modelBuilder.Entity("GentApp.Models.Branch", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Address");
+                    b.Property<string>("Address")
+                        .IsRequired();
 
-                    b.Property<int>("CompanyId");
+                    b.Property<string>("CompanyId")
+                        .IsRequired();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<string>("OpeningHours");
 
@@ -43,7 +46,7 @@ namespace GentWebApi.Migrations
 
             modelBuilder.Entity("GentApp.Models.Company", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Address");
@@ -57,16 +60,32 @@ namespace GentWebApi.Migrations
                     b.ToTable("Companies");
                 });
 
+            modelBuilder.Entity("GentApp.Models.User", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CompanyId");
+
+                    b.Property<string>("Firstname");
+
+                    b.Property<string>("Lastname");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("GentWebApi.Models.Promotion", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<bool>("AllBranches");
 
-                    b.Property<int>("BranchId");
-
-                    b.Property<string>("CouponId");
+                    b.Property<string>("BranchId");
 
                     b.Property<string>("Description");
 
@@ -91,12 +110,18 @@ namespace GentWebApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("GentApp.Models.User", b =>
+                {
+                    b.HasOne("GentApp.Models.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId");
+                });
+
             modelBuilder.Entity("GentWebApi.Models.Promotion", b =>
                 {
-                    b.HasOne("GentApp.Models.Branch")
+                    b.HasOne("GentApp.Models.Branch", "Branch")
                         .WithMany("Promotions")
-                        .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("BranchId");
                 });
 #pragma warning restore 612, 618
         }

@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GentApp.DataModel
-{
-    public enum RoleType
+namespace GentApp.DataModel {
+    enum RoleType
     {
-        ANONYMOUS, USER, ENTREPRENEUR
+        USER, ENTREPRENEUR
     }
 }
