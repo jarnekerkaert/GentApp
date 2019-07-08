@@ -53,8 +53,15 @@ namespace GentWebApi.Controllers
 			}
 			else
 			{
-				return NotFound();
+				return BadRequest();
 			}
+		}
+
+		// GET: api/branches/2/promotions
+		[HttpGet("{id}/promotions", Name = "GetPromotions")]
+		public IEnumerable<Promotion> GetPromotions(string id)
+		{
+			return _context.Promotions.Where(p => p.Branch.Id.Equals(id));
 		}
 	}
 }

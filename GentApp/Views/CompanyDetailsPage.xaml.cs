@@ -32,7 +32,7 @@ namespace GentApp.Views
         {
             this.InitializeComponent();
 			RetrieveBranches();
-			this.DataContext = MainPage.CompaniesViewModel.MySelectedCompany;
+			this.DataContext = MainPage.CompaniesViewModel.SelectedCompany;
 			Branches = MainPage.BranchesViewModel.Branches;
 		}
 
@@ -48,7 +48,7 @@ namespace GentApp.Views
 		{
 			HttpClient client = new HttpClient();
 			progressBranches.IsActive = true;
-			var json = await client.GetStringAsync(new Uri("http://localhost:50957/api/companies/" + MainPage.CompaniesViewModel.MySelectedCompany.Id +"/branches"));
+			var json = await client.GetStringAsync(new Uri("http://localhost:50957/api/companies/" + MainPage.CompaniesViewModel.SelectedCompany.Id +"/branches"));
 			var list = JsonConvert.DeserializeObject<ObservableCollection<Branch>>(json);
 			branchesListView.ItemsSource = list;
 			progressBranches.IsActive = false;

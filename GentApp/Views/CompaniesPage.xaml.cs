@@ -31,7 +31,7 @@ namespace GentApp.Views
 
 		private void ListView_ItemClick(object sender, ItemClickEventArgs e)
 		{
-			MainPage.CompaniesViewModel.MySelectedCompany = e.ClickedItem as Company;
+			MainPage.CompaniesViewModel.SelectedCompany = e.ClickedItem as Company;
 			Frame.Navigate(typeof(CompanyDetailsPage));
 		}
 	}

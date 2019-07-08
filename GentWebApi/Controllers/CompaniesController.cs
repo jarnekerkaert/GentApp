@@ -80,5 +80,14 @@ namespace GentAppWebApi.Controllers {
 				return NotFound();
 			}
 		}
+
+		// GET: api/companies/5/branches
+		[HttpGet("{id}/branches", Name = "GetBranches")]
+		public IEnumerable<Branch> GetBranches(string id)
+		{
+			//return _context.Companies.Find(id).Branches;
+			//return _context.Branches.Where(b => b.CompanyId == id).Include(b => b.Promotions);
+			return _context.Branches.Where(b => b.CompanyId.Equals(id));
+		}
 	}
 }

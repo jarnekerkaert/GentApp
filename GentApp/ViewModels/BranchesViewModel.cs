@@ -66,7 +66,7 @@ namespace GentApp.ViewModels
 
 			//var branchJson = JsonConvert.SerializeObject(oldBranch);
 			//HttpClient client = new HttpClient();
-			//var res = await client.PutAsync("http://localhost:63187/api/branches/" + MainPage.BranchesViewModel.MySelectedBranch.Id, new StringContent(branchJson, System.Text.Encoding.UTF8, "application/json"));
+			//var res = await client.PutAsync("http://localhost:50957/api/branches/" + MainPage.BranchesViewModel.MySelectedBranch.Id, new StringContent(branchJson, System.Text.Encoding.UTF8, "application/json"));
 		}
 
 		public void DeleteBranch()
