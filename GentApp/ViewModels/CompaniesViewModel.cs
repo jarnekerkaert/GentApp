@@ -101,7 +101,11 @@ namespace GentApp.ViewModels {
 
 		public RelayCommand LoadCommand {
 			get {
-				return _loadCommand ?? (_loadCommand = new RelayCommand(async () => Companies = new ObservableCollection<Company>(await companyService.GetAll())));
+				return _loadCommand ?? (_loadCommand = new RelayCommand(async () => {
+					Companies = new ObservableCollection<Company>(await companyService.GetAll());
+					MyCompany = Companies[0];
+				}
+				));
 			}
 		}
 	}

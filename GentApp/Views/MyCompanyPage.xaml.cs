@@ -27,8 +27,6 @@ namespace GentApp.Views
 		public MyCompanyPage()
 		{
 			InitializeComponent();
-			DataContext = SimpleIoc.Default.GetInstance<CompaniesViewModel>().MyCompany;
-			Branches = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches;
 		}
 
 		private void SymbolIcon_Tapped(object sender, TappedRoutedEventArgs e)

@@ -5,28 +5,30 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:local1="using:GentApp.DataModel"
+	xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+	xmlns:core="using:Microsoft.Xaml.Interactions.Core"
 	mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+	DataContext="{Binding CompaniesViewModelInstance, Source={StaticResource Locator}}">
 
 	<StackPanel>
 		<TextBlock Margin="0,50,0,50" HorizontalAlignment="Center">Details of your company:</TextBlock>
 
 		<TextBlock FontWeight="Bold">Name:</TextBlock>
-		<TextBlock Text="{Binding Name, TargetNullValue='Empty'}"></TextBlock>
+		<TextBlock Text="{Binding Path=MyCompany.Name, Mode=OneWay, TargetNullValue='Empty'}"></TextBlock>
 		<TextBlock FontWeight="Bold">Address:</TextBlock>
-		<TextBlock Text="{Binding Address, TargetNullValue='Empty'}"></TextBlock>
+		<TextBlock Text="{Binding Path=MyCompany.Address, Mode=OneWay, TargetNullValue='Empty'}"></TextBlock>
 		<TextBlock FontWeight="Bold">Opening hours:</TextBlock>
-		<TextBlock Text="{Binding OpeningHours, TargetNullValue='Empty'}"></TextBlock>
+		<TextBlock Text="{Binding Path=MyCompany.OpeningHours, Mode=OneWay, TargetNullValue='Empty'}"></TextBlock>
 
 		<SymbolIcon Symbol="Edit" IsTapEnabled="True" Tapped="SymbolIcon_Tapped"></SymbolIcon>
 
 		<TextBlock Margin="0,50,0,0">Branches:</TextBlock>
-		<ListView ItemsSource="{x:Bind Branches}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick" x:Name="branchesListView">
+		<ListView ItemsSource="{Binding Path=MyCompany.Branches}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick" x:Name="branchesListView">
 			<ListView.ItemTemplate>
 				<DataTemplate x:DataType="local1:Branch">
 					<StackPanel>
-						<TextBlock FontSize="18" Text="{x:Bind Name}" />
-						<TextBlock FontSize="10" Text="{x:Bind Address}" />
+						<TextBlock FontSize="18" Text="{Binding Path=Name}" />
+						<TextBlock FontSize="10" Text="{Binding Path=Address}" />
 					</StackPanel>
 				</DataTemplate>
 			</ListView.ItemTemplate>
