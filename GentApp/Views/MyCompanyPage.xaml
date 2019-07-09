@@ -23,7 +23,13 @@
 		<SymbolIcon Symbol="Edit" IsTapEnabled="True" Tapped="SymbolIcon_Tapped"></SymbolIcon>
 
 		<TextBlock Margin="0,50,0,0">Branches:</TextBlock>
-		<ListView ItemsSource="{Binding Path=MyCompany.Branches}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick" x:Name="branchesListView">
+		<ListView ItemsSource="{Binding Path=MyCompany.Branches}" 
+				  SelectedItem="{Binding Path=SelectedBranch, Mode=TwoWay}">
+			<interactivity:Interaction.Behaviors>
+				<core:EventTriggerBehavior EventName="SelectionChanged">
+					<core:InvokeCommandAction Command="{Binding Path=MyBranchSelectedCommand}" />
+				</core:EventTriggerBehavior>
+			</interactivity:Interaction.Behaviors>
 			<ListView.ItemTemplate>
 				<DataTemplate x:DataType="local1:Branch">
 					<StackPanel>

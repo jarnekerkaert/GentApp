@@ -66,7 +66,7 @@ namespace GentAppWebApi.Controllers {
 				return Ok();
 			}
 			else {
-				return NotFound();
+				return BadRequest();
 			}
 		}
 

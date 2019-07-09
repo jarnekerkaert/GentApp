@@ -28,11 +28,11 @@ namespace GentApp.Views
 		public EditBranchPage()
 		{
 			InitializeComponent();
-			DataContext = SimpleIoc.Default.GetInstance<BranchesViewModel>().MySelectedBranch;
 			var _enumval = Enum.GetValues(typeof(BranchType)).Cast<BranchType>().ToList();
 			_enumval.Remove(BranchType.NONE);
 			Type.ItemsSource = _enumval;
-			Type.SelectedItem = SimpleIoc.Default.GetInstance<BranchesViewModel>().MySelectedBranch.Type;
+			Type.SelectedItem = SimpleIoc.Default.GetInstance<CompaniesViewModel>().SelectedBranch.Type;
+			//Type.SelectedItem = SimpleIoc.Default.GetInstance<BranchesViewModel>().MySelectedBranch.Type;
 		}
 
 		private void SymbolIcon_Tapped(object sender, TappedRoutedEventArgs e)
@@ -86,7 +86,7 @@ namespace GentApp.Views
 			if (isValid == true)
 			{
 				BranchType selectedType = (BranchType)comboBoxItem;
-				SimpleIoc.Default.GetInstance<BranchesViewModel>().EditBranch(Name.Text, Address.Text, OpeningHours.Text, selectedType);
+				SimpleIoc.Default.GetInstance<CompaniesViewModel>().EditBranch(Name.Text, Address.Text, OpeningHours.Text, selectedType);
 				Frame.Navigate(typeof(MyCompanyPage));
 			}
 		}

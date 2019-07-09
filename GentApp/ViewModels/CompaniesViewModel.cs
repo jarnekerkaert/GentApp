@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GentApp.DataModel;
@@ -82,6 +84,14 @@ namespace GentApp.ViewModels {
 			}
 		}
 
+		public RelayCommand MyBranchSelectedCommand
+		{
+			get
+			{
+				return _branchSelectedCommand = new RelayCommand(() => _navigationService.NavigateTo("EditBranchPage"));
+			}
+		}
+
 		public void EditCompany(string name, string address, string openingHours) {
 			// var oldCompany = Companies.Where(x => x.Id == companyId).First();
 			var oldCompany = MyCompany;
@@ -107,6 +117,17 @@ namespace GentApp.ViewModels {
 				}
 				));
 			}
+		}
+
+		public async void EditBranch(string name, string address, string openingHours, BranchType type)
+		{
+			SelectedBranch.Name = name;
+			SelectedBranch.Address = address;
+			SelectedBranch.OpeningHours = openingHours;
+			SelectedBranch.Type = type;
+			//var oldBranch = MyCompany.Branches.Where(b => b.Id.Equals(SelectedBranch.Id)).First();
+			//oldBranch = SelectedBranch;
+			await companyService.Update(Companies[0]);
 		}
 	}
 }

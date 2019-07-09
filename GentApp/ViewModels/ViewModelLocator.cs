@@ -23,6 +23,7 @@ namespace GentApp.ViewModels
 		public const string BranchDetailsPageKey = "BranchDetailsPage";
 		public const string AddBranchPageKey = "AddBranchPage";
 		public const string AddPromotionPageKey = "AddPromotionPage";
+		public const string EditBranchPageKey = "EditBranchPage";
 
 		public ViewModelLocator() {
 			ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
@@ -51,6 +52,7 @@ namespace GentApp.ViewModels
 			navigationService.Configure(BranchDetailsPageKey, typeof(BranchDetailsPage));
 			navigationService.Configure(AddBranchPageKey, typeof(AddBranchPage));
 			navigationService.Configure(AddPromotionPageKey, typeof(AddPromotionPage));
+			navigationService.Configure(EditBranchPageKey, typeof(EditBranchPage));
 			SimpleIoc.Default.Register<INavigationService>(() => navigationService);
 		}
 
