@@ -92,14 +92,12 @@ namespace GentApp.ViewModels {
 			}
 		}
 
-		public void EditCompany(string name, string address, string openingHours) {
-			// var oldCompany = Companies.Where(x => x.Id == companyId).First();
-			var oldCompany = MyCompany;
-			if (oldCompany != null) {
-				oldCompany.Name = name;
-				oldCompany.Address = address;
-				oldCompany.OpeningHours = openingHours;
-			}
+		public async void EditCompany(string name, string address, string openingHours) {
+			MyCompany.Name = name;
+			MyCompany.Address = address;
+			MyCompany.OpeningHours = openingHours;
+
+			await companyService.Update(MyCompany);
 		}
 
 		public async void SaveBranch() {
@@ -127,7 +125,7 @@ namespace GentApp.ViewModels {
 			SelectedBranch.Type = type;
 			//var oldBranch = MyCompany.Branches.Where(b => b.Id.Equals(SelectedBranch.Id)).First();
 			//oldBranch = SelectedBranch;
-			await companyService.Update(Companies[0]);
+			await companyService.Update(MyCompany);
 		}
 	}
 }

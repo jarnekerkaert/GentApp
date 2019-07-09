@@ -23,7 +23,6 @@ namespace GentApp.Views
 		public EditCompanyPage()
 		{
 			InitializeComponent();
-			DataContext = SimpleIoc.Default.GetInstance<CompaniesViewModel>().SelectedCompany;
 		}
 
 		private void SymbolIcon_Tapped(object sender, TappedRoutedEventArgs e)
