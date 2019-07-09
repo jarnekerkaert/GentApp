@@ -23,7 +23,6 @@ namespace GentApp.Views
 		public BranchDetailsPage()
 		{
 			InitializeComponent();
-			DataContext = SimpleIoc.Default.GetInstance<BranchesViewModel>().MySelectedBranch;
 		}
 
 	}
