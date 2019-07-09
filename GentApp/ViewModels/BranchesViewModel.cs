@@ -32,7 +32,8 @@ namespace GentApp.ViewModels
 			{
 				if (value != mySelectedBranch)
 				{
-					mySelectedBranch = value; NotifyPropertyChanged("MySelectedBranch");
+					mySelectedBranch = value;
+					NotifyPropertyChanged(nameof(MySelectedBranch));
 				}
 			}
 		}
@@ -50,7 +51,7 @@ namespace GentApp.ViewModels
 
 		public void AddBranch(Branch newBranch)
 		{
-			this.Branches.Add(newBranch);
+			Branches.Add(newBranch);
 		}
 
 		//private void SaveBranch(object p)
@@ -64,7 +65,7 @@ namespace GentApp.ViewModels
 		//	this.Branches.Add(p as Branch);
 		//}
 
-		public async void EditBranch(string name, string address, string openingHours, BranchType type)
+		public void EditBranch(string name, string address, string openingHours, BranchType type)
 		{
 			var oldBranch = MySelectedBranch;
 			if (oldBranch != null)
@@ -85,10 +86,9 @@ namespace GentApp.ViewModels
 			this.Branches.Remove(MySelectedBranch);
 		}
 
-		private void NotifyPropertyChanged(String propertyName)
+		private void NotifyPropertyChanged(string propertyName)
 		{
-			if (null != PropertyChanged)
-				PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
 	}

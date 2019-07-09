@@ -9,9 +9,7 @@ using System.Threading.Tasks;
 namespace GentApp.DataModel {
 	public class Branch
 	{
-		[Required]
 		public string Id { get; set; }
-		[Required]
 		public string CompanyId { get; set; }
 		[Required]
 		public string Name { get; set; }

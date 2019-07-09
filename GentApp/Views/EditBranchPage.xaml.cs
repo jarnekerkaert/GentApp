@@ -1,4 +1,6 @@
-﻿using GentApp.DataModel;
+﻿using GalaSoft.MvvmLight.Ioc;
+using GentApp.DataModel;
+using GentApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,12 +27,12 @@ namespace GentApp.Views
 	{
 		public EditBranchPage()
 		{
-			this.InitializeComponent();
-			this.DataContext = MainPage.BranchesViewModel.MySelectedBranch;
+			InitializeComponent();
+			DataContext = SimpleIoc.Default.GetInstance<BranchesViewModel>().MySelectedBranch;
 			var _enumval = Enum.GetValues(typeof(BranchType)).Cast<BranchType>().ToList();
 			_enumval.Remove(BranchType.NONE);
 			Type.ItemsSource = _enumval;
-			Type.SelectedItem = MainPage.BranchesViewModel.MySelectedBranch.Type;
+			Type.SelectedItem = SimpleIoc.Default.GetInstance<BranchesViewModel>().MySelectedBranch.Type;
 		}
 
 		private void SymbolIcon_Tapped(object sender, TappedRoutedEventArgs e)
@@ -84,7 +86,7 @@ namespace GentApp.Views
 			if (isValid == true)
 			{
 				BranchType selectedType = (BranchType)comboBoxItem;
-				MainPage.BranchesViewModel.EditBranch(Name.Text, Address.Text, OpeningHours.Text, selectedType);
+				SimpleIoc.Default.GetInstance<BranchesViewModel>().EditBranch(Name.Text, Address.Text, OpeningHours.Text, selectedType);
 				Frame.Navigate(typeof(MyCompanyPage));
 			}
 		}
@@ -100,7 +102,7 @@ namespace GentApp.Views
 			};
 			ContentDialogResult result = await deleteBranchDialog.ShowAsync();
 			if (result == ContentDialogResult.Primary) {
-				MainPage.BranchesViewModel.DeleteBranch();
+				SimpleIoc.Default.GetInstance<BranchesViewModel>().DeleteBranch();
 				Frame.Navigate(typeof(MyCompanyPage));
 			}
 			//else if(result == ContentDialogResult.Secondary){ /* ... */}

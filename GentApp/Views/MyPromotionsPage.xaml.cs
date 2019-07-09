@@ -1,4 +1,6 @@
-﻿using GentApp.DataModel;
+﻿using GalaSoft.MvvmLight.Ioc;
+using GentApp.DataModel;
+using GentApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -30,16 +32,15 @@ namespace GentApp.Views
 		public MyPromotionsPage()
 		{
 			InitializeComponent();
-			MyCompany = MainPage.CompaniesViewModel.MyCompany;
+			MyCompany = SimpleIoc.Default.GetInstance<CompaniesViewModel>().MyCompany;
 			horStackPanel.DataContext = MyCompany;
-			Promotions = MainPage.BranchViewModel.Promotions;
+			Promotions = SimpleIoc.Default.GetInstance<BranchViewModel>().Promotions;
 			AmountPromotionsTextBlock.Text = Promotions.Count.ToString();
 		}
 
 		private void PromotionsListView_ItemClick(object sender, ItemClickEventArgs e)
 		{
-			var selectedPromotion = e.ClickedItem as Promotion;
-			MainPage.BranchViewModel.MySelectedPromotion = selectedPromotion;
+			SimpleIoc.Default.GetInstance<BranchViewModel>().MySelectedPromotion = e.ClickedItem as Promotion;
 			Frame.Navigate(typeof(EditPromotionPage));
 		}
 

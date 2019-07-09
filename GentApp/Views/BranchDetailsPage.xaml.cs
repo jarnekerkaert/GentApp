@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Ioc;
+using GentApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,8 +22,8 @@ namespace GentApp.Views
 	{
 		public BranchDetailsPage()
 		{
-			this.InitializeComponent();
-			this.DataContext = MainPage.BranchesViewModel.MySelectedBranch;
+			InitializeComponent();
+			DataContext = SimpleIoc.Default.GetInstance<BranchesViewModel>().MySelectedBranch;
 		}
 
 	}

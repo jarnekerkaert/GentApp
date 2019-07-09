@@ -4,11 +4,18 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:local="using:GentApp.DataModel"
+	xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+	xmlns:core="using:Microsoft.Xaml.Interactions.Core"
 	mc:Ignorable="d"
     DataContext="{Binding CompaniesViewModelInstance, Source={StaticResource Locator}}">
-    
-    <ScrollViewer>
+
+	<interactivity:Interaction.Behaviors>
+		<core:EventTriggerBehavior EventName="Loaded">
+			<core:InvokeCommandAction Command="{Binding Path=LoadCommand}" />
+		</core:EventTriggerBehavior>
+	</interactivity:Interaction.Behaviors>
+
+	<ScrollViewer>
         <StackPanel>
 			<TextBlock>Companies:</TextBlock>
 
@@ -19,18 +26,22 @@
 
 			<ProgressRing x:Name="progressCompanies" HorizontalAlignment="Left" Margin="5,10,0,0" />
 
-			<ListView ItemsSource="{Binding Companies}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick" x:Name="companiesListView">
+			<ListView ItemsSource="{Binding Path=Companies}" 
+					  SelectedItem="{Binding Path=SelectedCompany, Mode=TwoWay}">
+				<interactivity:Interaction.Behaviors>
+					<core:EventTriggerBehavior EventName="SelectionChanged">
+						<core:InvokeCommandAction Command="{Binding Path=CompanySelectedCommand}" />
+					</core:EventTriggerBehavior>
+				</interactivity:Interaction.Behaviors>
 				<ListView.ItemTemplate>
-					<DataTemplate x:DataType="local:Company">
+					<DataTemplate>
 						<StackPanel>
-							<TextBlock FontSize="18" Text="{x:Bind Name}" />
-							<TextBlock FontSize="10" Text="{x:Bind Address}" />
+							<TextBlock FontSize="18" Text="{Binding Path=Name}" />
+							<TextBlock FontSize="10" Text="{Binding Path=Address}" />
 						</StackPanel>
 					</DataTemplate>
 				</ListView.ItemTemplate>
-
 			</ListView>
-
 		</StackPanel>
     </ScrollViewer>
 </Page>

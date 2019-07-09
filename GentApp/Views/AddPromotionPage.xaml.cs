@@ -1,4 +1,6 @@
-﻿using GentApp.DataModel;
+﻿using GalaSoft.MvvmLight.Ioc;
+using GentApp.DataModel;
+using GentApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,8 +28,8 @@ namespace GentApp.Views
 		public AddPromotionPage()
 		{
 			this.InitializeComponent();
-			horStackPanel.DataContext = MainPage.BranchesViewModel.MySelectedBranch;
-			this.DataContext = MainPage.BranchViewModel;
+			horStackPanel.DataContext = SimpleIoc.Default.GetInstance<BranchesViewModel>().MySelectedBranch;
+			this.DataContext = SimpleIoc.Default.GetInstance<BranchViewModel>();
 
 		}
 
@@ -78,7 +80,7 @@ namespace GentApp.Views
 			if (isValid == true)
 			{
 				Promotion newPromotion = new Promotion() { Title = Title.Text, Description = Description.Text, StartDate = StartDatePicker.Date.Value.DateTime, EndDate = EndDatePicker.Date.Value.DateTime };
-				MainPage.BranchViewModel.AddPromotion(newPromotion);
+				SimpleIoc.Default.GetInstance<BranchViewModel>().AddPromotion(newPromotion);
 				Frame.Navigate(typeof(MyPromotionsPage));
 			}
 		}

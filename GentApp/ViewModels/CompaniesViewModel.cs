@@ -1,112 +1,108 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using System.Collections.ObjectModel;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using GentApp.DataModel;
 using GentApp.Helpers;
 using GentApp.Services;
 using MetroLog;
-using Newtonsoft.Json;
 
-namespace GentApp.ViewModels
-{
-    public class CompaniesViewModel : INotifyPropertyChanged
-	{
-		private ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<CompaniesViewModel>();
-		public ObservableCollection<Company> Companies { get; set; }
-
+namespace GentApp.ViewModels {
+	public class CompaniesViewModel : ViewModelBase {
+		private readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<CompaniesViewModel>();
 		private readonly CompanyService companyService = new CompanyService();
+		private readonly INavigationService _navigationService;
 
-		private Company selectedCompany;
-		public Company SelectedCompany {
-			get { return selectedCompany; }
-			set
-			{
-				if (value != selectedCompany)
-				{
-					selectedCompany = value;
-					NotifyPropertyChanged("MySelectedCompany");
-				}
+		public CompaniesViewModel(INavigationService navigationService) {
+			_navigationService = navigationService;
+			MyCompany = DummyDataSource.Companies[2];
+		}
+
+		private ObservableCollection<Company> _companies;
+		public ObservableCollection<Company> Companies {
+			get {
+				return _companies;
+			}
+
+			set {
+				_companies = value;
+				RaisePropertyChanged(nameof(Companies));
 			}
 		}
+
+		public Company SelectedCompany { get; set; }
 
 		private Company myCompany;
-		public Company MyCompany
-		{
+
+		public Company MyCompany {
 			get { return myCompany; }
-			set
-			{
-				if (value != myCompany)
-				{
+			set {
+				if (value != myCompany) {
 					myCompany = value;
-					NotifyPropertyChanged("MyCompany");
+					RaisePropertyChanged(nameof(MyCompany));
 				}
 			}
 		}
 
-		private Branch mySelectedBranch;
-		public Branch MySelectedBranch
-		{
-			get { return mySelectedBranch; }
-			set
-			{
-				if (value != mySelectedBranch)
-				{
-					mySelectedBranch = value;
-					NotifyPropertyChanged("MySelectedBranch");
+		private Branch selectedBranch;
+
+		public Branch SelectedBranch {
+			get { return selectedBranch; }
+			set {
+				if (value != selectedBranch) {
+					selectedBranch = value;
+					RaisePropertyChanged(nameof(SelectedBranch));
 				}
 			}
 		}
 
-		public RelayCommand SaveCompanyCommand { get; set; }
+		private RelayCommand _saveCompanyCommand;
 
-		public CompaniesViewModel()
-        {
-            RetrieveCompanies();
-			MyCompany = DummyDataSource.Companies[2];
-            SaveCompanyCommand = new RelayCommand(SaveCompany);
-        }
-
-		public async void RetrieveCompanies() {
-			Companies = new ObservableCollection<Company>(await companyService.GetAll());
+		public RelayCommand SaveCompanyCommand {
+			get {
+				return _saveCompanyCommand = new RelayCommand(() => Companies.Add(new Company() {
+					Name = SelectedCompany.Name,
+					Address = "Dummy adres",
+					OpeningHours = "24/7"
+				}));
+			}
 		}
 
-		public event PropertyChangedEventHandler PropertyChanged;
+		private RelayCommand _companySelectedCommand;
 
-		private void SaveCompany(object p)
-        {
-            Companies.Add(new Company()
-            {
-                Name = p.ToString(),
-                Address = "Dummy adres",
-                OpeningHours = "24/7"
-			});
-        }
+		public RelayCommand CompanySelectedCommand {
+			get {
+				return _companySelectedCommand = new RelayCommand(() => _navigationService.NavigateTo("CompanyDetailsPage"));
+			}
+		}
+		private RelayCommand _branchSelectedCommand;
 
-		public void EditCompany(string name, string address, string openingHours)
-		{
+		public RelayCommand BranchSelectedCommand {
+			get {
+				return _branchSelectedCommand = new RelayCommand(() => _navigationService.NavigateTo("BranchDetailsPage"));
+			}
+		}
+
+		public void EditCompany(string name, string address, string openingHours) {
 			// var oldCompany = Companies.Where(x => x.Id == companyId).First();
 			var oldCompany = MyCompany;
-			if (oldCompany != null)
-			{
+			if (oldCompany != null) {
 				oldCompany.Name = name;
 				oldCompany.Address = address;
 				oldCompany.OpeningHours = openingHours;
 			}
 		}
 
-		public async void SaveBranch(Branch newBranch) {
-			SelectedCompany.Branches.Add(newBranch);
+		public async void SaveBranch() {
+			SelectedCompany.Branches.Add(SelectedBranch);
 			await companyService.Save(SelectedCompany);
 		}
 
-		private void NotifyPropertyChanged(string propertyName) {
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		private RelayCommand _loadCommand;
+
+		public RelayCommand LoadCommand {
+			get {
+				return _loadCommand ?? (_loadCommand = new RelayCommand(async () => Companies = new ObservableCollection<Company>(await companyService.GetAll())));
+			}
 		}
 	}
 }

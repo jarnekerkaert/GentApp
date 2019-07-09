@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
-
+using GalaSoft.MvvmLight.Ioc;
 using GentApp.DataModel;
-
+using GentApp.ViewModels;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -23,8 +23,8 @@ namespace GentApp.Views
     {
         public AddBranchPage()
         {
-            this.InitializeComponent();
-			this.DataContext = MainPage.CompaniesViewModel;
+            InitializeComponent();
+			DataContext = SimpleIoc.Default.GetInstance<MainViewModel>();
 			var _enumval = Enum.GetValues(typeof(BranchType)).Cast<BranchType>().ToList();
 			_enumval.Remove(BranchType.NONE);
 			Type.ItemsSource = _enumval;
@@ -77,11 +77,11 @@ namespace GentApp.Views
 				TypeValidationErrorTextBlock.Text = "You have to choose a type";
 				isValid = false;
 			}
-			if (isValid == true)
+			if (isValid)
 			{
 				BranchType selectedType = (BranchType)comboBoxItem;
 				Branch newBranch = new Branch() { Name = Name.Text, Address = Address.Text, OpeningHours = OpeningHours.Text, Type = selectedType };
-				MainPage.BranchesViewModel.AddBranch(newBranch);
+				SimpleIoc.Default.GetInstance<BranchesViewModel>().AddBranch(newBranch);
 				// TODO: navigate through navigationService
 				// TODO: send notification
 				Frame.Navigate(typeof(MyCompanyPage));

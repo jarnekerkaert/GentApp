@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Ioc;
+using GentApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,19 +22,19 @@ namespace GentApp.Views
 	{
 		public EditCompanyPage()
 		{
-			this.InitializeComponent();
-			this.DataContext = MainPage.CompaniesViewModel.MyCompany;
+			InitializeComponent();
+			DataContext = SimpleIoc.Default.GetInstance<CompaniesViewModel>().SelectedCompany;
 		}
 
 		private void SymbolIcon_Tapped(object sender, TappedRoutedEventArgs e)
 		{
-			validateInput();
+			ValidateInput();
 		}
 
-		private void validateInput()
+		private void ValidateInput()
 		{
 			var isValid = true;
-			if (Name.Text == "")
+			if (Name.Text?.Length == 0)
 			{
 				NameValidationErrorTextBlock.Text = "This field is required.";
 				isValid = false;
@@ -42,7 +44,7 @@ namespace GentApp.Views
 				NameValidationErrorTextBlock.Text = "The maximum length of this field is 200 characters.";
 				isValid = false;
 			}
-			if (OpeningHours.Text == "")
+			if (OpeningHours.Text?.Length == 0)
 			{
 				OpeningHoursValidationErrorTextBlock.Text = "This field is required.";
 				isValid = false;
@@ -52,7 +54,7 @@ namespace GentApp.Views
 				OpeningHoursValidationErrorTextBlock.Text = "The maximum length of this field is 200 characters.";
 				isValid = false;
 			}
-			if (Address.Text == "")
+			if (Address.Text?.Length == 0)
 			{
 				AddressValidationErrorTextBlock.Text = "This field is required.";
 				isValid = false;
@@ -62,9 +64,9 @@ namespace GentApp.Views
 				AddressValidationErrorTextBlock.Text = "The maximum length of this field is 200 characters.";
 				isValid = false;
 			}
-			if (isValid == true)
+			if (isValid)
 			{
-				MainPage.CompaniesViewModel.EditCompany(Name.Text, Address.Text, OpeningHours.Text);
+				SimpleIoc.Default.GetInstance<CompaniesViewModel>().EditCompany(Name.Text, Address.Text, OpeningHours.Text);
 				Frame.Navigate(typeof(MyCompanyPage));
 			}
 		}
