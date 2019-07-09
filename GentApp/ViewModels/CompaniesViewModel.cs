@@ -12,6 +12,7 @@ namespace GentApp.ViewModels {
 	public class CompaniesViewModel : ViewModelBase {
 		private readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<CompaniesViewModel>();
 		private readonly CompanyService companyService = new CompanyService();
+		private readonly BranchService branchService = new BranchService();
 		private readonly INavigationService _navigationService;
 
 		public CompaniesViewModel(INavigationService navigationService) {
@@ -126,6 +127,19 @@ namespace GentApp.ViewModels {
 			//var oldBranch = MyCompany.Branches.Where(b => b.Id.Equals(SelectedBranch.Id)).First();
 			//oldBranch = SelectedBranch;
 			await companyService.Update(MyCompany);
+		}
+
+		public async void AddBranch(Branch branch)
+		{
+			await branchService.Save(branch);
+			//MyCompany.Branches.Add(branch);
+			//await companyService.Update(MyCompany);
+		}
+
+		public async void RefreshCompanies()
+		{
+			Companies = new ObservableCollection<Company>(await companyService.GetAll());
+			MyCompany = Companies[0];
 		}
 	}
 }

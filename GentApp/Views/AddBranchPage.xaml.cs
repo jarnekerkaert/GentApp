@@ -24,7 +24,6 @@ namespace GentApp.Views
         public AddBranchPage()
         {
             InitializeComponent();
-			DataContext = SimpleIoc.Default.GetInstance<MainViewModel>();
 			var _enumval = Enum.GetValues(typeof(BranchType)).Cast<BranchType>().ToList();
 			_enumval.Remove(BranchType.NONE);
 			Type.ItemsSource = _enumval;
@@ -80,10 +79,10 @@ namespace GentApp.Views
 			if (isValid)
 			{
 				BranchType selectedType = (BranchType)comboBoxItem;
-				Branch newBranch = new Branch() { Name = Name.Text, Address = Address.Text, OpeningHours = OpeningHours.Text, Type = selectedType };
-				SimpleIoc.Default.GetInstance<BranchesViewModel>().AddBranch(newBranch);
-				// TODO: navigate through navigationService
-				// TODO: send notification
+				Branch newBranch = new Branch() { Name = Name.Text, Address = Address.Text, OpeningHours = OpeningHours.Text, Type = selectedType, CompanyId = SimpleIoc.Default.GetInstance<CompaniesViewModel>() .MyCompany.Id};
+				SimpleIoc.Default.GetInstance<CompaniesViewModel>().AddBranch(newBranch);
+				//TODO: werkt nog niet optimaal
+				SimpleIoc.Default.GetInstance<CompaniesViewModel>().RefreshCompanies();
 				Frame.Navigate(typeof(MyCompanyPage));
 			}
 		}

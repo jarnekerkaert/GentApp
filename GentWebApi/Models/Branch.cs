@@ -10,8 +10,7 @@ using System.Threading.Tasks;
 namespace GentApp.Models {
 	public class Branch
 	{
-		[Required]
-		//[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public string Id { get; set; }
 		[Required]
 		public string CompanyId { get; set; }
