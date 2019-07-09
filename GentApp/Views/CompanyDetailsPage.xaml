@@ -12,16 +12,16 @@
 		<TextBlock Margin="0,50,0,50" HorizontalAlignment="Center">Details of company:</TextBlock>
 		
 		<TextBlock FontWeight="Bold">Name:</TextBlock>
-		<TextBlock Text="{Binding SelectedCompany.Name, Mode=TwoWay, TargetNullValue='Empty'}"></TextBlock>
+		<TextBlock Text="{Binding Path=SelectedCompany.Name, Mode=OneWay, TargetNullValue='Empty'}"></TextBlock>
 		<TextBlock FontWeight="Bold">Address:</TextBlock>
-		<TextBlock Text="{Binding SelectedCompany.Address, Mode=TwoWay, TargetNullValue='Empty'}"></TextBlock>
+		<TextBlock Text="{Binding Path=SelectedCompany.Address, Mode=OneWay, TargetNullValue='Empty'}"></TextBlock>
 		<TextBlock FontWeight="Bold">Opening hours:</TextBlock>
-		<TextBlock Text="{Binding SelectedCompany.OpeningHours, Mode=TwoWay, TargetNullValue='Empty'}"></TextBlock>
+		<TextBlock Text="{Binding Path=SelectedCompany.OpeningHours, Mode=OneWay, TargetNullValue='Empty'}"></TextBlock>
 
 		<ProgressRing x:Name="progressBranches" HorizontalAlignment="Left" Margin="5,10,0,0" />
 
 		<TextBlock Margin="0,50,0,0">Branches:</TextBlock>
-		<ListView ItemsSource="{Binding SelectedCompany.Branches, Mode=TwoWay}"
+		<ListView ItemsSource="{Binding Path=SelectedCompany.Branches, Mode=TwoWay}"
 				  IsItemClickEnabled="True" 
 				  ItemClick="Branches_Click"
 				  x:Name="branchesListView">
