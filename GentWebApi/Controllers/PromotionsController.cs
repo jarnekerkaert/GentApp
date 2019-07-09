@@ -47,6 +47,7 @@ namespace GentWebApi.Controllers
 			if (ModelState.IsValid)
 			{
 				_context.Promotions.Add(promotion);
+				_context.SaveChanges();
 				return Ok();
 			}
 			else

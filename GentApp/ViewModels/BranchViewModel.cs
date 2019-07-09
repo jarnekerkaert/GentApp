@@ -35,9 +35,19 @@ namespace GentApp.ViewModels
 
 		}
 
-		public void AddPromotion(Promotion newPromotion)
+		public async void AddPromotion(Promotion newPromotion)
 		{
 			this.Promotions.Add(newPromotion);
+			MainPage.BranchesViewModel.MySelectedBranch.Promotions.ToList().Add(newPromotion);
+
+			Branch updatedBranch = MainPage.BranchesViewModel.MySelectedBranch;
+			var branchJson = JsonConvert.SerializeObject(updatedBranch);
+			HttpClient client = new HttpClient();
+			var res = await client.PutAsync("http://localhost:50957/api/branches/" + MainPage.BranchesViewModel.MySelectedBranch.Id, new StringContent(branchJson, System.Text.Encoding.UTF8, "application/json"));
+
+			//var promotionJson = JsonConvert.SerializeObject(newPromotion);
+			//HttpClient client = new HttpClient();
+			//var res = await client.PostAsync("http://localhost:50957/api/promotions", new StringContent(promotionJson, System.Text.Encoding.UTF8, "application/json"));
 		}
 
 		public async void EditPromotion(string title, string description, DateTime startdate, DateTime enddate)
