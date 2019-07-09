@@ -25,9 +25,5 @@ namespace GentApp.Views {
 		public CompanyDetailsPage() {
 			InitializeComponent();
 		}
-
-		private void Branches_Click(object sender, ItemClickEventArgs e) {
-			Frame.Navigate(typeof(BranchDetailsPage));
-		}
 	}
 }
