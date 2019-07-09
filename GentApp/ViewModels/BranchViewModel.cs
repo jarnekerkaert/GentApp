@@ -38,12 +38,12 @@ namespace GentApp.ViewModels
 		public async void AddPromotion(Promotion newPromotion)
 		{
 			this.Promotions.Add(newPromotion);
-			MainPage.BranchesViewModel.MySelectedBranch.Promotions.ToList().Add(newPromotion);
+			//MainPage.BranchesViewModel.MySelectedBranch.Promotions.ToList().Add(newPromotion);
 
-			Branch updatedBranch = MainPage.BranchesViewModel.MySelectedBranch;
-			var branchJson = JsonConvert.SerializeObject(updatedBranch);
-			HttpClient client = new HttpClient();
-			var res = await client.PutAsync("http://localhost:50957/api/branches/" + MainPage.BranchesViewModel.MySelectedBranch.Id, new StringContent(branchJson, System.Text.Encoding.UTF8, "application/json"));
+			//Branch updatedBranch = MainPage.BranchesViewModel.MySelectedBranch;
+			//var branchJson = JsonConvert.SerializeObject(updatedBranch);
+			//HttpClient client = new HttpClient();
+			//var res = await client.PutAsync("http://localhost:50957/api/branches/" + MainPage.BranchesViewModel.MySelectedBranch.Id, new StringContent(branchJson, System.Text.Encoding.UTF8, "application/json"));
 
 			//var promotionJson = JsonConvert.SerializeObject(newPromotion);
 			//HttpClient client = new HttpClient();
@@ -61,9 +61,9 @@ namespace GentApp.ViewModels
 				oldPromotion.EndDate = enddate;
 			}
 
-			var promotionJson = JsonConvert.SerializeObject(oldPromotion);
-			HttpClient client = new HttpClient();
-			var res = await client.PutAsync("http://localhost:50957/api/branches/" + MainPage.BranchesViewModel.MySelectedBranch.Id + "/promotions", new StringContent(promotionJson, System.Text.Encoding.UTF8, "application/json"));
+			//	var promotionJson = JsonConvert.SerializeObject(oldPromotion);
+			//	HttpClient client = new HttpClient();
+			//	var res = await client.PutAsync("http://localhost:50957/api/branches/" + MainPage.BranchesViewModel.MySelectedBranch.Id + "/promotions", new StringContent(promotionJson, System.Text.Encoding.UTF8, "application/json"));
 		}
 
 		public void DeletePromotion()

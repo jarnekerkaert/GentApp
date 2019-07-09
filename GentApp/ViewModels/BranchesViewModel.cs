@@ -65,7 +65,7 @@ namespace GentApp.ViewModels
 		//	this.Branches.Add(p as Branch);
 		//}
 
-		public void EditBranch(string name, string address, string openingHours, BranchType type)
+		public async void EditBranch(string name, string address, string openingHours, BranchType type)
 		{
 			var oldBranch = MySelectedBranch;
 			if (oldBranch != null)
@@ -76,9 +76,9 @@ namespace GentApp.ViewModels
 				oldBranch.Type = type;
 			}
 
-			var branchJson = JsonConvert.SerializeObject(oldBranch);
-			HttpClient client = new HttpClient();
-			var res = await client.PutAsync("http://localhost:50957/api/branches/" + MainPage.BranchesViewModel.MySelectedBranch.Id, new StringContent(branchJson, System.Text.Encoding.UTF8, "application/json"));
+			//var branchJson = JsonConvert.SerializeObject(oldBranch);
+			//HttpClient client = new HttpClient();
+			//var res = await client.PutAsync("http://localhost:50957/api/branches/" + MainPage.BranchesViewModel.MySelectedBranch.Id, new StringContent(branchJson, System.Text.Encoding.UTF8, "application/json"));
 		}
 
 		public void DeleteBranch()

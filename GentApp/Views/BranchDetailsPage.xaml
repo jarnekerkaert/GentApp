@@ -11,7 +11,7 @@
 		<TextBlock Margin="0,50,0,50" HorizontalAlignment="Center">Details of branch:</TextBlock>
 
 		<TextBlock FontWeight="Bold">Name:</TextBlock>
-		<TextBlock Text="{Binding Name, TargetNullValue='Empty'}"></TextBlock>
+		<TextBlock Text="{Binding Path=Name, TargetNullValue='Empty'}"></TextBlock>
 		<TextBlock FontWeight="Bold">Address:</TextBlock>
 		<TextBlock Text="{Binding Address, TargetNullValue='Empty'}"></TextBlock>
 		<TextBlock FontWeight="Bold">Type:</TextBlock>
