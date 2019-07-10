@@ -1,4 +1,8 @@
-﻿using GentApp.DataModel;
+﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Views;
+using GentApp.DataModel;
+using MetroLog;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,10 +15,20 @@ using System.Threading.Tasks;
 
 namespace GentApp.ViewModels
 {
-	public class BranchViewModel : INotifyPropertyChanged
+	public class BranchViewModel : ViewModelBase
 	{
-		public event PropertyChangedEventHandler PropertyChanged;
-		
+		private readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<BranchViewModel>();
+		//private readonly CompanyService companyService = new CompanyService();
+		//private readonly BranchService branchService = new BranchService();
+		//private readonly INavigationService _navigationService;
+
+		//public BranchViewModel(INavigationService navigationService)
+		public BranchViewModel()
+		{
+			//_navigationService = navigationService;
+			Promotions = new ObservableCollection<Promotion>(DummyDataSource.Promotions);
+		}
+
 		public ObservableCollection<Promotion> Promotions { get; set; }
 
 		private Promotion mySelectedPromotion;
@@ -25,14 +39,10 @@ namespace GentApp.ViewModels
 			{
 				if (value != mySelectedPromotion)
 				{
-					mySelectedPromotion = value; NotifyPropertyChanged("MySelectedPromotion");
+					mySelectedPromotion = value;
+					RaisePropertyChanged(nameof(MySelectedPromotion));
 				}
 			}
-		}
-		public BranchViewModel()
-		{
-			Promotions = new ObservableCollection<Promotion>(DummyDataSource.Promotions);
-
 		}
 
 		public async void AddPromotion(Promotion newPromotion)
@@ -71,10 +81,5 @@ namespace GentApp.ViewModels
 			this.Promotions.Remove(MySelectedPromotion);
 		}
 
-		private void NotifyPropertyChanged(String propertyName)
-		{
-			if (null != PropertyChanged)
-				PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-		}
 	}
 }

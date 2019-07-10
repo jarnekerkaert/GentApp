@@ -28,18 +28,15 @@ namespace GentApp.Views
 	/// </summary>
 	public sealed partial class BranchPromotionsPage : Page
 	{
-		//public Company MyCompany { get; set; }
-		public Branch MyBranch { get; set; }
-		public ObservableCollection<Promotion> Promotions { get; set; }
+		//public ObservableCollection<Promotion> Promotions { get; set; }
+		public List<Promotion> Promotions { get; set; }
 
 		public BranchPromotionsPage()
 		{
 			this.InitializeComponent();
 			RetrievePromotions();
-			MyBranch = SimpleIoc.Default.GetInstance<CompaniesViewModel>().SelectedBranch;
-			horStackPanel.DataContext = MyBranch;
-			Promotions = SimpleIoc.Default.GetInstance<BranchViewModel>().Promotions;
-			AmountPromotionsTextBlock.Text = Promotions.Count.ToString();
+			horStackPanel.DataContext = SimpleIoc.Default.GetInstance<CompaniesViewModel>().SelectedBranch;
+			//AmountPromotionsTextBlock.Text = Promotions.Count.ToString();
 		}
 
 		private void PromotionsListView_ItemClick(object sender, ItemClickEventArgs e)
@@ -60,9 +57,13 @@ namespace GentApp.Views
 			progressPromotions.IsActive = true;
 			var json = await client.GetStringAsync(new Uri("http://localhost:50957/api/branches/" + SimpleIoc.Default.GetInstance<CompaniesViewModel>().SelectedBranch.Id + "/promotions"));
 			var list = JsonConvert.DeserializeObject<ObservableCollection<Promotion>>(json);
-			promotionsListView.ItemsSource = list;
+			var currentBranchId = SimpleIoc.Default.GetInstance<CompaniesViewModel>().SelectedBranch.Id;
+			SimpleIoc.Default.GetInstance<CompaniesViewModel>().MyCompany.Branches.Where(b => b.Id.Equals(currentBranchId)).FirstOrDefault().Promotions = list;
+			//SimpleIoc.Default.GetInstance<BranchViewModel>().Promotions = list;
 			progressPromotions.IsActive = false;
-			SimpleIoc.Default.GetInstance<BranchViewModel>().Promotions = list;
+			promotionsListView.ItemsSource = SimpleIoc.Default.GetInstance<CompaniesViewModel>().SelectedBranch.Promotions;
+			// TODO: datums checken
+			currentPromotionsListView.ItemsSource = SimpleIoc.Default.GetInstance<CompaniesViewModel>().SelectedBranch.Promotions;
 		}
 	}
 }

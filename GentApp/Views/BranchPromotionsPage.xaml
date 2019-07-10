@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:local="using:GentApp.DataModel"
 	mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    DataContext="{Binding CompaniesViewModelInstance, Source={StaticResource Locator}}">
 
 	<StackPanel>
 		<StackPanel Orientation="Horizontal" x:Name="horStackPanel">
@@ -20,6 +20,18 @@
 		</StackPanel>
 		<TextBlock x:Name="NoPromotionsTextBlock"></TextBlock>
 		<TextBlock>Your current promotions:</TextBlock>
+		<ProgressRing x:Name="progressCurrentPromotions" HorizontalAlignment="Left" Margin="5,10,0,0" />
+		<ListView ItemsSource="{Binding Path=SelectedBranch.Promotions}" IsItemClickEnabled="True" ItemClick="PromotionsListView_ItemClick" x:Name="currentPromotionsListView">
+			<ListView.ItemTemplate>
+				<DataTemplate x:DataType="local:Promotion">
+					<StackPanel>
+						<TextBlock Text="{Binding Path=Title}" />
+					</StackPanel>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
+
+		<TextBlock>All your promotions:</TextBlock>
 		<ProgressRing x:Name="progressPromotions" HorizontalAlignment="Left" Margin="5,10,0,0" />
 		<ListView ItemsSource="{x:Bind Promotions}" IsItemClickEnabled="True" ItemClick="PromotionsListView_ItemClick" x:Name="promotionsListView">
 			<ListView.ItemTemplate>
@@ -29,7 +41,6 @@
 					</StackPanel>
 				</DataTemplate>
 			</ListView.ItemTemplate>
-
 		</ListView>
 		<SymbolIcon Symbol="Add" IsTapEnabled="True" Tapped="AddIcon_Tapped"></SymbolIcon>
 	</StackPanel>
