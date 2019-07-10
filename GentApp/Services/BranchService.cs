@@ -44,5 +44,24 @@ namespace GentApp.Services
 				await new MessageDialog(ex.Message).ShowAsync();
 			}
 		}
+
+		public async Task Delete(Branch branch)
+		{
+			try
+			{
+				var request = new HttpRequestMessage
+				{
+					Method = HttpMethod.Delete,
+					RequestUri = new Uri(apiUrl),
+					Content = new StringContent(JsonConvert.SerializeObject(branch), Encoding.UTF8, "application/json")
+				};
+				HttpResponseMessage responseMsg = await HttpClient.SendAsync(request);
+				//var response = await HttpClient.DeleteAsync(apiUrl + "/" + branch.Id);
+			}
+			catch (Exception ex)
+			{
+				await new MessageDialog(ex.Message).ShowAsync();
+			}
+		}
 	}
 }

@@ -141,5 +141,10 @@ namespace GentApp.ViewModels {
 			Companies = new ObservableCollection<Company>(await companyService.GetAll());
 			MyCompany = Companies[0];
 		}
+
+		public async void DeleteBranch()
+		{
+			await branchService.Delete(SelectedBranch);
+		}
 	}
 }

@@ -102,7 +102,9 @@ namespace GentApp.Views
 			};
 			ContentDialogResult result = await deleteBranchDialog.ShowAsync();
 			if (result == ContentDialogResult.Primary) {
-				SimpleIoc.Default.GetInstance<BranchesViewModel>().DeleteBranch();
+				SimpleIoc.Default.GetInstance<CompaniesViewModel>().DeleteBranch();
+				//TODO: werkt nog niet optimaal
+				SimpleIoc.Default.GetInstance<CompaniesViewModel>().RefreshCompanies();
 				Frame.Navigate(typeof(MyCompanyPage));
 			}
 			//else if(result == ContentDialogResult.Secondary){ /* ... */}
