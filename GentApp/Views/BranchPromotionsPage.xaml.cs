@@ -34,7 +34,6 @@ namespace GentApp.Views
 		public BranchPromotionsPage()
 		{
 			this.InitializeComponent();
-			//AmountPromotionsTextBlock.Text = Promotions.Count.ToString();
 			// datums checken voor current promotions
 		}
 

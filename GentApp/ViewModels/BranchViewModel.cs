@@ -1,7 +1,9 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Views;
 using GentApp.DataModel;
+using GentApp.Services;
 using MetroLog;
 using Newtonsoft.Json;
 using System;
@@ -18,7 +20,7 @@ namespace GentApp.ViewModels
 	public class BranchViewModel : ViewModelBase
 	{
 		private readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<BranchViewModel>();
-		//private readonly CompanyService companyService = new CompanyService();
+		private readonly CompanyService companyService = new CompanyService();
 		//private readonly BranchService branchService = new BranchService();
 		//private readonly INavigationService _navigationService;
 
@@ -62,18 +64,11 @@ namespace GentApp.ViewModels
 
 		public async void EditPromotion(string title, string description, DateTime startdate, DateTime enddate)
 		{
-			var oldPromotion = MySelectedPromotion;
-			if (oldPromotion != null)
-			{
-				oldPromotion.Title = title;
-				oldPromotion.Description = description;
-				oldPromotion.StartDate = startdate;
-				oldPromotion.EndDate = enddate;
-			}
-
-			//	var promotionJson = JsonConvert.SerializeObject(oldPromotion);
-			//	HttpClient client = new HttpClient();
-			//	var res = await client.PutAsync("http://localhost:50957/api/branches/" + MainPage.BranchesViewModel.MySelectedBranch.Id + "/promotions", new StringContent(promotionJson, System.Text.Encoding.UTF8, "application/json"));
+			MySelectedPromotion.Title = title;
+			MySelectedPromotion.Description = description;
+			MySelectedPromotion.StartDate = startdate;
+			MySelectedPromotion.EndDate = enddate;
+			await companyService.Update(SimpleIoc.Default.GetInstance<CompaniesViewModel>().MyCompany);
 		}
 
 		public void DeletePromotion()

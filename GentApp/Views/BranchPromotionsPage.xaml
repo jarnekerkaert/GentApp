@@ -22,10 +22,6 @@
 			<TextBlock Text="{Binding Name}"></TextBlock>
 			<TextBlock Text=":" />
 		</StackPanel>
-		<StackPanel Orientation="Horizontal">
-			<TextBlock>Amount:</TextBlock>
-			<TextBlock x:Name="AmountPromotionsTextBlock"></TextBlock>
-		</StackPanel>
 		<TextBlock x:Name="NoPromotionsTextBlock"></TextBlock>
 		<TextBlock>Your current promotions:</TextBlock>
 		<ProgressRing x:Name="progressCurrentPromotions" HorizontalAlignment="Left" Margin="5,10,0,0" />
