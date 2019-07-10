@@ -23,7 +23,7 @@ namespace GentApp.Views
 		public EditPromotionPage()
 		{
 			InitializeComponent();
-			DataContext = SimpleIoc.Default.GetInstance<BranchViewModel>().MySelectedPromotion;
+			//DataContext = SimpleIoc.Default.GetInstance<BranchViewModel>().MySelectedPromotion;
 			StartDatePicker.Date = SimpleIoc.Default.GetInstance<BranchViewModel>().MySelectedPromotion.StartDate;
 			EndDatePicker.Date = SimpleIoc.Default.GetInstance<BranchViewModel>().MySelectedPromotion.EndDate;
 		}
@@ -92,6 +92,8 @@ namespace GentApp.Views
 			if (result == ContentDialogResult.Primary)
 			{
 				SimpleIoc.Default.GetInstance<BranchViewModel>().DeletePromotion();
+				//TODO: werkt nog niet optimaal
+				SimpleIoc.Default.GetInstance<CompaniesViewModel>().RefreshCompanies();
 				Frame.Navigate(typeof(MyPromotionsPage));
 			}
 			//else if(result == ContentDialogResult.Secondary){ /* ... */}

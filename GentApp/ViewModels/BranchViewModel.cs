@@ -21,6 +21,7 @@ namespace GentApp.ViewModels
 	{
 		private readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<BranchViewModel>();
 		private readonly CompanyService companyService = new CompanyService();
+		private readonly PromotionService promotionService = new PromotionService();
 		//private readonly BranchService branchService = new BranchService();
 		//private readonly INavigationService _navigationService;
 
@@ -71,9 +72,10 @@ namespace GentApp.ViewModels
 			await companyService.Update(SimpleIoc.Default.GetInstance<CompaniesViewModel>().MyCompany);
 		}
 
-		public void DeletePromotion()
+		public async void DeletePromotion()
 		{
-			this.Promotions.Remove(MySelectedPromotion);
+			//this.Promotions.Remove(MySelectedPromotion);
+			await promotionService.Delete(MySelectedPromotion);
 		}
 
 	}

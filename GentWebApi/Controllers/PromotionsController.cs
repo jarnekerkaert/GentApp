@@ -72,12 +72,28 @@ namespace GentWebApi.Controllers
 			}
 		}
 
-        // DELETE: api/promotions/5
-        [HttpDelete("{id}")]
-        public IActionResult Delete(string id)
-        {
-			Promotion promotion = _context.Promotions.Find(id);
-			if (promotion != null)
+  //      // DELETE: api/promotions/5
+  //      [HttpDelete("{id}")]
+  //      public IActionResult Delete(string id)
+  //      {
+		//	Promotion promotion = _context.Promotions.Find(id);
+		//	if (promotion != null)
+		//	{
+		//		_context.Promotions.Remove(promotion);
+		//		_context.SaveChanges();
+		//		return Ok();
+		//	}
+		//	else
+		//	{
+		//		return NotFound();
+		//	}
+		//}
+
+		// DELETE: api/promotions
+		[HttpDelete]
+		public IActionResult Delete([FromBody] Promotion promotion)
+		{
+			if (_context.Promotions.Contains(promotion))
 			{
 				_context.Promotions.Remove(promotion);
 				_context.SaveChanges();
@@ -88,6 +104,5 @@ namespace GentWebApi.Controllers
 				return NotFound();
 			}
 		}
-
 	}
 }

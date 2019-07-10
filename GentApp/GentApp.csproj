@@ -108,6 +108,7 @@
     <Compile Include="Helpers\NavigationService.cs" />
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\BranchService.cs" />
+    <Compile Include="Services\PromotionService.cs" />
     <Compile Include="ViewModels\BranchesViewModel.cs" />
     <Compile Include="ViewModels\BranchViewModel.cs" />
     <Compile Include="Services\CompanyService.cs" />
