@@ -81,7 +81,8 @@ namespace GentWebApi.Controllers
 		[HttpGet("{id}/promotions", Name = "GetPromotions")]
 		public IEnumerable<Promotion> GetPromotions(string id)
 		{
-			return _context.Promotions.Where(p => p.Branch.Id.Equals(id));
+			//return _context.Promotions.Where(p => p.Branch.Id.Equals(id));
+			return _context.Promotions.Where(p => p.BranchId.Equals(id));
 		}
 
 		// DELETE: api/branches

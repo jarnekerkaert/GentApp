@@ -40,6 +40,7 @@ namespace GentApp.ViewModels
 			SimpleIoc.Default.Register<AccountViewModel>();
 			SimpleIoc.Default.Register<CompaniesViewModel>();
 			SimpleIoc.Default.Register<BranchesViewModel>();
+			SimpleIoc.Default.Register<BranchViewModel>();
 			SetupNavigation();
 		}
 
@@ -60,6 +61,7 @@ namespace GentApp.ViewModels
 		public AccountViewModel AccountViewModelInstance => ServiceLocator.Current.GetInstance<AccountViewModel>();
 		public CompaniesViewModel CompaniesViewModelInstance => ServiceLocator.Current.GetInstance<CompaniesViewModel>();
 		public BranchesViewModel BranchesViewModelInstance => ServiceLocator.Current.GetInstance<BranchesViewModel>();
+		public BranchViewModel BranchViewModelInstance => ServiceLocator.Current.GetInstance<BranchViewModel>();
 
 		// <summary>
 		// The cleanup.

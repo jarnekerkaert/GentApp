@@ -35,10 +35,8 @@ namespace GentApp.Views
 		public BranchPromotionsPage()
 		{
 			this.InitializeComponent();
-			//MyCompany = MainPage.CompaniesViewModel.MyCompany;
-			//horStackPanel.DataContext = MyCompany;
 			RetrievePromotions();
-			MyBranch = SimpleIoc.Default.GetInstance<BranchesViewModel>().MySelectedBranch;
+			MyBranch = SimpleIoc.Default.GetInstance<CompaniesViewModel>().SelectedBranch;
 			horStackPanel.DataContext = MyBranch;
 			Promotions = SimpleIoc.Default.GetInstance<BranchViewModel>().Promotions;
 			AmountPromotionsTextBlock.Text = Promotions.Count.ToString();
@@ -60,7 +58,7 @@ namespace GentApp.Views
 		{
 			HttpClient client = new HttpClient();
 			progressPromotions.IsActive = true;
-			var json = await client.GetStringAsync(new Uri("http://localhost:50957/api/branches/" + SimpleIoc.Default.GetInstance<BranchesViewModel>().MySelectedBranch.Id + "/promotions"));
+			var json = await client.GetStringAsync(new Uri("http://localhost:50957/api/branches/" + SimpleIoc.Default.GetInstance<CompaniesViewModel>().SelectedBranch.Id + "/promotions"));
 			var list = JsonConvert.DeserializeObject<ObservableCollection<Promotion>>(json);
 			promotionsListView.ItemsSource = list;
 			progressPromotions.IsActive = false;
