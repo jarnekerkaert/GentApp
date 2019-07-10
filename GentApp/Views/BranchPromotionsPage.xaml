@@ -22,8 +22,8 @@
 			<TextBlock Text="{Binding Name}"></TextBlock>
 			<TextBlock Text=":" />
 		</StackPanel>
-		<TextBlock x:Name="NoPromotionsTextBlock"></TextBlock>
 		<TextBlock>Your current promotions:</TextBlock>
+		<TextBlock x:Name="NoCurrentPromotionsTextBlock"></TextBlock>
 		<ProgressRing x:Name="progressCurrentPromotions" HorizontalAlignment="Left" Margin="5,10,0,0" />
 		<ListView ItemsSource="{Binding Path=SelectedBranch.Promotions}" IsItemClickEnabled="True" ItemClick="PromotionsListView_ItemClick" x:Name="currentPromotionsListView">
 			<ListView.ItemTemplate>
@@ -36,6 +36,7 @@
 		</ListView>
 
 		<TextBlock>All your promotions:</TextBlock>
+		<TextBlock x:Name="NoPromotionsTextBlock"></TextBlock>
 		<ProgressRing x:Name="progressPromotions" HorizontalAlignment="Left" Margin="5,10,0,0" />
 		<ListView ItemsSource="{Binding Path=SelectedBranch.Promotions}" IsItemClickEnabled="True" ItemClick="PromotionsListView_ItemClick" x:Name="promotionsListView">
 			<ListView.ItemTemplate>

@@ -17,11 +17,11 @@
 		<TextBox Width="200" x:Name="Title" Header= "Title" MaxLength="300" InputScope="Text" PlaceholderText="Title"></TextBox>
 		<TextBlock x:Name="TitleValidationErrorTextBlock" HorizontalAlignment="Center"
                 Foreground="Red" />
-		<TextBlock Text="Branch:" HorizontalAlignment="Center" Width="200" />
-		<!-- checkbox voor alle branches, dan combobox invisible maken -->
+		<!--<TextBlock Text="Branch:" HorizontalAlignment="Center" Width="200" />
+		--><!-- checkbox voor alle branches, dan combobox invisible maken --><!--
 		<ComboBox x:Name="Branch" PlaceholderText="Branch" Width="200" HorizontalAlignment="Center" Margin="0,20,0,0" />
 		<TextBlock x:Name="BranchValidationErrorTextBlock" HorizontalAlignment="Center" Margin="0,10,0,0"
-                Foreground="Red" />
+                Foreground="Red" />-->
 		<TextBox Width="200" x:Name="Description" Header= "Description" MaxLength="300" InputScope="Text" PlaceholderText="Description"></TextBox>
 		<TextBlock x:Name="DescriptionValidationErrorTextBlock" HorizontalAlignment="Center"
                 Foreground="Red" />

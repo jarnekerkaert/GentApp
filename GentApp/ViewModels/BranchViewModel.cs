@@ -48,9 +48,11 @@ namespace GentApp.ViewModels
 			}
 		}
 
-		public async void AddPromotion(Promotion newPromotion)
+		public async void AddPromotion(Promotion promotion)
 		{
-			this.Promotions.Add(newPromotion);
+			await promotionService.Save(promotion);
+
+			//this.Promotions.Add(newPromotion);
 			//MainPage.BranchesViewModel.MySelectedBranch.Promotions.ToList().Add(newPromotion);
 
 			//Branch updatedBranch = MainPage.BranchesViewModel.MySelectedBranch;

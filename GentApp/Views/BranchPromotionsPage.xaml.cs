@@ -34,7 +34,6 @@ namespace GentApp.Views
 		public BranchPromotionsPage()
 		{
 			this.InitializeComponent();
-			// datums checken voor current promotions
 		}
 
 		private void PromotionsListView_ItemClick(object sender, ItemClickEventArgs e)

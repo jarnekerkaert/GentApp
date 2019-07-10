@@ -39,5 +39,17 @@ namespace GentApp.Services
 				await new MessageDialog(ex.Message).ShowAsync();
 			}
 		}
+
+		public async Task Save(Promotion promotion)
+		{
+			try
+			{
+				var response = await HttpClient.PostAsync(apiUrl, new StringContent(JsonConvert.SerializeObject(promotion), System.Text.Encoding.UTF8, "application/json"));
+			}
+			catch (Exception ex)
+			{
+				await new MessageDialog(ex.Message).ShowAsync();
+			}
+		}
 	}
 }
