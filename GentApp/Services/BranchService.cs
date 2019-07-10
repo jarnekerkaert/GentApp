@@ -63,5 +63,15 @@ namespace GentApp.Services
 				await new MessageDialog(ex.Message).ShowAsync();
 			}
 		}
+
+		public async Task<IEnumerable<Promotion>> GetPromotions(string id)
+		{
+			HttpResponseMessage response = await HttpClient.GetAsync(apiUrl + "/" + id + "/promotions");
+			if (response.IsSuccessStatusCode)
+			{
+				return JsonConvert.DeserializeObject<IEnumerable<Promotion>>(await response.Content.ReadAsStringAsync());
+			}
+			return Enumerable.Empty<Promotion>();
+		}
 	}
 }

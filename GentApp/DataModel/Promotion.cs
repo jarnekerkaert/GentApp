@@ -11,7 +11,7 @@ namespace GentApp.DataModel {
 		public DateTime EndDate { get; set; }
 		public string Title { get; set; }
 		public string Description { get; set; }
-		public Branch Branch { get; set; }
+		public string BranchId { get; set; }
 		public bool AllBranches { get; set; }
 
 		public Promotion() {

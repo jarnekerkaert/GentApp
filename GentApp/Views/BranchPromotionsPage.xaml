@@ -5,11 +5,19 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:local="using:GentApp.DataModel"
+	xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+	xmlns:core="using:Microsoft.Xaml.Interactions.Core"
 	mc:Ignorable="d"
     DataContext="{Binding CompaniesViewModelInstance, Source={StaticResource Locator}}">
 
+	<interactivity:Interaction.Behaviors>
+		<core:EventTriggerBehavior EventName="Loaded">
+			<core:InvokeCommandAction Command="{Binding Path=LoadPromotionsCommand}" />
+		</core:EventTriggerBehavior>
+	</interactivity:Interaction.Behaviors>
+
 	<StackPanel>
-		<StackPanel Orientation="Horizontal" x:Name="horStackPanel">
+		<StackPanel Orientation="Horizontal" x:Name="horStackPanel" DataContext="{Binding Path=SelectedBranch}">
 			<TextBlock Text="Manage the promotions of" Margin="0,0,5,0"></TextBlock>
 			<TextBlock Text="{Binding Name}"></TextBlock>
 			<TextBlock Text=":" />
@@ -23,7 +31,7 @@
 		<ProgressRing x:Name="progressCurrentPromotions" HorizontalAlignment="Left" Margin="5,10,0,0" />
 		<ListView ItemsSource="{Binding Path=SelectedBranch.Promotions}" IsItemClickEnabled="True" ItemClick="PromotionsListView_ItemClick" x:Name="currentPromotionsListView">
 			<ListView.ItemTemplate>
-				<DataTemplate x:DataType="local:Promotion">
+				<DataTemplate>
 					<StackPanel>
 						<TextBlock Text="{Binding Path=Title}" />
 					</StackPanel>
@@ -33,15 +41,16 @@
 
 		<TextBlock>All your promotions:</TextBlock>
 		<ProgressRing x:Name="progressPromotions" HorizontalAlignment="Left" Margin="5,10,0,0" />
-		<ListView ItemsSource="{x:Bind Promotions}" IsItemClickEnabled="True" ItemClick="PromotionsListView_ItemClick" x:Name="promotionsListView">
+		<ListView ItemsSource="{Binding Path=SelectedBranch.Promotions}" IsItemClickEnabled="True" ItemClick="PromotionsListView_ItemClick" x:Name="promotionsListView">
 			<ListView.ItemTemplate>
 				<DataTemplate x:DataType="local:Promotion">
 					<StackPanel>
-						<TextBlock Text="{x:Bind Title}" />
+						<TextBlock Text="{Binding Path=Title}" />
 					</StackPanel>
 				</DataTemplate>
 			</ListView.ItemTemplate>
 		</ListView>
+
 		<SymbolIcon Symbol="Add" IsTapEnabled="True" Tapped="AddIcon_Tapped"></SymbolIcon>
 	</StackPanel>
 </Page>

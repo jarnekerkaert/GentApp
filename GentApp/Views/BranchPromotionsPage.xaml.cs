@@ -34,9 +34,8 @@ namespace GentApp.Views
 		public BranchPromotionsPage()
 		{
 			this.InitializeComponent();
-			RetrievePromotions();
-			horStackPanel.DataContext = SimpleIoc.Default.GetInstance<CompaniesViewModel>().SelectedBranch;
 			//AmountPromotionsTextBlock.Text = Promotions.Count.ToString();
+			// datums checken voor current promotions
 		}
 
 		private void PromotionsListView_ItemClick(object sender, ItemClickEventArgs e)
@@ -51,19 +50,5 @@ namespace GentApp.Views
 			Frame.Navigate(typeof(AddPromotionPage));
 		}
 
-		private async void RetrievePromotions()
-		{
-			HttpClient client = new HttpClient();
-			progressPromotions.IsActive = true;
-			var json = await client.GetStringAsync(new Uri("http://localhost:50957/api/branches/" + SimpleIoc.Default.GetInstance<CompaniesViewModel>().SelectedBranch.Id + "/promotions"));
-			var list = JsonConvert.DeserializeObject<ObservableCollection<Promotion>>(json);
-			var currentBranchId = SimpleIoc.Default.GetInstance<CompaniesViewModel>().SelectedBranch.Id;
-			SimpleIoc.Default.GetInstance<CompaniesViewModel>().MyCompany.Branches.Where(b => b.Id.Equals(currentBranchId)).FirstOrDefault().Promotions = list;
-			//SimpleIoc.Default.GetInstance<BranchViewModel>().Promotions = list;
-			progressPromotions.IsActive = false;
-			promotionsListView.ItemsSource = SimpleIoc.Default.GetInstance<CompaniesViewModel>().SelectedBranch.Promotions;
-			// TODO: datums checken
-			currentPromotionsListView.ItemsSource = SimpleIoc.Default.GetInstance<CompaniesViewModel>().SelectedBranch.Promotions;
-		}
 	}
 }

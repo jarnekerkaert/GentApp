@@ -146,5 +146,20 @@ namespace GentApp.ViewModels {
 		{
 			await branchService.Delete(SelectedBranch);
 		}
+
+		private RelayCommand _loadPromotionsCommand;
+
+		public RelayCommand LoadPromotionsCommand
+		{
+			get
+			{
+				return _loadPromotionsCommand ?? (_loadPromotionsCommand = new RelayCommand(async () => {
+					MyCompany.Branches.Where(b => b.Id.Equals(SelectedBranch.Id)).FirstOrDefault().Promotions = await branchService.GetPromotions(SelectedBranch.Id);
+					RaisePropertyChanged(nameof(MyCompany));
+					RaisePropertyChanged(nameof(SelectedBranch));
+				}
+				));
+			}
+		}
 	}
 }
