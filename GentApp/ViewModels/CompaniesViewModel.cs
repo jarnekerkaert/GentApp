@@ -85,14 +85,6 @@ namespace GentApp.ViewModels {
 			}
 		}
 
-		public RelayCommand MyBranchSelectedCommand
-		{
-			get
-			{
-				return _branchSelectedCommand = new RelayCommand(() => _navigationService.NavigateTo("EditBranchPage"));
-			}
-		}
-
 		public async void EditCompany(string name, string address, string openingHours) {
 			MyCompany.Name = name;
 			MyCompany.Address = address;
@@ -134,7 +126,6 @@ namespace GentApp.ViewModels {
 		public async void AddBranch(Branch branch)
 		{
 			await branchService.Save(branch);
-			//RaisePropertyChanged(nameof(MyCompany));
 			//MyCompany.Branches.Add(branch);
 			//await companyService.Update(MyCompany);
 		}
@@ -149,7 +140,6 @@ namespace GentApp.ViewModels {
 		public async void DeleteBranch()
 		{
 			await branchService.Delete(SelectedBranch);
-			RaisePropertyChanged(nameof(MyCompany));
 		}
 
 		private RelayCommand _loadPromotionsCommand;
