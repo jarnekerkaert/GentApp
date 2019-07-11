@@ -38,6 +38,7 @@ namespace GentApp.Services
 			try
 			{
 				var response = await HttpClient.PostAsync(apiUrl, new StringContent(JsonConvert.SerializeObject(branch), System.Text.Encoding.UTF8, "application/json"));
+				Console.WriteLine("test");
 			}
 			catch (Exception ex)
 			{

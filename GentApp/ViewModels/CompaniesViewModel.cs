@@ -99,6 +99,7 @@ namespace GentApp.ViewModels {
 			MyCompany.OpeningHours = openingHours;
 
 			await companyService.Update(MyCompany);
+			RaisePropertyChanged(nameof(MyCompany));
 		}
 
 		public async void SaveBranch() {
@@ -112,7 +113,7 @@ namespace GentApp.ViewModels {
 			get {
 				return _loadCommand ?? (_loadCommand = new RelayCommand(async () => {
 					Companies = new ObservableCollection<Company>(await companyService.GetAll());
-					MyCompany = Companies[0];
+					//MyCompany = Companies[0];
 				}
 				));
 			}
@@ -127,11 +128,13 @@ namespace GentApp.ViewModels {
 			//var oldBranch = MyCompany.Branches.Where(b => b.Id.Equals(SelectedBranch.Id)).First();
 			//oldBranch = SelectedBranch;
 			await companyService.Update(MyCompany);
+			RaisePropertyChanged(nameof(MyCompany));
 		}
 
 		public async void AddBranch(Branch branch)
 		{
 			await branchService.Save(branch);
+			//RaisePropertyChanged(nameof(MyCompany));
 			//MyCompany.Branches.Add(branch);
 			//await companyService.Update(MyCompany);
 		}
@@ -146,6 +149,7 @@ namespace GentApp.ViewModels {
 		public async void DeleteBranch()
 		{
 			await branchService.Delete(SelectedBranch);
+			RaisePropertyChanged(nameof(MyCompany));
 		}
 
 		private RelayCommand _loadPromotionsCommand;
@@ -162,5 +166,22 @@ namespace GentApp.ViewModels {
 				));
 			}
 		}
+
+		private RelayCommand _loadCompanyCommand;
+
+		// Tijdelijk
+		private string MyCompanyId = "1";
+		public RelayCommand LoadCompanyCommand
+		{
+			get
+			{
+				return _loadCompanyCommand ?? (_loadCompanyCommand = new RelayCommand(async () => {
+					MyCompany = await companyService.GetMyCompany(MyCompanyId);
+					RaisePropertyChanged(nameof(MyCompany));
+				}
+				));
+			}
+		}
 	}
+
 }

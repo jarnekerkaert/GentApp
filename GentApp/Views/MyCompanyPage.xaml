@@ -10,6 +10,12 @@
 	mc:Ignorable="d"
 	DataContext="{Binding CompaniesViewModelInstance, Source={StaticResource Locator}}">
 
+	<interactivity:Interaction.Behaviors>
+		<core:EventTriggerBehavior EventName="Loaded">
+			<core:InvokeCommandAction Command="{Binding Path=LoadCompanyCommand}" />
+		</core:EventTriggerBehavior>
+	</interactivity:Interaction.Behaviors>
+
 	<StackPanel>
 		<TextBlock Margin="0,50,0,50" HorizontalAlignment="Center">Details of your company:</TextBlock>
 

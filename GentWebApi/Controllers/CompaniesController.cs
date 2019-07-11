@@ -35,7 +35,8 @@ namespace GentAppWebApi.Controllers {
 		public ActionResult<Company> Get(string id) {
 			if (_context.Companies.Find(id) != null)
 			{
-				return _context.Companies.Find(id);
+				//return _context.Companies.Find(id);
+				return _context.Companies.Include(c => c.Branches).Where(c => c.Id.Equals(id)).FirstOrDefault();
 			}
 			else
 			{
