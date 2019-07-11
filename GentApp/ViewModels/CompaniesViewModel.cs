@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GentApp.DataModel;
@@ -155,6 +156,12 @@ namespace GentApp.ViewModels {
 				}
 				));
 			}
+		}
+
+		public async Task<IEnumerable<Promotion>> RetrievePromotions()
+		{
+			var promotions = await branchService.GetPromotions(SelectedBranch.Id);
+			return promotions;
 		}
 
 		private RelayCommand _loadCompanyCommand;

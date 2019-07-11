@@ -24,8 +24,7 @@
 		</StackPanel>
 		<TextBlock>Your current promotions:</TextBlock>
 		<TextBlock x:Name="NoCurrentPromotionsTextBlock"></TextBlock>
-		<ProgressRing x:Name="progressCurrentPromotions" HorizontalAlignment="Left" Margin="5,10,0,0" />
-		<ListView ItemsSource="{Binding Path=SelectedBranch.Promotions}" IsItemClickEnabled="True" ItemClick="PromotionsListView_ItemClick" x:Name="currentPromotionsListView">
+		<ListView IsItemClickEnabled="True" ItemClick="PromotionsListView_ItemClick" x:Name="currentPromotionsListView" Margin="0,0,0,20">
 			<ListView.ItemTemplate>
 				<DataTemplate>
 					<StackPanel>
@@ -35,10 +34,22 @@
 			</ListView.ItemTemplate>
 		</ListView>
 
-		<TextBlock>All your promotions:</TextBlock>
+		<!--<TextBlock>All your promotions:</TextBlock>
 		<TextBlock x:Name="NoPromotionsTextBlock"></TextBlock>
 		<ProgressRing x:Name="progressPromotions" HorizontalAlignment="Left" Margin="5,10,0,0" />
 		<ListView ItemsSource="{Binding Path=SelectedBranch.Promotions}" IsItemClickEnabled="True" ItemClick="PromotionsListView_ItemClick" x:Name="promotionsListView">
+			<ListView.ItemTemplate>
+				<DataTemplate x:DataType="local:Promotion">
+					<StackPanel>
+						<TextBlock Text="{Binding Path=Title}" />
+					</StackPanel>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>-->
+
+		<TextBlock>Non current promotions:</TextBlock>
+		<TextBlock x:Name="NoPromotionsTextBlock"></TextBlock>
+		<ListView IsItemClickEnabled="True" ItemClick="PromotionsListView_ItemClick" x:Name="promotionsListView">
 			<ListView.ItemTemplate>
 				<DataTemplate x:DataType="local:Promotion">
 					<StackPanel>
