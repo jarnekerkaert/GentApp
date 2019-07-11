@@ -32,7 +32,20 @@ namespace GentApp.ViewModels
 			Promotions = new ObservableCollection<Promotion>(DummyDataSource.Promotions);
 		}
 
-		public ObservableCollection<Promotion> Promotions { get; set; }
+		private ObservableCollection<Promotion> _promotions;
+		public ObservableCollection<Promotion> Promotions
+		{
+			get
+			{
+				return _promotions;
+			}
+
+			set
+			{
+				_promotions = value;
+				RaisePropertyChanged(nameof(Promotions));
+			}
+		}
 
 		private Promotion mySelectedPromotion;
 		public Promotion MySelectedPromotion
@@ -71,7 +84,9 @@ namespace GentApp.ViewModels
 			MySelectedPromotion.Description = description;
 			MySelectedPromotion.StartDate = startdate;
 			MySelectedPromotion.EndDate = enddate;
-			await companyService.Update(SimpleIoc.Default.GetInstance<CompaniesViewModel>().MyCompany);
+			//await companyService.Update(SimpleIoc.Default.GetInstance<CompaniesViewModel>().MyCompany);
+			await promotionService.Update(MySelectedPromotion);
+			RaisePropertyChanged(nameof(Promotions));
 		}
 
 		public async void DeletePromotion()

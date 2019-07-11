@@ -81,7 +81,7 @@ namespace GentApp.Views
 			{
 				Promotion newPromotion = new Promotion() { Title = Title.Text, Description = Description.Text, StartDate = StartDatePicker.Date.Value.DateTime, EndDate = EndDatePicker.Date.Value.DateTime, BranchId = SimpleIoc.Default.GetInstance<CompaniesViewModel>().SelectedBranch.Id, AllBranches = false };
 				SimpleIoc.Default.GetInstance<BranchViewModel>().AddPromotion(newPromotion);
-				Frame.Navigate(typeof(MyPromotionsPage));
+				Frame.Navigate(typeof(BranchPromotionsPage));
 			}
 		}
 	}

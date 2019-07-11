@@ -58,7 +58,7 @@ namespace GentWebApi.Controllers
 
 		// PUT: api/promotions/5
 		[HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Promotion promotion)
+        public IActionResult Put([FromBody] Promotion promotion)
         {
 			if (ModelState.IsValid)
 			{
