@@ -22,10 +22,6 @@
 			</interactivity:Interaction.Behaviors>
 			<NavigationView.MenuItems>
 				<NavigationViewItem
-					Tag="MainPage"
-					Content="Home"
-					Icon="List" />
-				<NavigationViewItem
 					Tag="CompaniesPage"
 					Content="Companies"
 					Icon="List" />
@@ -33,18 +29,6 @@
 					Tag="MyCompanyPage"
 					Content="Your Company"
 					Icon="Edit" />
-				<NavigationViewItem
-					Tag="AddBranchPage"
-					Content="Add a branch"
-					Icon="Add" />
-				<NavigationViewItem
-					Tag="BranchPromotionsPage"
-					Content="Manage promotions"
-					Icon="Emoji2" />
-				<NavigationViewItem
-					Tag="MyEventsPage"
-					Content="Manage events"
-					Icon="Calendar" />
 				<NavigationViewItem
 					Tag="Logout"
 					Content="Logout"

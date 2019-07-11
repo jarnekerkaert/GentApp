@@ -29,9 +29,6 @@ namespace GentApp.ViewModels
 		{
 			("Companies", nameof(CompaniesPage)),
 			("Your Company", nameof(MyCompanyPage)),
-			("Add a branch", nameof(AddBranchPage)),
-			("Manage promotions", nameof(MyPromotionsPage)),
-			("Manage events", nameof(MyEventsPage)),
 			("Logout",nameof(LoginPage))
 		};
 
