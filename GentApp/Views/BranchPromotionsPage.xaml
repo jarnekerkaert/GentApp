@@ -8,7 +8,7 @@
 	xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
 	xmlns:core="using:Microsoft.Xaml.Interactions.Core"
 	mc:Ignorable="d"
-    DataContext="{Binding CompaniesViewModelInstance, Source={StaticResource Locator}}">
+    DataContext="{Binding BranchViewModelInstance, Source={StaticResource Locator}}">
 
 	<interactivity:Interaction.Behaviors>
 		<core:EventTriggerBehavior EventName="Loaded">
@@ -17,14 +17,14 @@
 	</interactivity:Interaction.Behaviors>
 
 	<StackPanel>
-		<StackPanel Orientation="Horizontal" x:Name="horStackPanel" DataContext="{Binding Path=SelectedBranch}">
+		<StackPanel Orientation="Horizontal" x:Name="horStackPanel">
 			<TextBlock Text="Manage the promotions of" Margin="0,0,5,0"></TextBlock>
 			<TextBlock Text="{Binding Name}"></TextBlock>
 			<TextBlock Text=":" />
 		</StackPanel>
 		<TextBlock>Your current promotions:</TextBlock>
 		<TextBlock x:Name="NoCurrentPromotionsTextBlock"></TextBlock>
-		<ListView IsItemClickEnabled="True" ItemClick="PromotionsListView_ItemClick" x:Name="currentPromotionsListView" Margin="0,0,0,20">
+		<ListView ItemsSource="{Binding Path=CurrentPromotions}" IsItemClickEnabled="True" ItemClick="PromotionsListView_ItemClick" x:Name="currentPromotionsListView" Margin="0,0,0,20">
 			<ListView.ItemTemplate>
 				<DataTemplate>
 					<StackPanel>
@@ -49,7 +49,7 @@
 
 		<TextBlock>Non current promotions:</TextBlock>
 		<TextBlock x:Name="NoPromotionsTextBlock"></TextBlock>
-		<ListView IsItemClickEnabled="True" ItemClick="PromotionsListView_ItemClick" x:Name="promotionsListView">
+		<ListView ItemsSource="{Binding Path=NonCurrentPromotions}" IsItemClickEnabled="True" ItemClick="PromotionsListView_ItemClick" x:Name="promotionsListView">
 			<ListView.ItemTemplate>
 				<DataTemplate x:DataType="local:Promotion">
 					<StackPanel>

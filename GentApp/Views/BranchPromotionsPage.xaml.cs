@@ -28,26 +28,11 @@ namespace GentApp.Views
 	/// </summary>
 	public sealed partial class BranchPromotionsPage : Page
 	{
-		//public ObservableCollection<Promotion> Promotions { get; set; }
-		public IEnumerable<Promotion> Promotions { get; set; }
-		public List<Promotion> CurrentPromotions { get; set; }
-		public List<Promotion> NonCurrentPromotions { get; set; }
 
 		public BranchPromotionsPage()
 		{
 			this.InitializeComponent();
-			PrepareLists();
-		}
-
-		private async void PrepareLists()
-		{
-			var currentDate = DateTime.Today.Date;
-			Promotions = await SimpleIoc.Default.GetInstance<CompaniesViewModel>().RetrievePromotions();
-			// check wanneer start- en einddatum vandaag zijn => current
-			CurrentPromotions = Promotions.Where(p => p.StartDate <= currentDate && p.EndDate >= currentDate).ToList();
-			NonCurrentPromotions = Promotions.Except(CurrentPromotions).ToList();
-			promotionsListView.ItemsSource = NonCurrentPromotions;
-			currentPromotionsListView.ItemsSource = CurrentPromotions;
+			horStackPanel.DataContext = SimpleIoc.Default.GetInstance<CompaniesViewModel>().SelectedBranch;
 		}
 
 		private void PromotionsListView_ItemClick(object sender, ItemClickEventArgs e)

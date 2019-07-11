@@ -22,18 +22,18 @@ namespace GentApp.ViewModels
 		private readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<BranchViewModel>();
 		private readonly CompanyService companyService = new CompanyService();
 		private readonly PromotionService promotionService = new PromotionService();
-		//private readonly BranchService branchService = new BranchService();
+		private readonly BranchService branchService = new BranchService();
 		//private readonly INavigationService _navigationService;
 
 		//public BranchViewModel(INavigationService navigationService)
 		public BranchViewModel()
 		{
 			//_navigationService = navigationService;
-			Promotions = new ObservableCollection<Promotion>(DummyDataSource.Promotions);
+			//Promotions = new ObservableCollection<Promotion>(DummyDataSource.Promotions);
 		}
 
-		private ObservableCollection<Promotion> _promotions;
-		public ObservableCollection<Promotion> Promotions
+		private IEnumerable<Promotion> _promotions;
+		public IEnumerable<Promotion> Promotions
 		{
 			get
 			{
@@ -44,6 +44,36 @@ namespace GentApp.ViewModels
 			{
 				_promotions = value;
 				RaisePropertyChanged(nameof(Promotions));
+			}
+		}
+
+		private IEnumerable<Promotion> _currentPromotions;
+		public IEnumerable<Promotion> CurrentPromotions
+		{
+			get
+			{
+				return _currentPromotions;
+			}
+
+			set
+			{
+				_currentPromotions = value;
+				RaisePropertyChanged(nameof(CurrentPromotions));
+			}
+		}
+
+		private IEnumerable<Promotion> _nonCurrentPromotions;
+		public IEnumerable<Promotion> NonCurrentPromotions
+		{
+			get
+			{
+				return _nonCurrentPromotions;
+			}
+
+			set
+			{
+				_nonCurrentPromotions = value;
+				RaisePropertyChanged(nameof(NonCurrentPromotions));
 			}
 		}
 
@@ -93,6 +123,22 @@ namespace GentApp.ViewModels
 		{
 			//this.Promotions.Remove(MySelectedPromotion);
 			await promotionService.Delete(MySelectedPromotion);
+		}
+
+		private RelayCommand _loadPromotionsCommand;
+
+		public RelayCommand LoadPromotionsCommand
+		{
+			get
+			{
+				return _loadPromotionsCommand ?? (_loadPromotionsCommand = new RelayCommand(async () => {
+					Promotions = await branchService.GetPromotions(SimpleIoc.Default.GetInstance<CompaniesViewModel>().SelectedBranch.Id);
+					var currentDate = DateTime.Today.Date;
+					CurrentPromotions = Promotions.Where(p => p.StartDate <= currentDate && p.EndDate >= currentDate).ToList();
+					NonCurrentPromotions = Promotions.Except(CurrentPromotions).ToList();
+				}
+				));
+			}
 		}
 
 	}

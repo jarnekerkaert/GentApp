@@ -27,7 +27,7 @@ namespace GentApp.Views
 	public sealed partial class MyPromotionsPage : Page
 	{
 		public Company MyCompany { get; set; }
-		public ObservableCollection<Promotion> Promotions { get; set; }
+		public IEnumerable<Promotion> Promotions { get; set; }
 
 		public MyPromotionsPage()
 		{
@@ -35,7 +35,7 @@ namespace GentApp.Views
 			MyCompany = SimpleIoc.Default.GetInstance<CompaniesViewModel>().MyCompany;
 			horStackPanel.DataContext = MyCompany;
 			Promotions = SimpleIoc.Default.GetInstance<BranchViewModel>().Promotions;
-			AmountPromotionsTextBlock.Text = Promotions.Count.ToString();
+			AmountPromotionsTextBlock.Text = Promotions.ToList().Count.ToString();
 		}
 
 		private void PromotionsListView_ItemClick(object sender, ItemClickEventArgs e)
