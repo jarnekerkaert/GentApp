@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-	DataContext="{Binding AccountViewModelInstance, Source={StaticResource Locator}}">
+	DataContext="{Binding UserViewModelInstance, Source={StaticResource Locator}}">
 
 	<Grid
         VerticalAlignment="Center">
@@ -33,9 +33,15 @@
                 VerticalAlignment="Center" 
                 FontSize="16"/>
 			<TextBox 
-                x:Name="UsernameTextBox"
-				Text="{Binding RegisterModel.UserName, Mode=TwoWay}"
-                PlaceholderText="Username"
+                x:Name="FirstNameTextBox"
+				Text="{Binding Path=RegisterModel.FirstName, Mode=TwoWay}"
+                PlaceholderText="FirstName"
+                Margin="4,10" 
+                Width="250"/>
+			<TextBox 
+                x:Name="LastNameTextBox"
+				Text="{Binding RegisterModel.LastName, Mode=TwoWay}"
+                PlaceholderText="LastName"
                 Margin="4,10" 
                 Width="250"/>
 			<TextBox 
@@ -61,7 +67,7 @@
 			<TextBlock 
                 x:Name="RegisterButtonTextBlock" 
                 Text="Login"
-                PointerPressed="Register_To_LoginPage"
+                PointerPressed="ToLoginPage"
                 Foreground="DodgerBlue"
                 TextAlignment="Center" 
                 VerticalAlignment="Center"

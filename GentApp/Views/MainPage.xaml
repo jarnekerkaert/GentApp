@@ -18,7 +18,7 @@
 	
 	<Grid>
 		<NavigationView
-			Header="Welcome to GentApp!" >
+			Header="{Binding Path=Title}">
 			<interactivity:Interaction.Behaviors>
 				<core:EventTriggerBehavior EventName="ItemInvoked">
 					<core:EventTriggerBehavior.Actions>
@@ -28,19 +28,18 @@
 			</interactivity:Interaction.Behaviors>
 			<NavigationView.MenuItems>
 				<NavigationViewItem
-					Tag="HomePage"
 					Content="Home"
 					Icon="List" />
 				<NavigationViewItem
-					Tag="CompaniesPage"
 					Content="Companies"
 					Icon="List" />
 				<NavigationViewItem
-					Tag="MyCompanyPage"
 					Content="Your Company"
 					Icon="Edit" />
 				<NavigationViewItem
-					Tag="Logout"
+					Content="Login"
+					Icon="Import"/>
+				<NavigationViewItem
 					Content="Logout"
 					Icon="Import"/>
 			</NavigationView.MenuItems>

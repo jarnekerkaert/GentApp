@@ -103,18 +103,18 @@
     <Compile Include="DataModel\Company.cs" />
     <Compile Include="DataModel\Promotion.cs" />
     <Compile Include="DataModel\RegisterModel.cs" />
-    <Compile Include="DataModel\RoleType.cs" />
     <Compile Include="DataModel\User.cs" />
     <Compile Include="Helpers\NavigationService.cs" />
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\BranchService.cs" />
     <Compile Include="Services\PromotionService.cs" />
+    <Compile Include="Services\UserService.cs" />
     <Compile Include="ViewModels\BranchesViewModel.cs" />
     <Compile Include="ViewModels\BranchViewModel.cs" />
     <Compile Include="Services\CompanyService.cs" />
-    <Compile Include="ViewModels\AccountViewModel.cs" />
     <Compile Include="ViewModels\CompaniesViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\AddBranchPage.xaml.cs">
       <DependentUpon>AddBranchPage.xaml</DependentUpon>

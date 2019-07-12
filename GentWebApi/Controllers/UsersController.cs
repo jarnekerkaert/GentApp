@@ -18,8 +18,20 @@ namespace GentWebApi.Controllers {
 		}
 
 		// GET api/<controller>/5
+		[HttpGet("{firstname}")]
+		public ActionResult<User> GetByName(string firstName) {
+			User response = _context.Users.Find(firstName);
+			if (response != null ) {
+				return response;
+			}
+			else {
+				return NotFound();
+			}
+		}
+
+		// GET api/<controller>/5
 		[HttpGet("{id}")]
-		public ActionResult<User> Get(string id) {
+		public ActionResult<User> GetById(string id) {
 			if (_context.Users.Find(id) != null)
 			{
 				return _context.Users.Find(id);
@@ -32,10 +44,10 @@ namespace GentWebApi.Controllers {
 
 		// POST api/<controller>
 		[HttpPost]
-		public IActionResult Post([FromBody] User value) {
+		public ActionResult<string> Post([FromBody] RegisterModel value) {
 			if (ModelState.IsValid) {
 				_context.Users
-				.Add(value);
+				.Add(new User(value.FirstName, value.LastName, value.Password));
 				_context.SaveChanges();
 				return Ok();
 			}

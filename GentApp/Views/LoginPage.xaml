@@ -6,7 +6,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+	DataContext="{Binding UserViewModelInstance, Source={StaticResource Locator}}">
 
     <Grid 
         Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
@@ -33,13 +34,21 @@
                 TextAlignment="Center"
                 VerticalAlignment="Center" 
                 FontSize="16"/>
-            <TextBox 
-                x:Name="UsernameTextBox"
-                PlaceholderText="Username"
+			<TextBox 
+                x:Name="FirstNameTextBox"
+				Text="{Binding Path=RegisterModel.FirstName, Mode=TwoWay}"
+                PlaceholderText="FirstName"
                 Margin="4,10" 
                 Width="250"/>
-            <TextBox 
+			<TextBox 
+                x:Name="LastNameTextBox"
+				Text="{Binding RegisterModel.LastName, Mode=TwoWay}"
+                PlaceholderText="LastName"
+                Margin="4,10" 
+                Width="250"/>
+			<TextBox 
                 x:Name="PasswordTextBox"
+				Text="{Binding RegisterModel.Password, Mode=TwoWay}"
                 PlaceholderText="Password"
                 Margin="4" 
                 Width="250"/>

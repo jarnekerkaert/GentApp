@@ -1,21 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-
+﻿using GalaSoft.MvvmLight.Ioc;
 using GentApp.ViewModels;
-
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
-
 
 namespace GentApp.Views
 {
@@ -29,8 +15,8 @@ namespace GentApp.Views
             InitializeComponent();
 		}
 
-		void Register_To_LoginPage(object sender, RoutedEventArgs args) {
-			Frame.Navigate(typeof(LoginPage));
+		public void ToLoginPage(object sender, RoutedEventArgs args) {
+			var relayCommand = SimpleIoc.Default.GetInstance<UserViewModel>().ToLogin;
 		}
 	}
 }

@@ -41,7 +41,7 @@ namespace GentApp.ViewModels {
 		public Company MyCompany {
 			get { return myCompany; }
 			set {
-				if (value != myCompany) {
+				if ( value != myCompany ) {
 					myCompany = value;
 					RaisePropertyChanged(nameof(MyCompany));
 				}
@@ -53,7 +53,7 @@ namespace GentApp.ViewModels {
 		public Branch SelectedBranch {
 			get { return selectedBranch; }
 			set {
-				if (value != selectedBranch) {
+				if ( value != selectedBranch ) {
 					selectedBranch = value;
 					RaisePropertyChanged(nameof(SelectedBranch));
 				}
@@ -105,16 +105,15 @@ namespace GentApp.ViewModels {
 
 		public RelayCommand LoadCommand {
 			get {
-				return _loadCommand ?? (_loadCommand = new RelayCommand(async () => {
+				return _loadCommand ?? ( _loadCommand = new RelayCommand(async () => {
 					Companies = new ObservableCollection<Company>(await companyService.GetAll());
 					//MyCompany = Companies[0];
 				}
-				));
+				) );
 			}
 		}
 
-		public async void EditBranch(string name, string address, string openingHours, BranchType type)
-		{
+		public async void EditBranch(string name, string address, string openingHours, BranchType type) {
 			SelectedBranch.Name = name;
 			SelectedBranch.Address = address;
 			SelectedBranch.OpeningHours = openingHours;
@@ -125,22 +124,19 @@ namespace GentApp.ViewModels {
 			RaisePropertyChanged(nameof(MyCompany));
 		}
 
-		public async void AddBranch(Branch branch)
-		{
+		public async void AddBranch(Branch branch) {
 			await branchService.Save(branch);
 			//MyCompany.Branches.Add(branch);
 			//await companyService.Update(MyCompany);
 		}
 
-		public async void RefreshCompanies()
-		{
+		public async void RefreshCompanies() {
 			Companies = new ObservableCollection<Company>(await companyService.GetAll());
 			MyCompany = Companies[0];
 			RaisePropertyChanged(nameof(MyCompany));
 		}
 
-		public async void DeleteBranch()
-		{
+		public async void DeleteBranch() {
 			await branchService.Delete(SelectedBranch);
 		}
 
@@ -148,15 +144,13 @@ namespace GentApp.ViewModels {
 
 		// Tijdelijk
 		private string MyCompanyId = "1";
-		public RelayCommand LoadCompanyCommand
-		{
-			get
-			{
-				return _loadCompanyCommand ?? (_loadCompanyCommand = new RelayCommand(async () => {
+		public RelayCommand LoadCompanyCommand {
+			get {
+				return _loadCompanyCommand ?? ( _loadCompanyCommand = new RelayCommand(async () => {
 					MyCompany = await companyService.GetMyCompany(MyCompanyId);
 					RaisePropertyChanged(nameof(MyCompany));
 				}
-				));
+				) );
 			}
 		}
 	}

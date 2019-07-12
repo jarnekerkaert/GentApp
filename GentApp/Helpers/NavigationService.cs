@@ -69,6 +69,13 @@ namespace GentApp.Helpers {
 		}
 
 		/// <summary>
+		/// Navigates to the home page.
+		/// </summary>
+		public void NavigateToHome() {
+			NavigateTo("HomePage");
+		}
+
+		/// <summary>
 		/// Navigates to the specified page.
 		/// </summary>
 		/// <param name="page"></param>
