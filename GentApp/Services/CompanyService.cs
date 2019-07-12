@@ -35,5 +35,27 @@ namespace GentApp.Services {
 				await new MessageDialog(ex.Message).ShowAsync();
 			}
 		}
+
+		public async Task Update(Company company)
+		{
+			try
+			{
+				var response = await HttpClient.PutAsync(apiUrl + "/" + company.Id, new StringContent(JsonConvert.SerializeObject(company), System.Text.Encoding.UTF8, "application/json"));
+			}
+			catch (Exception ex)
+			{
+				await new MessageDialog(ex.Message).ShowAsync();
+			}
+		}
+
+		public async Task<Company> GetMyCompany(string id)
+		{
+			HttpResponseMessage response = await HttpClient.GetAsync(apiUrl + "/" + id);
+			if (response.IsSuccessStatusCode)
+			{
+				return JsonConvert.DeserializeObject<Company>(await response.Content.ReadAsStringAsync());
+			}
+			return DummyDataSource.Companies[0];
+		}
 	}
 }

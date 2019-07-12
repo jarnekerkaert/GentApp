@@ -30,9 +30,6 @@ namespace GentApp.ViewModels
 			("Home", nameof(HomePage)),
 			("Companies", nameof(CompaniesPage)),
 			("Your Company", nameof(MyCompanyPage)),
-			("Add a branch", nameof(AddBranchPage)),
-			("Manage promotions", nameof(MyPromotionsPage)),
-			("Manage events", nameof(MyEventsPage)),
 			("Logout",nameof(LoginPage))
 		};
 

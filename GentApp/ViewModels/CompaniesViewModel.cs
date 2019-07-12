@@ -1,4 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GentApp.DataModel;
@@ -9,7 +12,8 @@ using MetroLog;
 namespace GentApp.ViewModels {
 	public class CompaniesViewModel : ViewModelBase {
 		private readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<CompaniesViewModel>();
-		private readonly CompanyService companyService;
+		private readonly CompanyService companyService = new CompanyService();
+		private readonly BranchService branchService = new BranchService();
 		private readonly INavigationService _navigationService;
 
 		public CompaniesViewModel(INavigationService navigationService) {
@@ -83,14 +87,13 @@ namespace GentApp.ViewModels {
 			}
 		}
 
-		public void EditCompany(string name, string address, string openingHours) {
-			// var oldCompany = Companies.Where(x => x.Id == companyId).First();
-			var oldCompany = MyCompany;
-			if (oldCompany != null) {
-				oldCompany.Name = name;
-				oldCompany.Address = address;
-				oldCompany.OpeningHours = openingHours;
-			}
+		public async void EditCompany(string name, string address, string openingHours) {
+			MyCompany.Name = name;
+			MyCompany.Address = address;
+			MyCompany.OpeningHours = openingHours;
+
+			await companyService.Update(MyCompany);
+			RaisePropertyChanged(nameof(MyCompany));
 		}
 
 		public async void SaveBranch() {
@@ -102,8 +105,60 @@ namespace GentApp.ViewModels {
 
 		public RelayCommand LoadCommand {
 			get {
-				return _loadCommand ?? (_loadCommand = new RelayCommand(async () => Companies = new ObservableCollection<Company>(await companyService.GetAll())));
+				return _loadCommand ?? (_loadCommand = new RelayCommand(async () => {
+					Companies = new ObservableCollection<Company>(await companyService.GetAll());
+					//MyCompany = Companies[0];
+				}
+				));
+			}
+		}
+
+		public async void EditBranch(string name, string address, string openingHours, BranchType type)
+		{
+			SelectedBranch.Name = name;
+			SelectedBranch.Address = address;
+			SelectedBranch.OpeningHours = openingHours;
+			SelectedBranch.Type = type;
+			//var oldBranch = MyCompany.Branches.Where(b => b.Id.Equals(SelectedBranch.Id)).First();
+			//oldBranch = SelectedBranch;
+			await companyService.Update(MyCompany);
+			RaisePropertyChanged(nameof(MyCompany));
+		}
+
+		public async void AddBranch(Branch branch)
+		{
+			await branchService.Save(branch);
+			//MyCompany.Branches.Add(branch);
+			//await companyService.Update(MyCompany);
+		}
+
+		public async void RefreshCompanies()
+		{
+			Companies = new ObservableCollection<Company>(await companyService.GetAll());
+			MyCompany = Companies[0];
+			RaisePropertyChanged(nameof(MyCompany));
+		}
+
+		public async void DeleteBranch()
+		{
+			await branchService.Delete(SelectedBranch);
+		}
+
+		private RelayCommand _loadCompanyCommand;
+
+		// Tijdelijk
+		private string MyCompanyId = "1";
+		public RelayCommand LoadCompanyCommand
+		{
+			get
+			{
+				return _loadCompanyCommand ?? (_loadCompanyCommand = new RelayCommand(async () => {
+					MyCompany = await companyService.GetMyCompany(MyCompanyId);
+					RaisePropertyChanged(nameof(MyCompany));
+				}
+				));
 			}
 		}
 	}
+
 }

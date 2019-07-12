@@ -19,7 +19,8 @@ namespace GentApp.Models
         public User(string firstName) {
 			Firstname = firstName;
 		}
-		
+
+		//[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public string Id { get; set; }
         public string Firstname { get; set; }
 		public string Lastname { get; set; }

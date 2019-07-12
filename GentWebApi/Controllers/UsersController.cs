@@ -20,11 +20,12 @@ namespace GentWebApi.Controllers {
 		// GET api/<controller>/5
 		[HttpGet("{id}")]
 		public ActionResult<User> Get(string id) {
-			if (ModelState.IsValid) {
-				return _context.Users
-				.Find(id);
+			if (_context.Users.Find(id) != null)
+			{
+				return _context.Users.Find(id);
 			}
-			else {
+			else
+			{
 				return NotFound();
 			}
 		}

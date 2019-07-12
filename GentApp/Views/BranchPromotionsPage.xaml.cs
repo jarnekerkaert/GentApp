@@ -28,20 +28,11 @@ namespace GentApp.Views
 	/// </summary>
 	public sealed partial class BranchPromotionsPage : Page
 	{
-		//public Company MyCompany { get; set; }
-		public Branch MyBranch { get; set; }
-		public ObservableCollection<Promotion> Promotions { get; set; }
 
 		public BranchPromotionsPage()
 		{
 			this.InitializeComponent();
-			//MyCompany = MainPage.CompaniesViewModel.MyCompany;
-			//horStackPanel.DataContext = MyCompany;
-			RetrievePromotions();
-			MyBranch = SimpleIoc.Default.GetInstance<BranchesViewModel>().MySelectedBranch;
-			horStackPanel.DataContext = MyBranch;
-			Promotions = SimpleIoc.Default.GetInstance<BranchViewModel>().Promotions;
-			AmountPromotionsTextBlock.Text = Promotions.Count.ToString();
+			horStackPanel.DataContext = SimpleIoc.Default.GetInstance<CompaniesViewModel>().SelectedBranch;
 		}
 
 		private void PromotionsListView_ItemClick(object sender, ItemClickEventArgs e)
@@ -56,15 +47,5 @@ namespace GentApp.Views
 			Frame.Navigate(typeof(AddPromotionPage));
 		}
 
-		private async void RetrievePromotions()
-		{
-			HttpClient client = new HttpClient();
-			progressPromotions.IsActive = true;
-			var json = await client.GetStringAsync(new Uri("http://localhost:50957/api/branches/" + SimpleIoc.Default.GetInstance<BranchesViewModel>().MySelectedBranch.Id + "/promotions"));
-			var list = JsonConvert.DeserializeObject<ObservableCollection<Promotion>>(json);
-			promotionsListView.ItemsSource = list;
-			progressPromotions.IsActive = false;
-			SimpleIoc.Default.GetInstance<BranchViewModel>().Promotions = list;
-		}
 	}
 }

@@ -23,7 +23,7 @@ namespace GentApp.Views
 		public EditPromotionPage()
 		{
 			InitializeComponent();
-			DataContext = SimpleIoc.Default.GetInstance<BranchViewModel>().MySelectedPromotion;
+			//DataContext = SimpleIoc.Default.GetInstance<BranchViewModel>().MySelectedPromotion;
 			StartDatePicker.Date = SimpleIoc.Default.GetInstance<BranchViewModel>().MySelectedPromotion.StartDate;
 			EndDatePicker.Date = SimpleIoc.Default.GetInstance<BranchViewModel>().MySelectedPromotion.EndDate;
 		}
@@ -75,7 +75,8 @@ namespace GentApp.Views
 			if (isValid == true)
 			{
 				SimpleIoc.Default.GetInstance<BranchViewModel>().EditPromotion(Title.Text, Description.Text, StartDatePicker.Date.Value.DateTime, EndDatePicker.Date.Value.DateTime);
-				Frame.Navigate(typeof(MyPromotionsPage));
+				//SimpleIoc.Default.GetInstance<CompaniesViewModel>().RefreshCompanies();
+				Frame.Navigate(typeof(BranchPromotionsPage));
 			}
 		}
 
@@ -92,7 +93,7 @@ namespace GentApp.Views
 			if (result == ContentDialogResult.Primary)
 			{
 				SimpleIoc.Default.GetInstance<BranchViewModel>().DeletePromotion();
-				Frame.Navigate(typeof(MyPromotionsPage));
+				Frame.Navigate(typeof(BranchPromotionsPage));
 			}
 			//else if(result == ContentDialogResult.Secondary){ /* ... */}
 		}

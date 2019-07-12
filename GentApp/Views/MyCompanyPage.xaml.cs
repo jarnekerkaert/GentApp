@@ -27,8 +27,6 @@ namespace GentApp.Views
 		public MyCompanyPage()
 		{
 			InitializeComponent();
-			DataContext = SimpleIoc.Default.GetInstance<CompaniesViewModel>().MyCompany;
-			Branches = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches;
 		}
 
 		private void SymbolIcon_Tapped(object sender, TappedRoutedEventArgs e)
@@ -44,7 +42,8 @@ namespace GentApp.Views
 
 		private void ListView_ItemClick(object sender, ItemClickEventArgs e)
 		{
-			SimpleIoc.Default.GetInstance<BranchesViewModel>().MySelectedBranch = e.ClickedItem as Branch;
+			//SimpleIoc.Default.GetInstance<BranchesViewModel>().MySelectedBranch = e.ClickedItem as Branch;
+			SimpleIoc.Default.GetInstance<CompaniesViewModel>().SelectedBranch = e.ClickedItem as Branch;
 			Frame.Navigate(typeof(EditBranchPage));
 
 		}

@@ -33,10 +33,13 @@ namespace GentAppWebApi.Controllers {
 		// GET: api/Companies/5
 		[HttpGet("{id}", Name = "Get")]
 		public ActionResult<Company> Get(string id) {
-			if (ModelState.IsValid) {
-				return _context.Companies.Find(id);
+			if (_context.Companies.Find(id) != null)
+			{
+				//return _context.Companies.Find(id);
+				return _context.Companies.Include(c => c.Branches).Where(c => c.Id.Equals(id)).FirstOrDefault();
 			}
-			else {
+			else
+			{
 				return NotFound();
 			}
 		}
@@ -64,14 +67,14 @@ namespace GentAppWebApi.Controllers {
 				return Ok();
 			}
 			else {
-				return NotFound();
+				return BadRequest();
 			}
 		}
 
 		// DELETE: api/Companies
 		[HttpDelete]
 		public IActionResult Delete([FromBody] Company company) {
-			if (ModelState.IsValid) {
+			if (_context.Companies.Contains(company)) {
 				_context.Companies.Remove(company);
 				_context.SaveChanges();
 				return Ok();
@@ -79,6 +82,17 @@ namespace GentAppWebApi.Controllers {
 			else {
 				return NotFound();
 			}
+		}
+
+		// GET: api/companies/5/branches
+		[HttpGet("{id}/branches", Name = "GetBranches")]
+		public IEnumerable<Branch> GetBranches(string id)
+		{
+			//return _context.Companies.Find(id).Branches;
+			//return _context.Branches.Where(b => b.CompanyId == id).Include(b => b.Promotions);
+			///werkt: 
+			return _context.Branches.Where(b => b.CompanyId.Equals(id));
+			//return _context.Branches.Where(b => b.CompanyId.Equals(id)).Include(b => b.Promotions);
 		}
 	}
 }

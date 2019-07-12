@@ -5,8 +5,16 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:local="using:GentApp.DataModel"
+	xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+	xmlns:core="using:Microsoft.Xaml.Interactions.Core"
 	mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    DataContext="{Binding BranchViewModelInstance, Source={StaticResource Locator}}">
+
+	<interactivity:Interaction.Behaviors>
+		<core:EventTriggerBehavior EventName="Loaded">
+			<core:InvokeCommandAction Command="{Binding Path=LoadPromotionsCommand}" />
+		</core:EventTriggerBehavior>
+	</interactivity:Interaction.Behaviors>
 
 	<StackPanel>
 		<StackPanel Orientation="Horizontal" x:Name="horStackPanel">
@@ -14,23 +22,43 @@
 			<TextBlock Text="{Binding Name}"></TextBlock>
 			<TextBlock Text=":" />
 		</StackPanel>
-		<StackPanel Orientation="Horizontal">
-			<TextBlock>Amount:</TextBlock>
-			<TextBlock x:Name="AmountPromotionsTextBlock"></TextBlock>
-		</StackPanel>
-		<TextBlock x:Name="NoPromotionsTextBlock"></TextBlock>
 		<TextBlock>Your current promotions:</TextBlock>
-		<ProgressRing x:Name="progressPromotions" HorizontalAlignment="Left" Margin="5,10,0,0" />
-		<ListView ItemsSource="{x:Bind Promotions}" IsItemClickEnabled="True" ItemClick="PromotionsListView_ItemClick" x:Name="promotionsListView">
+		<TextBlock x:Name="NoCurrentPromotionsTextBlock"></TextBlock>
+		<ListView ItemsSource="{Binding Path=CurrentPromotions}" IsItemClickEnabled="True" ItemClick="PromotionsListView_ItemClick" x:Name="currentPromotionsListView" Margin="0,0,0,20">
 			<ListView.ItemTemplate>
-				<DataTemplate x:DataType="local:Promotion">
+				<DataTemplate>
 					<StackPanel>
-						<TextBlock Text="{x:Bind Title}" />
+						<TextBlock Text="{Binding Path=Title}" />
 					</StackPanel>
 				</DataTemplate>
 			</ListView.ItemTemplate>
-
 		</ListView>
+
+		<!--<TextBlock>All your promotions:</TextBlock>
+		<TextBlock x:Name="NoPromotionsTextBlock"></TextBlock>
+		<ProgressRing x:Name="progressPromotions" HorizontalAlignment="Left" Margin="5,10,0,0" />
+		<ListView ItemsSource="{Binding Path=SelectedBranch.Promotions}" IsItemClickEnabled="True" ItemClick="PromotionsListView_ItemClick" x:Name="promotionsListView">
+			<ListView.ItemTemplate>
+				<DataTemplate x:DataType="local:Promotion">
+					<StackPanel>
+						<TextBlock Text="{Binding Path=Title}" />
+					</StackPanel>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>-->
+
+		<TextBlock>Non current promotions:</TextBlock>
+		<TextBlock x:Name="NoPromotionsTextBlock"></TextBlock>
+		<ListView ItemsSource="{Binding Path=NonCurrentPromotions}" IsItemClickEnabled="True" ItemClick="PromotionsListView_ItemClick" x:Name="promotionsListView">
+			<ListView.ItemTemplate>
+				<DataTemplate x:DataType="local:Promotion">
+					<StackPanel>
+						<TextBlock Text="{Binding Path=Title}" />
+					</StackPanel>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
+
 		<SymbolIcon Symbol="Add" IsTapEnabled="True" Tapped="AddIcon_Tapped"></SymbolIcon>
 	</StackPanel>
 </Page>
