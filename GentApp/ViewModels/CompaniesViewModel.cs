@@ -9,11 +9,12 @@ using MetroLog;
 namespace GentApp.ViewModels {
 	public class CompaniesViewModel : ViewModelBase {
 		private readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<CompaniesViewModel>();
-		private readonly CompanyService companyService = new CompanyService();
+		private readonly CompanyService companyService;
 		private readonly INavigationService _navigationService;
 
 		public CompaniesViewModel(INavigationService navigationService) {
 			_navigationService = navigationService;
+			companyService = new CompanyService();
 			MyCompany = DummyDataSource.Companies[2];
 		}
 

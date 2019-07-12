@@ -16,17 +16,18 @@ namespace GentApp.ViewModels
 			_navigationService = navigationService;
 		}
 
-		private RelayCommand _loadedCommand;
-		public RelayCommand LoadedCommand {
+		private RelayCommand _loadCommand;
+		public RelayCommand LoadCommand {
 			get {
-				return _loadedCommand
-					?? (_loadedCommand = new RelayCommand(
+				return _loadCommand
+					?? (_loadCommand = new RelayCommand(
 					() => _navigationService.NavigateTo("CompaniesPage")));
 			}
 		}
 
 		private readonly List<(string Tag, string Page)> _pages = new List<(string Tag, string Page)>
 		{
+			("Home", nameof(HomePage)),
 			("Companies", nameof(CompaniesPage)),
 			("Your Company", nameof(MyCompanyPage)),
 			("Add a branch", nameof(AddBranchPage)),

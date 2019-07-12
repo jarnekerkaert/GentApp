@@ -10,6 +10,12 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding MainViewModelInstance, Source={StaticResource Locator}}">
 
+	<interactivity:Interaction.Behaviors>
+		<core:EventTriggerBehavior EventName="Loaded">
+			<core:InvokeCommandAction Command="{Binding Path=LoadCommand}" />
+		</core:EventTriggerBehavior>
+	</interactivity:Interaction.Behaviors>
+	
 	<Grid>
 		<NavigationView
 			Header="Welcome to GentApp!" >
@@ -22,7 +28,7 @@
 			</interactivity:Interaction.Behaviors>
 			<NavigationView.MenuItems>
 				<NavigationViewItem
-					Tag="MainPage"
+					Tag="HomePage"
 					Content="Home"
 					Icon="List" />
 				<NavigationViewItem

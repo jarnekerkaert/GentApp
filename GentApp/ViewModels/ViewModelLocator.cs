@@ -16,14 +16,6 @@ namespace GentApp.ViewModels
 		/// Initializes a new instance of the ViewModelLocator class.
 		/// </summary>
 
-		public const string MainPageKey = "MainPage";
-		public const string CompaniesPageKey = "CompaniesPage";
-		public const string CompanyDetailsPageKey = "CompanyDetailsPage";
-		public const string MyCompanyPageKey = "MyCompanyPage";
-		public const string BranchDetailsPageKey = "BranchDetailsPage";
-		public const string AddBranchPageKey = "AddBranchPage";
-		public const string AddPromotionPageKey = "AddPromotionPage";
-
 		public ViewModelLocator() {
 			ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
@@ -44,13 +36,14 @@ namespace GentApp.ViewModels
 
 		private static void SetupNavigation() {
 			var navigationService = new NavigationService();
-			navigationService.Configure(MainPageKey, typeof(MainPage));
-			navigationService.Configure(CompaniesPageKey, typeof(CompaniesPage));
-			navigationService.Configure(CompanyDetailsPageKey, typeof(CompanyDetailsPage));
-			navigationService.Configure(MyCompanyPageKey, typeof(MyCompanyPage));
-			navigationService.Configure(BranchDetailsPageKey, typeof(BranchDetailsPage));
-			navigationService.Configure(AddBranchPageKey, typeof(AddBranchPage));
-			navigationService.Configure(AddPromotionPageKey, typeof(AddPromotionPage));
+			navigationService.Configure(nameof(HomePage), typeof(HomePage));
+			navigationService.Configure(nameof(MainPage), typeof(MainPage));
+			navigationService.Configure(nameof(CompaniesPage), typeof(CompaniesPage));
+			navigationService.Configure(nameof(CompanyDetailsPage), typeof(CompanyDetailsPage));
+			navigationService.Configure(nameof(MyCompanyPage), typeof(MyCompanyPage));
+			navigationService.Configure(nameof(BranchDetailsPage), typeof(BranchDetailsPage));
+			navigationService.Configure(nameof(AddBranchPage), typeof(AddBranchPage));
+			navigationService.Configure(nameof(AddPromotionPage), typeof(AddPromotionPage));
 			SimpleIoc.Default.Register<INavigationService>(() => navigationService);
 		}
 
