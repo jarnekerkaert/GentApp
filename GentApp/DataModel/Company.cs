@@ -1,23 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace GentApp.DataModel {
-	public class Company {
-		private int _id;
-		private string _name;
-		private string _address;
-		private string _openingHours;
-
-		public string Name { get => _name; set => _name = value; }
-		public string Address { get => _address; set => _address = value; }
-
-		public int Id { get => _id; set => _id = value; }
-		public string OpeningHours { get => _openingHours; set => _openingHours = value; }
-
-		public IEnumerable<Branch> Branches { get; set; }
+    public class Company
+    {
+		public string Name { get; set; }
+		public string Address { get; set; }
+		public string OpeningHours { get; set; }
+		public string Id { get; set; }
+		public ICollection<Branch> Branches { get; set; }
 
 		public Company(string name, string address, string openingHours) {
 			Name = name;
@@ -26,7 +16,6 @@ namespace GentApp.DataModel {
 		}
 
 		public Company() {
-
 		}
-	}
+    }
 }

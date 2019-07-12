@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+
+using GentApp.ViewModels;
+
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -13,7 +16,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace GentApp.Views
 {
@@ -24,7 +26,11 @@ namespace GentApp.Views
     {
         public RegisterClientPage()
         {
-            this.InitializeComponent();
-        }
-    }
+            InitializeComponent();
+		}
+
+		void Register_To_LoginPage(object sender, RoutedEventArgs args) {
+			Frame.Navigate(typeof(LoginPage));
+		}
+	}
 }

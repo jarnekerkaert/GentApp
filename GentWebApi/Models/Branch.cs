@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,10 +10,10 @@ using System.Threading.Tasks;
 namespace GentApp.Models {
 	public class Branch
 	{
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		public string Id { get; set; }
 		[Required]
-		public int Id { get; set; }
-		[Required]
-		public int CompanyId { get; set; }
+		public string CompanyId { get; set; }
 		[Required]
 		public string Name { get; set; }
 		[Required]
@@ -24,7 +25,7 @@ namespace GentApp.Models {
 		public Branch() {
 		}
 
-		public Branch(string name, BranchType type, int Id, int companyId, string address, string openingHours) {
+		public Branch(string name, BranchType type, string id, string companyId, string address, string openingHours) {
 			Name = name;
 			Type = type;
 			CompanyId = companyId;

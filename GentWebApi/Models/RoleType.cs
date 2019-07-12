@@ -8,6 +8,6 @@ namespace GentApp.Models
 {
     enum RoleType
     {
-        ANONYMOUS, USER, ENTREPRENEUR
+        USER, ENTREPRENEUR
     }
 }

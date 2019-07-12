@@ -1,27 +1,27 @@
-﻿using System;
+﻿using GentApp.Models;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace GentWebApi.Models
-{
-	public class Promotion
-	{
-		public int Id { get; set; }
+namespace GentWebApi.Models {
+	public class Promotion {
+
+		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		public string Id { get; set; }
 		public DateTime StartDate { get; set; }
 		public DateTime EndDate { get; set; }
 		public string Title { get; set; }
 		public string Description { get; set; }
-		public string CouponId { get; set; }
-		public int BranchId { get; set; }
+		//public Branch Branch { get; set; }
+		public string BranchId { get; set; }
 		public bool AllBranches { get; set; }
 
-		public Promotion()
-		{
+		public Promotion() {
 		}
 
-		public Promotion(DateTime startDate, DateTime endDate, string title, string description)
-		{
+		public Promotion(DateTime startDate, DateTime endDate, string title, string description) {
 			StartDate = startDate;
 			EndDate = endDate;
 			Title = title;

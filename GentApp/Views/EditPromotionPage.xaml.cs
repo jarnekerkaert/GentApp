@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Ioc;
+using GentApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,10 +22,10 @@ namespace GentApp.Views
 	{
 		public EditPromotionPage()
 		{
-			this.InitializeComponent();
-			this.DataContext = MainPage.BranchViewModel.MySelectedPromotion;
-			StartDatePicker.Date = MainPage.BranchViewModel.MySelectedPromotion.StartDate;
-			EndDatePicker.Date = MainPage.BranchViewModel.MySelectedPromotion.EndDate;
+			InitializeComponent();
+			//DataContext = SimpleIoc.Default.GetInstance<BranchViewModel>().MySelectedPromotion;
+			StartDatePicker.Date = SimpleIoc.Default.GetInstance<BranchViewModel>().MySelectedPromotion.StartDate;
+			EndDatePicker.Date = SimpleIoc.Default.GetInstance<BranchViewModel>().MySelectedPromotion.EndDate;
 		}
 
 		private void SymbolIcon_Tapped(object sender, TappedRoutedEventArgs e)
@@ -72,8 +74,9 @@ namespace GentApp.Views
 			}
 			if (isValid == true)
 			{
-				MainPage.BranchViewModel.EditPromotion(Title.Text, Description.Text, StartDatePicker.Date.Value.DateTime, EndDatePicker.Date.Value.DateTime);
-				Frame.Navigate(typeof(MyPromotionsPage));
+				SimpleIoc.Default.GetInstance<BranchViewModel>().EditPromotion(Title.Text, Description.Text, StartDatePicker.Date.Value.DateTime, EndDatePicker.Date.Value.DateTime);
+				//SimpleIoc.Default.GetInstance<CompaniesViewModel>().RefreshCompanies();
+				Frame.Navigate(typeof(BranchPromotionsPage));
 			}
 		}
 
@@ -89,8 +92,8 @@ namespace GentApp.Views
 			ContentDialogResult result = await deletePromotionDialog.ShowAsync();
 			if (result == ContentDialogResult.Primary)
 			{
-				MainPage.BranchViewModel.DeletePromotion();
-				Frame.Navigate(typeof(MyPromotionsPage));
+				SimpleIoc.Default.GetInstance<BranchViewModel>().DeletePromotion();
+				Frame.Navigate(typeof(BranchPromotionsPage));
 			}
 			//else if(result == ContentDialogResult.Secondary){ /* ... */}
 		}

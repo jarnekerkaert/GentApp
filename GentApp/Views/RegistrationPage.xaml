@@ -37,23 +37,23 @@
                 
                 <Button
                     x:Name="registerClient"
+					Click="Register_Client"
                     Content="Client"
                     FontSize="20"
                     Width="120"
                     Margin="10,0,10,0"
                     Background="DodgerBlue"
-                    Foreground="White"
-                   />
+                    Foreground="White"/>
 
                 <Button
                     x:Name="registerCompany"
+					Click="Register_Company"
                     Content="Company"
                     FontSize="20"
                     Background="DodgerBlue"
                     Foreground="White"
                     Width="120"
-                    Margin="10,0,10,0"
-                   />
+                    Margin="10,0,10,0"/>
             </StackPanel>
         </StackPanel>
     </Grid>

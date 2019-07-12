@@ -20,33 +20,84 @@ namespace GentWebApi.Controllers
 		public BranchesController(GentDbContext context)
 		{
 			_context = context;
-			if (_context.Branches.Count() == 0)
+		}
+
+		// GET api/branches
+		[HttpGet("{id}")]
+		public ActionResult<IEnumerable<Branch>> Get() {
+			return _context.Branches;
+		}
+
+		// GET api/branches/2
+		[HttpGet("{id}")]
+		public ActionResult<Branch> Get(string id) {
+			if (_context.Branches.Find(id) != null)
 			{
-				_context.Branches.Add(new Branch { Name = "TasteIt" });
+				return _context.Branches.Find(id);
+			}
+			else
+			{
+				return NotFound();
+			}
+		}
+
+		// POST: api/branches
+		[HttpPost]
+		public IActionResult Post([FromBody] Branch branch)
+		{
+			if (ModelState.IsValid)
+			{
+				_context.Branches.Add(branch);
 				_context.SaveChanges();
+				return Created(branch.Id, branch);
+			}
+			else
+			{
+				return BadRequest();
+			}
+		}
+
+		// PUT: api/branches/2
+		[HttpPut("{id}")]
+		public IActionResult Put([FromBody] Branch branch, string id)
+		{
+			//if (_context.Branches.Find(id) == null)
+			//{
+			//	return NotFound();
+			//}
+			if (ModelState.IsValid)
+			{
+				_context.Branches.Update(branch);
+				_context.SaveChanges();
+				return Ok();
+			}
+			else
+			{
+				return BadRequest();
 			}
 		}
 
 		// GET: api/branches/2/promotions
 		[HttpGet("{id}/promotions", Name = "GetPromotions")]
-		public IEnumerable<Promotion> GetPromotions(int id)
+		public IEnumerable<Promotion> GetPromotions(string id)
 		{
-			return _context.Promotions.Where(p => p.BranchId == id);
+			//return _context.Promotions.Where(p => p.Branch.Id.Equals(id));
+			return _context.Promotions.Where(p => p.BranchId.Equals(id));
 		}
 
-		// PUT: api/branches/2
-		[HttpPut("{id}")]
-		public HttpResponseMessage Put(int id, [FromBody] Branch branch)
+		// DELETE: api/branches
+		[HttpDelete]
+		public IActionResult Delete([FromBody] Branch branch)
 		{
-			if (this.ModelState.IsValid)
+			if (_context.Branches.Contains(branch))
 			{
-				_context.Branches.Update(branch);
+				_context.Branches.Remove(branch);
 				_context.SaveChanges();
-				return new HttpResponseMessage(HttpStatusCode.OK);
+				return Ok();
 			}
 			else
 			{
-				return new HttpResponseMessage(HttpStatusCode.BadRequest);
+				return NotFound();
 			}
 		}
 	}

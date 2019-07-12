@@ -1,4 +1,6 @@
-﻿using GentApp.DataModel;
+﻿using GalaSoft.MvvmLight.Ioc;
+using GentApp.DataModel;
+using GentApp.ViewModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -26,26 +28,17 @@ namespace GentApp.Views
 	/// </summary>
 	public sealed partial class BranchPromotionsPage : Page
 	{
-		//public Company MyCompany { get; set; }
-		public Branch MyBranch { get; set; }
-		public ObservableCollection<Promotion> Promotions { get; set; }
 
 		public BranchPromotionsPage()
 		{
 			this.InitializeComponent();
-			//MyCompany = MainPage.CompaniesViewModel.MyCompany;
-			//horStackPanel.DataContext = MyCompany;
-			RetrievePromotions();
-			MyBranch = MainPage.BranchesViewModel.MySelectedBranch;
-			horStackPanel.DataContext = MyBranch;
-			Promotions = MainPage.BranchViewModel.Promotions;
-			AmountPromotionsTextBlock.Text = Promotions.Count.ToString();
+			horStackPanel.DataContext = SimpleIoc.Default.GetInstance<CompaniesViewModel>().SelectedBranch;
 		}
 
 		private void PromotionsListView_ItemClick(object sender, ItemClickEventArgs e)
 		{
 			var selectedPromotion = e.ClickedItem as Promotion;
-			MainPage.BranchViewModel.MySelectedPromotion = selectedPromotion;
+			SimpleIoc.Default.GetInstance<BranchViewModel>().MySelectedPromotion = selectedPromotion;
 			Frame.Navigate(typeof(EditPromotionPage));
 		}
 
@@ -54,15 +47,5 @@ namespace GentApp.Views
 			Frame.Navigate(typeof(AddPromotionPage));
 		}
 
-		private async void RetrievePromotions()
-		{
-			HttpClient client = new HttpClient();
-			progressPromotions.IsActive = true;
-			var json = await client.GetStringAsync(new Uri("http://localhost:50957/api/branches/" + MainPage.BranchesViewModel.MySelectedBranch.Id + "/promotions"));
-			var list = JsonConvert.DeserializeObject<ObservableCollection<Promotion>>(json);
-			promotionsListView.ItemsSource = list;
-			progressPromotions.IsActive = false;
-			MainPage.BranchViewModel.Promotions = list;
-		}
 	}
 }

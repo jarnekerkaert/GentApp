@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using GentApp.Models;
+
 using GentWebApi.Models;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -18,10 +21,6 @@ namespace GentAppWebApi.Controllers {
 
 		public CompaniesController(GentDbContext context) {
 			_context = context;
-			if (_context.Companies.Count() == 0) {
-				_context.Companies.Add(new Company { Name = "TasteIt" });
-				_context.SaveChanges();
-			}
 		}
 
 		// GET: api/Companies
@@ -33,42 +32,67 @@ namespace GentAppWebApi.Controllers {
 
 		// GET: api/Companies/5
 		[HttpGet("{id}", Name = "Get")]
-		public ActionResult<Company> Get(int id) {
-			return _context.Companies.Find(id);
+		public ActionResult<Company> Get(string id) {
+			if (_context.Companies.Find(id) != null)
+			{
+				//return _context.Companies.Find(id);
+				return _context.Companies.Include(c => c.Branches).Where(c => c.Id.Equals(id)).FirstOrDefault();
+			}
+			else
+			{
+				return NotFound();
+			}
 		}
 
 		// POST: api/Companies
 		[HttpPost]
-		public void Post([FromBody] Company company) {
-			_context.Companies.Add(company);
+		public IActionResult Post([FromBody] Company company) {
+			if (ModelState.IsValid) {
+				_context.Companies
+				.Add(company);
+				_context.SaveChanges();
+				return Created(company.Id, company);
+			}
+			else {
+				return BadRequest();
+			}
 		}
 
 		// PUT: api/Companies/5
 		[HttpPut("{id}")]
-		public void Put(int id, [FromBody] Company company) {
-			_context.Companies.Update(company);
+		public IActionResult Put([FromBody] Company company) {
+			if (ModelState.IsValid) {
+				_context.Companies.Update(company);
+				_context.SaveChanges();
+				return Ok();
+			}
+			else {
+				return BadRequest();
+			}
 		}
 
 		// DELETE: api/Companies
 		[HttpDelete]
-		public void Delete([FromBody] Company company) {
-			_context.Companies.Remove(company);
+		public IActionResult Delete([FromBody] Company company) {
+			if (_context.Companies.Contains(company)) {
+				_context.Companies.Remove(company);
+				_context.SaveChanges();
+				return Ok();
+			}
+			else {
+				return NotFound();
+			}
 		}
 
 		// GET: api/companies/5/branches
 		[HttpGet("{id}/branches", Name = "GetBranches")]
-		public IEnumerable<Branch> GetBranches(int id)
+		public IEnumerable<Branch> GetBranches(string id)
 		{
 			//return _context.Companies.Find(id).Branches;
 			//return _context.Branches.Where(b => b.CompanyId == id).Include(b => b.Promotions);
-			return _context.Branches.Where(b => b.CompanyId == id);
+			///werkt: 
+			return _context.Branches.Where(b => b.CompanyId.Equals(id));
+			//return _context.Branches.Where(b => b.CompanyId.Equals(id)).Include(b => b.Promotions);
 		}
-
-		//// GET: api/companies/5/promotions
-		//[HttpGet("{id}/promotions", Name = "GetPromotions")]
-		//public IEnumerable<Promotion> GetPromotions(int id)
-		//{
-		//	return _context.Promotions.Where(b => b.CompanyId == id);
-		//}
 	}
 }
