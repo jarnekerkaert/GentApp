@@ -10,8 +10,12 @@ namespace GentApp.DataModel {
 			Id = id;
 		}
 
-		public User(string userName, string firstName, string lastName) {
+		public User(string userName, string firstName, string lastName)
+			: this(firstName, lastName){
 			UserName = userName;
+		}
+
+		public User(string firstName, string lastName) {
 			Firstname = firstName;
 			Lastname = lastName;
 		}

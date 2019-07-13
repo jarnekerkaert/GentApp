@@ -43,12 +43,18 @@ namespace GentApp.ViewModels {
 		private User _currentUser;
 		public User CurrentUser {
 			get {
-				return _currentUser ?? DummyDataSource.DefaultUser;
+				return _currentUser ?? new User("","");
 			}
 
 			set {
 				_currentUser = value;
 				RaisePropertyChanged(nameof(CurrentUser));
+			}
+		}
+
+		public bool LoggedIn {
+			get {
+				return CurrentUser.Id != null || CurrentUser == null;
 			}
 		}
 
@@ -63,8 +69,9 @@ namespace GentApp.ViewModels {
 			get {
 				return _registerCommand = new RelayCommand(async () => {
 					try {
-						var result = await _userService.Register(RegisterModel);
+						CurrentUser = await _userService.Register(RegisterModel);
 						_navigationService.NavigateTo(nameof(HomePage));
+						RaisePropertyChanged(nameof(LoggedIn));
 						await new MessageDialog("Registered!").ShowAsync();
 					} catch ( Exception e ) {
 						await new MessageDialog(e.Message).ShowAsync();
@@ -81,10 +88,24 @@ namespace GentApp.ViewModels {
 					try {
 						CurrentUser = await _userService.Login(LoginModel);
 						_navigationService.NavigateTo(nameof(HomePage));
+						RaisePropertyChanged(nameof(LoggedIn));
 						await new MessageDialog("Logged in!").ShowAsync();
 					} catch ( Exception e ) {
 						await new MessageDialog(e.Message).ShowAsync();
 					}
+				});
+			}
+		}
+
+		private RelayCommand _logoutCommand;
+
+		public RelayCommand LogoutCommand {
+			get {
+				return _logoutCommand = new RelayCommand(async () => {
+					CurrentUser = null;
+					RaisePropertyChanged(nameof(LoggedIn));
+					_navigationService.NavigateTo(nameof(HomePage));
+					await new MessageDialog("Logged out").ShowAsync();
 				});
 			}
 		}

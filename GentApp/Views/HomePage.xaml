@@ -9,7 +9,11 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding CompaniesViewModelInstance, Source={StaticResource Locator}}">
 
-	<Grid>
-		
-	</Grid>
+	<RelativePanel
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center">
+		<TextBlock 
+			Text="Home"
+			FontSize="70"/>
+	</RelativePanel>
 </Page>

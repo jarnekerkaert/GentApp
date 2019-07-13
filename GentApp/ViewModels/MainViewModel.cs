@@ -11,22 +11,20 @@ using Windows.UI.Xaml.Controls;
 namespace GentApp.ViewModels {
 	public class MainViewModel : ViewModelBase {
 		private INavigationService _navigationService;
-		private readonly UserViewModel _userViewModel;
 
 		public MainViewModel(INavigationService navigationService) {
 			_navigationService = navigationService;
-			_userViewModel = SimpleIoc.Default.GetInstance<UserViewModel>();
+		}
+
+		public UserViewModel UserViewModel {
+			get {
+				return SimpleIoc.Default.GetInstance<UserViewModel>();
+			}
 		}
 
 		public string Title {
 			get {
-				return "Welcome " + User.Firstname + " " + User.Lastname;
-			}
-		}
-
-		public User User {
-			get {
-				return _userViewModel.CurrentUser;
+				return "Welcome " + UserViewModel.CurrentUser.Firstname + " " + UserViewModel.CurrentUser.Lastname;
 			}
 		}
 
@@ -44,8 +42,7 @@ namespace GentApp.ViewModels {
 			("Home", nameof(HomePage)),
 			("Companies", nameof(CompaniesPage)),
 			("Your Company", nameof(MyCompanyPage)),
-			("Login", nameof(LoginPage)),
-			("Logout",nameof(LoginPage))
+			("Login", nameof(LoginPage))
 		};
 
 		private RelayCommand<NavigationViewItemInvokedEventArgs> _navigateCommand;
@@ -54,11 +51,12 @@ namespace GentApp.ViewModels {
 			get {
 				return _navigateCommand =
 					new RelayCommand<NavigationViewItemInvokedEventArgs>((page) => {
-						if(page.Equals("Logout")) {
-							_navigationService.NavigateTo("HomePage");
+						if ( page.InvokedItem.ToString().Equals("Logout") ) {
+							UserViewModel.LogoutCommand.Execute(null);
 						}
-						else
+						else {
 							_navigationService.NavigateTo(_pages.FirstOrDefault(p => p.Tag.Equals(page.InvokedItem.ToString())).Page);
+						}
 					});
 			}
 		}

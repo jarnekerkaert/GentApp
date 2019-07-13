@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
 	xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+	xmlns:triggers="using:WindowsStateTriggers"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding MainViewModelInstance, Source={StaticResource Locator}}">
@@ -15,10 +16,33 @@
 			<core:InvokeCommandAction Command="{Binding Path=LoadCommand}" />
 		</core:EventTriggerBehavior>
 	</interactivity:Interaction.Behaviors>
-	
+
 	<Grid>
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup>
+				<VisualState x:Name="LoggedIn">
+					<VisualState.StateTriggers>
+						<triggers:EqualsStateTrigger EqualTo="True" Value="{Binding Path=UserViewModel.LoggedIn}" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="LoginItem.Visibility" Value="Collapsed"/>
+						<Setter Target="LogoutItem.Visibility" Value="Visible" />
+					</VisualState.Setters>
+				</VisualState>
+				<VisualState x:Name="LoggedOut">
+					<VisualState.StateTriggers>
+						<triggers:EqualsStateTrigger EqualTo="False" Value="{Binding Path=UserViewModel.LoggedIn}" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="LoginItem.Visibility" Value="Visible"/>
+						<Setter Target="LogoutItem.Visibility" Value="Collapsed" />
+					</VisualState.Setters>
+				</VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
 		<NavigationView
-			Header="{Binding Path=Title}">
+			Header="{Binding Path=UserViewModel.CurrentUser.UserName}"
+			IsBackEnabled="False">
 			<interactivity:Interaction.Behaviors>
 				<core:EventTriggerBehavior EventName="ItemInvoked">
 					<core:EventTriggerBehavior.Actions>
@@ -29,17 +53,20 @@
 			<NavigationView.MenuItems>
 				<NavigationViewItem
 					Content="Home"
-					Icon="List" />
+					Icon="Home" />
 				<NavigationViewItem
 					Content="Companies"
 					Icon="List" />
 				<NavigationViewItem
+					x:Name="YourCompanyItem"
 					Content="Your Company"
 					Icon="Edit" />
 				<NavigationViewItem
+					x:Name="LoginItem"
 					Content="Login"
-					Icon="Import"/>
+					Icon="GoToStart"/>
 				<NavigationViewItem
+					x:Name="LogoutItem"
 					Content="Logout"
 					Icon="Import"/>
 			</NavigationView.MenuItems>
