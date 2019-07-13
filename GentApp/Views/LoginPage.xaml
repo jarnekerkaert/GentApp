@@ -2,7 +2,6 @@
     x:Class="GentApp.Views.LoginPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:GentApp.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -26,7 +25,7 @@
                 Margin="4"
                 Foreground="Red"
                 TextAlignment="Center"/>
-            <TextBlock 
+			<TextBlock 
                 Text="Enter your username and password below"
                 Margin="0,0,0,20"
                 TextWrapping="Wrap"
@@ -35,29 +34,23 @@
                 VerticalAlignment="Center" 
                 FontSize="16"/>
 			<TextBox 
-                x:Name="FirstNameTextBox"
-				Text="{Binding Path=RegisterModel.FirstName, Mode=TwoWay}"
-                PlaceholderText="FirstName"
-                Margin="4,10" 
-                Width="250"/>
-			<TextBox 
-                x:Name="LastNameTextBox"
-				Text="{Binding RegisterModel.LastName, Mode=TwoWay}"
-                PlaceholderText="LastName"
-                Margin="4,10" 
+                x:Name="UsernameTextBox"
+				Text="{Binding LoginModel.UserName, Mode=TwoWay}"
+                PlaceholderText="Username"
+                Margin="4" 
                 Width="250"/>
 			<TextBox 
                 x:Name="PasswordTextBox"
-				Text="{Binding RegisterModel.Password, Mode=TwoWay}"
+				Text="{Binding LoginModel.Password, Mode=TwoWay}"
                 PlaceholderText="Password"
-                Margin="4" 
+                Margin="4, 10" 
                 Width="250"/>
             <Button 
                 x:Name="LoginButton"
                 Content="Login" 
+				Command="{Binding Path=LoginCommand}"
                 Background="DodgerBlue" 
                 Foreground="White"
-                Click="Login_Click" 
                 Width="80" 
                 HorizontalAlignment="Center"
                 Margin="0,20"/>

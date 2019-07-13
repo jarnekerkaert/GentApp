@@ -35,7 +35,7 @@ namespace GentApp.ViewModels {
 			get {
 				return _loadCommand
 					?? ( _loadCommand = new RelayCommand(
-					() => _navigationService.NavigateTo("CompaniesPage")) );
+					() => _navigationService.NavigateTo(nameof(HomePage))) );
 			}
 		}
 

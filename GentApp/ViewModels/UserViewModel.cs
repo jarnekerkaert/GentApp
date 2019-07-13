@@ -5,6 +5,8 @@ using GentApp.Helpers;
 using GentApp.Services;
 using GentApp.Views;
 using MetroLog;
+using System;
+using Windows.UI.Popups;
 
 namespace GentApp.ViewModels {
 	public class UserViewModel : ViewModelBase {
@@ -22,6 +24,19 @@ namespace GentApp.ViewModels {
 			set {
 				_registerModel = value;
 				RaisePropertyChanged(nameof(RegisterModel));
+			}
+		}
+
+		private LoginModel _loginModel = new LoginModel();
+
+		public LoginModel LoginModel {
+			get {
+				return _loginModel;
+			}
+
+			set {
+				_loginModel = value;
+				RaisePropertyChanged(nameof(LoginModel));
 			}
 		}
 
@@ -47,8 +62,13 @@ namespace GentApp.ViewModels {
 		public RelayCommand RegisterCommand {
 			get {
 				return _registerCommand = new RelayCommand(async () => {
-					CurrentUser = await _userService.Register(RegisterModel);
-					_navigationService.NavigateTo(nameof(HomePage));
+					try {
+						var result = await _userService.Register(RegisterModel);
+						_navigationService.NavigateTo(nameof(HomePage));
+						await new MessageDialog("Registered!").ShowAsync();
+					} catch ( Exception e ) {
+						await new MessageDialog(e.Message).ShowAsync();
+					}
 				});
 			}
 		}
@@ -58,8 +78,13 @@ namespace GentApp.ViewModels {
 		public RelayCommand LoginCommand {
 			get {
 				return _loginCommand = new RelayCommand(async () => {
-					CurrentUser = await _userService.Login(RegisterModel);
-					_navigationService.NavigateTo(nameof(HomePage));
+					try {
+						CurrentUser = await _userService.Login(LoginModel);
+						_navigationService.NavigateTo(nameof(HomePage));
+						await new MessageDialog("Logged in!").ShowAsync();
+					} catch ( Exception e ) {
+						await new MessageDialog(e.Message).ShowAsync();
+					}
 				});
 			}
 		}

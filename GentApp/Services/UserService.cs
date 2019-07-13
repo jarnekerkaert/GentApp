@@ -17,36 +17,30 @@ namespace GentApp.Services {
 		}
 
 		public async Task<User> Register(RegisterModel content) {
-			using ( var request = new HttpRequestMessage(HttpMethod.Post, apiUrl) ) {
+			using ( var request = new HttpRequestMessage(HttpMethod.Post, apiUrl + "/register") ) {
 				var json = JsonConvert.SerializeObject(content);
 				using ( var stringContent = new StringContent(json, Encoding.UTF8, "application/json") ) {
 					request.Content = stringContent;
-
 					using ( var response = await HttpClient
 						.SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
 						.ConfigureAwait(false) ) {
 						response.EnsureSuccessStatusCode();
-						
 						return new User(content.FirstName, content.LastName, response.Content.ToString());
 					}
 				}
 			}
 		}
 
-		public async Task<User> Login(RegisterModel loginModel) {
-			HttpResponseMessage response = await HttpClient.GetAsync(apiUrl + "/" + loginModel.FirstName);
-			if ( response.IsSuccessStatusCode ) {
-				return JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());
-			}
-			return DummyDataSource.DefaultUser;
+		public async Task<User> Login(LoginModel loginModel) {
+			HttpResponseMessage response = await HttpClient.GetAsync(apiUrl + "/login/" + loginModel.UserName);
+			response.EnsureSuccessStatusCode();
+			return JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());
 		}
 
 		public async Task<User> GetUser(string userId) {
 			HttpResponseMessage response = await HttpClient.GetAsync(apiUrl + "/" + userId);
-			if ( response.IsSuccessStatusCode ) {
-				return JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());
-			}
-			return DummyDataSource.DefaultUser;
+			response.EnsureSuccessStatusCode();
+			return JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());
 		}
 	}
 }

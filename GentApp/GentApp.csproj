@@ -96,6 +96,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataModel\DummyDataSource.cs" />
+    <Compile Include="DataModel\LoginModel.cs" />
     <Compile Include="Helpers\INavigationService.cs" />
     <Compile Include="Helpers\Logger.cs" />
     <Compile Include="DataModel\Branch.cs" />

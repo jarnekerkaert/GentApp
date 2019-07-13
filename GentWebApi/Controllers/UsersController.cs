@@ -18,36 +18,26 @@ namespace GentWebApi.Controllers {
 		}
 
 		// GET api/<controller>/5
-		[HttpGet("{firstname}")]
-		public ActionResult<User> GetByName(string firstName) {
-			User response = _context.Users.Find(firstName);
-			if (response != null ) {
-				return response;
-			}
-			else {
-				return NotFound();
-			}
+		[HttpGet("login/{username}")]
+		public ActionResult<User> Login(string userName) {
+			User response = _context.Users
+				.Where(u => u.UserName == userName)
+				.SingleOrDefault();
+			return response != null ? (ActionResult<User>) response : (ActionResult<User>) NotFound();
 		}
 
 		// GET api/<controller>/5
 		[HttpGet("{id}")]
 		public ActionResult<User> GetById(string id) {
-			if (_context.Users.Find(id) != null)
-			{
-				return _context.Users.Find(id);
-			}
-			else
-			{
-				return NotFound();
-			}
+			return _context.Users.Find(id) ?? (ActionResult<User>) NotFound();
 		}
 
 		// POST api/<controller>
-		[HttpPost]
-		public ActionResult<string> Post([FromBody] RegisterModel value) {
+		[HttpPost("register")]
+		public ActionResult<string> Register([FromBody] RegisterModel value) {
 			if (ModelState.IsValid) {
 				_context.Users
-				.Add(new User(value.FirstName, value.LastName, value.Password));
+				.Add(new User(value.UserName, value.FirstName, value.LastName, value.Password));
 				_context.SaveChanges();
 				return Ok();
 			}
