@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using GentApp.Models;
 using GentWebApi.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -34,12 +31,13 @@ namespace GentWebApi.Controllers {
 
 		// POST api/<controller>
 		[HttpPost("register")]
-		public ActionResult<string> Register([FromBody] RegisterModel value) {
+		public ActionResult<string> Register([FromBody] RegisterModel user) {
 			if (ModelState.IsValid) {
+				User newUser = new User(user.UserName, user.FirstName, user.LastName, user.Password);
 				_context.Users
-				.Add(new User(value.UserName, value.FirstName, value.LastName, value.Password));
+				.Add(newUser);
 				_context.SaveChanges();
-				return Ok();
+				return Created(newUser.Id, newUser);
 			}
 			else {
 				return BadRequest();
@@ -48,15 +46,14 @@ namespace GentWebApi.Controllers {
 
 		// PUT api/<controller>/5
 		[HttpPut("{id}")]
-		public IActionResult Put([FromBody]User value) {
+		public IActionResult Put(string id, [FromBody]User value) {
 			if (ModelState.IsValid) {
-				_context.Users
-					.Update(value);
+				_context.Users.Update(value);
 				_context.SaveChanges();
 				return Ok();
 			}
 			else {
-				return NotFound();
+				return BadRequest();
 			}
 		}
 
@@ -70,7 +67,7 @@ namespace GentWebApi.Controllers {
 				return Ok();
 			}
 			else {
-				return NotFound();
+				return BadRequest();
 			}
 		}
 	}

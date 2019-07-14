@@ -29,6 +29,7 @@ namespace GentApp.ViewModels
 			SimpleIoc.Default.Register<MainViewModel>();
 			SimpleIoc.Default.Register<UserViewModel>();
 			SimpleIoc.Default.Register<CompaniesViewModel>();
+			SimpleIoc.Default.Register<CompanyViewModel>();
 			SimpleIoc.Default.Register<BranchesViewModel>();
 			SimpleIoc.Default.Register<BranchViewModel>();
 			SetupNavigation();
@@ -54,6 +55,7 @@ namespace GentApp.ViewModels
 		public MainViewModel MainViewModelInstance => ServiceLocator.Current.GetInstance<MainViewModel>();
 		public UserViewModel UserViewModelInstance => ServiceLocator.Current.GetInstance<UserViewModel>();
 		public CompaniesViewModel CompaniesViewModelInstance => ServiceLocator.Current.GetInstance<CompaniesViewModel>();
+		public CompanyViewModel CompanyViewModelInstance => ServiceLocator.Current.GetInstance<CompanyViewModel>();
 		public BranchesViewModel BranchesViewModelInstance => ServiceLocator.Current.GetInstance<BranchesViewModel>();
 		public BranchViewModel BranchViewModelInstance => ServiceLocator.Current.GetInstance<BranchViewModel>();
 

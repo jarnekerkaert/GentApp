@@ -114,6 +114,7 @@
     <Compile Include="ViewModels\BranchViewModel.cs" />
     <Compile Include="Services\CompanyService.cs" />
     <Compile Include="ViewModels\CompaniesViewModel.cs" />
+    <Compile Include="ViewModels\CompanyViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />

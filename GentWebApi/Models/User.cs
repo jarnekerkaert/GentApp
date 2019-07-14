@@ -7,7 +7,12 @@ namespace GentApp.Models
 
         }
 
-        public User(string userName, string firstName, string lastName, string password) {
+		public User(string userName, string firstName, string lastName, string password, Company company)
+			: this(userName, firstName, lastName, password) {
+			Company = company;
+		}
+
+		public User(string userName, string firstName, string lastName, string password) {
 			UserName = userName;
 			Firstname = firstName;
 			Lastname = lastName;

@@ -42,6 +42,7 @@ namespace GentApp.ViewModels {
 			("Home", nameof(HomePage)),
 			("Companies", nameof(CompaniesPage)),
 			("Your Company", nameof(MyCompanyPage)),
+			("Register Company", nameof(RegisterCompanyPage)),
 			("Login", nameof(LoginPage))
 		};
 
@@ -55,7 +56,7 @@ namespace GentApp.ViewModels {
 							UserViewModel.LogoutCommand.Execute(null);
 						}
 						else {
-							_navigationService.NavigateTo(_pages.FirstOrDefault(p => p.Tag.Equals(page.InvokedItem.ToString())).Page);
+							_navigationService.NavigateTo(_pages.Find(p => p.Tag.Equals(page.InvokedItem.ToString())).Page);
 						}
 					});
 			}

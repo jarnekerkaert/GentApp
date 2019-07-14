@@ -25,7 +25,7 @@ namespace GentApp.Services {
 						.SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
 						.ConfigureAwait(false) ) {
 						response.EnsureSuccessStatusCode();
-						return new User(content.FirstName, content.LastName, response.Content.ToString());
+						return JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());
 					}
 				}
 			}
@@ -41,6 +41,21 @@ namespace GentApp.Services {
 			HttpResponseMessage response = await HttpClient.GetAsync(apiUrl + "/" + userId);
 			response.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());
+		}
+
+		public async Task<User> Update(User content) {
+			using ( var request = new HttpRequestMessage(HttpMethod.Put, apiUrl + "/" + content.Id) ) {
+				var json = JsonConvert.SerializeObject(content);
+				using ( var stringContent = new StringContent(json, Encoding.UTF8, "application/json") ) {
+					request.Content = stringContent;
+					using ( var response = await HttpClient
+						.SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
+						.ConfigureAwait(false) ) {
+						response.EnsureSuccessStatusCode();
+						return JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());
+					}
+				}
+			}
 		}
 	}
 }

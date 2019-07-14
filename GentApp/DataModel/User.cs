@@ -11,7 +11,7 @@ namespace GentApp.DataModel {
 		}
 
 		public User(string userName, string firstName, string lastName)
-			: this(firstName, lastName){
+			: this(firstName, lastName) {
 			UserName = userName;
 		}
 
@@ -25,5 +25,11 @@ namespace GentApp.DataModel {
 		public string Firstname { get; set; }
 		public string Lastname { get; set; }
 		public Company Company { get; set; }
+
+		public bool IsEntrepreneur {
+			get {
+				return Company != null;
+			}
+		}
 	}
 }

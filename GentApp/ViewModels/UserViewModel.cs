@@ -15,6 +15,7 @@ namespace GentApp.ViewModels {
 		private readonly UserService _userService;
 
 		private RegisterModel _registerModel = new RegisterModel();
+		private bool _registerCompany = false;
 
 		public RegisterModel RegisterModel {
 			get {
@@ -43,7 +44,7 @@ namespace GentApp.ViewModels {
 		private User _currentUser;
 		public User CurrentUser {
 			get {
-				return _currentUser ?? new User("","");
+				return _currentUser ?? new User("", "");
 			}
 
 			set {
@@ -52,9 +53,24 @@ namespace GentApp.ViewModels {
 			}
 		}
 
+		public async void SaveUser() {
+			try {
+				await _userService.Update(CurrentUser).ContinueWith(p => RaisePropertyChanged(nameof(IsEntrepreneur)));			
+				await new MessageDialog("User saved!").ShowAsync();
+			} catch(Exception e) {
+				await new MessageDialog("Error saving user: "+e.Message).ShowAsync();
+			}
+		}
+
 		public bool LoggedIn {
 			get {
 				return CurrentUser.Id != null || CurrentUser == null;
+			}
+		}
+
+		public bool IsEntrepreneur {
+			get {
+				return CurrentUser.Company != null;
 			}
 		}
 
@@ -70,7 +86,10 @@ namespace GentApp.ViewModels {
 				return _registerCommand = new RelayCommand(async () => {
 					try {
 						CurrentUser = await _userService.Register(RegisterModel);
-						_navigationService.NavigateTo(nameof(HomePage));
+						if(_registerCompany)
+							_navigationService.NavigateTo(nameof(RegisterCompanyPage));
+						else
+							_navigationService.NavigateTo(nameof(HomePage));
 						RaisePropertyChanged(nameof(LoggedIn));
 						await new MessageDialog("Registered!").ShowAsync();
 					} catch ( Exception e ) {
@@ -130,7 +149,10 @@ namespace GentApp.ViewModels {
 
 		public RelayCommand ToCompanyRegistration {
 			get {
-				return new RelayCommand(() => _navigationService.NavigateTo(nameof(RegisterCompanyPage)));
+				return new RelayCommand(() => {
+					_registerCompany = true;
+					_navigationService.NavigateTo(nameof(RegisterClientPage));
+				});
 			}
 		}
 	}
