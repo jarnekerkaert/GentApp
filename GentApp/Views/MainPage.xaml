@@ -6,13 +6,63 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
 	xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+	xmlns:triggers="using:WindowsStateTriggers"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding MainViewModelInstance, Source={StaticResource Locator}}">
 
+	<interactivity:Interaction.Behaviors>
+		<core:EventTriggerBehavior EventName="Loaded">
+			<core:InvokeCommandAction Command="{Binding Path=LoadCommand}" />
+		</core:EventTriggerBehavior>
+	</interactivity:Interaction.Behaviors>
+
 	<Grid>
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup>
+				<VisualState x:Name="LoggedIn">
+					<VisualState.StateTriggers>
+						<triggers:EqualsStateTrigger EqualTo="True" Value="{Binding Path=UserViewModel.LoggedIn}" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="LoginItem.Visibility" Value="Collapsed"/>
+						<Setter Target="LogoutItem.Visibility" Value="Visible" />
+						<Setter Target="YourCompanyItem.Visibility" Value="Visible" />
+					</VisualState.Setters>
+				</VisualState>
+				<VisualState x:Name="LoggedOut">
+					<VisualState.StateTriggers>
+						<triggers:EqualsStateTrigger EqualTo="False" Value="{Binding Path=UserViewModel.LoggedIn}" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="LoginItem.Visibility" Value="Visible"/>
+						<Setter Target="LogoutItem.Visibility" Value="Collapsed" />
+						<Setter Target="YourCompanyItem.Visibility" Value="Collapsed" />
+					</VisualState.Setters>
+				</VisualState>
+			</VisualStateGroup>
+			<VisualStateGroup>
+				<VisualState x:Name="IsEntrepreneur">
+					<VisualState.StateTriggers>
+						<triggers:EqualsStateTrigger EqualTo="True" Value="{Binding Path=UserViewModel.CurrentUser.IsEntrepreneur}" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="YourCompanyItem.Content" Value="Your company"/>
+					</VisualState.Setters>
+				</VisualState>
+				<VisualState x:Name="NotEntrepreneur">
+					<VisualState.StateTriggers>
+						<triggers:EqualsStateTrigger EqualTo="False" Value="{Binding Path=UserViewModel.CurrentUser.IsEntrepreneur}" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="YourCompanyItem.Content" Value="Register Company"/>
+					</VisualState.Setters>
+				</VisualState>
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
 		<NavigationView
-			Header="Welcome to GentApp!" >
+			Header="{Binding Path=UserViewModel.CurrentUser.UserName}"
+			IsBackEnabled="False">
 			<interactivity:Interaction.Behaviors>
 				<core:EventTriggerBehavior EventName="ItemInvoked">
 					<core:EventTriggerBehavior.Actions>
@@ -22,15 +72,21 @@
 			</interactivity:Interaction.Behaviors>
 			<NavigationView.MenuItems>
 				<NavigationViewItem
-					Tag="CompaniesPage"
+					Content="Home"
+					Icon="Home" />
+				<NavigationViewItem
 					Content="Companies"
 					Icon="List" />
 				<NavigationViewItem
-					Tag="MyCompanyPage"
+					x:Name="YourCompanyItem"
 					Content="Your Company"
 					Icon="Edit" />
 				<NavigationViewItem
-					Tag="Logout"
+					x:Name="LoginItem"
+					Content="Login"
+					Icon="GoToStart"/>
+				<NavigationViewItem
+					x:Name="LogoutItem"
 					Content="Logout"
 					Icon="Import"/>
 			</NavigationView.MenuItems>

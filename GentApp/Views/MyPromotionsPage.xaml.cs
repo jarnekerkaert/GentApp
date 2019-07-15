@@ -32,7 +32,7 @@ namespace GentApp.Views
 		public MyPromotionsPage()
 		{
 			InitializeComponent();
-			MyCompany = SimpleIoc.Default.GetInstance<CompaniesViewModel>().MyCompany;
+			MyCompany = SimpleIoc.Default.GetInstance<CompanyViewModel>().MyCompany;
 			horStackPanel.DataContext = MyCompany;
 			Promotions = SimpleIoc.Default.GetInstance<BranchViewModel>().Promotions;
 			AmountPromotionsTextBlock.Text = Promotions.ToList().Count.ToString();

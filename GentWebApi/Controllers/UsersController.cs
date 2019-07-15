@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using GentApp.Models;
 using GentWebApi.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -18,26 +15,29 @@ namespace GentWebApi.Controllers {
 		}
 
 		// GET api/<controller>/5
+		[HttpGet("login/{username}")]
+		public ActionResult<User> Login(string userName) {
+			User response = _context.Users
+				.Where(u => u.UserName == userName)
+				.SingleOrDefault();
+			return response != null ? (ActionResult<User>) response : (ActionResult<User>) NotFound();
+		}
+
+		// GET api/<controller>/5
 		[HttpGet("{id}")]
-		public ActionResult<User> Get(string id) {
-			if (_context.Users.Find(id) != null)
-			{
-				return _context.Users.Find(id);
-			}
-			else
-			{
-				return NotFound();
-			}
+		public ActionResult<User> GetById(string id) {
+			return _context.Users.Find(id) ?? (ActionResult<User>) NotFound();
 		}
 
 		// POST api/<controller>
-		[HttpPost]
-		public IActionResult Post([FromBody] User value) {
+		[HttpPost("register")]
+		public ActionResult<string> Register([FromBody] RegisterModel user) {
 			if (ModelState.IsValid) {
+				User newUser = new User(user.UserName, user.FirstName, user.LastName, user.Password);
 				_context.Users
-				.Add(value);
+				.Add(newUser);
 				_context.SaveChanges();
-				return Ok();
+				return Created(newUser.Id, newUser);
 			}
 			else {
 				return BadRequest();
@@ -46,15 +46,14 @@ namespace GentWebApi.Controllers {
 
 		// PUT api/<controller>/5
 		[HttpPut("{id}")]
-		public IActionResult Put([FromBody]User value) {
+		public IActionResult Put(string id, [FromBody]User value) {
 			if (ModelState.IsValid) {
-				_context.Users
-					.Update(value);
+				_context.Users.Update(value);
 				_context.SaveChanges();
 				return Ok();
 			}
 			else {
-				return NotFound();
+				return BadRequest();
 			}
 		}
 
@@ -68,7 +67,7 @@ namespace GentWebApi.Controllers {
 				return Ok();
 			}
 			else {
-				return NotFound();
+				return BadRequest();
 			}
 		}
 	}

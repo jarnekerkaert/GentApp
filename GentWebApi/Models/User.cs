@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using GentWebApi.Models;
-
-using Microsoft.AspNetCore.Identity;
-
+﻿
 namespace GentApp.Models
 {
     public class User
@@ -16,15 +7,23 @@ namespace GentApp.Models
 
         }
 
-        public User(string firstName) {
-			Firstname = firstName;
+		public User(string userName, string firstName, string lastName, string password, Company company)
+			: this(userName, firstName, lastName, password) {
+			Company = company;
 		}
 
-		//[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		public User(string userName, string firstName, string lastName, string password) {
+			UserName = userName;
+			Firstname = firstName;
+			Lastname = lastName;
+			Password = password;
+		}
+
 		public string Id { get; set; }
+		public string UserName { get; set; }
         public string Firstname { get; set; }
 		public string Lastname { get; set; }
+		public string Password { get; set; }
 		public Company Company { get; set; }
-		internal RoleType Role { get; set; }
 	}
 }

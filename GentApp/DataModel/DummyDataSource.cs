@@ -26,5 +26,11 @@ namespace GentApp.DataModel {
 			new Promotion(){Id="h", StartDate=DateTime.Now, EndDate = DateTime.Now, Title = "Big promotion for August!", Description = "Buy two items and get a third for free - only during August" },
 			new Promotion(){Id="i", StartDate=DateTime.Now, EndDate = DateTime.Now, Title = "Big promotion for September!", Description = "Buy three items and get a fourth for free - only during September" }
 		};
+
+		public static User DefaultUser = new User() {
+			Firstname = "henk",
+			Lastname = "pim",
+			Id = "abcd-1234"
+		};
 	}
 }
