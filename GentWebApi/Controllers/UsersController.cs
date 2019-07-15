@@ -2,6 +2,7 @@
 using GentApp.Models;
 using GentWebApi.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,7 +18,7 @@ namespace GentWebApi.Controllers {
 		// GET api/<controller>/5
 		[HttpGet("login/{username}")]
 		public ActionResult<User> Login(string userName) {
-			User response = _context.Users
+			User response = _context.Users.Include(u => u.Company)
 				.Where(u => u.UserName == userName)
 				.SingleOrDefault();
 			return response != null ? (ActionResult<User>) response : (ActionResult<User>) NotFound();
