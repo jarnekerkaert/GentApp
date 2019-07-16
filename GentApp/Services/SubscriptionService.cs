@@ -43,5 +43,17 @@ namespace GentApp.Services
 			}
 			return Enumerable.Empty<Subscription>();
 		}
+
+		public async Task Unsubscribe(string subscriptionId)
+		{
+			try
+			{
+				HttpResponseMessage responseMsg = await HttpClient.DeleteAsync(apiUrl + "/" + subscriptionId);
+			}
+			catch (Exception ex)
+			{
+				await new MessageDialog(ex.Message).ShowAsync();
+			}
+		}
 	}
 }

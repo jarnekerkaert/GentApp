@@ -96,8 +96,19 @@ namespace GentApp.ViewModels {
 			get
 			{
 				return _subscribeCommand ?? (_subscribeCommand = new RelayCommand(async () => {
-					Subscription subscription = new Subscription(){BranchId =  SelectedBranch.Id, UserId = UserViewModel.CurrentUser.Id};
-					await subscriptionService.Subscribe(subscription);
+					if (SubscribedTo)
+					{
+						Subscription subscription = Subscriptions.Where(s => s.BranchId.Equals(SelectedBranch.Id)).FirstOrDefault();
+						Subscriptions.Remove(subscription);
+						RaisePropertyChanged(nameof(Subscriptions));
+						RaisePropertyChanged(nameof(SubscribedTo));
+						await subscriptionService.Unsubscribe(subscription.Id);
+					}
+					else
+					{
+						Subscription subscription = new Subscription() { BranchId = SelectedBranch.Id, UserId = UserViewModel.CurrentUser.Id };
+						await subscriptionService.Subscribe(subscription);
+					}
 				}
 				));
 			}
@@ -135,8 +146,6 @@ namespace GentApp.ViewModels {
 		{
 			get
 			{
-				var test1 = selectedBranch.Name;
-				var test = Subscriptions.Where(s => s.BranchId.Equals(SelectedBranch.Id)).Any();
 				return Subscriptions.Where(s => s.BranchId.Equals(SelectedBranch.Id)).Any();
 			}
 		}

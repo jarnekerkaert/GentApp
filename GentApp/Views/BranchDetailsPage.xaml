@@ -14,7 +14,7 @@
 	<Grid>
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup>
-				<VisualState x:Name="SubscribedTo">
+				<VisualState x:Name="Subscribed">
 					<VisualState.StateTriggers>
 						<triggers:EqualsStateTrigger EqualTo="True" Value="{Binding Path=SubscribedTo}" />
 					</VisualState.StateTriggers>
@@ -22,7 +22,7 @@
 						<Setter Target="SubscribeButton.Content" Value="Unsubscribe"/>
 					</VisualState.Setters>
 				</VisualState>
-				<VisualState x:Name="LoggedOut">
+				<VisualState x:Name="IsLoggedOut">
 					<VisualState.StateTriggers>
 						<triggers:EqualsStateTrigger EqualTo="False" Value="{Binding Path=UserViewModel.LoggedIn}" />
 					</VisualState.StateTriggers>
@@ -31,7 +31,7 @@
 					</VisualState.Setters>
 				</VisualState>
 
-				<!--<VisualState x:Name="NotSubscribedTo">
+				<VisualState x:Name="NotSubscribed">
 					<VisualState.StateTriggers>
 						<triggers:EqualsStateTrigger EqualTo="False" Value="{Binding Path=SubscribedTo}" />
 					</VisualState.StateTriggers>
@@ -39,14 +39,14 @@
 						<Setter Target="SubscribeButton.Content" Value="Subscribe"/>
 					</VisualState.Setters>
 				</VisualState>
-				<VisualState x:Name="LoggedIn">
+				<VisualState x:Name="IsLoggedIn">
 					<VisualState.StateTriggers>
 						<triggers:EqualsStateTrigger EqualTo="True" Value="{Binding Path=UserViewModel.LoggedIn}" />
 					</VisualState.StateTriggers>
 					<VisualState.Setters>
 						<Setter Target="SubscribeButton.Visibility" Value="Visible"/>
 					</VisualState.Setters>
-				</VisualState>-->
+				</VisualState>
 			</VisualStateGroup>
 		</VisualStateManager.VisualStateGroups>
 		<StackPanel>
@@ -61,7 +61,7 @@
 			<TextBlock FontWeight="Bold">Opening hours:</TextBlock>
 			<TextBlock Text="{Binding Path=SelectedBranch.OpeningHours, Mode=OneWay, TargetNullValue='Empty'}"></TextBlock>
 
-			<Button x:Name="SubscribeButton" Command="{Binding Path=SubscribeCommand}" HorizontalAlignment="Center">Subscribe</Button>
+			<Button x:Name="SubscribeButton" Command="{Binding Path=SubscribeCommand}" HorizontalAlignment="Center"></Button>
 
 		</StackPanel>
 	</Grid>
