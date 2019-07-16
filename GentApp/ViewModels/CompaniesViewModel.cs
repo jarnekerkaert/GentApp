@@ -107,6 +107,9 @@ namespace GentApp.ViewModels {
 					else
 					{
 						Subscription subscription = new Subscription() { BranchId = SelectedBranch.Id, UserId = UserViewModel.CurrentUser.Id };
+						Subscriptions.Add(subscription);
+						RaisePropertyChanged(nameof(Subscriptions));
+						RaisePropertyChanged(nameof(SubscribedTo));
 						await subscriptionService.Subscribe(subscription);
 					}
 				}
