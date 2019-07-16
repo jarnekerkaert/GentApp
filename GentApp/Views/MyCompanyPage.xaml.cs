@@ -43,7 +43,7 @@ namespace GentApp.Views
 		private void ListView_ItemClick(object sender, ItemClickEventArgs e)
 		{
 			//SimpleIoc.Default.GetInstance<BranchesViewModel>().MySelectedBranch = e.ClickedItem as Branch;
-			SimpleIoc.Default.GetInstance<CompaniesViewModel>().SelectedBranch = e.ClickedItem as Branch;
+			SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch = e.ClickedItem as Branch;
 			Frame.Navigate(typeof(EditBranchPage));
 
 		}

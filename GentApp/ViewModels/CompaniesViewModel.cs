@@ -79,8 +79,5 @@ namespace GentApp.ViewModels {
 			RaisePropertyChanged(nameof(Companies));
 		}
 
-		public async void DeleteBranch() {
-			await branchService.Delete(SelectedBranch);
-		}
 	}
 }

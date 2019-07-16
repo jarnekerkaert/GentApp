@@ -47,7 +47,7 @@
 						<triggers:EqualsStateTrigger EqualTo="True" Value="{Binding Path=UserViewModel.CurrentUser.IsEntrepreneur}" />
 					</VisualState.StateTriggers>
 					<VisualState.Setters>
-						<Setter Target="YourCompanyItem.Content" Value="Your company"/>
+						<Setter Target="YourCompanyItem.Content" Value="Your Company"/>
 					</VisualState.Setters>
 				</VisualState>
 				<VisualState x:Name="NotEntrepreneur">

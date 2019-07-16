@@ -48,6 +48,8 @@ namespace GentApp.ViewModels
 			navigationService.Configure(nameof(BranchDetailsPage), typeof(BranchDetailsPage));
 			navigationService.Configure(nameof(AddBranchPage), typeof(AddBranchPage));
 			navigationService.Configure(nameof(AddPromotionPage), typeof(AddPromotionPage));
+			navigationService.Configure(nameof(EditBranchPage), typeof(EditBranchPage));
+
 			SimpleIoc.Default.Unregister<INavigationService>();
 			SimpleIoc.Default.Register<INavigationService>(() => navigationService);
 		}

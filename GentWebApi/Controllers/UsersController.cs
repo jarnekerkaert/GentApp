@@ -18,7 +18,7 @@ namespace GentWebApi.Controllers {
 		// GET api/<controller>/5
 		[HttpGet("login/{username}")]
 		public ActionResult<User> Login(string userName) {
-			User response = _context.Users.Include(u => u.Company)
+			User response = _context.Users.Include(u => u.Company.Branches)
 				.Where(u => u.UserName == userName)
 				.SingleOrDefault();
 			return response != null ? (ActionResult<User>) response : (ActionResult<User>) NotFound();
