@@ -31,7 +31,7 @@ namespace GentApp.Views
 			var _enumval = Enum.GetValues(typeof(BranchType)).Cast<BranchType>().ToList();
 			_enumval.Remove(BranchType.NONE);
 			Type.ItemsSource = _enumval;
-			Type.SelectedItem = SimpleIoc.Default.GetInstance<CompaniesViewModel>().SelectedBranch.Type;
+			Type.SelectedItem = SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch.Type;
 			//Type.SelectedItem = SimpleIoc.Default.GetInstance<BranchesViewModel>().MySelectedBranch.Type;
 		}
 
@@ -102,7 +102,7 @@ namespace GentApp.Views
 			};
 			ContentDialogResult result = await deleteBranchDialog.ShowAsync();
 			if (result == ContentDialogResult.Primary) {
-				SimpleIoc.Default.GetInstance<CompaniesViewModel>().DeleteBranch();
+				SimpleIoc.Default.GetInstance<CompanyViewModel>().DeleteBranch();
 				Frame.Navigate(typeof(MyCompanyPage));
 			}
 			//else if(result == ContentDialogResult.Secondary){ /* ... */}

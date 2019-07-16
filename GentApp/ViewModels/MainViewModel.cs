@@ -43,6 +43,7 @@ namespace GentApp.ViewModels {
 			("Companies", nameof(CompaniesPage)),
 			("Your Company", nameof(MyCompanyPage)),
 			("Register Company", nameof(RegisterCompanyPage)),
+			("Your Subscriptions", nameof(SubscriptionsPage)),
 			("Login", nameof(LoginPage))
 		};
 

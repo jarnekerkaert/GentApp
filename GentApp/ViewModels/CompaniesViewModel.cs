@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Ioc;
 using GentApp.DataModel;
 using GentApp.Helpers;
 using GentApp.Services;
@@ -14,11 +15,20 @@ namespace GentApp.ViewModels {
 		private readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<CompaniesViewModel>();
 		private readonly CompanyService companyService = new CompanyService();
 		private readonly BranchService branchService = new BranchService();
+		private readonly SubscriptionService subscriptionService = new SubscriptionService();
 		private readonly INavigationService _navigationService;
 
 		public CompaniesViewModel(INavigationService navigationService) {
 			_navigationService = navigationService;
 			companyService = new CompanyService();
+		}
+
+		public UserViewModel UserViewModel
+		{
+			get
+			{
+				return SimpleIoc.Default.GetInstance<UserViewModel>();
+			}
 		}
 
 		private ObservableCollection<Company> _companies;
@@ -79,8 +89,69 @@ namespace GentApp.ViewModels {
 			RaisePropertyChanged(nameof(Companies));
 		}
 
-		public async void DeleteBranch() {
-			await branchService.Delete(SelectedBranch);
+		private RelayCommand _subscribeCommand;
+
+		public RelayCommand SubscribeCommand
+		{
+			get
+			{
+				return _subscribeCommand ?? (_subscribeCommand = new RelayCommand(async () => {
+					if (SubscribedTo)
+					{
+						Subscription subscription = Subscriptions.Where(s => s.BranchId.Equals(SelectedBranch.Id)).FirstOrDefault();
+						Subscriptions.Remove(subscription);
+						RaisePropertyChanged(nameof(Subscriptions));
+						RaisePropertyChanged(nameof(SubscribedTo));
+						await subscriptionService.Unsubscribe(subscription.Id);
+					}
+					else
+					{
+						Subscription subscription = new Subscription() { BranchId = SelectedBranch.Id, UserId = UserViewModel.CurrentUser.Id };
+						Subscriptions.Add(subscription);
+						RaisePropertyChanged(nameof(Subscriptions));
+						RaisePropertyChanged(nameof(SubscribedTo));
+						await subscriptionService.Subscribe(subscription);
+					}
+				}
+				));
+			}
 		}
+
+		private ObservableCollection<Subscription> _subscriptions;
+		public ObservableCollection<Subscription> Subscriptions
+		{
+			get
+			{
+				return _subscriptions;
+			}
+
+			set
+			{
+				_subscriptions = value;
+				RaisePropertyChanged(nameof(Subscriptions));
+			}
+		}
+
+		private RelayCommand _loadSubscriptionsCommand;
+
+		public RelayCommand LoadSubscriptionsCommand
+		{
+			get
+			{
+				return _loadSubscriptionsCommand ?? (_loadSubscriptionsCommand = new RelayCommand(async () => {
+					Subscriptions = new ObservableCollection<Subscription>(await subscriptionService.GetSubscriptions(UserViewModel.CurrentUser.Id));
+				}
+				));
+			}
+		}
+
+		public bool SubscribedTo
+		{
+			get
+			{
+				return Subscriptions.Where(s => s.BranchId.Equals(SelectedBranch.Id)).Any();
+			}
+		}
+
 	}
 }
