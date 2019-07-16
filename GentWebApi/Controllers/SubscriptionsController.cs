@@ -19,21 +19,21 @@ namespace GentWebApi.Controllers
 			_context = context;
 		}
 
-        // GET: api/Subscription/branch/5
+        // GET: api/Subscriptions/branch/5
         [HttpGet("branch/{id}", Name = "GetSubscribers")]
         public IEnumerable<Subscription> GetSubscribers(string id)
         {
 			return _context.Subscriptions.Where(s => s.BranchId.Equals(id));
         }
 
-		// GET: api/Subscription/user/5
+		// GET: api/Subscriptions/user/5
 		[HttpGet("user/{id}", Name = "GetSubscriptions")]
 		public IEnumerable<Subscription> GetSubscriptions(string id)
 		{
 			return _context.Subscriptions.Where(s => s.UserId.Equals(id));
 		}
 
-		// POST: api/Subscription
+		// POST: api/Subscriptions
 		[HttpPost]
         public IActionResult Post([FromBody] Subscription subscription)
         {
@@ -50,7 +50,7 @@ namespace GentWebApi.Controllers
 			}
 		}
 
-        // DELETE: api/ApiWithActions/5
+        // DELETE: api/Subscriptions/5
         [HttpDelete("{id}")]
         public IActionResult Delete(string id)
         {

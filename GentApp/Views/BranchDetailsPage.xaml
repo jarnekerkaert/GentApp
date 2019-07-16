@@ -7,20 +7,63 @@
 	xmlns:local="using:GentApp.DataModel"
 	xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
 	xmlns:core="using:Microsoft.Xaml.Interactions.Core"
-    mc:Ignorable="d"
+	xmlns:triggers="using:WindowsStateTriggers"
+	mc:Ignorable="d"
 	DataContext="{Binding CompaniesViewModelInstance, Source={StaticResource Locator}}">
 
-	<StackPanel>
-		<TextBlock Margin="0,50,0,50" HorizontalAlignment="Center">Details of branch:</TextBlock>
+	<Grid>
+		<VisualStateManager.VisualStateGroups>
+			<VisualStateGroup>
+				<VisualState x:Name="SubscribedTo">
+					<VisualState.StateTriggers>
+						<triggers:EqualsStateTrigger EqualTo="True" Value="{Binding Path=SubscribedTo}" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="SubscribeButton.Content" Value="Unsubscribe"/>
+					</VisualState.Setters>
+				</VisualState>
+				<VisualState x:Name="LoggedOut">
+					<VisualState.StateTriggers>
+						<triggers:EqualsStateTrigger EqualTo="False" Value="{Binding Path=UserViewModel.LoggedIn}" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="SubscribeButton.Visibility" Value="Collapsed"/>
+					</VisualState.Setters>
+				</VisualState>
 
-		<TextBlock FontWeight="Bold">Name:</TextBlock>
-		<TextBlock Text="{Binding Path=SelectedBranch.Name, Mode=OneWay, TargetNullValue='Empty'}"></TextBlock>
-		<TextBlock FontWeight="Bold">Address:</TextBlock>
-		<TextBlock Text="{Binding Path=SelectedBranch.Address, Mode=OneWay, TargetNullValue='Empty'}"></TextBlock>
-		<TextBlock FontWeight="Bold">Type:</TextBlock>
-		<TextBlock Text="{Binding Path=SelectedBranch.Type, Mode=OneWay, TargetNullValue='Empty'}"></TextBlock>
-		<TextBlock FontWeight="Bold">Opening hours:</TextBlock>
-		<TextBlock Text="{Binding Path=SelectedBranch.OpeningHours, Mode=OneWay, TargetNullValue='Empty'}"></TextBlock>
+				<!--<VisualState x:Name="NotSubscribedTo">
+					<VisualState.StateTriggers>
+						<triggers:EqualsStateTrigger EqualTo="False" Value="{Binding Path=SubscribedTo}" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="SubscribeButton.Content" Value="Subscribe"/>
+					</VisualState.Setters>
+				</VisualState>
+				<VisualState x:Name="LoggedIn">
+					<VisualState.StateTriggers>
+						<triggers:EqualsStateTrigger EqualTo="True" Value="{Binding Path=UserViewModel.LoggedIn}" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="SubscribeButton.Visibility" Value="Visible"/>
+					</VisualState.Setters>
+				</VisualState>-->
+			</VisualStateGroup>
+		</VisualStateManager.VisualStateGroups>
+		<StackPanel>
+			<TextBlock Margin="0,50,0,50" HorizontalAlignment="Center">Details of branch:</TextBlock>
 
-	</StackPanel>
+			<TextBlock FontWeight="Bold">Name:</TextBlock>
+			<TextBlock Text="{Binding Path=SelectedBranch.Name, Mode=OneWay, TargetNullValue='Empty'}"></TextBlock>
+			<TextBlock FontWeight="Bold">Address:</TextBlock>
+			<TextBlock Text="{Binding Path=SelectedBranch.Address, Mode=OneWay, TargetNullValue='Empty'}"></TextBlock>
+			<TextBlock FontWeight="Bold">Type:</TextBlock>
+			<TextBlock Text="{Binding Path=SelectedBranch.Type, Mode=OneWay, TargetNullValue='Empty'}"></TextBlock>
+			<TextBlock FontWeight="Bold">Opening hours:</TextBlock>
+			<TextBlock Text="{Binding Path=SelectedBranch.OpeningHours, Mode=OneWay, TargetNullValue='Empty'}"></TextBlock>
+
+			<Button x:Name="SubscribeButton" Command="{Binding Path=SubscribeCommand}" HorizontalAlignment="Center">Subscribe</Button>
+
+		</StackPanel>
+	</Grid>
+	
 </Page>

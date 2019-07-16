@@ -28,6 +28,7 @@
 						<Setter Target="LoginItem.Visibility" Value="Collapsed"/>
 						<Setter Target="LogoutItem.Visibility" Value="Visible" />
 						<Setter Target="YourCompanyItem.Visibility" Value="Visible" />
+						<Setter Target="YourSubscriptionsItem.Visibility" Value="Visible" />
 					</VisualState.Setters>
 				</VisualState>
 				<VisualState x:Name="LoggedOut">
@@ -38,6 +39,8 @@
 						<Setter Target="LoginItem.Visibility" Value="Visible"/>
 						<Setter Target="LogoutItem.Visibility" Value="Collapsed" />
 						<Setter Target="YourCompanyItem.Visibility" Value="Collapsed" />
+						<Setter Target="YourSubscriptionsItem.Visibility" Value="Collapsed" />
+
 					</VisualState.Setters>
 				</VisualState>
 			</VisualStateGroup>
@@ -81,6 +84,10 @@
 					x:Name="YourCompanyItem"
 					Content="Your Company"
 					Icon="Edit" />
+				<NavigationViewItem
+					x:Name="YourSubscriptionsItem"
+					Content="Your Subscriptions"
+					Icon="Favorite" />
 				<NavigationViewItem
 					x:Name="LoginItem"
 					Content="Login"
