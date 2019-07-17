@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <Compile Remove="Controllers\AccountController.cs" />
+    <Compile Remove="Models\RoleType.cs" />
     <Compile Remove="Models\UserRole.cs" />
   </ItemGroup>
 

@@ -65,7 +65,7 @@ namespace GentApp.Views
 			}
 			if (isValid)
 			{
-				SimpleIoc.Default.GetInstance<CompaniesViewModel>().EditCompany(Name.Text, Address.Text, OpeningHours.Text);
+				SimpleIoc.Default.GetInstance<CompanyViewModel>().EditCompany(Name.Text, Address.Text, OpeningHours.Text);
 				Frame.Navigate(typeof(MyCompanyPage));
 			}
 		}

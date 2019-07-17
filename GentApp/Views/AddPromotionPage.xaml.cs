@@ -79,7 +79,7 @@ namespace GentApp.Views
 			}
 			if (isValid == true)
 			{
-				Promotion newPromotion = new Promotion() { Title = Title.Text, Description = Description.Text, StartDate = StartDatePicker.Date.Value.DateTime, EndDate = EndDatePicker.Date.Value.DateTime, BranchId = SimpleIoc.Default.GetInstance<CompaniesViewModel>().SelectedBranch.Id, AllBranches = false };
+				Promotion newPromotion = new Promotion() { Title = Title.Text, Description = Description.Text, StartDate = StartDatePicker.Date.Value.DateTime, EndDate = EndDatePicker.Date.Value.DateTime, BranchId = SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch.Id, AllBranches = false };
 				SimpleIoc.Default.GetInstance<BranchViewModel>().AddPromotion(newPromotion);
 				Frame.Navigate(typeof(BranchPromotionsPage));
 			}

@@ -3,15 +3,17 @@ using System;
 using GentWebApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace GentWebApi.Migrations
 {
     [DbContext(typeof(GentDbContext))]
-    partial class GentDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190713121044_Usernames")]
+    partial class Usernames
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -106,24 +108,6 @@ namespace GentWebApi.Migrations
                     b.ToTable("Promotions");
                 });
 
-            modelBuilder.Entity("GentWebApi.Models.Subscription", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("BranchId");
-
-                    b.Property<string>("UserId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BranchId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Subscriptions");
-                });
-
             modelBuilder.Entity("GentApp.Models.Branch", b =>
                 {
                     b.HasOne("GentApp.Models.Company")
@@ -144,17 +128,6 @@ namespace GentWebApi.Migrations
                     b.HasOne("GentApp.Models.Branch")
                         .WithMany("Promotions")
                         .HasForeignKey("BranchId");
-                });
-
-            modelBuilder.Entity("GentWebApi.Models.Subscription", b =>
-                {
-                    b.HasOne("GentApp.Models.Branch", "Branch")
-                        .WithMany()
-                        .HasForeignKey("BranchId");
-
-                    b.HasOne("GentApp.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

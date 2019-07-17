@@ -10,6 +10,12 @@
 	mc:Ignorable="d"
 	DataContext="{Binding CompaniesViewModelInstance, Source={StaticResource Locator}}">
 
+	<interactivity:Interaction.Behaviors>
+		<core:EventTriggerBehavior EventName="Loaded">
+			<core:InvokeCommandAction Command="{Binding Path=LoadSubscriptionsCommand}" />
+		</core:EventTriggerBehavior>
+	</interactivity:Interaction.Behaviors>
+
 	<StackPanel>
 		<TextBlock Margin="0,50,0,50" HorizontalAlignment="Center">Details of company:</TextBlock>
 		
@@ -38,7 +44,6 @@
 					</StackPanel>
 				</DataTemplate>
 			</ListView.ItemTemplate>
-
 		</ListView>
 	</StackPanel>
 </Page>

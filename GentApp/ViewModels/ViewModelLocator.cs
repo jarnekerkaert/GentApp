@@ -1,5 +1,4 @@
-﻿using System;
-using CommonServiceLocator;
+﻿using CommonServiceLocator;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using GentApp.Helpers;
@@ -16,17 +15,7 @@ namespace GentApp.ViewModels
 		/// Initializes a new instance of the ViewModelLocator class.
 		/// </summary>
 
-		public const string MainPageKey = "MainPage";
-		public const string CompaniesPageKey = "CompaniesPage";
-		public const string CompanyDetailsPageKey = "CompanyDetailsPage";
-		public const string MyCompanyPageKey = "MyCompanyPage";
-		public const string BranchDetailsPageKey = "BranchDetailsPage";
-		public const string AddBranchPageKey = "AddBranchPage";
-		public const string AddPromotionPageKey = "AddPromotionPage";
-		public const string EditBranchPageKey = "EditBranchPage";
-		public const string LoginPageKey = "LoginPage";
-
-		public ViewModelLocator() {
+		static ViewModelLocator() {
 			ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
 			if ( ViewModelBase.IsInDesignModeStatic ) {
@@ -38,8 +27,9 @@ namespace GentApp.ViewModels
 
 			//Register your services used here
 			SimpleIoc.Default.Register<MainViewModel>();
-			SimpleIoc.Default.Register<AccountViewModel>();
+			SimpleIoc.Default.Register<UserViewModel>();
 			SimpleIoc.Default.Register<CompaniesViewModel>();
+			SimpleIoc.Default.Register<CompanyViewModel>();
 			SimpleIoc.Default.Register<BranchesViewModel>();
 			SimpleIoc.Default.Register<BranchViewModel>();
 			SetupNavigation();
@@ -47,21 +37,28 @@ namespace GentApp.ViewModels
 
 		private static void SetupNavigation() {
 			var navigationService = new NavigationService();
-			navigationService.Configure(MainPageKey, typeof(MainPage));
-			navigationService.Configure(CompaniesPageKey, typeof(CompaniesPage));
-			navigationService.Configure(CompanyDetailsPageKey, typeof(CompanyDetailsPage));
-			navigationService.Configure(MyCompanyPageKey, typeof(MyCompanyPage));
-			navigationService.Configure(BranchDetailsPageKey, typeof(BranchDetailsPage));
-			navigationService.Configure(AddBranchPageKey, typeof(AddBranchPage));
-			navigationService.Configure(AddPromotionPageKey, typeof(AddPromotionPage));
-			navigationService.Configure(EditBranchPageKey, typeof(EditBranchPage));
-			navigationService.Configure(LoginPageKey, typeof(LoginPage));
+			navigationService.Configure(nameof(HomePage), typeof(HomePage));
+			navigationService.Configure(nameof(MainPage), typeof(MainPage));
+			navigationService.Configure(nameof(LoginPage), typeof(LoginPage));
+			navigationService.Configure(nameof(RegisterClientPage), typeof(RegisterClientPage));
+			navigationService.Configure(nameof(RegisterCompanyPage), typeof(RegisterCompanyPage));
+			navigationService.Configure(nameof(CompaniesPage), typeof(CompaniesPage));
+			navigationService.Configure(nameof(CompanyDetailsPage), typeof(CompanyDetailsPage));
+			navigationService.Configure(nameof(MyCompanyPage), typeof(MyCompanyPage));
+			navigationService.Configure(nameof(BranchDetailsPage), typeof(BranchDetailsPage));
+			navigationService.Configure(nameof(AddBranchPage), typeof(AddBranchPage));
+			navigationService.Configure(nameof(AddPromotionPage), typeof(AddPromotionPage));
+			navigationService.Configure(nameof(EditBranchPage), typeof(EditBranchPage));
+			navigationService.Configure(nameof(SubscriptionsPage), typeof(SubscriptionsPage));
+
+			SimpleIoc.Default.Unregister<INavigationService>();
 			SimpleIoc.Default.Register<INavigationService>(() => navigationService);
 		}
 
 		public MainViewModel MainViewModelInstance => ServiceLocator.Current.GetInstance<MainViewModel>();
-		public AccountViewModel AccountViewModelInstance => ServiceLocator.Current.GetInstance<AccountViewModel>();
+		public UserViewModel UserViewModelInstance => ServiceLocator.Current.GetInstance<UserViewModel>();
 		public CompaniesViewModel CompaniesViewModelInstance => ServiceLocator.Current.GetInstance<CompaniesViewModel>();
+		public CompanyViewModel CompanyViewModelInstance => ServiceLocator.Current.GetInstance<CompanyViewModel>();
 		public BranchesViewModel BranchesViewModelInstance => ServiceLocator.Current.GetInstance<BranchesViewModel>();
 		public BranchViewModel BranchViewModelInstance => ServiceLocator.Current.GetInstance<BranchViewModel>();
 
