@@ -40,7 +40,6 @@ namespace GentApp.ViewModels {
 		private readonly List<(string Tag, string Page)> _pages = new List<(string Tag, string Page)>
 		{
 			("Home", nameof(HomePage)),
-			("Companies", nameof(CompaniesPage)),
 			("Your Company", nameof(MyCompanyPage)),
 			("Register Company", nameof(RegisterCompanyPage)),
 			("Your Subscriptions", nameof(SubscriptionsPage)),

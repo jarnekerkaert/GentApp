@@ -23,7 +23,7 @@ namespace GentWebApi.Controllers
 		}
 
 		// GET api/branches
-		[HttpGet("{id}")]
+		[HttpGet]
 		public ActionResult<IEnumerable<Branch>> Get() {
 			return _context.Branches;
 		}

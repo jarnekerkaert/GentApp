@@ -22,7 +22,7 @@ namespace GentApp.Services
 			HttpClient = new HttpClient();
 		}
 
-		public async Task<IEnumerable<Branch>> GetBranches(string id)
+		public async Task<IEnumerable<Branch>> GetBranches()
 		{
 			// TODO: aanpassen
 			HttpResponseMessage response = await HttpClient.GetAsync(apiUrl);
@@ -33,11 +33,20 @@ namespace GentApp.Services
 			return Enumerable.Empty<Branch>();
 		}
 
+		public async Task<IEnumerable<Branch>> GetBranchesOfCompany(string id) {
+			// TODO: aanpassen
+			HttpResponseMessage response = await HttpClient.GetAsync(apiUrl);
+			if ( response.IsSuccessStatusCode ) {
+				return JsonConvert.DeserializeObject<IEnumerable<Branch>>(await response.Content.ReadAsStringAsync());
+			}
+			return Enumerable.Empty<Branch>();
+		}
+
 		public async Task Save(Branch branch)
 		{
 			try
 			{
-				var response = await HttpClient.PostAsync(apiUrl, new StringContent(JsonConvert.SerializeObject(branch), System.Text.Encoding.UTF8, "application/json"));
+				var response = await HttpClient.PostAsync(apiUrl, new StringContent(JsonConvert.SerializeObject(branch), Encoding.UTF8, "application/json"));
 				Console.WriteLine("test");
 			}
 			catch (Exception ex)

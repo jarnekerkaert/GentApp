@@ -78,9 +78,6 @@
 					Content="Home"
 					Icon="Home" />
 				<NavigationViewItem
-					Content="Companies"
-					Icon="List" />
-				<NavigationViewItem
 					x:Name="YourCompanyItem"
 					Content="Your Company"
 					Icon="Edit" />
