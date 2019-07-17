@@ -22,7 +22,7 @@ namespace GentApp.Services
 			HttpClient = new HttpClient();
 		}
 
-		public async Task<IEnumerable<Branch>> GetBranches(string id)
+		public async Task<IEnumerable<Branch>> GetBranches()
 		{
 			// TODO: aanpassen
 			HttpResponseMessage response = await HttpClient.GetAsync(apiUrl);
@@ -74,5 +74,6 @@ namespace GentApp.Services
 			}
 			return Enumerable.Empty<Promotion>();
 		}
+
 	}
 }

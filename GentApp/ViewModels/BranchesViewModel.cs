@@ -44,11 +44,6 @@ namespace GentApp.ViewModels
 			//SaveBranchCommand = new RelayCommand((p) => SaveBranch(p as Branch));
 		}
 
-		public async void RetrieveBranchesOfCompany(string id)
-		{
-			Branches = new ObservableCollection<Branch>(await branchService.GetBranches(id));
-		}
-
 		public void AddBranch(Branch newBranch)
 		{
 			Branches.Add(newBranch);
