@@ -96,6 +96,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataModel\DummyDataSource.cs" />
+    <Compile Include="DataModel\Event.cs" />
     <Compile Include="DataModel\LoginModel.cs" />
     <Compile Include="DataModel\Subscription.cs" />
     <Compile Include="Helpers\INavigationService.cs" />
@@ -109,6 +110,7 @@
     <Compile Include="Helpers\NavigationService.cs" />
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\BranchService.cs" />
+    <Compile Include="Services\EventService.cs" />
     <Compile Include="Services\PromotionService.cs" />
     <Compile Include="Services\SubscriptionService.cs" />
     <Compile Include="Services\UserService.cs" />
@@ -128,6 +130,9 @@
     </Compile>
     <Compile Include="Views\BranchDetailsPage.xaml.cs">
       <DependentUpon>BranchDetailsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BranchEventsPage.xaml.cs">
+      <DependentUpon>BranchEventsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\BranchPromotionsPage.xaml.cs">
       <DependentUpon>BranchPromotionsPage.xaml</DependentUpon>
@@ -209,6 +214,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BranchDetailsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BranchEventsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

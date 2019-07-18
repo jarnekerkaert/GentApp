@@ -24,5 +24,6 @@ namespace GentWebApi.Models {
 
 		public DbSet<Subscription> Subscriptions { get; set; }
 
+		public DbSet<Event> Events { get; set; }
 	}
 }

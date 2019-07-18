@@ -29,6 +29,7 @@
 			<SymbolIcon Symbol="Delete" IsTapEnabled="False" Tapped="DeleteIcon_Tapped" Margin="0,0,30,0" />
 			<SymbolIcon Symbol="Save" IsTapEnabled="True" Tapped="SymbolIcon_Tapped"/>
 		</StackPanel>
-		<Button Content="Manage promotions" HorizontalAlignment="Center" Margin="0,20,0,0" Click="Promotions_Click"></Button>
+		<Button Content="Manage promotions" Width="200" HorizontalAlignment="Center" Margin="0,20,0,0" Click="Promotions_Click"></Button>
+		<Button Content="Manage events" Width="200" HorizontalAlignment="Center" Margin="0,20,0,0" Click="Events_Click"></Button>
 	</StackPanel>
 </Page>

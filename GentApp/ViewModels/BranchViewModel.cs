@@ -141,5 +141,33 @@ namespace GentApp.ViewModels
 			}
 		}
 
+		private IEnumerable<Event> _events;
+		public IEnumerable<Event> Events
+		{
+			get
+			{
+				return _events;
+			}
+
+			set
+			{
+				_events = value;
+				RaisePropertyChanged(nameof(Events));
+			}
+		}
+
+		private RelayCommand _loadEventsCommand;
+
+		public RelayCommand LoadEventsCommand
+		{
+			get
+			{
+				return _loadEventsCommand ?? (_loadEventsCommand = new RelayCommand(async () => {
+					Events = await branchService.GetEvents(SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch.Id);
+				}
+				));
+			}
+		}
+
 	}
 }
