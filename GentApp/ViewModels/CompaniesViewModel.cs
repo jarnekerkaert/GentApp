@@ -160,21 +160,22 @@ namespace GentApp.ViewModels {
 			}
 		}
 
+		// -----------------------------------------------------------------------------------------------------------
 		// for your subscriptions page
-		private ObservableCollection<Branch> _branches;
-		public ObservableCollection<Branch> Branches
-		{
-			get
-			{
-				return _branches;
-			}
+		//private ObservableCollection<Branch> _branches;
+		//public ObservableCollection<Branch> Branches
+		//{
+		//	get
+		//	{
+		//		return _branches;
+		//	}
 
-			set
-			{
-				_branches = value;
-				RaisePropertyChanged(nameof(Branches));
-			}
-		}
+		//	set
+		//	{
+		//		_branches = value;
+		//		RaisePropertyChanged(nameof(Branches));
+		//	}
+		//}
 
 		private ObservableCollection<Branch> _subscribedBranches;
 		public ObservableCollection<Branch> SubscribedBranches
