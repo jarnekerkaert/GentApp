@@ -14,6 +14,7 @@ namespace GentApp.ViewModels {
 	public class CompaniesViewModel : ViewModelBase {
 		private readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<CompaniesViewModel>();
 		private readonly CompanyService companyService = new CompanyService();
+		private readonly UserService userService = new UserService();
 		private readonly BranchService branchService = new BranchService();
 		private readonly SubscriptionService subscriptionService = new SubscriptionService();
 		private readonly INavigationService _navigationService;
@@ -175,6 +176,21 @@ namespace GentApp.ViewModels {
 			}
 		}
 
+		private ObservableCollection<Branch> _subscribedBranches;
+		public ObservableCollection<Branch> SubscribedBranches
+		{
+			get
+			{
+				return _subscribedBranches;
+			}
+
+			set
+			{
+				_subscribedBranches = value;
+				RaisePropertyChanged(nameof(SubscribedBranches));
+			}
+		}
+
 		private RelayCommand _loadBranchesCommand;
 
 		public RelayCommand LoadBranchesCommand
@@ -182,7 +198,8 @@ namespace GentApp.ViewModels {
 			get
 			{
 				return _loadBranchesCommand ?? (_loadBranchesCommand = new RelayCommand(async () => {
-					Branches = new ObservableCollection<Branch>(await branchService.GetBranches());
+					//Branches = new ObservableCollection<Branch>(await branchService.GetBranches());
+					SubscribedBranches = new ObservableCollection<Branch>(await userService.GetSubscribedBranches(UserViewModel.CurrentUser.Id));
 				}
 				));
 			}

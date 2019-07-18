@@ -28,7 +28,7 @@
 
 		<ListView
 					x:Name="BranchesList"
-					ItemsSource="{Binding Path=Branches}" 
+					ItemsSource="{Binding Path=SubscribedBranches}" 
 					SelectedItem="{Binding Path=SelectedBranch, Mode=TwoWay}">
 			<interactivity:Interaction.Behaviors>
 				<core:EventTriggerBehavior EventName="SelectionChanged">

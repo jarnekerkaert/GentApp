@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using GentApp.Models;
 using GentWebApi.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -70,6 +71,18 @@ namespace GentWebApi.Controllers {
 			else {
 				return BadRequest();
 			}
+		}
+
+		[HttpGet("{id}/subscribedbranches")]
+		public IEnumerable<Branch> GetSubscribedBranchesOfUser(string id)
+		{
+			IEnumerable<Subscription> subscriptions = _context.Subscriptions.Where(s => s.UserId.Equals(id));
+			List<Branch> branches = new List<Branch>();
+			foreach(Subscription subscription in subscriptions)
+			{
+				branches.Add(_context.Branches.Find(subscription.BranchId));
+			}
+			return branches;
 		}
 	}
 }
