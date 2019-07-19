@@ -124,6 +124,7 @@ namespace GentApp.ViewModels
 		{
 			//this.Promotions.Remove(MySelectedPromotion);
 			await promotionService.Delete(MySelectedPromotion);
+			RaisePropertyChanged(nameof(Promotions));
 		}
 
 		private RelayCommand _loadPromotionsCommand;
@@ -173,6 +174,36 @@ namespace GentApp.ViewModels
 		public async void AddEvent(Event newEvent)
 		{
 			await eventService.Add(newEvent);
+		}
+
+		private Event _selectedEvent;
+		public Event SelectedEvent
+		{
+			get { return _selectedEvent; }
+			set
+			{
+				if (value != _selectedEvent)
+				{
+					_selectedEvent = value;
+					RaisePropertyChanged(nameof(SelectedEvent));
+				}
+			}
+		}
+
+		public async void EditEvent(string title, string description, DateTime startdate, DateTime enddate)
+		{
+			SelectedEvent.Title = title;
+			SelectedEvent.Description = description;
+			SelectedEvent.StartDate = startdate;
+			SelectedEvent.EndDate = enddate;
+			await eventService.Update(SelectedEvent);
+			RaisePropertyChanged(nameof(Events));
+		}
+
+		public async void DeleteEvent()
+		{
+			await eventService.Delete(SelectedEvent);
+			RaisePropertyChanged(nameof(Events));
 		}
 
 	}

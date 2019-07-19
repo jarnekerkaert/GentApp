@@ -34,8 +34,8 @@ namespace GentApp.Views
 		private void EventsListView_ItemClick(object sender, ItemClickEventArgs e)
 		{
 			var selectedEvent = e.ClickedItem as Event;
-			//SimpleIoc.Default.GetInstance<BranchViewModel>().MySelectedPromotion = selectedPromotion;
-			//Frame.Navigate(typeof(EditEventPage));
+			SimpleIoc.Default.GetInstance<BranchViewModel>().SelectedEvent = selectedEvent;
+			Frame.Navigate(typeof(EditEventPage));
 		}
 
 		private void AddIcon_Tapped(object sender, TappedRoutedEventArgs e)

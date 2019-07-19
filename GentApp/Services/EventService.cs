@@ -51,5 +51,17 @@ namespace GentApp.Services
 				await new MessageDialog(ex.Message).ShowAsync();
 			}
 		}
+
+		public async Task Update(Event updatedEvent)
+		{
+			try
+			{
+				var response = await HttpClient.PutAsync(apiUrl + "/" + updatedEvent.Id, new StringContent(JsonConvert.SerializeObject(updatedEvent), System.Text.Encoding.UTF8, "application/json"));
+			}
+			catch (Exception ex)
+			{
+				await new MessageDialog(ex.Message).ShowAsync();
+			}
+		}
 	}
 }

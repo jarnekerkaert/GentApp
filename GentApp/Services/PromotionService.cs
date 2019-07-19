@@ -57,7 +57,6 @@ namespace GentApp.Services
 			try
 			{
 				var response = await HttpClient.PutAsync(apiUrl + "/" + promotion.Id, new StringContent(JsonConvert.SerializeObject(promotion), System.Text.Encoding.UTF8, "application/json"));
-				Console.WriteLine("test");
 			}
 			catch (Exception ex)
 			{
