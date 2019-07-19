@@ -23,6 +23,7 @@ namespace GentApp.ViewModels
 		private readonly CompanyService companyService = new CompanyService();
 		private readonly PromotionService promotionService = new PromotionService();
 		private readonly BranchService branchService = new BranchService();
+		private readonly EventService eventService = new EventService();
 		//private readonly INavigationService _navigationService;
 
 		//public BranchViewModel(INavigationService navigationService)
@@ -167,6 +168,11 @@ namespace GentApp.ViewModels
 				}
 				));
 			}
+		}
+
+		public async void AddEvent(Event newEvent)
+		{
+			await eventService.Add(newEvent);
 		}
 
 	}

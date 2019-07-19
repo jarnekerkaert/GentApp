@@ -125,6 +125,9 @@
     <Compile Include="Views\AddBranchPage.xaml.cs">
       <DependentUpon>AddBranchPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\AddEventPage.xaml.cs">
+      <DependentUpon>AddEventPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AddPromotionPage.xaml.cs">
       <DependentUpon>AddPromotionPage.xaml</DependentUpon>
     </Compile>
@@ -206,6 +209,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Page Include="Views\AddBranchPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddEventPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
