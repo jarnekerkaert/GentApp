@@ -67,7 +67,7 @@ namespace GentApp.ViewModels {
 		{
 			get
 			{
-				return _branchSelectedCommand = new RelayCommand(() => _navigationService.NavigateTo("EditBranchPage"));
+				return _branchSelectedCommand = new RelayCommand(() => _navigationService.NavigateTo(nameof(EditBranchPage)));
 			}
 		}
 

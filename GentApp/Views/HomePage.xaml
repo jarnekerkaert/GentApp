@@ -17,7 +17,7 @@
 			<core:InvokeCommandAction Command="{Binding Path=LoadBranchesCommand}" />
 		</core:EventTriggerBehavior>
 	</interactivity:Interaction.Behaviors>
-	
+
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*"></RowDefinition>
@@ -31,6 +31,23 @@
 				Source="/Assets/ghent_parallax.png">
 			</Image>
 		</ParallaxView>
+		<StackPanel Orientation="Horizontal"
+					Margin="24,68,24,310"
+					Grid.Row="0" Grid.RowSpan="2">
+			<ComboBox x:Name="companyTypeComboBox"
+					  PlaceholderText="Filter by sort"
+					  Margin="2"/>
+			<AutoSuggestBox PlaceholderText="Search a company"
+							Width="200"
+							Margin="2"
+							QueryIcon="Find"/>
+		</StackPanel>
+		<TextBlock
+			Grid.Row="1" 
+			VerticalAlignment="Top" 
+			FontWeight="Medium" 
+			Margin="24,12,0,0" 
+			Text="Recommended" />
 		<GridView 
 			Grid.Row="1"
 			x:Name="HomeFeedGrid"

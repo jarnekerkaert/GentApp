@@ -83,7 +83,7 @@ namespace GentApp.Views
 				TypeValidationErrorTextBlock.Text = "You have to choose a type";
 				isValid = false;
 			}
-			if (isValid == true)
+			if ( isValid )
 			{
 				BranchType selectedType = (BranchType)comboBoxItem;
 				SimpleIoc.Default.GetInstance<CompanyViewModel>().EditBranch(Name.Text, Address.Text, OpeningHours.Text, selectedType);

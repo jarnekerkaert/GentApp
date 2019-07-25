@@ -36,16 +36,7 @@ namespace GentApp.Views
 
 		private void AddIcon_Tapped(object sender, TappedRoutedEventArgs e)
 		{
-			// navigationservice, navigate to add a branch
 			Frame.Navigate(typeof(AddBranchPage));
-		}
-
-		private void ListView_ItemClick(object sender, ItemClickEventArgs e)
-		{
-			//SimpleIoc.Default.GetInstance<BranchesViewModel>().MySelectedBranch = e.ClickedItem as Branch;
-			SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch = e.ClickedItem as Branch;
-			Frame.Navigate(typeof(EditBranchPage));
-
 		}
 	}
 }
