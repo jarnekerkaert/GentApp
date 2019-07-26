@@ -14,6 +14,7 @@ namespace GentApp.ViewModels {
 	public class CompaniesViewModel : ViewModelBase {
 		private readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<CompaniesViewModel>();
 		private readonly CompanyService companyService = new CompanyService();
+		private readonly UserService userService = new UserService();
 		private readonly BranchService branchService = new BranchService();
 		private readonly SubscriptionService subscriptionService = new SubscriptionService();
 		private readonly INavigationService _navigationService;
@@ -149,9 +150,60 @@ namespace GentApp.ViewModels {
 		{
 			get
 			{
-				return Subscriptions.Where(s => s.BranchId.Equals(SelectedBranch.Id)).Any();
+				if(SelectedBranch == null)
+				{
+					return false;
+				}
+				Subscription subscription = Subscriptions.Where(s => s.BranchId.Equals(SelectedBranch.Id)).DefaultIfEmpty(null).First();
+				return subscription != null;
+				//return Subscriptions.Where(s => s.BranchId.Equals(SelectedBranch.Id)).Any();
 			}
 		}
 
+		// -----------------------------------------------------------------------------------------------------------
+		// for your subscriptions page
+		//private ObservableCollection<Branch> _branches;
+		//public ObservableCollection<Branch> Branches
+		//{
+		//	get
+		//	{
+		//		return _branches;
+		//	}
+
+		//	set
+		//	{
+		//		_branches = value;
+		//		RaisePropertyChanged(nameof(Branches));
+		//	}
+		//}
+
+		private ObservableCollection<Branch> _subscribedBranches;
+		public ObservableCollection<Branch> SubscribedBranches
+		{
+			get
+			{
+				return _subscribedBranches;
+			}
+
+			set
+			{
+				_subscribedBranches = value;
+				RaisePropertyChanged(nameof(SubscribedBranches));
+			}
+		}
+
+		private RelayCommand _loadBranchesCommand;
+
+		public RelayCommand LoadBranchesCommand
+		{
+			get
+			{
+				return _loadBranchesCommand ?? (_loadBranchesCommand = new RelayCommand(async () => {
+					//Branches = new ObservableCollection<Branch>(await branchService.GetBranches());
+					SubscribedBranches = new ObservableCollection<Branch>(await userService.GetSubscribedBranches(UserViewModel.CurrentUser.Id));
+				}
+				));
+			}
+		}
 	}
 }

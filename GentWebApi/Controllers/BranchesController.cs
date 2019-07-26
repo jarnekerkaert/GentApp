@@ -8,6 +8,7 @@ using GentApp.Models;
 using GentWebApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GentWebApi.Controllers
 {
@@ -22,9 +23,9 @@ namespace GentWebApi.Controllers
 			_context = context;
 		}
 
-		// GET api/branches
-		[HttpGet("{id}")]
-		public ActionResult<IEnumerable<Branch>> Get() {
+		[HttpGet]
+		public IEnumerable<Branch> GetAll()
+		{
 			return _context.Branches;
 		}
 
