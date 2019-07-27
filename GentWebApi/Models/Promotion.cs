@@ -16,6 +16,7 @@ namespace GentWebApi.Models {
 		public string Description { get; set; }
 		//public Branch Branch { get; set; }
 		public string BranchId { get; set; }
+		public Coupon Coupon { get; set; }
 		public bool AllBranches { get; set; }
 
 		public Promotion() {
