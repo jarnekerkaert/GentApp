@@ -8,6 +8,7 @@ using GentApp.Models;
 using GentWebApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GentWebApi.Controllers
 {
@@ -83,6 +84,14 @@ namespace GentWebApi.Controllers
 		{
 			//return _context.Promotions.Where(p => p.Branch.Id.Equals(id));
 			return _context.Promotions.Where(p => p.BranchId.Equals(id));
+		}
+
+		// GET: api/branches/2/events
+		[HttpGet("{id}/events", Name = "GetEvents")]
+		public IEnumerable<Event> GetEvents(string id)
+		{
+			//return _context.Promotions.Where(p => p.Branch.Id.Equals(id));
+			return _context.Events.Where(p => p.BranchId.Equals(id));
 		}
 
 		// DELETE: api/branches

@@ -5,10 +5,44 @@
     xmlns:local="using:GentApp.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+	xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    DataContext="{Binding CompaniesViewModelInstance, Source={StaticResource Locator}}">
 
-    <StackPanel>
-		<TextBlock >Your subscriptions:</TextBlock>
-    </StackPanel>
+	<interactivity:Interaction.Behaviors>
+		<core:EventTriggerBehavior EventName="Loaded">
+			<core:InvokeCommandAction Command="{Binding Path=LoadBranchesCommand}" />
+		</core:EventTriggerBehavior>
+		<core:EventTriggerBehavior EventName="Loaded">
+			<core:InvokeCommandAction Command="{Binding Path=LoadSubscriptionsCommand}" />
+		</core:EventTriggerBehavior>
+	</interactivity:Interaction.Behaviors>
+
+	<StackPanel>
+		<TextBlock>Your subscriptions:</TextBlock>
+
+		<StackPanel Orientation="Horizontal">
+			<AutoSuggestBox PlaceholderText="Search a branch" QueryIcon="Find" Width="200" />
+		</StackPanel>
+
+		<ListView
+					x:Name="BranchesList"
+					ItemsSource="{Binding Path=SubscribedBranches}" 
+					SelectedItem="{Binding Path=SelectedBranch, Mode=TwoWay}">
+			<interactivity:Interaction.Behaviors>
+				<core:EventTriggerBehavior EventName="SelectionChanged">
+					<core:InvokeCommandAction Command="{Binding Path=BranchSelectedCommand}" />
+				</core:EventTriggerBehavior>
+			</interactivity:Interaction.Behaviors>
+			<ListView.ItemTemplate>
+				<DataTemplate>
+					<StackPanel>
+						<TextBlock FontSize="18" Text="{Binding Path=Name}" />
+						<TextBlock FontSize="10" Text="{Binding Path=Address}" />
+					</StackPanel>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
+	</StackPanel>
 </Page>

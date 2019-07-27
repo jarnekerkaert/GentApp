@@ -15,17 +15,20 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
+// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
+
 namespace GentApp.Views
 {
-
-	public sealed partial class EditPromotionPage : Page
+	/// <summary>
+	/// An empty page that can be used on its own or navigated to within a Frame.
+	/// </summary>
+	public sealed partial class EditEventPage : Page
 	{
-		public EditPromotionPage()
+		public EditEventPage()
 		{
-			InitializeComponent();
-			//DataContext = SimpleIoc.Default.GetInstance<BranchViewModel>().MySelectedPromotion;
-			StartDatePicker.Date = SimpleIoc.Default.GetInstance<BranchViewModel>().MySelectedPromotion.StartDate;
-			EndDatePicker.Date = SimpleIoc.Default.GetInstance<BranchViewModel>().MySelectedPromotion.EndDate;
+			this.InitializeComponent();
+			StartDatePicker.Date = SimpleIoc.Default.GetInstance<BranchViewModel>().SelectedEvent.StartDate;
+			EndDatePicker.Date = SimpleIoc.Default.GetInstance<BranchViewModel>().SelectedEvent.EndDate;
 		}
 
 		private void SymbolIcon_Tapped(object sender, TappedRoutedEventArgs e)
@@ -73,26 +76,25 @@ namespace GentApp.Views
 			}
 			if (isValid == true)
 			{
-				SimpleIoc.Default.GetInstance<BranchViewModel>().EditPromotion(Title.Text, Description.Text, StartDatePicker.Date.Value.DateTime, EndDatePicker.Date.Value.DateTime);
-				//SimpleIoc.Default.GetInstance<CompaniesViewModel>().RefreshCompanies();
-				Frame.Navigate(typeof(BranchPromotionsPage));
+				SimpleIoc.Default.GetInstance<BranchViewModel>().EditEvent(Title.Text, Description.Text, StartDatePicker.Date.Value.DateTime, EndDatePicker.Date.Value.DateTime);
+				Frame.Navigate(typeof(BranchEventsPage));
 			}
 		}
 
 		private async void DeleteIcon_Tapped(object sender, TappedRoutedEventArgs e)
 		{
-			ContentDialog deletePromotionDialog = new ContentDialog()
+			ContentDialog deleteEventDialog = new ContentDialog()
 			{
-				Title = "Delete a promotion",
-				Content = "Are you sure you want to delete this promotion?",
+				Title = "Delete an event",
+				Content = "Are you sure you want to delete this event?",
 				PrimaryButtonText = "Yes",
 				SecondaryButtonText = "No"
 			};
-			ContentDialogResult result = await deletePromotionDialog.ShowAsync();
+			ContentDialogResult result = await deleteEventDialog.ShowAsync();
 			if (result == ContentDialogResult.Primary)
 			{
-				SimpleIoc.Default.GetInstance<BranchViewModel>().DeletePromotion();
-				Frame.Navigate(typeof(BranchPromotionsPage));
+				SimpleIoc.Default.GetInstance<BranchViewModel>().DeleteEvent();
+				Frame.Navigate(typeof(BranchEventsPage));
 			}
 			//else if(result == ContentDialogResult.Secondary){ /* ... */}
 		}

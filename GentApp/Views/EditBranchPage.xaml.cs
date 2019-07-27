@@ -112,5 +112,10 @@ namespace GentApp.Views
 		{
 			Frame.Navigate(typeof(BranchPromotionsPage));
 		}
+
+		private void Events_Click(object sender, RoutedEventArgs e)
+		{
+			Frame.Navigate(typeof(BranchEventsPage));
+		}
 	}
 }

@@ -23,17 +23,16 @@ namespace GentApp.Views
 	/// <summary>
 	/// An empty page that can be used on its own or navigated to within a Frame.
 	/// </summary>
-	public sealed partial class AddPromotionPage : Page
+	public sealed partial class AddEventPage : Page
 	{
-		public AddPromotionPage()
+		public AddEventPage()
 		{
 			this.InitializeComponent();
 			horStackPanel.DataContext = SimpleIoc.Default.GetInstance<BranchesViewModel>().MySelectedBranch;
 			this.DataContext = SimpleIoc.Default.GetInstance<BranchViewModel>();
-
 		}
 
-		private void SavePromotionBtn_Click(object sender, RoutedEventArgs e)
+		private void SaveEventBtn_Click(object sender, RoutedEventArgs e)
 		{
 			TitleValidationErrorTextBlock.Text = "";
 			DescriptionValidationErrorTextBlock.Text = "";
@@ -78,9 +77,9 @@ namespace GentApp.Views
 			}
 			if (isValid == true)
 			{
-				Promotion newPromotion = new Promotion() { Title = Title.Text, Description = Description.Text, StartDate = StartDatePicker.Date.Value.DateTime, EndDate = EndDatePicker.Date.Value.DateTime, BranchId = SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch.Id, AllBranches = false };
-				SimpleIoc.Default.GetInstance<BranchViewModel>().AddPromotion(newPromotion);
-				Frame.Navigate(typeof(BranchPromotionsPage));
+				Event newEvent = new Event() { Title = Title.Text, Description = Description.Text, StartDate = StartDatePicker.Date.Value.DateTime, EndDate = EndDatePicker.Date.Value.DateTime, BranchId = SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch.Id};
+				SimpleIoc.Default.GetInstance<BranchViewModel>().AddEvent(newEvent);
+				Frame.Navigate(typeof(BranchEventsPage));
 			}
 		}
 	}

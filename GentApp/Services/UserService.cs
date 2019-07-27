@@ -57,5 +57,15 @@ namespace GentApp.Services {
 				}
 			}
 		}
+
+		public async Task<IEnumerable<Branch>> GetSubscribedBranches(string id)
+		{
+			HttpResponseMessage response = await HttpClient.GetAsync(apiUrl + "/" + id + "/subscribedbranches");
+			if (response.IsSuccessStatusCode)
+			{
+				return JsonConvert.DeserializeObject<IEnumerable<Branch>>(await response.Content.ReadAsStringAsync());
+			}
+			return Enumerable.Empty<Branch>();
+		}
 	}
 }

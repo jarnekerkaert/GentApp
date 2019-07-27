@@ -23,6 +23,7 @@ namespace GentApp.ViewModels
 		private readonly CompanyService companyService = new CompanyService();
 		private readonly PromotionService promotionService = new PromotionService();
 		private readonly BranchService branchService = new BranchService();
+		private readonly EventService eventService = new EventService();
 		//private readonly INavigationService _navigationService;
 
 		//public BranchViewModel(INavigationService navigationService)
@@ -123,6 +124,7 @@ namespace GentApp.ViewModels
 		{
 			//this.Promotions.Remove(MySelectedPromotion);
 			await promotionService.Delete(MySelectedPromotion);
+			RaisePropertyChanged(nameof(Promotions));
 		}
 
 		private RelayCommand _loadPromotionsCommand;
@@ -139,6 +141,69 @@ namespace GentApp.ViewModels
 				}
 				));
 			}
+		}
+
+		private IEnumerable<Event> _events;
+		public IEnumerable<Event> Events
+		{
+			get
+			{
+				return _events;
+			}
+
+			set
+			{
+				_events = value;
+				RaisePropertyChanged(nameof(Events));
+			}
+		}
+
+		private RelayCommand _loadEventsCommand;
+
+		public RelayCommand LoadEventsCommand
+		{
+			get
+			{
+				return _loadEventsCommand ?? (_loadEventsCommand = new RelayCommand(async () => {
+					Events = await branchService.GetEvents(SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch.Id);
+				}
+				));
+			}
+		}
+
+		public async void AddEvent(Event newEvent)
+		{
+			await eventService.Add(newEvent);
+		}
+
+		private Event _selectedEvent;
+		public Event SelectedEvent
+		{
+			get { return _selectedEvent; }
+			set
+			{
+				if (value != _selectedEvent)
+				{
+					_selectedEvent = value;
+					RaisePropertyChanged(nameof(SelectedEvent));
+				}
+			}
+		}
+
+		public async void EditEvent(string title, string description, DateTime startdate, DateTime enddate)
+		{
+			SelectedEvent.Title = title;
+			SelectedEvent.Description = description;
+			SelectedEvent.StartDate = startdate;
+			SelectedEvent.EndDate = enddate;
+			await eventService.Update(SelectedEvent);
+			RaisePropertyChanged(nameof(Events));
+		}
+
+		public async void DeleteEvent()
+		{
+			await eventService.Delete(SelectedEvent);
+			RaisePropertyChanged(nameof(Events));
 		}
 
 	}
