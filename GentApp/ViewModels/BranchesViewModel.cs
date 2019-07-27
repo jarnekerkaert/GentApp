@@ -9,10 +9,8 @@ using MetroLog;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace GentApp.ViewModels
-{
-	public class BranchesViewModel : ViewModelBase
-	{
+namespace GentApp.ViewModels {
+	public class BranchesViewModel : ViewModelBase {
 		private ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<BranchesViewModel>();
 		private readonly INavigationService _navigationService;
 		private readonly BranchService _branchService;
@@ -21,13 +19,10 @@ namespace GentApp.ViewModels
 		public ObservableCollection<Branch> Branches { get; set; }
 
 		private Branch mySelectedBranch;
-		public Branch MySelectedBranch
-		{
+		public Branch MySelectedBranch {
 			get { return mySelectedBranch; }
-			set
-			{
-				if (value != mySelectedBranch)
-				{
+			set {
+				if ( value != mySelectedBranch ) {
 					mySelectedBranch = value;
 					RaisePropertyChanged(nameof(MySelectedBranch));
 				}
@@ -46,21 +41,17 @@ namespace GentApp.ViewModels
 			}
 		}
 
-		public async void RetrieveBranchesOfCompany(string id)
-		{
+		public async void RetrieveBranchesOfCompany(string id) {
 			Branches = new ObservableCollection<Branch>(await _branchService.GetBranchesOfCompany(id));
 		}
 
-		public void AddBranch(Branch newBranch)
-		{
+		public void AddBranch(Branch newBranch) {
 			Branches.Add(newBranch);
 		}
 
-		public void EditBranch(string name, string address, string openingHours, BranchType type)
-		{
+		public void EditBranch(string name, string address, string openingHours, BranchType type) {
 			var oldBranch = MySelectedBranch;
-			if (oldBranch != null)
-			{
+			if ( oldBranch != null ) {
 				oldBranch.Name = name;
 				oldBranch.Address = address;
 				oldBranch.OpeningHours = openingHours;
@@ -88,8 +79,7 @@ namespace GentApp.ViewModels
 			}
 		}
 
-		public void DeleteBranch()
-		{
+		public void DeleteBranch() {
 			Branches.Remove(MySelectedBranch);
 		}
 
@@ -144,7 +134,7 @@ namespace GentApp.ViewModels
 
 		public RelayCommand LoadSubscriptionsCommand {
 			get {
-				return _loadSubscriptionsCommand ?? ( 
+				return _loadSubscriptionsCommand ?? (
 					_loadSubscriptionsCommand = new RelayCommand(
 						async () => Subscriptions = new ObservableCollection<Subscription>(
 							await _subscriptionService.GetSubscriptions(UserViewModel.CurrentUser.Id))
@@ -154,7 +144,24 @@ namespace GentApp.ViewModels
 
 		public bool SubscribedTo {
 			get {
-				return Subscriptions.Any(s => s.BranchId.Equals(SelectedBranch.Id));
+				if ( SelectedBranch == null ) {
+					return false;
+				}
+				
+				Subscription subscription = Subscriptions.Where(s => s.BranchId.Equals(SelectedBranch.Id)).DefaultIfEmpty(null).First();
+				return subscription != null;
+			}
+		}
+
+		private ObservableCollection<Branch> _subscribedBranches;
+		public ObservableCollection<Branch> SubscribedBranches {
+			get {
+				return _subscribedBranches;
+			}
+
+			set {
+				_subscribedBranches = value;
+				RaisePropertyChanged(nameof(SubscribedBranches));
 			}
 		}
 	}

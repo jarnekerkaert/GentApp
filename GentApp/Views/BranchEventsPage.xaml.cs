@@ -27,14 +27,13 @@ namespace GentApp.Views
 	{
 		public BranchEventsPage()
 		{
-			this.InitializeComponent();
-			horStackPanel.DataContext = SimpleIoc.Default.GetInstance<CompaniesViewModel>().SelectedBranch;
+			InitializeComponent();
+			horStackPanel.DataContext = SimpleIoc.Default.GetInstance<BranchesViewModel>().SelectedBranch;
 		}
 
 		private void EventsListView_ItemClick(object sender, ItemClickEventArgs e)
 		{
-			var selectedEvent = e.ClickedItem as Event;
-			SimpleIoc.Default.GetInstance<BranchViewModel>().SelectedEvent = selectedEvent;
+			SimpleIoc.Default.GetInstance<BranchViewModel>().SelectedEvent = e.ClickedItem as Event;
 			Frame.Navigate(typeof(EditEventPage));
 		}
 
