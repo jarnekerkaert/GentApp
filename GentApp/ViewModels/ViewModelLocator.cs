@@ -50,6 +50,7 @@ namespace GentApp.ViewModels
 			navigationService.Configure(nameof(AddPromotionPage), typeof(AddPromotionPage));
 			navigationService.Configure(nameof(EditBranchPage), typeof(EditBranchPage));
 			navigationService.Configure(nameof(SubscriptionsPage), typeof(SubscriptionsPage));
+			navigationService.Configure(nameof(AddEventPage), typeof(AddEventPage));
 
 			SimpleIoc.Default.Unregister<INavigationService>();
 			SimpleIoc.Default.Register<INavigationService>(() => navigationService);

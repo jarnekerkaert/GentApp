@@ -35,7 +35,7 @@
 				</DataTemplate>
 			</ListView.ItemTemplate>
 		</ListView>
-
-		<SymbolIcon Symbol="Add" IsTapEnabled="True" Tapped="AddIcon_Tapped"></SymbolIcon>
+		
+		<Button Content="Add event" Command="{Binding ToAddEventCommand}" />
 	</StackPanel>
 </Page>

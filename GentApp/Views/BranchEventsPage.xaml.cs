@@ -38,9 +38,5 @@ namespace GentApp.Views
 			Frame.Navigate(typeof(EditEventPage));
 		}
 
-		private void AddIcon_Tapped(object sender, TappedRoutedEventArgs e)
-		{
-			Frame.Navigate(typeof(AddEventPage));
-		}
 	}
 }
