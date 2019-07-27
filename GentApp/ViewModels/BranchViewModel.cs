@@ -1,7 +1,4 @@
-﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Ioc;
-using GalaSoft.MvvmLight.Views;
+﻿
 using GentApp.DataModel;
 using GentApp.Services;
 using MetroLog;
@@ -14,6 +11,10 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using GentApp.Helpers;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Ioc;
 
 namespace GentApp.ViewModels
 {
@@ -24,12 +25,12 @@ namespace GentApp.ViewModels
 		private readonly PromotionService promotionService = new PromotionService();
 		private readonly BranchService branchService = new BranchService();
 		private readonly EventService eventService = new EventService();
-		//private readonly INavigationService _navigationService;
+		private readonly INavigationService _navigationService;
 
 		//public BranchViewModel(INavigationService navigationService)
-		public BranchViewModel()
+		public BranchViewModel(Helpers.INavigationService navigationService)
 		{
-			//_navigationService = navigationService;
+			_navigationService = navigationService;
 			//Promotions = new ObservableCollection<Promotion>(DummyDataSource.Promotions);
 		}
 
@@ -204,6 +205,16 @@ namespace GentApp.ViewModels
 		{
 			await eventService.Delete(SelectedEvent);
 			RaisePropertyChanged(nameof(Events));
+		}
+
+		private RelayCommand _toAddEventCommand;
+
+		public RelayCommand ToAddEventCommand
+		{
+			get
+			{
+				return _toAddEventCommand = new RelayCommand(() => _navigationService.NavigateTo("AddEventPage"));
+			}
 		}
 
 	}
