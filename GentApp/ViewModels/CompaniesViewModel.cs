@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -203,6 +204,51 @@ namespace GentApp.ViewModels {
 					SubscribedBranches = new ObservableCollection<Branch>(await userService.GetSubscribedBranches(UserViewModel.CurrentUser.Id));
 				}
 				));
+			}
+		}
+
+		private RelayCommand _loadPromotionsCommand;
+
+		public RelayCommand LoadPromotionsCommand
+		{
+			get
+			{
+				return _loadPromotionsCommand ?? (_loadPromotionsCommand = new RelayCommand(async () => {
+					Promotions = await branchService.GetPromotions(SelectedBranch.Id);
+					var currentDate = DateTime.Today.Date;
+					CurrentPromotions = Promotions.Where(p => p.StartDate <= currentDate && p.EndDate >= currentDate).ToList();
+				}
+				));
+			}
+		}
+
+		private IEnumerable<Promotion> _promotions;
+		public IEnumerable<Promotion> Promotions
+		{
+			get
+			{
+				return _promotions;
+			}
+
+			set
+			{
+				_promotions = value;
+				RaisePropertyChanged(nameof(Promotions));
+			}
+		}
+
+		private IEnumerable<Promotion> _currentPromotions;
+		public IEnumerable<Promotion> CurrentPromotions
+		{
+			get
+			{
+				return _currentPromotions;
+			}
+
+			set
+			{
+				_currentPromotions = value;
+				RaisePropertyChanged(nameof(CurrentPromotions));
 			}
 		}
 	}

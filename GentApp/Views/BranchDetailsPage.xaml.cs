@@ -25,5 +25,13 @@ namespace GentApp.Views
 			InitializeComponent();
 		}
 
+
+		private void PromotionsListView_ItemClick(object sender, ItemClickEventArgs e)
+		{
+			//var selectedPromotion = e.ClickedItem as Promotion;
+			//SimpleIoc.Default.GetInstance<BranchViewModel>().MySelectedPromotion = selectedPromotion;
+			//Frame.Navigate(typeof(PromotionPage));
+		}
+
 	}
 }

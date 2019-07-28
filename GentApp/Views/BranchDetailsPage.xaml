@@ -11,6 +11,12 @@
 	mc:Ignorable="d"
 	DataContext="{Binding CompaniesViewModelInstance, Source={StaticResource Locator}}">
 
+	<interactivity:Interaction.Behaviors>
+		<core:EventTriggerBehavior EventName="Loaded">
+			<core:InvokeCommandAction Command="{Binding Path=LoadPromotionsCommand}" />
+		</core:EventTriggerBehavior>
+	</interactivity:Interaction.Behaviors>
+
 	<Grid>
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup>
@@ -59,7 +65,22 @@
 			<TextBlock FontWeight="Bold">Type:</TextBlock>
 			<TextBlock Text="{Binding Path=SelectedBranch.Type, Mode=OneWay, TargetNullValue='Empty'}"></TextBlock>
 			<TextBlock FontWeight="Bold">Opening hours:</TextBlock>
-			<TextBlock Text="{Binding Path=SelectedBranch.OpeningHours, Mode=OneWay, TargetNullValue='Empty'}"></TextBlock>
+			<TextBlock Text="{Binding Path=SelectedBranch.OpeningHours, Mode=OneWay, TargetNullValue='Empty'}" Margin="0,20,0,0"></TextBlock>
+
+			<TextBlock FontWeight="Bold">Current promotions:</TextBlock>
+			<ListView ItemsSource="{Binding Path=CurrentPromotions}" IsItemClickEnabled="True" ItemClick="PromotionsListView_ItemClick" x:Name="currentPromotionsListView" Margin="0,0,0,20">
+				<ListView.Header>
+					<TextBlock Visibility="{Binding CurrentPromotions.Count}" Text="None">
+					</TextBlock>
+				</ListView.Header>
+				<ListView.ItemTemplate>
+					<DataTemplate>
+						<StackPanel>
+							<TextBlock Text="{Binding Path=Title}" />
+						</StackPanel>
+					</DataTemplate>
+				</ListView.ItemTemplate>
+			</ListView>
 
 			<Button x:Name="SubscribeButton" Command="{Binding Path=SubscribeCommand}" HorizontalAlignment="Center"></Button>
 
