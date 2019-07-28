@@ -2,15 +2,9 @@
 using GentApp.DataModel;
 using GentApp.Services;
 using MetroLog;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using GentApp.Helpers;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -26,12 +20,10 @@ namespace GentApp.ViewModels
 		private readonly BranchService branchService = new BranchService();
 		private readonly EventService eventService = new EventService();
 		private readonly INavigationService _navigationService;
-
-		//public BranchViewModel(INavigationService navigationService)
+		
 		public BranchViewModel(Helpers.INavigationService navigationService)
 		{
 			_navigationService = navigationService;
-			//Promotions = new ObservableCollection<Promotion>(DummyDataSource.Promotions);
 		}
 
 		private IEnumerable<Promotion> _promotions;
@@ -96,18 +88,6 @@ namespace GentApp.ViewModels
 		public async void AddPromotion(Promotion promotion)
 		{
 			await promotionService.Save(promotion);
-
-			//this.Promotions.Add(newPromotion);
-			//MainPage.BranchesViewModel.MySelectedBranch.Promotions.ToList().Add(newPromotion);
-
-			//Branch updatedBranch = MainPage.BranchesViewModel.MySelectedBranch;
-			//var branchJson = JsonConvert.SerializeObject(updatedBranch);
-			//HttpClient client = new HttpClient();
-			//var res = await client.PutAsync("http://localhost:50957/api/branches/" + MainPage.BranchesViewModel.MySelectedBranch.Id, new StringContent(branchJson, System.Text.Encoding.UTF8, "application/json"));
-
-			//var promotionJson = JsonConvert.SerializeObject(newPromotion);
-			//HttpClient client = new HttpClient();
-			//var res = await client.PostAsync("http://localhost:50957/api/promotions", new StringContent(promotionJson, System.Text.Encoding.UTF8, "application/json"));
 		}
 
 		public async void EditPromotion(string title, string description, DateTime startdate, DateTime enddate)
@@ -116,14 +96,12 @@ namespace GentApp.ViewModels
 			MySelectedPromotion.Description = description;
 			MySelectedPromotion.StartDate = startdate;
 			MySelectedPromotion.EndDate = enddate;
-			//await companyService.Update(SimpleIoc.Default.GetInstance<CompaniesViewModel>().MyCompany);
 			await promotionService.Update(MySelectedPromotion);
 			RaisePropertyChanged(nameof(Promotions));
 		}
 
 		public async void DeletePromotion()
 		{
-			//this.Promotions.Remove(MySelectedPromotion);
 			await promotionService.Delete(MySelectedPromotion);
 			RaisePropertyChanged(nameof(Promotions));
 		}

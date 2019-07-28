@@ -46,11 +46,16 @@
 				</VisualState>
 			</VisualStateGroup>
 		</VisualStateManager.VisualStateGroups>
-		<StackPanel>
-			<TextBlock Margin="0,50,0,50" HorizontalAlignment="Center">Details of branch:</TextBlock>
+		<StackPanel
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			MinWidth="300">
+			<TextBlock
+				FontSize="25dp"
+				FontWeight="SemiBold"
+				HorizontalAlignment="Center"
+				Text="{Binding Path=SelectedBranch.Name}"/>
 
-			<TextBlock FontWeight="Bold">Name:</TextBlock>
-			<TextBlock Text="{Binding Path=SelectedBranch.Name, Mode=OneWay, TargetNullValue='Empty'}"></TextBlock>
 			<TextBlock FontWeight="Bold">Address:</TextBlock>
 			<TextBlock Text="{Binding Path=SelectedBranch.Address, Mode=OneWay, TargetNullValue='Empty'}"></TextBlock>
 			<TextBlock FontWeight="Bold">Type:</TextBlock>
@@ -62,5 +67,5 @@
 
 		</StackPanel>
 	</Grid>
-	
+
 </Page>

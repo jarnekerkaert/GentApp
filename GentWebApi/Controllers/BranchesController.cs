@@ -22,7 +22,10 @@ namespace GentWebApi.Controllers
 		// GET api/branches
 		[HttpGet]
 		public ActionResult<IEnumerable<Branch>> Get() {
-			return _context.Branches;
+			return _context.Branches
+				.Include(b => b.Events)
+				.Include(b => b.Promotions)
+				.ToList();
 		}
 
 		// GET api/branches/2

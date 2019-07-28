@@ -92,7 +92,7 @@
 				<NavigationViewItem
 					x:Name="LoginItem"
 					Content="Login"
-					Icon="GoToStart"/>
+					Icon="OtherUser"/>
 				<NavigationViewItem
 					x:Name="LogoutItem"
 					Content="Logout"

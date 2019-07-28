@@ -2,15 +2,20 @@
     x:Class="GentApp.Views.AddEventPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:GentApp.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-	<StackPanel>
+	<StackPanel
+		Margin="14">
 		<StackPanel Orientation="Horizontal" x:Name="horStackPanel" HorizontalAlignment="Center" Margin="0,0,0,20">
-			<TextBlock HorizontalAlignment="Center" Margin="0,20,0,0" Text="Add an event to your branch "></TextBlock>
+			<TextBlock 
+				HorizontalAlignment="Center"
+				Margin="10"
+				FontSize="25dp"
+				FontWeight="SemiBold"
+				Text="Schedule an event"/>
 			<TextBlock Text="{Binding Name}"></TextBlock>
 		</StackPanel>
 

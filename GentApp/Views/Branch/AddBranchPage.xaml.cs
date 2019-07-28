@@ -69,7 +69,12 @@ namespace GentApp.Views
 			if (isValid)
 			{
 				BranchType selectedType = (BranchType)comboBoxItem;
-				Branch newBranch = new Branch() { Name = Name.Text, Address = Address.Text, OpeningHours = OpeningHours.Text, Type = selectedType, CompanyId = SimpleIoc.Default.GetInstance<CompanyViewModel>().MyCompany.Id};
+				Branch newBranch = new Branch() {
+					Name = Name.Text,
+					Address = Address.Text,
+					OpeningHours = OpeningHours.Text,
+					Type = selectedType,
+					Company = SimpleIoc.Default.GetInstance<CompanyViewModel>().MyCompany};
 				SimpleIoc.Default.GetInstance<CompanyViewModel>().AddBranch(newBranch);
 				Frame.Navigate(typeof(MyCompanyPage));
 			}

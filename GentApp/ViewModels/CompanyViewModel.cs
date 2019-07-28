@@ -100,6 +100,7 @@ namespace GentApp.ViewModels {
 			get {
 				return _loadCompanyCommand = new RelayCommand(() => {
 					MyCompany = UserViewModel.CurrentUser.Company;
+					SelectedBranch = null;
 					RaisePropertyChanged(nameof(MyCompany));
 				});
 			}
@@ -110,6 +111,5 @@ namespace GentApp.ViewModels {
 			await branchService.Delete(SelectedBranch);
 			RaisePropertyChanged(nameof(MyCompany));
 		}
-
 	}
 }

@@ -8,7 +8,6 @@ namespace GentApp.Models {
 	{
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public string Id { get; set; }
-		[Required]
 		public Company Company { get; set; }
 		[Required]
 		public string Name { get; set; }

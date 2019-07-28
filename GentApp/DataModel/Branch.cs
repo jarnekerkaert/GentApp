@@ -6,7 +6,7 @@ namespace GentApp.DataModel {
 	public class Branch
 	{
 		public string Id { get; set; }
-		public string CompanyId { get; set; }
+		public Company Company { get; set; }
 		[Required]
 		public string Name { get; set; }
 		[Required]
@@ -21,11 +21,11 @@ namespace GentApp.DataModel {
 			ImageUri = RandomAsset.getRandomAsset();
 		}
 
-		public Branch(string name, BranchType type, string id, string companyId, string address, string openingHours)
+		public Branch(string name, BranchType type, Company company, string address, string openingHours)
 			: this() {
 			Name = name;
 			Type = type;
-			CompanyId = companyId;
+			Company = company;
 			Address = address;
 			OpeningHours = openingHours;
 		}
