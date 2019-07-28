@@ -5,19 +5,21 @@ using GentApp.DataModel;
 using GentApp.Helpers;
 using GentApp.Services;
 using MetroLog;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace GentApp.ViewModels {
 	public class EventsViewModel : ViewModelBase {
 		private readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<UserViewModel>();
 		private readonly INavigationService _navigationService;
 		private readonly EventService _eventService;
-		private readonly SubscriptionService _subscriptionService;
+		private readonly UserService _userService;
 
 		public EventsViewModel(INavigationService navigationService) {
 			_navigationService = navigationService;
 			_eventService = new EventService();
-			_subscriptionService = new SubscriptionService();
+			_userService = new UserService();
 			SubscribedEvents = new ObservableCollection<Event>();
 		}
 		public UserViewModel UserViewModel {
@@ -66,7 +68,13 @@ namespace GentApp.ViewModels {
 			get {
 				return _loadUpcomingEventsCommand = new RelayCommand(async () => {
 					if ( UserViewModel.LoggedIn ) {
-						SubscribedEvents = new ObservableCollection<Event>(await _subscriptionService.GetSubscribedEvents(UserViewModel.CurrentUser.Id));
+						var subbedBranches = await _userService.GetSubscribedBranches(UserViewModel.CurrentUser.Id);
+						List<Event> events = new List<Event>();
+						foreach (Branch branch in subbedBranches ) {
+							if( branch.Events.Count != 0 )
+								events.AddRange(branch.Events);
+						}
+						SubscribedEvents = new ObservableCollection<Event>(events);
 					}
 					else {
 						SubscribedEvents = new ObservableCollection<Event>();

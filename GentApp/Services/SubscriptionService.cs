@@ -44,16 +44,6 @@ namespace GentApp.Services
 			return Enumerable.Empty<Subscription>();
 		}
 
-		public async Task<IEnumerable<Event>> GetSubscribedEvents(string userId) {
-			IEnumerable<Subscription> subscriptions = await GetSubscriptions(userId);
-			List<Event> events = new List<Event>();
-			foreach (Subscription subscription in subscriptions) {
-				if(subscription.Branch.Events != null)
-					events.AddRange(subscription.Branch.Events);
-			}
-			return events;
-		}
-
 		public async Task Unsubscribe(string subscriptionId)
 		{
 			try

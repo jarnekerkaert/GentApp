@@ -69,9 +69,14 @@ namespace GentApp.Views
 					Title = Title.Text,
 					Description = Description.Text,
 					StartDate = StartDatePicker.Date.Value.DateTime,
-					EndDate = EndDatePicker.Date.Value.DateTime,
-					Branch = SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch};
-				SimpleIoc.Default.GetInstance<BranchViewModel>().AddEvent(newEvent);
+					EndDate = EndDatePicker.Date.Value.DateTime };
+				SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch.Events.Add(newEvent);
+				var branch = SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch;
+				var company = SimpleIoc.Default.GetInstance<CompanyViewModel>().MyCompany;
+
+				SimpleIoc.Default.GetInstance<CompanyViewModel>().MyCompany.Branches[company.Branches.FindIndex(i => i.Equals(branch))] = branch;
+
+				SimpleIoc.Default.GetInstance<CompanyViewModel>().SaveCompanyCommand.Execute(null);
 				Frame.Navigate(typeof(BranchEventsPage));
 			}
 		}

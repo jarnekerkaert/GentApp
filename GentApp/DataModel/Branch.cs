@@ -13,8 +13,8 @@ namespace GentApp.DataModel {
 		public string Address { get; set; }
 		public BranchType Type { get; set; }
 		public string OpeningHours { get; set; }
-		public IEnumerable<Promotion> Promotions { get; set; }
-		public IEnumerable<Event> Events { get; set; }
+		public List<Promotion> Promotions { get; set; }
+		public List<Event> Events { get; set; }
 		public string ImageUri { get; set; }
 
 		public Branch() {

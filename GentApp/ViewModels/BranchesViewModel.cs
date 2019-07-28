@@ -15,6 +15,7 @@ namespace GentApp.ViewModels {
 		private readonly INavigationService _navigationService;
 		private readonly BranchService _branchService;
 		private readonly SubscriptionService _subscriptionService;
+		private readonly UserService _userService;
 
 		public ObservableCollection<Branch> Branches { get; set; }
 
@@ -33,6 +34,7 @@ namespace GentApp.ViewModels {
 			_navigationService = navigationService;
 			_branchService = new BranchService();
 			_subscriptionService = new SubscriptionService();
+			_userService = new UserService();
 		}
 
 		public UserViewModel UserViewModel {
@@ -100,14 +102,14 @@ namespace GentApp.ViewModels {
 			get {
 				return _subscribeCommand = new RelayCommand(async () => {
 					if ( SubscribedTo ) {
-						Subscription subscription = Subscriptions.FirstOrDefault(s => s.Branch.Id.Equals(SelectedBranch.Id));
+						Subscription subscription = Subscriptions.FirstOrDefault(s => s.BranchId.Equals(SelectedBranch.Id));
 						Subscriptions.Remove(subscription);
 						RaisePropertyChanged(nameof(Subscriptions));
 						RaisePropertyChanged(nameof(SubscribedTo));
 						await _subscriptionService.Unsubscribe(subscription.Id);
 					}
 					else {
-						Subscription subscription = new Subscription() { Branch = SelectedBranch, User = UserViewModel.CurrentUser };
+						Subscription subscription = new Subscription() { BranchId = SelectedBranch.Id, UserId = UserViewModel.CurrentUser.Id };
 						Subscriptions.Add(subscription);
 						RaisePropertyChanged(nameof(Subscriptions));
 						RaisePropertyChanged(nameof(SubscribedTo));
@@ -137,7 +139,8 @@ namespace GentApp.ViewModels {
 						async () => {
 							Subscriptions = new ObservableCollection<Subscription>(
 								await _subscriptionService.GetSubscriptions(UserViewModel.CurrentUser.Id));
-							SubscribedBranches = new ObservableCollection<Branch>(Subscriptions.Select(s => s.Branch));
+							SubscribedBranches = new ObservableCollection<Branch>(
+								await _userService.GetSubscribedBranches(UserViewModel.CurrentUser.Id));
 						});
 			}
 		}
@@ -147,7 +150,7 @@ namespace GentApp.ViewModels {
 				if ( SelectedBranch == null ) {
 					return false;
 				}
-				Subscription subscription = Subscriptions.Where(s => s.Branch.Id.Equals(SelectedBranch.Id)).DefaultIfEmpty(null).First();
+				Subscription subscription = Subscriptions.Where(s => s.BranchId.Equals(SelectedBranch.Id)).DefaultIfEmpty(null).First();
 				return subscription != null;
 			}
 		}

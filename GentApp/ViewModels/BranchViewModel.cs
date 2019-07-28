@@ -9,6 +9,7 @@ using GentApp.Helpers;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
+using GentApp.Views;
 
 namespace GentApp.ViewModels
 {
@@ -113,7 +114,7 @@ namespace GentApp.ViewModels
 			get
 			{
 				return _loadPromotionsCommand ?? (_loadPromotionsCommand = new RelayCommand(async () => {
-					Promotions = await branchService.GetPromotions(SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch.Id);
+					Promotions = SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch.Promotions;
 					var currentDate = DateTime.Today.Date;
 					CurrentPromotions = Promotions.Where(p => p.StartDate <= currentDate && p.EndDate >= currentDate).ToList();
 					NonCurrentPromotions = Promotions.Except(CurrentPromotions).ToList();
@@ -148,11 +149,6 @@ namespace GentApp.ViewModels
 				}
 				));
 			}
-		}
-
-		public async void AddEvent(Event newEvent)
-		{
-			await eventService.Add(newEvent);
 		}
 
 		private Event _selectedEvent;
@@ -191,7 +187,7 @@ namespace GentApp.ViewModels
 		{
 			get
 			{
-				return _toAddEventCommand = new RelayCommand(() => _navigationService.NavigateTo("AddEventPage"));
+				return _toAddEventCommand = new RelayCommand(() => _navigationService.NavigateTo(nameof(AddEventPage)));
 			}
 		}
 

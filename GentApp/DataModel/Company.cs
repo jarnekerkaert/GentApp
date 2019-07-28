@@ -8,7 +8,7 @@ namespace GentApp.DataModel {
 		public string Address { get; set; }
 		public string OpeningHours { get; set; }
 		public string Id { get; set; }
-		public ICollection<Branch> Branches { get; set; }
+		public List<Branch> Branches { get; set; }
 		public string ImageUri { get; set; }
 
 		public Company(string name, string address, string openingHours) 

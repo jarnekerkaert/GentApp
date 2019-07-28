@@ -11,12 +11,12 @@ namespace GentApp.ViewModels {
 	public class CompanyViewModel : ViewModelBase {
 		private INavigationService _navigationService;
 		private readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<CompanyViewModel>();
-		private readonly CompanyService companyService = new CompanyService();
-		private readonly BranchService branchService = new BranchService();
+		private readonly CompanyService _companyService = new CompanyService();
+		private readonly BranchService _branchService = new BranchService();
 
 		public CompanyViewModel(INavigationService navigationService) {
 			_navigationService = navigationService;
-			companyService = new CompanyService();
+			_companyService = new CompanyService();
 			_myCompany = new Company();
 		}
 
@@ -76,7 +76,7 @@ namespace GentApp.ViewModels {
 			MyCompany.Address = address;
 			MyCompany.OpeningHours = openingHours;
 
-			await companyService.Update(MyCompany);
+			await _companyService.Update(MyCompany);
 			RaisePropertyChanged(nameof(MyCompany));
 		}
 
@@ -85,12 +85,12 @@ namespace GentApp.ViewModels {
 			SelectedBranch.Address = address;
 			SelectedBranch.OpeningHours = openingHours;
 			SelectedBranch.Type = type;
-			await companyService.Update(MyCompany);
+			await _companyService.Update(MyCompany);
 			RaisePropertyChanged(nameof(MyCompany));
 		}
 
 		public async void AddBranch(Branch branch) {
-			await branchService.Save(branch);
+			await _branchService.Save(branch);
 			_navigationService.NavigateTo(nameof(MyCompanyPage));
 		}
 
@@ -98,9 +98,8 @@ namespace GentApp.ViewModels {
 
 		public RelayCommand LoadCompanyCommand {
 			get {
-				return _loadCompanyCommand = new RelayCommand(() => {
-					MyCompany = UserViewModel.CurrentUser.Company;
-					SelectedBranch = null;
+				return _loadCompanyCommand = new RelayCommand(async () => {
+					MyCompany = await _companyService.GetMyCompany(UserViewModel.CurrentUser.Company.Id);
 					RaisePropertyChanged(nameof(MyCompany));
 				});
 			}
@@ -108,7 +107,7 @@ namespace GentApp.ViewModels {
 
 		public async void DeleteBranch()
 		{
-			await branchService.Delete(SelectedBranch);
+			await _branchService.Delete(SelectedBranch);
 			RaisePropertyChanged(nameof(MyCompany));
 		}
 	}
