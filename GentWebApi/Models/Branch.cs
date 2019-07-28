@@ -1,11 +1,7 @@
 ﻿using GentWebApi.Models;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GentApp.Models {
 	public class Branch
@@ -13,7 +9,7 @@ namespace GentApp.Models {
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public string Id { get; set; }
 		[Required]
-		public string CompanyId { get; set; }
+		public Company Company { get; set; }
 		[Required]
 		public string Name { get; set; }
 		[Required]
@@ -21,14 +17,15 @@ namespace GentApp.Models {
 		public BranchType Type { get; set; }
 		public string OpeningHours { get; set; }
 		public IEnumerable<Promotion> Promotions { get; set; }
+		public IEnumerable<Event> Events { get; set; }
 
 		public Branch() {
 		}
 
-		public Branch(string name, BranchType type, string id, string companyId, string address, string openingHours) {
+		public Branch(string name, BranchType type, Company company, string address, string openingHours) {
 			Name = name;
 			Type = type;
-			CompanyId = companyId;
+			Company = company;
 			Address = address;
 			OpeningHours = openingHours;
 		}

@@ -1,9 +1,5 @@
 ﻿using GentApp.Helpers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GentApp.DataModel
 {
@@ -14,8 +10,7 @@ namespace GentApp.DataModel
 		public DateTime EndDate { get; set; }
 		public string Title { get; set; }
 		public string Description { get; set; }
-		//public Branch Branch { get; set; }
-		public string BranchId { get; set; }
+		public Branch Branch { get; set; }
 		public string ImageUri { get; set; }
 
 		public Event()

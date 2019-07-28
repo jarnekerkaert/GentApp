@@ -6,17 +6,19 @@ using GentApp.Helpers;
 using GentApp.Services;
 using MetroLog;
 using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace GentApp.ViewModels {
 	public class EventsViewModel : ViewModelBase {
 		private readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<UserViewModel>();
 		private readonly INavigationService _navigationService;
 		private readonly EventService _eventService;
+		private readonly SubscriptionService _subscriptionService;
 
 		public EventsViewModel(INavigationService navigationService) {
 			_navigationService = navigationService;
 			_eventService = new EventService();
+			_subscriptionService = new SubscriptionService();
+			SubscribedEvents = new ObservableCollection<Event>();
 		}
 		public UserViewModel UserViewModel {
 			get {
@@ -63,15 +65,15 @@ namespace GentApp.ViewModels {
 		public RelayCommand LoadUpcomingEventsCommand {
 			get {
 				return _loadUpcomingEventsCommand = new RelayCommand(async () => {
-					SubscribedEvents = new ObservableCollection<Event>();
+					if ( UserViewModel.LoggedIn ) {
+						SubscribedEvents = new ObservableCollection<Event>(await _subscriptionService.GetSubscribedEvents(UserViewModel.CurrentUser.Id));
+					}
+					else {
+						SubscribedEvents = new ObservableCollection<Event>();
+					}
+
 					RaisePropertyChanged(nameof(Events));
 				});
-			}
-		}
-
-		public string RandomAssetSource {
-			get {
-				return RandomAsset.getRandomAsset();
 			}
 		}
 	}

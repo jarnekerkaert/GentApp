@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace GentWebApi.Models {
+﻿namespace GentWebApi.Models {
 	public class Coupon {
 
 		public string Id { get; set; }

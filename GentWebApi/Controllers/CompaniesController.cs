@@ -91,7 +91,7 @@ namespace GentAppWebApi.Controllers {
 			//return _context.Companies.Find(id).Branches;
 			//return _context.Branches.Where(b => b.CompanyId == id).Include(b => b.Promotions);
 			///werkt: 
-			return _context.Branches.Where(b => b.CompanyId.Equals(id));
+			return _context.Branches.Where(b => b.Company.Id.Equals(id));
 			//return _context.Branches.Where(b => b.CompanyId.Equals(id)).Include(b => b.Promotions);
 		}
 	}

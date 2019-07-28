@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using GentWebApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GentWebApi.Controllers
 {
@@ -23,14 +24,21 @@ namespace GentWebApi.Controllers
         [HttpGet("branch/{id}", Name = "GetSubscribers")]
         public IEnumerable<Subscription> GetSubscribers(string id)
         {
-			return _context.Subscriptions.Where(s => s.BranchId.Equals(id));
+			return _context.Subscriptions
+				.Include(s => s.Branch)
+				.ThenInclude(b => b.Events)
+				.Include(s => s.User)
+				.Where(s => s.Branch.Id.Equals(id));
         }
 
 		// GET: api/Subscriptions/user/5
 		[HttpGet("user/{id}", Name = "GetSubscriptions")]
 		public IEnumerable<Subscription> GetSubscriptions(string id)
 		{
-			return _context.Subscriptions.Where(s => s.UserId.Equals(id));
+			return _context.Subscriptions
+				.Include(s => s.User)
+				.Include(s => s.Branch)
+				.Where(s => s.User.Id.Equals(id));
 		}
 
 		// POST: api/Subscriptions

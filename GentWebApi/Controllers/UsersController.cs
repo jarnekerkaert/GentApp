@@ -76,11 +76,11 @@ namespace GentWebApi.Controllers {
 		[HttpGet("{id}/subscribedbranches")]
 		public IEnumerable<Branch> GetSubscribedBranchesOfUser(string id)
 		{
-			IEnumerable<Subscription> subscriptions = _context.Subscriptions.Where(s => s.UserId.Equals(id));
+			IEnumerable<Subscription> subscriptions = _context.Subscriptions.Where(s => s.User.Id.Equals(id));
 			List<Branch> branches = new List<Branch>();
 			foreach(Subscription subscription in subscriptions)
 			{
-				branches.Add(_context.Branches.Find(subscription.BranchId));
+				branches.Add(_context.Branches.Find(subscription.Branch.Id));
 			}
 			return branches;
 		}

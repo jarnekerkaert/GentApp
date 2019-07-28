@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace GentApp.DataModel
 {
@@ -11,20 +6,18 @@ namespace GentApp.DataModel
 	{
 		public string Id { get; set; }
 		[Required]
-		public string BranchId { get; set; }
-		//public Branch Branch { get; set; }
+		public Branch Branch { get; set; }
 		[Required]
-		public string UserId { get; set; }
-		//public User User { get; set; }
+		public User User { get; set; }
 
 		public Subscription()
 		{
 		}
 
-		public Subscription(string branchId, string userId)
+		public Subscription(Branch branch, User user)
 		{
-			BranchId = branchId;
-			UserId = userId;
+			Branch = branch;
+			User = user;
 		}
 	}
 }

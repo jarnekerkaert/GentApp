@@ -80,41 +80,26 @@ namespace GentApp.ViewModels {
 			RaisePropertyChanged(nameof(MyCompany));
 		}
 
-		//public async void SaveBranch() {
-		//	//MyCompany.Branches.Add(SelectedBranch);
-		//	await companyService.Save(MyCompany);
-		//}
-
 		public async void EditBranch(string name, string address, string openingHours, BranchType type) {
 			SelectedBranch.Name = name;
 			SelectedBranch.Address = address;
 			SelectedBranch.OpeningHours = openingHours;
 			SelectedBranch.Type = type;
-			//var oldBranch = MyCompany.Branches.Where(b => b.Id.Equals(SelectedBranch.Id)).First();
-			//oldBranch = SelectedBranch;
 			await companyService.Update(MyCompany);
 			RaisePropertyChanged(nameof(MyCompany));
 		}
 
 		public async void AddBranch(Branch branch) {
-			//MyCompany.Branches.Add(branch);
 			await branchService.Save(branch);
+			_navigationService.NavigateTo(nameof(MyCompanyPage));
 		}
-
-		//public async void AddBranch(Branch branch)
-		//{
-		//	await branchService.Save(branch);
-		//	//MyCompany.Branches.Add(branch);
-		//	//await companyService.Update(MyCompany);
-		//}
 
 		private RelayCommand _loadCompanyCommand;
 
 		public RelayCommand LoadCompanyCommand {
 			get {
-				return _loadCompanyCommand = new RelayCommand(async () => {
-					//MyCompany = UserViewModel.CurrentUser.Company;
-					MyCompany = await companyService.GetMyCompany(UserViewModel.CurrentUser.Company.Id);
+				return _loadCompanyCommand = new RelayCommand(() => {
+					MyCompany = UserViewModel.CurrentUser.Company;
 					RaisePropertyChanged(nameof(MyCompany));
 				});
 			}

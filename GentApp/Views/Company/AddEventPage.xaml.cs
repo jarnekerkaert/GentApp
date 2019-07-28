@@ -1,20 +1,8 @@
 ﻿using GalaSoft.MvvmLight.Ioc;
 using GentApp.DataModel;
 using GentApp.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -27,9 +15,9 @@ namespace GentApp.Views
 	{
 		public AddEventPage()
 		{
-			this.InitializeComponent();
+			InitializeComponent();
 			horStackPanel.DataContext = SimpleIoc.Default.GetInstance<BranchesViewModel>().MySelectedBranch;
-			this.DataContext = SimpleIoc.Default.GetInstance<BranchViewModel>();
+			DataContext = SimpleIoc.Default.GetInstance<BranchViewModel>();
 		}
 
 		private void SaveEventBtn_Click(object sender, RoutedEventArgs e)
@@ -75,9 +63,14 @@ namespace GentApp.Views
 				EndDateValidationErrorTextBlock.Text = "This field is required.";
 				isValid = false;
 			}
-			if (isValid == true)
+			if ( isValid )
 			{
-				Event newEvent = new Event() { Title = Title.Text, Description = Description.Text, StartDate = StartDatePicker.Date.Value.DateTime, EndDate = EndDatePicker.Date.Value.DateTime, BranchId = SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch.Id};
+				Event newEvent = new Event() {
+					Title = Title.Text,
+					Description = Description.Text,
+					StartDate = StartDatePicker.Date.Value.DateTime,
+					EndDate = EndDatePicker.Date.Value.DateTime,
+					Branch = SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch};
 				SimpleIoc.Default.GetInstance<BranchViewModel>().AddEvent(newEvent);
 				Frame.Navigate(typeof(BranchEventsPage));
 			}

@@ -14,6 +14,7 @@ namespace GentApp.DataModel {
 		public BranchType Type { get; set; }
 		public string OpeningHours { get; set; }
 		public IEnumerable<Promotion> Promotions { get; set; }
+		public IEnumerable<Event> Events { get; set; }
 		public string ImageUri { get; set; }
 
 		public Branch() {
