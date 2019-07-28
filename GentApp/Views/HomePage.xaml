@@ -23,7 +23,7 @@
 			<RowDefinition Height="*"></RowDefinition>
 			<RowDefinition Height="310"></RowDefinition>
 		</Grid.RowDefinitions>
-		<ParallaxView x:Name="paraimage" Grid.Row="0" HorizontalShift="400" Source="{x:Bind HomeFeedGrid}" VerticalAlignment="Bottom" Margin="0,-228,0,0">
+		<ParallaxView Grid.Row="0" HorizontalShift="400" Source="{x:Bind HomeFeedGrid}" VerticalAlignment="Bottom" Margin="0,-228,0,0">
 			<Image 
                    Margin="-0,0,0,0"
                    Stretch="UniformToFill"
@@ -73,7 +73,7 @@
 			</GridView.ItemsPanel>
 			<GridView.ItemTemplate>
 				<DataTemplate x:DataType="datamodel:Branch">
-					<Grid x:Name="GalleryItem" Margin="10,0">
+					<Grid Margin="10,0">
 						<Grid.RowDefinitions>
 							<RowDefinition Height="200" />
 							<RowDefinition />
@@ -83,7 +83,7 @@
 						<Image x:Name="Image" 
                                    HorizontalAlignment="Left"
                                    Stretch="UniformToFill" Height="190" Width="190"
-									Source="/Assets/ghent_parallax.png">
+									Source="{x:Bind ImageUri}">
 						</Image>
 						<StackPanel VerticalAlignment="Bottom" Grid.Row="1" Margin="5,0,5,0" Width="180">
 							<TextBlock Text="{x:Bind Name}" FontWeight="Medium" 

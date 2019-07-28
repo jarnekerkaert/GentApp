@@ -147,7 +147,6 @@ namespace GentApp.ViewModels {
 				if ( SelectedBranch == null ) {
 					return false;
 				}
-				
 				Subscription subscription = Subscriptions.Where(s => s.BranchId.Equals(SelectedBranch.Id)).DefaultIfEmpty(null).First();
 				return subscription != null;
 			}

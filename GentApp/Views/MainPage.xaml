@@ -82,6 +82,10 @@
 					Content="Your Company"
 					Icon="Edit" />
 				<NavigationViewItem
+					x:Name="EventsItem"
+					Content="Events"
+					Icon="Calendar" />
+				<NavigationViewItem
 					x:Name="YourSubscriptionsItem"
 					Content="Your Subscriptions"
 					Icon="Favorite" />

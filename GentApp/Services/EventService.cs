@@ -22,6 +22,14 @@ namespace GentApp.Services
 			HttpClient = new HttpClient();
 		}
 
+		public async Task<IEnumerable<Event>> GetAll() {
+			HttpResponseMessage response = await HttpClient.GetAsync(apiUrl);
+			if ( response.IsSuccessStatusCode ) {
+				return JsonConvert.DeserializeObject<IEnumerable<Event>>(await response.Content.ReadAsStringAsync());
+			}
+			return Enumerable.Empty<Event>();
+		}
+
 		public async Task Add(Event newEvent)
 		{
 			try

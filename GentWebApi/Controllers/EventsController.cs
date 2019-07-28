@@ -19,6 +19,11 @@ namespace GentWebApi.Controllers
 			_context = context;
 		}
 
+		[HttpGet]
+		public ActionResult<IEnumerable<Event>> Get() {
+			return _context.Events;
+		}
+
 		// POST: api/events
 		[HttpPost]
 		public IActionResult Post([FromBody] Event newEvent)

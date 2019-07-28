@@ -1,10 +1,6 @@
-﻿using GentApp.DataModel;
-using System;
+﻿using GentApp.Helpers;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GentApp.DataModel {
 	public class Branch
@@ -18,11 +14,14 @@ namespace GentApp.DataModel {
 		public BranchType Type { get; set; }
 		public string OpeningHours { get; set; }
 		public IEnumerable<Promotion> Promotions { get; set; }
+		public string ImageUri { get; set; }
 
 		public Branch() {
+			ImageUri = RandomAsset.getRandomAsset();
 		}
 
-		public Branch(string name, BranchType type, string id, string companyId, string address, string openingHours) {
+		public Branch(string name, BranchType type, string id, string companyId, string address, string openingHours)
+			: this() {
 			Name = name;
 			Type = type;
 			CompanyId = companyId;
