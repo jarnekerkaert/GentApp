@@ -11,6 +11,10 @@
 	mc:Ignorable="d"
 	DataContext="{Binding CompaniesViewModelInstance, Source={StaticResource Locator}}">
 
+	<Page.Resources>
+		<local:StringFormatConverter x:Key="StringFormatConverter" />
+	</Page.Resources>
+
 	<interactivity:Interaction.Behaviors>
 		<core:EventTriggerBehavior EventName="Loaded">
 			<core:InvokeCommandAction Command="{Binding Path=LoadPromotionsCommand}" />
@@ -69,14 +73,15 @@
 
 			<TextBlock FontWeight="Bold">Current promotions:</TextBlock>
 			<ListView ItemsSource="{Binding Path=CurrentPromotions}" IsItemClickEnabled="True" ItemClick="PromotionsListView_ItemClick" x:Name="currentPromotionsListView" Margin="0,0,0,20">
-				<ListView.Header>
-					<TextBlock Visibility="{Binding CurrentPromotions.Count}" Text="None">
-					</TextBlock>
-				</ListView.Header>
 				<ListView.ItemTemplate>
 					<DataTemplate>
 						<StackPanel>
-							<TextBlock Text="{Binding Path=Title}" />
+							<TextBlock FontSize="14" Text="{Binding Path=Title}" />
+							<TextBlock FontSize="12" Text="{Binding Path=Description}" TextWrapping="Wrap"/>
+							<StackPanel Orientation="Horizontal">
+								<TextBlock FontSize="10" Text="Eindigt op:" Margin="0,0,5,0"/>
+								<TextBlock FontSize="10" Text="{Binding Path=EndDate.Date, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:dd/MM/yyy}'}" />
+							</StackPanel>
 						</StackPanel>
 					</DataTemplate>
 				</ListView.ItemTemplate>
