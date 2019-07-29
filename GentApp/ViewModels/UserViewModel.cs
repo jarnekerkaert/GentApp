@@ -10,12 +10,12 @@ using Windows.UI.Popups;
 
 namespace GentApp.ViewModels {
 	public class UserViewModel : ViewModelBase {
-		private readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<CompaniesViewModel>();
+		private readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<UserViewModel>();
 		private readonly INavigationService _navigationService;
 		private readonly UserService _userService;
 
 		private RegisterModel _registerModel = new RegisterModel();
-		private bool _registerCompany = false;
+		private bool _registerCompany;
 
 		public RegisterModel RegisterModel {
 			get {
@@ -55,7 +55,8 @@ namespace GentApp.ViewModels {
 
 		public async void SaveUser() {
 			try {
-				await _userService.Update(CurrentUser).ContinueWith(p => RaisePropertyChanged(nameof(IsEntrepreneur)));			
+				await _userService.Update(CurrentUser);
+				RaisePropertyChanged(nameof(IsEntrepreneur));
 				await new MessageDialog("User saved!").ShowAsync();
 			} catch(Exception e) {
 				await new MessageDialog("Error saving user: "+e.Message).ShowAsync();

@@ -16,14 +16,13 @@ namespace GentApp.Views
 
 		public BranchPromotionsPage()
 		{
-			this.InitializeComponent();
-			horStackPanel.DataContext = SimpleIoc.Default.GetInstance<CompaniesViewModel>().SelectedBranch;
+			InitializeComponent();
+			horStackPanel.DataContext = SimpleIoc.Default.GetInstance<BranchesViewModel>().SelectedBranch;
 		}
 
 		private void PromotionsListView_ItemClick(object sender, ItemClickEventArgs e)
 		{
-			var selectedPromotion = e.ClickedItem as Promotion;
-			SimpleIoc.Default.GetInstance<BranchViewModel>().MySelectedPromotion = selectedPromotion;
+			SimpleIoc.Default.GetInstance<BranchViewModel>().MySelectedPromotion = e.ClickedItem as Promotion;
 			Frame.Navigate(typeof(EditPromotionPage));
 		}
 

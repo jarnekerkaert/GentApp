@@ -11,12 +11,13 @@ namespace GentApp.ViewModels {
 	public class CompanyViewModel : ViewModelBase {
 		private INavigationService _navigationService;
 		private readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<CompanyViewModel>();
-		private readonly CompanyService companyService = new CompanyService();
-		private readonly BranchService branchService = new BranchService();
+		private readonly CompanyService _companyService = new CompanyService();
+		private readonly BranchService _branchService = new BranchService();
+		private bool isNavigated;
 
 		public CompanyViewModel(INavigationService navigationService) {
 			_navigationService = navigationService;
-			companyService = new CompanyService();
+			_companyService = new CompanyService();
 			_myCompany = new Company();
 		}
 
@@ -54,20 +55,24 @@ namespace GentApp.ViewModels {
 		public Branch SelectedBranch {
 			get { return selectedBranch; }
 			set {
-				if ( value != selectedBranch ) {
-					selectedBranch = value;
-					RaisePropertyChanged(nameof(SelectedBranch));
-				}
+				selectedBranch = value;
+				RaisePropertyChanged(nameof(SelectedBranch));
 			}
 		}
 
 		private RelayCommand _branchSelectedCommand;
 
-		public RelayCommand BranchSelectedCommand
-		{
-			get
-			{
-				return _branchSelectedCommand = new RelayCommand(() => _navigationService.NavigateTo("EditBranchPage"));
+		public RelayCommand BranchSelectedCommand {
+			get {
+				return _branchSelectedCommand = new RelayCommand(() => {
+					if ( isNavigated && SelectedBranch == null) {
+						isNavigated = false;
+					}
+					else {
+						isNavigated = true;
+						_navigationService.NavigateTo(nameof(EditBranchPage));
+					}
+				});
 			}
 		}
 
@@ -76,55 +81,39 @@ namespace GentApp.ViewModels {
 			MyCompany.Address = address;
 			MyCompany.OpeningHours = openingHours;
 
-			await companyService.Update(MyCompany);
+			await _companyService.Update(MyCompany);
 			RaisePropertyChanged(nameof(MyCompany));
 		}
-
-		//public async void SaveBranch() {
-		//	//MyCompany.Branches.Add(SelectedBranch);
-		//	await companyService.Save(MyCompany);
-		//}
 
 		public async void EditBranch(string name, string address, string openingHours, BranchType type) {
 			SelectedBranch.Name = name;
 			SelectedBranch.Address = address;
 			SelectedBranch.OpeningHours = openingHours;
 			SelectedBranch.Type = type;
-			//var oldBranch = MyCompany.Branches.Where(b => b.Id.Equals(SelectedBranch.Id)).First();
-			//oldBranch = SelectedBranch;
-			await companyService.Update(MyCompany);
+			await _companyService.Update(MyCompany);
 			RaisePropertyChanged(nameof(MyCompany));
 		}
 
 		public async void AddBranch(Branch branch) {
-			//MyCompany.Branches.Add(branch);
-			await branchService.Save(branch);
+			await _branchService.Save(branch);
+			_navigationService.NavigateTo(nameof(MyCompanyPage));
 		}
-
-		//public async void AddBranch(Branch branch)
-		//{
-		//	await branchService.Save(branch);
-		//	//MyCompany.Branches.Add(branch);
-		//	//await companyService.Update(MyCompany);
-		//}
 
 		private RelayCommand _loadCompanyCommand;
 
 		public RelayCommand LoadCompanyCommand {
 			get {
 				return _loadCompanyCommand = new RelayCommand(async () => {
-					//MyCompany = UserViewModel.CurrentUser.Company;
-					MyCompany = await companyService.GetMyCompany(UserViewModel.CurrentUser.Company.Id);
+					MyCompany = await _companyService.GetMyCompany(UserViewModel.CurrentUser.Company.Id);
+					isNavigated = true;
 					RaisePropertyChanged(nameof(MyCompany));
 				});
 			}
 		}
 
-		public async void DeleteBranch()
-		{
-			await branchService.Delete(SelectedBranch);
+		public async void DeleteBranch() {
+			await _branchService.Delete(SelectedBranch);
 			RaisePropertyChanged(nameof(MyCompany));
 		}
-
 	}
 }

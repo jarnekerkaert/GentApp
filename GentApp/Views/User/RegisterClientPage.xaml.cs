@@ -16,7 +16,7 @@ namespace GentApp.Views
 		}
 
 		public void ToLoginPage(object sender, RoutedEventArgs args) {
-			var relayCommand = SimpleIoc.Default.GetInstance<UserViewModel>().ToLogin;
+			SimpleIoc.Default.GetInstance<UserViewModel>().ToLogin.Execute(sender);
 		}
 	}
 }

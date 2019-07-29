@@ -23,16 +23,17 @@ namespace GentApp.Views
 	/// <summary>
 	/// An empty page that can be used on its own or navigated to within a Frame.
 	/// </summary>
-	public sealed partial class AddEventPage : Page
+	public sealed partial class AddPromotionPage : Page
 	{
-		public AddEventPage()
+		public AddPromotionPage()
 		{
-			this.InitializeComponent();
+			InitializeComponent();
 			horStackPanel.DataContext = SimpleIoc.Default.GetInstance<BranchesViewModel>().MySelectedBranch;
-			this.DataContext = SimpleIoc.Default.GetInstance<BranchViewModel>();
+			DataContext = SimpleIoc.Default.GetInstance<BranchViewModel>();
+
 		}
 
-		private void SaveEventBtn_Click(object sender, RoutedEventArgs e)
+		private void SavePromotionBtn_Click(object sender, RoutedEventArgs e)
 		{
 			TitleValidationErrorTextBlock.Text = "";
 			DescriptionValidationErrorTextBlock.Text = "";
@@ -75,11 +76,24 @@ namespace GentApp.Views
 				EndDateValidationErrorTextBlock.Text = "This field is required.";
 				isValid = false;
 			}
-			if (isValid == true)
+			if ( isValid )
 			{
-				Event newEvent = new Event() { Title = Title.Text, Description = Description.Text, StartDate = StartDatePicker.Date.Value.DateTime, EndDate = EndDatePicker.Date.Value.DateTime, BranchId = SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch.Id};
-				SimpleIoc.Default.GetInstance<BranchViewModel>().AddEvent(newEvent);
-				Frame.Navigate(typeof(BranchEventsPage));
+				Promotion newPromotion = new Promotion() {
+					Title = Title.Text,
+					Description = Description.Text,
+					StartDate = StartDatePicker.Date.Value.DateTime,
+					EndDate = EndDatePicker.Date.Value.DateTime,
+					BranchId = SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch.Id,
+					AllBranches = false };
+				//SimpleIoc.Default.GetInstance<BranchViewModel>().AddPromotion(newPromotion);
+				SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch.Promotions.Add(newPromotion);
+				var branch = SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch;
+				var company = SimpleIoc.Default.GetInstance<CompanyViewModel>().MyCompany;
+
+				SimpleIoc.Default.GetInstance<CompanyViewModel>().MyCompany.Branches[company.Branches.FindIndex(i => i.Equals(branch))] = branch;
+
+				SimpleIoc.Default.GetInstance<CompanyViewModel>().SaveCompanyCommand.Execute(null);
+				Frame.Navigate(typeof(BranchPromotionsPage));
 			}
 		}
 	}

@@ -3,15 +3,17 @@ using System;
 using GentWebApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace GentWebApi.Migrations
 {
     [DbContext(typeof(GentDbContext))]
-    partial class GentDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190727180532_Coupon")]
+    partial class Coupon
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,8 +113,6 @@ namespace GentWebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BranchId");
-
                     b.ToTable("Events");
                 });
 
@@ -157,16 +157,12 @@ namespace GentWebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BranchId");
-
-                    b.HasIndex("UserId");
-
                     b.ToTable("Subscriptions");
                 });
 
             modelBuilder.Entity("GentApp.Models.Branch", b =>
                 {
-                    b.HasOne("GentApp.Models.Company", "Company")
+                    b.HasOne("GentApp.Models.Company")
                         .WithMany("Branches")
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -179,35 +175,15 @@ namespace GentWebApi.Migrations
                         .HasForeignKey("CompanyId");
                 });
 
-            modelBuilder.Entity("GentWebApi.Models.Event", b =>
-                {
-                    b.HasOne("GentApp.Models.Branch", "Branch")
-                        .WithMany("Events")
-                        .HasForeignKey("BranchId");
-                });
-
             modelBuilder.Entity("GentWebApi.Models.Promotion", b =>
                 {
-                    b.HasOne("GentApp.Models.Branch", "Branch")
+                    b.HasOne("GentApp.Models.Branch")
                         .WithMany("Promotions")
                         .HasForeignKey("BranchId");
 
                     b.HasOne("GentWebApi.Models.Coupon", "Coupon")
                         .WithMany()
                         .HasForeignKey("CouponId");
-                });
-
-            modelBuilder.Entity("GentWebApi.Models.Subscription", b =>
-                {
-                    b.HasOne("GentApp.Models.Branch", "Branch")
-                        .WithMany()
-                        .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("GentApp.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

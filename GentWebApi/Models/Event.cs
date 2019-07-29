@@ -1,9 +1,6 @@
 ﻿using GentApp.Models;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace GentWebApi.Models
 {
@@ -15,8 +12,7 @@ namespace GentWebApi.Models
 		public DateTime EndDate { get; set; }
 		public string Title { get; set; }
 		public string Description { get; set; }
-		//public Branch Branch { get; set; }
-		public string BranchId { get; set; }
+		public Branch Branch { get; set; }
 
 		public Event()
 		{
@@ -29,7 +25,5 @@ namespace GentWebApi.Models
 			Title = title;
 			Description = description;
 		}
-
-
 	}
 }

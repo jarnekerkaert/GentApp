@@ -1,4 +1,7 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Ioc;
+using GentApp.DataModel;
+using GentApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,11 +23,19 @@ namespace GentApp.Views
 	/// <summary>
 	/// An empty page that can be used on its own or navigated to within a Frame.
 	/// </summary>
-	public sealed partial class MyEventsPage : Page
+	public sealed partial class BranchEventsPage : Page
 	{
-		public MyEventsPage()
+		public BranchEventsPage()
 		{
-			this.InitializeComponent();
+			InitializeComponent();
+			horStackPanel.DataContext = SimpleIoc.Default.GetInstance<BranchesViewModel>().SelectedBranch;
 		}
+
+		private void EventsListView_ItemClick(object sender, ItemClickEventArgs e)
+		{
+			SimpleIoc.Default.GetInstance<BranchViewModel>().SelectedEvent = e.ClickedItem as Event;
+			Frame.Navigate(typeof(EditEventPage));
+		}
+
 	}
 }

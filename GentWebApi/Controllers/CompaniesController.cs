@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-
 using GentApp.Models;
-
 using GentWebApi.Models;
-
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -35,8 +30,12 @@ namespace GentAppWebApi.Controllers {
 		public ActionResult<Company> Get(string id) {
 			if (_context.Companies.Find(id) != null)
 			{
-				//return _context.Companies.Find(id);
-				return _context.Companies.Include(c => c.Branches).Where(c => c.Id.Equals(id)).FirstOrDefault();
+				return _context.Companies
+					.Include(c => c.Branches)
+					.ThenInclude(b => b.Promotions)
+					.Include(c => c.Branches)
+					.ThenInclude(b => b.Events)
+					.FirstOrDefault(c => c.Id.Equals(id));
 			}
 			else
 			{
@@ -88,11 +87,7 @@ namespace GentAppWebApi.Controllers {
 		[HttpGet("{id}/branches", Name = "GetBranches")]
 		public IEnumerable<Branch> GetBranches(string id)
 		{
-			//return _context.Companies.Find(id).Branches;
-			//return _context.Branches.Where(b => b.CompanyId == id).Include(b => b.Promotions);
-			///werkt: 
-			return _context.Branches.Where(b => b.CompanyId.Equals(id));
-			//return _context.Branches.Where(b => b.CompanyId.Equals(id)).Include(b => b.Promotions);
+			return _context.Branches.Where(b => b.Company.Id.Equals(id));
 		}
 	}
 }

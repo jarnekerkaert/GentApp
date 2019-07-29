@@ -1,4 +1,5 @@
 ﻿using GentApp.DataModel;
+using GentWebApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace GentApp.DataModel {
 		public string Description { get; set; }
 		public string BranchId { get; set; }
 		public bool AllBranches { get; set; }
+		public Coupon Coupon { get; set; }
 
 		public Promotion() {
 		}

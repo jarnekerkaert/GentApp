@@ -78,12 +78,13 @@
 					Content="Home"
 					Icon="Home" />
 				<NavigationViewItem
-					Content="Companies"
-					Icon="List" />
-				<NavigationViewItem
 					x:Name="YourCompanyItem"
 					Content="Your Company"
 					Icon="Edit" />
+				<NavigationViewItem
+					x:Name="EventsItem"
+					Content="Events"
+					Icon="Calendar" />
 				<NavigationViewItem
 					x:Name="YourSubscriptionsItem"
 					Content="Your Subscriptions"
@@ -91,7 +92,7 @@
 				<NavigationViewItem
 					x:Name="LoginItem"
 					Content="Login"
-					Icon="GoToStart"/>
+					Icon="OtherUser"/>
 				<NavigationViewItem
 					x:Name="LogoutItem"
 					Content="Logout"

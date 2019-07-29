@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
 using GentApp.Models;
 using GentWebApi.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,23 +19,20 @@ namespace GentWebApi.Controllers
 			_context = context;
 		}
 
+		// GET api/branches
 		[HttpGet]
-		public IEnumerable<Branch> GetAll()
-		{
-			return _context.Branches;
+		public ActionResult<IEnumerable<Branch>> Get() {
+			return _context.Branches
+				.Include(b => b.Events)
+				.Include(b => b.Promotions)
+				.ToList();
 		}
 
 		// GET api/branches/2
 		[HttpGet("{id}")]
 		public ActionResult<Branch> Get(string id) {
-			if (_context.Branches.Find(id) != null)
-			{
-				return _context.Branches.Find(id);
-			}
-			else
-			{
-				return NotFound();
-			}
+			var result = _context.Branches.Find(id);
+			return result != null ? (ActionResult<Branch>) result : (ActionResult<Branch>) NotFound();
 		}
 
 		// POST: api/branches
@@ -62,10 +55,6 @@ namespace GentWebApi.Controllers
 		[HttpPut("{id}")]
 		public IActionResult Put([FromBody] Branch branch, string id)
 		{
-			//if (_context.Branches.Find(id) == null)
-			//{
-			//	return NotFound();
-			//}
 			if (ModelState.IsValid)
 			{
 				_context.Branches.Update(branch);
@@ -82,16 +71,14 @@ namespace GentWebApi.Controllers
 		[HttpGet("{id}/promotions", Name = "GetPromotions")]
 		public IEnumerable<Promotion> GetPromotions(string id)
 		{
-			//return _context.Promotions.Where(p => p.Branch.Id.Equals(id));
-			return _context.Promotions.Where(p => p.BranchId.Equals(id));
+			return _context.Promotions.Where(p => p.Branch.Id.Equals(id));
 		}
 
 		// GET: api/branches/2/events
 		[HttpGet("{id}/events", Name = "GetEvents")]
 		public IEnumerable<Event> GetEvents(string id)
 		{
-			//return _context.Promotions.Where(p => p.Branch.Id.Equals(id));
-			return _context.Events.Where(p => p.BranchId.Equals(id));
+			return _context.Events.Where(p => p.Branch.Id.Equals(id));
 		}
 
 		// DELETE: api/branches

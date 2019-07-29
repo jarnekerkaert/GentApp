@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using GentWebApi.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GentWebApi.Controllers
@@ -17,6 +15,11 @@ namespace GentWebApi.Controllers
 		public EventsController(GentDbContext context)
 		{
 			_context = context;
+		}
+
+		[HttpGet]
+		public ActionResult<IEnumerable<Event>> Get() {
+			return _context.Events;
 		}
 
 		// POST: api/events

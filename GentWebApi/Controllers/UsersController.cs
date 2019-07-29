@@ -19,7 +19,10 @@ namespace GentWebApi.Controllers {
 		// GET api/<controller>/5
 		[HttpGet("login/{username}")]
 		public ActionResult<User> Login(string userName) {
-			User response = _context.Users.Include(u => u.Company.Branches)
+			User response = _context.Users
+				.Include(u => u.Company)
+				.ThenInclude(c => c.Branches)
+				//.ThenInclude(b => b.Company)
 				.Where(u => u.UserName == userName)
 				.SingleOrDefault();
 			return response != null ? (ActionResult<User>) response : (ActionResult<User>) NotFound();
@@ -80,7 +83,12 @@ namespace GentWebApi.Controllers {
 			List<Branch> branches = new List<Branch>();
 			foreach(Subscription subscription in subscriptions)
 			{
-				branches.Add(_context.Branches.Find(subscription.BranchId));
+				branches.Add(
+					_context.Branches
+					.Include(b => b.Events)
+					.Include(b => b.Promotions)
+					//.Include(b => b.Company)
+					.FirstOrDefault(b => b.Id == subscription.BranchId));
 			}
 			return branches;
 		}
