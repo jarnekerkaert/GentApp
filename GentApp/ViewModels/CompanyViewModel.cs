@@ -54,7 +54,7 @@ namespace GentApp.ViewModels {
 		public Branch SelectedBranch {
 			get { return selectedBranch; }
 			set {
-				if ( value != selectedBranch ) {
+				if ( value != null ) {
 					selectedBranch = value;
 					RaisePropertyChanged(nameof(SelectedBranch));
 				}
