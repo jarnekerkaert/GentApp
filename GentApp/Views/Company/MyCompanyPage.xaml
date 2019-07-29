@@ -31,15 +31,13 @@
 					Tapped="SymbolIcon_Tapped"></SymbolIcon>
 
 		<TextBlock Margin="0,50,0,0">Branches:</TextBlock>
-		<!--<ListView ItemsSource="{Binding Path=MyCompany.Branches, Mode=OneWay}" 
-				  SelectedItem="{Binding Path=SelectedBranch, Mode=TwoWay}">-->
-			<ListView ItemsSource="{Binding Path=MyCompany.Branches, Mode=OneWay}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick"
+		<ListView ItemsSource="{Binding Path=MyCompany.Branches}" 
 				  SelectedItem="{Binding Path=SelectedBranch, Mode=TwoWay}">
-			<!--<interactivity:Interaction.Behaviors>
+			<interactivity:Interaction.Behaviors>
 				<core:EventTriggerBehavior EventName="SelectionChanged">
 					<core:InvokeCommandAction Command="{Binding Path=BranchSelectedCommand}" />
 				</core:EventTriggerBehavior>
-			</interactivity:Interaction.Behaviors>-->
+			</interactivity:Interaction.Behaviors>
 			<ListView.ItemTemplate>
 				<DataTemplate x:DataType="local:Branch">
 					<StackPanel>

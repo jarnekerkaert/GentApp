@@ -13,6 +13,7 @@ namespace GentApp.ViewModels {
 		private readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<CompanyViewModel>();
 		private readonly CompanyService _companyService = new CompanyService();
 		private readonly BranchService _branchService = new BranchService();
+		private bool isNavigated;
 
 		public CompanyViewModel(INavigationService navigationService) {
 			_navigationService = navigationService;
@@ -54,20 +55,24 @@ namespace GentApp.ViewModels {
 		public Branch SelectedBranch {
 			get { return selectedBranch; }
 			set {
-				if (value != selectedBranch){
-					selectedBranch = value;
-					RaisePropertyChanged(nameof(SelectedBranch));
-				}
+				selectedBranch = value;
+				RaisePropertyChanged(nameof(SelectedBranch));
 			}
 		}
 
 		private RelayCommand _branchSelectedCommand;
 
-		public RelayCommand BranchSelectedCommand
-		{
-			get
-			{
-				return _branchSelectedCommand = new RelayCommand(() => _navigationService.NavigateTo(nameof(EditBranchPage)));
+		public RelayCommand BranchSelectedCommand {
+			get {
+				return _branchSelectedCommand = new RelayCommand(() => {
+					if ( isNavigated && SelectedBranch == null) {
+						isNavigated = false;
+					}
+					else {
+						isNavigated = true;
+						_navigationService.NavigateTo(nameof(EditBranchPage));
+					}
+				});
 			}
 		}
 
@@ -100,13 +105,13 @@ namespace GentApp.ViewModels {
 			get {
 				return _loadCompanyCommand = new RelayCommand(async () => {
 					MyCompany = await _companyService.GetMyCompany(UserViewModel.CurrentUser.Company.Id);
+					isNavigated = true;
 					RaisePropertyChanged(nameof(MyCompany));
 				});
 			}
 		}
 
-		public async void DeleteBranch()
-		{
+		public async void DeleteBranch() {
 			await _branchService.Delete(SelectedBranch);
 			RaisePropertyChanged(nameof(MyCompany));
 		}

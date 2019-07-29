@@ -16,6 +16,7 @@ namespace GentApp.ViewModels {
 		private readonly BranchService _branchService;
 		private readonly SubscriptionService _subscriptionService;
 		private readonly UserService _userService;
+		private bool isNavigated = false;
 
 		public ObservableCollection<Branch> Branches { get; set; }
 
@@ -77,7 +78,9 @@ namespace GentApp.ViewModels {
 
 		public RelayCommand BranchSelectedCommand {
 			get {
-				return _branchSelectedCommand = new RelayCommand(() => _navigationService.NavigateTo(nameof(BranchDetailsPage)));
+				return _branchSelectedCommand = new RelayCommand(() => {
+						_navigationService.NavigateTo(nameof(BranchDetailsPage));
+				});
 			}
 		}
 

@@ -73,10 +73,8 @@ namespace GentApp.Views
 					Name = Name.Text,
 					Address = Address.Text,
 					OpeningHours = OpeningHours.Text,
-					Type = selectedType,
-					//Company = SimpleIoc.Default.GetInstance<CompanyViewModel>().MyCompany
+					Type = selectedType
 				};
-				//SimpleIoc.Default.GetInstance<CompanyViewModel>().AddBranch(newBranch);
 				SimpleIoc.Default.GetInstance<CompanyViewModel>().MyCompany.Branches.Add(newBranch);
 				SimpleIoc.Default.GetInstance<CompanyViewModel>().SaveCompanyCommand.Execute(null);
 				Frame.Navigate(typeof(MyCompanyPage));

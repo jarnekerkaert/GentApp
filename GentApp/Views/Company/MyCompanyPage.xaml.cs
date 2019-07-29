@@ -1,22 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using GalaSoft.MvvmLight.Ioc;
+﻿using System.Collections.ObjectModel;
 using GentApp.DataModel;
-using GentApp.ViewModels;
-
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace GentApp.Views
 {
@@ -37,14 +22,6 @@ namespace GentApp.Views
 		private void AddIcon_Tapped(object sender, TappedRoutedEventArgs e)
 		{
 			Frame.Navigate(typeof(AddBranchPage));
-		}
-
-		private void ListView_ItemClick(object sender, ItemClickEventArgs e)
-		{
-			//SimpleIoc.Default.GetInstance<BranchesViewModel>().MySelectedBranch = e.ClickedItem as Branch;
-			SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch = e.ClickedItem as Branch;
-			Frame.Navigate(typeof(EditBranchPage));
-
 		}
 	}
 }
