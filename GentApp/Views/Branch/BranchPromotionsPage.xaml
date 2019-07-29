@@ -33,20 +33,6 @@
 				</DataTemplate>
 			</ListView.ItemTemplate>
 		</ListView>
-
-		<!--<TextBlock>All your promotions:</TextBlock>
-		<TextBlock x:Name="NoPromotionsTextBlock"></TextBlock>
-		<ProgressRing x:Name="progressPromotions" HorizontalAlignment="Left" Margin="5,10,0,0" />
-		<ListView ItemsSource="{Binding Path=SelectedBranch.Promotions}" IsItemClickEnabled="True" ItemClick="PromotionsListView_ItemClick" x:Name="promotionsListView">
-			<ListView.ItemTemplate>
-				<DataTemplate x:DataType="local:Promotion">
-					<StackPanel>
-						<TextBlock Text="{Binding Path=Title}" />
-					</StackPanel>
-				</DataTemplate>
-			</ListView.ItemTemplate>
-		</ListView>-->
-
 		<TextBlock>Non current promotions:</TextBlock>
 		<TextBlock x:Name="NoPromotionsTextBlock"></TextBlock>
 		<ListView ItemsSource="{Binding Path=NonCurrentPromotions}" IsItemClickEnabled="True" ItemClick="PromotionsListView_ItemClick" x:Name="promotionsListView">

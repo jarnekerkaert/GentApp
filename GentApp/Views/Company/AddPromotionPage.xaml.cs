@@ -27,9 +27,9 @@ namespace GentApp.Views
 	{
 		public AddPromotionPage()
 		{
-			this.InitializeComponent();
+			InitializeComponent();
 			horStackPanel.DataContext = SimpleIoc.Default.GetInstance<BranchesViewModel>().MySelectedBranch;
-			this.DataContext = SimpleIoc.Default.GetInstance<BranchViewModel>();
+			DataContext = SimpleIoc.Default.GetInstance<BranchViewModel>();
 
 		}
 
@@ -76,9 +76,15 @@ namespace GentApp.Views
 				EndDateValidationErrorTextBlock.Text = "This field is required.";
 				isValid = false;
 			}
-			if (isValid == true)
+			if ( isValid )
 			{
-				Promotion newPromotion = new Promotion() { Title = Title.Text, Description = Description.Text, StartDate = StartDatePicker.Date.Value.DateTime, EndDate = EndDatePicker.Date.Value.DateTime, BranchId = SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch.Id, AllBranches = false };
+				Promotion newPromotion = new Promotion() {
+					Title = Title.Text,
+					Description = Description.Text,
+					StartDate = StartDatePicker.Date.Value.DateTime,
+					EndDate = EndDatePicker.Date.Value.DateTime,
+					BranchId = SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch.Id,
+					AllBranches = false };
 				SimpleIoc.Default.GetInstance<BranchViewModel>().AddPromotion(newPromotion);
 				Frame.Navigate(typeof(BranchPromotionsPage));
 			}
