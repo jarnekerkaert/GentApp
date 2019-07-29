@@ -114,7 +114,8 @@ namespace GentApp.ViewModels
 			get
 			{
 				return _loadPromotionsCommand ?? (_loadPromotionsCommand = new RelayCommand(async () => {
-					Promotions = SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch.Promotions;
+					//Promotions = SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch.Promotions;
+					Promotions = await branchService.GetPromotions(SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch.Id);
 					var currentDate = DateTime.Today.Date;
 					CurrentPromotions = Promotions.Where(p => p.StartDate <= currentDate && p.EndDate >= currentDate).ToList();
 					NonCurrentPromotions = Promotions.Except(CurrentPromotions).ToList();
