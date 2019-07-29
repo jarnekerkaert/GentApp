@@ -53,11 +53,14 @@ namespace GentApp.ViewModels {
 			}
 		}
 
-		public async void SaveUser() {
+		public async void SaveUser(string name) {
 			try {
 				await _userService.Update(CurrentUser);
 				RaisePropertyChanged(nameof(IsEntrepreneur));
-				await new MessageDialog("User saved!").ShowAsync();
+
+				if( name?.Equals("") != false )
+					name = "User";
+				await new MessageDialog(name + " saved!").ShowAsync();
 			} catch(Exception e) {
 				await new MessageDialog("Error saving user: "+e.Message).ShowAsync();
 			}

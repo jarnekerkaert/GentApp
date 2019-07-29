@@ -8,15 +8,12 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 
 
-namespace GentApp.Views
-{
+namespace GentApp.Views {
 	/// <summary>
 	/// An empty page that can be used on its own or navigated to within a Frame.
 	/// </summary>
-	public sealed partial class EditBranchPage : Page
-	{
-		public EditBranchPage()
-		{
+	public sealed partial class EditBranchPage : Page {
+		public EditBranchPage() {
 			InitializeComponent();
 			var _enumval = Enum.GetValues(typeof(BranchType)).Cast<BranchType>().ToList();
 			_enumval.Remove(BranchType.NONE);
@@ -24,8 +21,7 @@ namespace GentApp.Views
 			Type.SelectedItem = SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch.Type;
 		}
 
-		private void SymbolIcon_Tapped(object sender, TappedRoutedEventArgs e)
-		{
+		private void SymbolIcon_Tapped(object sender, TappedRoutedEventArgs e) {
 			NameValidationErrorTextBlock.Text = "";
 			OpeningHoursValidationErrorTextBlock.Text = "";
 			TypeValidationErrorTextBlock.Text = "";
@@ -33,76 +29,64 @@ namespace GentApp.Views
 			validateInput();
 		}
 
-		private void validateInput()
-		{
+		private void validateInput() {
 			var comboBoxItem = Type.SelectedValue;
 			var isValid = true;
-			if (Name.Text == "")
-			{
+			if ( Name.Text?.Length == 0 ) {
 				NameValidationErrorTextBlock.Text = "This field is required.";
 				isValid = false;
 			}
-			else if (Name.Text.Length > 200)
-			{
+			else if ( Name.Text.Length > 200 ) {
 				NameValidationErrorTextBlock.Text = "The maximum length of this field is 200 characters.";
 				isValid = false;
 			}
-			if (OpeningHours.Text == "")
-			{
+			if ( OpeningHours.Text?.Length == 0 ) {
 				OpeningHoursValidationErrorTextBlock.Text = "This field is required.";
 				isValid = false;
 			}
-			else if (OpeningHours.Text.Length > 200)
-			{
+			else if ( OpeningHours.Text.Length > 200 ) {
 				OpeningHoursValidationErrorTextBlock.Text = "The maximum length of this field is 200 characters.";
 				isValid = false;
 			}
-			if (Address.Text == "")
-			{
+			if ( Address.Text?.Length == 0 ) {
 				AddressValidationErrorTextBlock.Text = "This field is required.";
 				isValid = false;
 			}
-			else if (Address.Text.Length > 200)
-			{
+			else if ( Address.Text.Length > 200 ) {
 				AddressValidationErrorTextBlock.Text = "The maximum length of this field is 200 characters.";
 				isValid = false;
 			}
-			if (comboBoxItem == null)
-			{
+			if ( comboBoxItem == null ) {
 				TypeValidationErrorTextBlock.Text = "You have to choose a type";
 				isValid = false;
 			}
-			if ( isValid )
-			{
-				BranchType selectedType = (BranchType)comboBoxItem;
-				SimpleIoc.Default.GetInstance<CompanyViewModel>().EditBranch(Name.Text, Address.Text, OpeningHours.Text, selectedType);
-				Frame.Navigate(typeof(MyCompanyPage));
+			if ( isValid ) {
+				SimpleIoc.Default.GetInstance<CompanyViewModel>().EditBranch(
+					Name.Text,
+					Address.Text,
+					OpeningHours.Text,
+					(BranchType) comboBoxItem);
 			}
 		}
 
-		private async void DeleteIcon_Tapped(object sender, TappedRoutedEventArgs e)
-		{
-			ContentDialog deleteBranchDialog = new ContentDialog()
-			{
+		private async void DeleteIcon_Tapped(object sender, TappedRoutedEventArgs e) {
+			ContentDialog deleteBranchDialog = new ContentDialog() {
 				Title = "Delete a branch",
 				Content = "Are you sure you want to delete this branch?",
 				PrimaryButtonText = "Yes",
 				SecondaryButtonText = "No"
 			};
 			ContentDialogResult result = await deleteBranchDialog.ShowAsync();
-			if (result == ContentDialogResult.Primary) {
+			if ( result == ContentDialogResult.Primary ) {
 				SimpleIoc.Default.GetInstance<CompanyViewModel>().DeleteBranch();
-				Frame.Navigate(typeof(MyCompanyPage));
 			}
 		}
 
-		private void Promotions_Click(object sender, RoutedEventArgs e)
-		{
+		private void Promotions_Click(object sender, RoutedEventArgs e) {
 			Frame.Navigate(typeof(BranchPromotionsPage));
 		}
 
-		private void Events_Click(object sender, RoutedEventArgs e)
-		{
+		private void Events_Click(object sender, RoutedEventArgs e) {
 			Frame.Navigate(typeof(BranchEventsPage));
 		}
 	}

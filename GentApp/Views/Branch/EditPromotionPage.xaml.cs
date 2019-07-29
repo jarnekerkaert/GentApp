@@ -1,19 +1,8 @@
 ﻿using GalaSoft.MvvmLight.Ioc;
 using GentApp.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace GentApp.Views
 {
@@ -23,7 +12,6 @@ namespace GentApp.Views
 		public EditPromotionPage()
 		{
 			InitializeComponent();
-			//DataContext = SimpleIoc.Default.GetInstance<BranchViewModel>().MySelectedPromotion;
 			StartDatePicker.Date = SimpleIoc.Default.GetInstance<BranchViewModel>().MySelectedPromotion.StartDate;
 			EndDatePicker.Date = SimpleIoc.Default.GetInstance<BranchViewModel>().MySelectedPromotion.EndDate;
 		}
@@ -35,13 +23,13 @@ namespace GentApp.Views
 			StartDateValidationErrorTextBlock.Text = "";
 			EndDateValidationErrorTextBlock.Text = "";
 			DateValidationErrorTextBlock.Text = "";
-			validateInput();
+			ValidateInput();
 		}
 
-		private void validateInput()
+		private void ValidateInput()
 		{
 			var isValid = true;
-			if (Title.Text == "")
+			if ( Title.Text?.Length == 0 )
 			{
 				TitleValidationErrorTextBlock.Text = "This field is required.";
 				isValid = false;
@@ -51,7 +39,7 @@ namespace GentApp.Views
 				TitleValidationErrorTextBlock.Text = "The maximum length of this field is 600 characters.";
 				isValid = false;
 			}
-			if (Description.Text == "")
+			if ( Description.Text?.Length == 0 )
 			{
 				DescriptionValidationErrorTextBlock.Text = "This field is required.";
 				isValid = false;
@@ -71,11 +59,13 @@ namespace GentApp.Views
 				EndDateValidationErrorTextBlock.Text = "This field is required.";
 				isValid = false;
 			}
-			if (isValid == true)
+			if ( isValid )
 			{
-				SimpleIoc.Default.GetInstance<BranchViewModel>().EditPromotion(Title.Text, Description.Text, StartDatePicker.Date.Value.DateTime, EndDatePicker.Date.Value.DateTime);
-				//SimpleIoc.Default.GetInstance<CompaniesViewModel>().RefreshCompanies();
-				Frame.Navigate(typeof(BranchPromotionsPage));
+				SimpleIoc.Default.GetInstance<BranchViewModel>().EditPromotion(
+					Title.Text,
+					Description.Text, 
+					StartDatePicker.Date.Value.DateTime,
+					EndDatePicker.Date.Value.DateTime);
 			}
 		}
 
@@ -92,9 +82,7 @@ namespace GentApp.Views
 			if (result == ContentDialogResult.Primary)
 			{
 				SimpleIoc.Default.GetInstance<BranchViewModel>().DeletePromotion();
-				Frame.Navigate(typeof(BranchPromotionsPage));
 			}
-			//else if(result == ContentDialogResult.Secondary){ /* ... */}
 		}
 	}
 }

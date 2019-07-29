@@ -55,7 +55,7 @@ namespace GentApp.Services {
 			{
 				return JsonConvert.DeserializeObject<Company>(await response.Content.ReadAsStringAsync());
 			}
-			return DummyDataSource.Companies[0];
+			return new Company();
 		}
 	}
 }

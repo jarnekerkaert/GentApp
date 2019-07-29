@@ -28,7 +28,7 @@ namespace GentApp.Views
 		public BranchEventsPage()
 		{
 			InitializeComponent();
-			horStackPanel.DataContext = SimpleIoc.Default.GetInstance<BranchesViewModel>().SelectedBranch;
+			horStackPanel.DataContext = SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch;
 		}
 
 		private void EventsListView_ItemClick(object sender, ItemClickEventArgs e)

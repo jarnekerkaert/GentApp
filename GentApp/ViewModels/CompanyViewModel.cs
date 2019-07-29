@@ -6,13 +6,14 @@ using GentApp.Helpers;
 using GentApp.Services;
 using GentApp.Views;
 using MetroLog;
+using System;
+using System.Collections.Generic;
 
 namespace GentApp.ViewModels {
 	public class CompanyViewModel : ViewModelBase {
 		private INavigationService _navigationService;
 		private readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<CompanyViewModel>();
 		private readonly CompanyService _companyService = new CompanyService();
-		private readonly BranchService _branchService = new BranchService();
 		private bool isNavigated;
 
 		public CompanyViewModel(INavigationService navigationService) {
@@ -37,15 +38,14 @@ namespace GentApp.ViewModels {
 			}
 		}
 
-		private RelayCommand _saveCompanyCommand;
+		private RelayCommand<string> _saveCompanyCommand;
 
-		public RelayCommand SaveCompanyCommand {
+		public RelayCommand<string> SaveCompanyCommand {
 			get {
-				return _saveCompanyCommand = new RelayCommand(() => {
+				return _saveCompanyCommand = new RelayCommand<string>(name => {
 					UserViewModel.CurrentUser.Company = MyCompany;
-					UserViewModel.SaveUser();
+					UserViewModel.SaveUser(name);
 					RaisePropertyChanged(nameof(MyCompany));
-					_navigationService.NavigateTo(nameof(HomePage));
 				});
 			}
 		}
@@ -65,7 +65,7 @@ namespace GentApp.ViewModels {
 		public RelayCommand BranchSelectedCommand {
 			get {
 				return _branchSelectedCommand = new RelayCommand(() => {
-					if ( isNavigated && SelectedBranch == null) {
+					if ( isNavigated && SelectedBranch == null ) {
 						isNavigated = false;
 					}
 					else {
@@ -76,26 +76,46 @@ namespace GentApp.ViewModels {
 			}
 		}
 
-		public async void EditCompany(string name, string address, string openingHours) {
+		public void EditCompany(string name, string address, string openingHours) {
 			MyCompany.Name = name;
 			MyCompany.Address = address;
 			MyCompany.OpeningHours = openingHours;
 
-			await _companyService.Update(MyCompany);
-			RaisePropertyChanged(nameof(MyCompany));
+			SaveCompanyCommand.Execute("Company");
+			_navigationService.NavigateTo(nameof(MyCompanyPage));
 		}
 
-		public async void EditBranch(string name, string address, string openingHours, BranchType type) {
+		public void AddBranch(Branch branch) {
+			MyCompany.Branches.Add(branch);
+
+			SaveCompanyCommand.Execute("Branch");
+			_navigationService.NavigateTo(nameof(MyCompanyPage));
+		}
+
+		public void EditBranch(string name, string address, string openingHours, BranchType type) {
 			SelectedBranch.Name = name;
 			SelectedBranch.Address = address;
 			SelectedBranch.OpeningHours = openingHours;
 			SelectedBranch.Type = type;
-			await _companyService.Update(MyCompany);
-			RaisePropertyChanged(nameof(MyCompany));
+
+			MyCompany.Branches[MyCompany.Branches.FindIndex(i => i.Equals(SelectedBranch))] = SelectedBranch;
+			SaveCompanyCommand.Execute("Branch");
+			_navigationService.NavigateTo(nameof(MyCompanyPage));
 		}
 
-		public async void AddBranch(Branch branch) {
-			await _branchService.Save(branch);
+		public void EditBranch(List<Event> events, List<Promotion> promotions, string name) {
+			SelectedBranch.Events = events;
+			SelectedBranch.Promotions = promotions;
+
+			MyCompany.Branches[MyCompany.Branches.FindIndex(i => i.Equals(SelectedBranch))] = SelectedBranch;
+			SaveCompanyCommand.Execute(name);
+			_navigationService.NavigateTo(nameof(EditBranchPage));
+		}
+
+		public void DeleteBranch() {
+			MyCompany.Branches.RemoveAt(MyCompany.Branches.FindIndex(i => i.Equals(SelectedBranch)));
+
+			SaveCompanyCommand.Execute("Company");
 			_navigationService.NavigateTo(nameof(MyCompanyPage));
 		}
 
@@ -109,11 +129,6 @@ namespace GentApp.ViewModels {
 					RaisePropertyChanged(nameof(MyCompany));
 				});
 			}
-		}
-
-		public async void DeleteBranch() {
-			await _branchService.Delete(SelectedBranch);
-			RaisePropertyChanged(nameof(MyCompany));
 		}
 	}
 }

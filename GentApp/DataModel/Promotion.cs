@@ -1,9 +1,5 @@
-﻿using GentApp.DataModel;
-using GentWebApi.Models;
+﻿using GentWebApi.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace GentApp.DataModel {
 	public class Promotion {
@@ -12,7 +8,7 @@ namespace GentApp.DataModel {
 		public DateTime EndDate { get; set; }
 		public string Title { get; set; }
 		public string Description { get; set; }
-		public string BranchId { get; set; }
+		public Branch Branch { get; set; }
 		public bool AllBranches { get; set; }
 		public Coupon Coupon { get; set; }
 

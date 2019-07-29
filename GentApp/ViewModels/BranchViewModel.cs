@@ -16,19 +16,33 @@ namespace GentApp.ViewModels
 	public class BranchViewModel : ViewModelBase
 	{
 		private readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<BranchViewModel>();
-		private readonly CompanyService companyService = new CompanyService();
-		private readonly PromotionService promotionService = new PromotionService();
-		private readonly BranchService branchService = new BranchService();
-		private readonly EventService eventService = new EventService();
 		private readonly INavigationService _navigationService;
-		
-		public BranchViewModel(Helpers.INavigationService navigationService)
+
+		public BranchViewModel(INavigationService navigationService)
 		{
 			_navigationService = navigationService;
 		}
 
-		private IEnumerable<Promotion> _promotions;
-		public IEnumerable<Promotion> Promotions
+		public CompanyViewModel CompanyViewModel {
+			get {
+				return SimpleIoc.Default.GetInstance<CompanyViewModel>();
+			}
+		}
+
+		private RelayCommand<string> _saveBranchCommand;
+
+		public RelayCommand<string> SaveBranchCommand {
+			get {
+				return _saveBranchCommand = new RelayCommand<string>(name => {
+					CompanyViewModel.EditBranch(Events, Promotions, name);
+					RaisePropertyChanged(nameof(Events));
+					RaisePropertyChanged(nameof(Promotions));
+				});
+			}
+		}
+
+		private List<Promotion> _promotions;
+		public List<Promotion> Promotions
 		{
 			get
 			{
@@ -86,24 +100,32 @@ namespace GentApp.ViewModels
 			}
 		}
 
-		public async void AddPromotion(Promotion promotion)
+		public void AddPromotion(Promotion promotion)
 		{
-			await promotionService.Save(promotion);
+			MySelectedPromotion = promotion;
+			Promotions[Promotions.FindIndex(i => i.Equals(MySelectedPromotion))] = MySelectedPromotion;
+
+			SaveBranchCommand.Execute("Promotion");
+			RaisePropertyChanged(nameof(Promotions));
 		}
 
-		public async void EditPromotion(string title, string description, DateTime startdate, DateTime enddate)
+		public void EditPromotion(string title, string description, DateTime startdate, DateTime enddate)
 		{
 			MySelectedPromotion.Title = title;
 			MySelectedPromotion.Description = description;
 			MySelectedPromotion.StartDate = startdate;
 			MySelectedPromotion.EndDate = enddate;
-			await promotionService.Update(MySelectedPromotion);
+
+			Promotions[Promotions.FindIndex(i => i.Equals(MySelectedPromotion))] = MySelectedPromotion;
+
+			SaveBranchCommand.Execute("Promotion");
 			RaisePropertyChanged(nameof(Promotions));
 		}
 
-		public async void DeletePromotion()
+		public void DeletePromotion()
 		{
-			await promotionService.Delete(MySelectedPromotion);
+			Promotions.RemoveAt(Events.FindIndex(i => i.Equals(MySelectedPromotion)));
+			SaveBranchCommand.Execute("Branch");
 			RaisePropertyChanged(nameof(Promotions));
 		}
 
@@ -113,9 +135,8 @@ namespace GentApp.ViewModels
 		{
 			get
 			{
-				return _loadPromotionsCommand ?? (_loadPromotionsCommand = new RelayCommand(async () => {
-					//Promotions = SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch.Promotions;
-					Promotions = await branchService.GetPromotions(SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch.Id);
+				return _loadPromotionsCommand ?? (_loadPromotionsCommand = new RelayCommand(() => {
+					Promotions = CompanyViewModel.SelectedBranch.Promotions;
 					var currentDate = DateTime.Today.Date;
 					CurrentPromotions = Promotions.Where(p => p.StartDate <= currentDate && p.EndDate >= currentDate).ToList();
 					NonCurrentPromotions = Promotions.Except(CurrentPromotions).ToList();
@@ -124,8 +145,8 @@ namespace GentApp.ViewModels
 			}
 		}
 
-		private IEnumerable<Event> _events;
-		public IEnumerable<Event> Events
+		private List<Event> _events;
+		public List<Event> Events
 		{
 			get
 			{
@@ -145,10 +166,7 @@ namespace GentApp.ViewModels
 		{
 			get
 			{
-				return _loadEventsCommand ?? (_loadEventsCommand = new RelayCommand(async () => {
-					Events = await branchService.GetEvents(SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch.Id);
-				}
-				));
+				return _loadEventsCommand = new RelayCommand(() => Events = CompanyViewModel.SelectedBranch.Events);
 			}
 		}
 
@@ -166,19 +184,34 @@ namespace GentApp.ViewModels
 			}
 		}
 
-		public async void EditEvent(string title, string description, DateTime startdate, DateTime enddate)
-		{
+		public void AddEvent(string title, string description, DateTime startDate, DateTime endDate) {
 			SelectedEvent.Title = title;
 			SelectedEvent.Description = description;
-			SelectedEvent.StartDate = startdate;
-			SelectedEvent.EndDate = enddate;
-			await eventService.Update(SelectedEvent);
+			SelectedEvent.StartDate = startDate;
+			SelectedEvent.EndDate = endDate;
+
+			Events.Add(SelectedEvent);
+
+			SaveBranchCommand.Execute("Event");
+			_navigationService.NavigateTo(nameof(BranchEventsPage));
+		}
+
+		public void EditEvent(string title, string description, DateTime startDate, DateTime endDate) {
+			SelectedEvent.Title = title;
+			SelectedEvent.Description = description;
+			SelectedEvent.StartDate = startDate;
+			SelectedEvent.EndDate = endDate;
+
+			Events [Events.FindIndex(i => i.Equals(SelectedEvent))] = SelectedEvent;
+
+			SaveBranchCommand.Execute("Event");
 			RaisePropertyChanged(nameof(Events));
 		}
 
-		public async void DeleteEvent()
+		public void DeleteEvent()
 		{
-			await eventService.Delete(SelectedEvent);
+			Events.RemoveAt(Events.FindIndex(i => i.Equals(SelectedEvent)));
+			SaveBranchCommand.Execute("Branch");
 			RaisePropertyChanged(nameof(Events));
 		}
 
@@ -191,6 +224,5 @@ namespace GentApp.ViewModels
 				return _toAddEventCommand = new RelayCommand(() => _navigationService.NavigateTo(nameof(AddEventPage)));
 			}
 		}
-
 	}
 }

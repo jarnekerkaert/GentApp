@@ -1,5 +1,4 @@
 ﻿using GalaSoft.MvvmLight.Ioc;
-using GentApp.DataModel;
 using GentApp.ViewModels;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -16,7 +15,7 @@ namespace GentApp.Views
 		public AddEventPage()
 		{
 			InitializeComponent();
-			horStackPanel.DataContext = SimpleIoc.Default.GetInstance<BranchesViewModel>().MySelectedBranch;
+			horStackPanel.DataContext = SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch;
 			DataContext = SimpleIoc.Default.GetInstance<BranchViewModel>();
 		}
 
@@ -33,7 +32,7 @@ namespace GentApp.Views
 		private void validateInput()
 		{
 			var isValid = true;
-			if (Title.Text == "")
+			if ( Title.Text?.Length == 0 )
 			{
 				TitleValidationErrorTextBlock.Text = "This field is required.";
 				isValid = false;
@@ -43,7 +42,7 @@ namespace GentApp.Views
 				TitleValidationErrorTextBlock.Text = "The maximum length of this field is 200 characters.";
 				isValid = false;
 			}
-			if (Description.Text == "")
+			if ( Description.Text?.Length == 0 )
 			{
 				DescriptionValidationErrorTextBlock.Text = "This field is required.";
 				isValid = false;
@@ -65,19 +64,11 @@ namespace GentApp.Views
 			}
 			if ( isValid )
 			{
-				Event newEvent = new Event() {
-					Title = Title.Text,
-					Description = Description.Text,
-					StartDate = StartDatePicker.Date.Value.DateTime,
-					EndDate = EndDatePicker.Date.Value.DateTime };
-				SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch.Events.Add(newEvent);
-				var branch = SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch;
-				var company = SimpleIoc.Default.GetInstance<CompanyViewModel>().MyCompany;
-
-				SimpleIoc.Default.GetInstance<CompanyViewModel>().MyCompany.Branches[company.Branches.FindIndex(i => i.Equals(branch))] = branch;
-
-				SimpleIoc.Default.GetInstance<CompanyViewModel>().SaveCompanyCommand.Execute(null);
-				Frame.Navigate(typeof(BranchEventsPage));
+				SimpleIoc.Default.GetInstance<BranchViewModel>().AddEvent(
+					Title.Text,
+					Description.Text,
+					StartDatePicker.Date.Value.DateTime,
+					EndDatePicker.Date.Value.DateTime);
 			}
 		}
 	}

@@ -16,7 +16,7 @@ namespace GentApp.ViewModels {
 		private readonly BranchService _branchService;
 		private readonly SubscriptionService _subscriptionService;
 		private readonly UserService _userService;
-		private bool isNavigated = false;
+		private bool isNavigated;
 
 		public ObservableCollection<Branch> Branches { get; set; }
 
@@ -67,10 +67,8 @@ namespace GentApp.ViewModels {
 		public Branch SelectedBranch {
 			get { return selectedBranch; }
 			set {
-				if ( value != selectedBranch ) {
-					selectedBranch = value;
-					RaisePropertyChanged(nameof(SelectedBranch));
-				}
+				selectedBranch = value;
+				RaisePropertyChanged(nameof(SelectedBranch));
 			}
 		}
 
@@ -79,7 +77,13 @@ namespace GentApp.ViewModels {
 		public RelayCommand BranchSelectedCommand {
 			get {
 				return _branchSelectedCommand = new RelayCommand(() => {
+					if ( isNavigated && SelectedBranch == null ) {
+						isNavigated = false;
+					}
+					else {
+						isNavigated = true;
 						_navigationService.NavigateTo(nameof(BranchDetailsPage));
+					}
 				});
 			}
 		}
@@ -94,6 +98,7 @@ namespace GentApp.ViewModels {
 			get {
 				return _loadBranchesCommand = new RelayCommand(async () => {
 					Branches = new ObservableCollection<Branch>(await _branchService.GetBranches());
+					isNavigated = true;
 					RaisePropertyChanged(nameof(Branches));
 				});
 			}
