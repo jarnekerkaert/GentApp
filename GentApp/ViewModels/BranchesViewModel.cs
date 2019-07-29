@@ -6,6 +6,8 @@ using GentApp.Helpers;
 using GentApp.Services;
 using GentApp.Views;
 using MetroLog;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -67,10 +69,8 @@ namespace GentApp.ViewModels {
 		public Branch SelectedBranch {
 			get { return selectedBranch; }
 			set {
-				if ( value != selectedBranch ) {
-					selectedBranch = value;
-					RaisePropertyChanged(nameof(SelectedBranch));
-				}
+				selectedBranch = value;
+				RaisePropertyChanged(nameof(SelectedBranch));
 			}
 		}
 
@@ -79,7 +79,15 @@ namespace GentApp.ViewModels {
 		public RelayCommand BranchSelectedCommand {
 			get {
 				return _branchSelectedCommand = new RelayCommand(() => {
+					if (isNavigated && SelectedBranch == null)
+					{
+						isNavigated = false;
+					}
+					else
+					{
+						isNavigated = true;
 						_navigationService.NavigateTo(nameof(BranchDetailsPage));
+					}
 				});
 			}
 		}
@@ -167,6 +175,53 @@ namespace GentApp.ViewModels {
 			set {
 				_subscribedBranches = value;
 				RaisePropertyChanged(nameof(SubscribedBranches));
+			}
+		}
+
+		
+		private RelayCommand _loadPromotionsCommand;
+
+		public RelayCommand LoadPromotionsCommand
+		{
+			get
+			{
+				return _loadPromotionsCommand ?? (_loadPromotionsCommand = new RelayCommand(async () => {
+					Promotions = await _branchService.GetPromotions(SelectedBranch.Id);
+					isNavigated = true;
+					var currentDate = DateTime.Today.Date;
+					CurrentPromotions = Promotions.Where(p => p.StartDate <= currentDate && p.EndDate >= currentDate).ToList();
+				}
+				));
+			}
+		}
+
+		private IEnumerable<Promotion> _promotions;
+		public IEnumerable<Promotion> Promotions
+		{
+			get
+			{
+				return _promotions;
+			}
+
+			set
+			{
+				_promotions = value;
+				RaisePropertyChanged(nameof(Promotions));
+			}
+		}
+
+		private IEnumerable<Promotion> _currentPromotions;
+		public IEnumerable<Promotion> CurrentPromotions
+		{
+			get
+			{
+				return _currentPromotions;
+			}
+
+			set
+			{
+				_currentPromotions = value;
+				RaisePropertyChanged(nameof(CurrentPromotions));
 			}
 		}
 	}

@@ -71,7 +71,7 @@ namespace GentApp.ViewModels {
 						var subbedBranches = await _userService.GetSubscribedBranches(UserViewModel.CurrentUser.Id);
 						List<Event> events = new List<Event>();
 						foreach (Branch branch in subbedBranches ) {
-							if( branch.Events.Count != 0 )
+							if( branch.Events.Count != 0)
 								events.AddRange(branch.Events);
 						}
 						SubscribedEvents = new ObservableCollection<Event>(events);
