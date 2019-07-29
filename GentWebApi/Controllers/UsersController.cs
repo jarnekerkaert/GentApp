@@ -22,7 +22,7 @@ namespace GentWebApi.Controllers {
 			User response = _context.Users
 				.Include(u => u.Company)
 				.ThenInclude(c => c.Branches)
-				.ThenInclude(b => b.Company)
+				//.ThenInclude(b => b.Company)
 				.Where(u => u.UserName == userName)
 				.SingleOrDefault();
 			return response != null ? (ActionResult<User>) response : (ActionResult<User>) NotFound();
@@ -87,7 +87,7 @@ namespace GentWebApi.Controllers {
 					_context.Branches
 					.Include(b => b.Events)
 					.Include(b => b.Promotions)
-					.Include(b => b.Company)
+					//.Include(b => b.Company)
 					.FirstOrDefault(b => b.Id == subscription.BranchId));
 			}
 			return branches;
