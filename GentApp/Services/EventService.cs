@@ -30,6 +30,14 @@ namespace GentApp.Services
 			return Enumerable.Empty<Event>();
 		}
 
+		public async Task<IEnumerable<Event>> GetByBranchId(string branchId) {
+			HttpResponseMessage response = await HttpClient.GetAsync(apiUrl + "/" + branchId);
+			if ( response.IsSuccessStatusCode ) {
+				return JsonConvert.DeserializeObject<IEnumerable<Event>>(await response.Content.ReadAsStringAsync());
+			}
+			return Enumerable.Empty<Event>();
+		}
+
 		public async Task Add(Event newEvent)
 		{
 			try

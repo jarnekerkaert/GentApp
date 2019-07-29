@@ -22,7 +22,6 @@ namespace GentWebApi.Controllers {
 			User response = _context.Users
 				.Include(u => u.Company)
 				.ThenInclude(c => c.Branches)
-				//.ThenInclude(b => b.Company)
 				.Where(u => u.UserName == userName)
 				.SingleOrDefault();
 			return response != null ? (ActionResult<User>) response : (ActionResult<User>) NotFound();

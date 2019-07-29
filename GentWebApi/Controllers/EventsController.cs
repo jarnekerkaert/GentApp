@@ -22,6 +22,11 @@ namespace GentWebApi.Controllers
 			return _context.Events;
 		}
 
+		[HttpGet("{id}")]
+		public ActionResult<IEnumerable<Event>> GetByBranchId(string branchId) {
+			return _context.Events.Where(b => b.Branch.Id == branchId).ToList();
+		}
+
 		// POST: api/events
 		[HttpPost]
 		public IActionResult Post([FromBody] Event newEvent)

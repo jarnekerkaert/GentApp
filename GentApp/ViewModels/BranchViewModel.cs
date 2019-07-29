@@ -11,15 +11,14 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
 using GentApp.Views;
 
-namespace GentApp.ViewModels
-{
-	public class BranchViewModel : ViewModelBase
-	{
+namespace GentApp.ViewModels {
+	public class BranchViewModel : ViewModelBase {
 		private readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<BranchViewModel>();
 		private readonly INavigationService _navigationService;
+		private readonly EventService _eventService;
 
-		public BranchViewModel(INavigationService navigationService)
-		{
+		public BranchViewModel(INavigationService navigationService) {
+			_eventService = new EventService();
 			_navigationService = navigationService;
 		}
 
@@ -42,119 +41,98 @@ namespace GentApp.ViewModels
 		}
 
 		private List<Promotion> _promotions;
-		public List<Promotion> Promotions
-		{
-			get
-			{
+		public List<Promotion> Promotions {
+			get {
 				return _promotions;
 			}
 
-			set
-			{
+			set {
 				_promotions = value;
 				RaisePropertyChanged(nameof(Promotions));
 			}
 		}
 
 		private IEnumerable<Promotion> _currentPromotions;
-		public IEnumerable<Promotion> CurrentPromotions
-		{
-			get
-			{
+		public IEnumerable<Promotion> CurrentPromotions {
+			get {
 				return _currentPromotions;
 			}
 
-			set
-			{
+			set {
 				_currentPromotions = value;
 				RaisePropertyChanged(nameof(CurrentPromotions));
 			}
 		}
 
 		private IEnumerable<Promotion> _nonCurrentPromotions;
-		public IEnumerable<Promotion> NonCurrentPromotions
-		{
-			get
-			{
+		public IEnumerable<Promotion> NonCurrentPromotions {
+			get {
 				return _nonCurrentPromotions;
 			}
 
-			set
-			{
+			set {
 				_nonCurrentPromotions = value;
 				RaisePropertyChanged(nameof(NonCurrentPromotions));
 			}
 		}
 
 		private Promotion mySelectedPromotion;
-		public Promotion MySelectedPromotion
-		{
+		public Promotion MySelectedPromotion {
 			get { return mySelectedPromotion; }
-			set
-			{
-				if (value != mySelectedPromotion)
-				{
+			set {
+				if ( value != mySelectedPromotion ) {
 					mySelectedPromotion = value;
 					RaisePropertyChanged(nameof(MySelectedPromotion));
 				}
 			}
 		}
 
-		public void AddPromotion(Promotion promotion)
-		{
-			MySelectedPromotion = promotion;
-			Promotions[Promotions.FindIndex(i => i.Equals(MySelectedPromotion))] = MySelectedPromotion;
+		public void AddPromotion(Promotion promotion) {
+			Promotions.Add(promotion);
 
 			SaveBranchCommand.Execute("Promotion");
 			RaisePropertyChanged(nameof(Promotions));
 		}
 
-		public void EditPromotion(string title, string description, DateTime startdate, DateTime enddate)
-		{
+		public void EditPromotion(string title, string description, DateTime startdate, DateTime enddate) {
 			MySelectedPromotion.Title = title;
 			MySelectedPromotion.Description = description;
 			MySelectedPromotion.StartDate = startdate;
 			MySelectedPromotion.EndDate = enddate;
 
-			Promotions[Promotions.FindIndex(i => i.Equals(MySelectedPromotion))] = MySelectedPromotion;
+			Promotions[Promotions.FindIndex(p => p.Id.Equals(MySelectedPromotion.Id))] = MySelectedPromotion;
 
 			SaveBranchCommand.Execute("Promotion");
 			RaisePropertyChanged(nameof(Promotions));
 		}
 
-		public void DeletePromotion()
-		{
-			Promotions.RemoveAt(Events.FindIndex(i => i.Equals(MySelectedPromotion)));
+		public void DeletePromotion() {
+			Promotions.RemoveAt(Promotions.FindIndex(p => p.Id.Equals(MySelectedPromotion.Id)));
 			SaveBranchCommand.Execute("Branch");
 			RaisePropertyChanged(nameof(Promotions));
 		}
 
 		private RelayCommand _loadPromotionsCommand;
 
-		public RelayCommand LoadPromotionsCommand
-		{
-			get
-			{
-				return _loadPromotionsCommand ?? (_loadPromotionsCommand = new RelayCommand(() => {
+		public RelayCommand LoadPromotionsCommand {
+			get {
+				return _loadPromotionsCommand ?? ( _loadPromotionsCommand = new RelayCommand(() => {
 					Promotions = CompanyViewModel.SelectedBranch.Promotions;
 					var currentDate = DateTime.Today.Date;
 					CurrentPromotions = Promotions.Where(p => p.StartDate <= currentDate && p.EndDate >= currentDate).ToList();
 					NonCurrentPromotions = Promotions.Except(CurrentPromotions).ToList();
 				}
-				));
+				) );
 			}
 		}
 
 		private List<Event> _events;
-		public List<Event> Events
-		{
-			get
-			{
+		public List<Event> Events {
+			get {
 				return _events;
 			}
 
-			set
-			{
+			set {
 				_events = value;
 				RaisePropertyChanged(nameof(Events));
 			}
@@ -162,35 +140,26 @@ namespace GentApp.ViewModels
 
 		private RelayCommand _loadEventsCommand;
 
-		public RelayCommand LoadEventsCommand
-		{
-			get
-			{
-				return _loadEventsCommand = new RelayCommand(() => Events = CompanyViewModel.SelectedBranch.Events);
+		public RelayCommand LoadEventsCommand {
+			get {
+				return _loadEventsCommand =
+					new RelayCommand(async () => Events = (List<Event>) await _eventService.GetByBranchId(CompanyViewModel.SelectedBranch.Id));
 			}
 		}
 
 		private Event _selectedEvent;
-		public Event SelectedEvent
-		{
+		public Event SelectedEvent {
 			get { return _selectedEvent; }
-			set
-			{
-				if (value != _selectedEvent)
-				{
+			set {
+				if ( value != _selectedEvent ) {
 					_selectedEvent = value;
 					RaisePropertyChanged(nameof(SelectedEvent));
 				}
 			}
 		}
 
-		public void AddEvent(string title, string description, DateTime startDate, DateTime endDate) {
-			SelectedEvent.Title = title;
-			SelectedEvent.Description = description;
-			SelectedEvent.StartDate = startDate;
-			SelectedEvent.EndDate = endDate;
-
-			Events.Add(SelectedEvent);
+		public void AddEvent(Event newEvent) {
+			Events.Add(newEvent);
 
 			SaveBranchCommand.Execute("Event");
 			_navigationService.NavigateTo(nameof(BranchEventsPage));
@@ -202,25 +171,22 @@ namespace GentApp.ViewModels
 			SelectedEvent.StartDate = startDate;
 			SelectedEvent.EndDate = endDate;
 
-			Events [Events.FindIndex(i => i.Equals(SelectedEvent))] = SelectedEvent;
+			Events[Events.FindIndex(e => e.Id.Equals(SelectedEvent.Id))] = SelectedEvent;
 
 			SaveBranchCommand.Execute("Event");
 			RaisePropertyChanged(nameof(Events));
 		}
 
-		public void DeleteEvent()
-		{
-			Events.RemoveAt(Events.FindIndex(i => i.Equals(SelectedEvent)));
+		public void DeleteEvent() {
+			Events.RemoveAt(Events.FindIndex(e => e.Id.Equals(SelectedEvent.Id)));
 			SaveBranchCommand.Execute("Branch");
 			RaisePropertyChanged(nameof(Events));
 		}
 
 		private RelayCommand _toAddEventCommand;
 
-		public RelayCommand ToAddEventCommand
-		{
-			get
-			{
+		public RelayCommand ToAddEventCommand {
+			get {
 				return _toAddEventCommand = new RelayCommand(() => _navigationService.NavigateTo(nameof(AddEventPage)));
 			}
 		}
