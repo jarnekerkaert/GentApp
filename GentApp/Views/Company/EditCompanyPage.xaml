@@ -7,18 +7,54 @@
     mc:Ignorable="d"
 	DataContext="{Binding CompanyViewModelInstance, Source={StaticResource Locator}}">
 
-	<StackPanel>
-		<TextBlock Margin="0,50,0,50" HorizontalAlignment="Center">Edit your company:</TextBlock>
+	<StackPanel
+		HorizontalAlignment="Center"
+		VerticalAlignment="Center"
+		Margin="10"
+		MinWidth="300">
+		<TextBlock 
+			HorizontalAlignment="Center"
+			FontSize="25dp"
+			FontWeight="SemiBold"
+			Margin="14"
+			Text="{Binding Path=MyCompany.Name, TargetNullValue='Empty'}"/>
 
-		<TextBox Width="200" x:Name="Name" Header= "Name" MaxLength="300" InputScope="Text" Text="{Binding Path=MyCompany.Name, Mode=OneWay, TargetNullValue='Empty'}"></TextBox>
-		<TextBlock x:Name="NameValidationErrorTextBlock" HorizontalAlignment="Center"
-                Foreground="Red" />
-		<TextBox Width="200" x:Name="Address" Header= "Address" MaxLength="300" InputScope="Text" Text="{Binding Path=MyCompany.Address, Mode=OneWay, TargetNullValue='Empty'}"></TextBox>
-		<TextBlock x:Name="AddressValidationErrorTextBlock" HorizontalAlignment="Center"
-                Foreground="Red" />
-		<TextBox Width="200" x:Name="OpeningHours" Header= "Opening hours" MaxLength="300" InputScope="Text" Text="{Binding Path=MyCompany.OpeningHours, Mode=OneWay, TargetNullValue='Empty'}"></TextBox>
-		<TextBlock x:Name="OpeningHoursValidationErrorTextBlock" HorizontalAlignment="Center"
-                Foreground="Red" />
-		<SymbolIcon Symbol="Save" IsTapEnabled="True" Tapped="SymbolIcon_Tapped" Margin="0,20,0,0"/>
+		<TextBox 
+			Width="200" 
+			x:Name="Name" 
+			Header= "Name"
+			MaxLength="300" 
+			InputScope="Text" 
+			Text="{Binding Path=MyCompany.Name, Mode=TwoWay, TargetNullValue='Empty'}"/>
+		<TextBlock x:Name="NameValidationErrorTextBlock" 
+				   Margin="3,1,3,1"
+				Foreground="Red" />
+		<TextBox
+			Width="200"
+			x:Name="Address"
+			Header= "Address"
+			MaxLength="300"
+			InputScope="Text" 
+			Text="{Binding Path=MyCompany.Address, Mode=OneWay, TargetNullValue='Empty'}"/>
+		<TextBlock
+			x:Name="AddressValidationErrorTextBlock" 
+			Margin="3,1,3,1"
+            Foreground="Red" />
+		<TextBox
+			Width="200"
+			x:Name="OpeningHours"
+			Header= "Opening hours"
+			MaxLength="300"
+			InputScope="Text" 
+			Text="{Binding Path=MyCompany.OpeningHours, Mode=OneWay, TargetNullValue='Empty'}"/>
+		<TextBlock 
+			x:Name="OpeningHoursValidationErrorTextBlock"
+			Margin="3,1,3,1"
+            Foreground="Red" />
+		<SymbolIcon 
+			Symbol="Save" 
+			IsTapEnabled="True"
+			Margin="10"
+			Tapped="SymbolIcon_Tapped"/>
 	</StackPanel>
 </Page>

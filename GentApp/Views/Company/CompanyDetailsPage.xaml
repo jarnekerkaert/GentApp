@@ -16,31 +16,54 @@
 		</core:EventTriggerBehavior>
 	</interactivity:Interaction.Behaviors>
 
-	<StackPanel>
-		<TextBlock Margin="0,50,0,50" HorizontalAlignment="Center">Details of company:</TextBlock>
+	<StackPanel
+		HorizontalAlignment="Center"
+		VerticalAlignment="Center"
+		Margin="10"
+		MinWidth="300">
+		<TextBlock HorizontalAlignment="Center"
+				   Text="{Binding Path=SelectedCompany.Name, TargetNullValue='Empty'}"/>
+
+		<StackPanel
+			Orientation="Horizontal"
+			Margin="10">
+			<TextBlock 
+				FontWeight="SemiBold">Address:</TextBlock>
+			<TextBlock 
+				Text="{Binding Path=SelectedCompany.Address, TargetNullValue='Empty'}"/>
+		</StackPanel>
+
+		<StackPanel
+			Orientation="Horizontal"
+			Margin="10">
+			<TextBlock
+				FontWeight="SemiBold">Opening hours:</TextBlock>
+			<TextBlock
+				Text="{Binding Path=SelectedCompany.OpeningHours, TargetNullValue='Empty'}"/>
+		</StackPanel>
 		
-		<TextBlock FontWeight="Bold">Name:</TextBlock>
-		<TextBlock Text="{Binding Path=SelectedCompany.Name, Mode=OneWay, TargetNullValue='Empty'}"></TextBlock>
-		<TextBlock FontWeight="Bold">Address:</TextBlock>
-		<TextBlock Text="{Binding Path=SelectedCompany.Address, Mode=OneWay, TargetNullValue='Empty'}"></TextBlock>
-		<TextBlock FontWeight="Bold">Opening hours:</TextBlock>
-		<TextBlock Text="{Binding Path=SelectedCompany.OpeningHours, Mode=OneWay, TargetNullValue='Empty'}"></TextBlock>
+		<ProgressRing 
+			x:Name="progressBranches"/>
 
-		<ProgressRing x:Name="progressBranches" HorizontalAlignment="Left" Margin="5,10,0,0" />
-
-		<TextBlock Margin="0,50,0,0">Branches:</TextBlock>
+		<TextBlock 
+			HorizontalAlignment="Center"
+			FontSize="20dp"
+			Margin="14"
+			FontWeight="SemiBold">Branches</TextBlock>
 		<ListView ItemsSource="{Binding Path=SelectedCompany.Branches}" 
 				  SelectedItem="{Binding Path=SelectedBranch, Mode=TwoWay}">
 			<interactivity:Interaction.Behaviors>
-				<core:EventTriggerBehavior EventName="SelectionChanged">
-					<core:InvokeCommandAction Command="{Binding Path=BranchSelectedCommand}" />
+				<core:EventTriggerBehavior 
+					EventName="SelectionChanged">
+					<core:InvokeCommandAction 
+						Command="{Binding Path=BranchSelectedCommand}" />
 				</core:EventTriggerBehavior>
 			</interactivity:Interaction.Behaviors>
 			<ListView.ItemTemplate>
 				<DataTemplate x:DataType="local:Branch">
 					<StackPanel>
 						<TextBlock FontSize="18" Text="{Binding Path=Name}" />
-						<TextBlock FontSize="10" Text="{Binding Path=Address}" />
+						<TextBlock FontSize="10" Text="{Binding Path=Address}"/>
 					</StackPanel>
 				</DataTemplate>
 			</ListView.ItemTemplate>
