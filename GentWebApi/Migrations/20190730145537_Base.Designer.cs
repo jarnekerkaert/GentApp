@@ -3,15 +3,17 @@ using System;
 using GentWebApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace GentWebApi.Migrations
 {
     [DbContext(typeof(GentDbContext))]
-    partial class GentDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190730145537_Base")]
+    partial class Base
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -147,10 +149,6 @@ namespace GentWebApi.Migrations
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AmountEvents");
-
-                    b.Property<int>("AmountPromotions");
 
                     b.Property<string>("BranchId")
                         .IsRequired();

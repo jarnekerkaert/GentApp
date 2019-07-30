@@ -8,7 +8,9 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
 	<StackPanel
-		Margin="14">
+		Margin="14"
+		HorizontalAlignment="Center"
+		VerticalAlignment="Center">
 		<StackPanel Orientation="Horizontal" x:Name="horStackPanel" HorizontalAlignment="Center" Margin="0,0,0,20">
 			<TextBlock 
 				HorizontalAlignment="Center"
@@ -16,23 +18,37 @@
 				FontSize="25dp"
 				FontWeight="SemiBold"
 				Text="Schedule an event"/>
-			<TextBlock Text="{Binding Name}"></TextBlock>
+			<TextBlock Text="{Binding Name}"/>
 		</StackPanel>
 
-		<TextBox Width="200" x:Name="Title" Header= "Title" MaxLength="300" InputScope="Text" PlaceholderText="Title"></TextBox>
-		<TextBlock x:Name="TitleValidationErrorTextBlock" HorizontalAlignment="Center"
+		<TextBox Width="200" x:Name="Title" Header= "Title" 
+				 MaxLength="300" InputScope="Text" PlaceholderText="Title"/>
+		<TextBlock x:Name="TitleValidationErrorTextBlock"
                 Foreground="Red" />
-		<TextBox Width="200" x:Name="Description" Header= "Description" MaxLength="300" InputScope="Text" PlaceholderText="Description"></TextBox>
-		<TextBlock x:Name="DescriptionValidationErrorTextBlock" HorizontalAlignment="Center"
+		<TextBox Width="200" x:Name="Description" Header= "Description" 
+				 MaxLength="300" InputScope="Text" PlaceholderText="Description"/>
+		<TextBlock x:Name="DescriptionValidationErrorTextBlock"
                 Foreground="Red" />
-		<CalendarDatePicker x:Name="StartDatePicker" Header="Start date" HorizontalAlignment="Center" Margin="0,0,0,10" Width="200"/>
-		<TextBlock x:Name="StartDateValidationErrorTextBlock" HorizontalAlignment="Center"
+		<CalendarDatePicker 
+			x:Name="StartDatePicker"
+			Header="Start date" 
+			Width="200"
+			HorizontalAlignment="Center"/>
+		<TextBlock x:Name="StartDateValidationErrorTextBlock"
                 Foreground="Red" />
-		<CalendarDatePicker x:Name="EndDatePicker" Header="End date" HorizontalAlignment="Center" Width="200" />
-		<TextBlock x:Name="EndDateValidationErrorTextBlock" HorizontalAlignment="Center"
+		<CalendarDatePicker 
+			x:Name="EndDatePicker"
+			Header="End date"
+			Width="200"
+			HorizontalAlignment="Center"/>
+		<TextBlock x:Name="EndDateValidationErrorTextBlock"
                 Foreground="Red" />
-		<TextBlock x:Name="DateValidationErrorTextBlock" HorizontalAlignment="Center"
+		<TextBlock x:Name="DateValidationErrorTextBlock"
                 Foreground="Red" />
-		<Button Content="Save" Click="SaveEventBtn_Click" x:Name="saveEventBtn" HorizontalAlignment="Center"/>
+		<Button Content="Save"
+				Background="DodgerBlue" 
+                Foreground="White"
+				MinWidth="100"
+				HorizontalAlignment="Center" Click="SaveEventBtn_Click" x:Name="saveEventBtn"/>
 	</StackPanel>
 </Page>

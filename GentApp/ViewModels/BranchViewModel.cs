@@ -34,6 +34,7 @@ namespace GentApp.ViewModels {
 			get {
 				return _saveBranchCommand = new RelayCommand<string>(name => {
 					CompanyViewModel.EditBranch(Events, Promotions, name);
+
 					RaisePropertyChanged(nameof(Events));
 					RaisePropertyChanged(nameof(Promotions));
 				});

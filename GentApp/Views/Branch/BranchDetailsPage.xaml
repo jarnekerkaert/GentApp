@@ -63,7 +63,11 @@
 			<TextBlock FontWeight="Bold">Opening hours:</TextBlock>
 			<TextBlock Text="{Binding Path=SelectedBranch.OpeningHours, Mode=OneWay, TargetNullValue='Empty'}"></TextBlock>
 
-			<Button x:Name="SubscribeButton" Command="{Binding Path=SubscribeCommand}" HorizontalAlignment="Center"></Button>
+			<Button x:Name="SubscribeButton" 
+					Background="DodgerBlue" 
+                Foreground="White"
+					Command="{Binding Path=SubscribeCommand}"
+					HorizontalAlignment="Center"/>
 
 		</StackPanel>
 	</Grid>

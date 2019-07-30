@@ -2,35 +2,88 @@
     x:Class="GentApp.Views.EditEventPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:GentApp.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
 	DataContext="{Binding BranchViewModelInstance, Source={StaticResource Locator}}">
 
-	<StackPanel>
-		<TextBlock HorizontalAlignment="Center" Margin="0,20,0,0" Text="Edit an event:"></TextBlock>
-
-		<TextBox Width="500" x:Name="Title" Header= "Title" MaxLength="600" InputScope="Text" Text="{Binding Path=SelectedEvent.Title}" PlaceholderText="Title"></TextBox>
-		<TextBlock x:Name="TitleValidationErrorTextBlock" HorizontalAlignment="Center"
-                Foreground="Red" />
-		<TextBox Width="600" Height="100" x:Name="Description" Header= "Description" MaxLength="1000" Text="{Binding Path=SelectedEvent.Description}" InputScope="Text" PlaceholderText="Description"
+	<StackPanel
+		HorizontalAlignment="Center"
+		VerticalAlignment="Center"
+		MinWidth="300"
+		Margin="10">
+		<TextBlock
+			Text="Edit event"
+			FontSize="25dp"
+			FontWeight="SemiBold"
+			HorizontalAlignment="Center"
+			Margin="14"/>
+		<TextBox 
+			Width="200" 
+			x:Name="Title"
+			Header= "Title"
+			MaxLength="150"
+			InputScope="Text" 
+			Text="{Binding Path=SelectedEvent.Title}"
+			PlaceholderText="Title"/>
+		<TextBlock
+			x:Name="TitleValidationErrorTextBlock"
+                Foreground="Red"
+			Margin="5"/>
+		<TextBox Width="270" 
+				 Height="100" 
+				 x:Name="Description" 
+				 Header= "Description" 
+				 MaxLength="1000" 
+				 Text="{Binding Path=SelectedEvent.Description}" 
+				 InputScope="Text" 
+				 PlaceholderText="Description"
 				 TextWrapping="Wrap"
-				 AcceptsReturn="True"
-				 ></TextBox>
-		<TextBlock x:Name="DescriptionValidationErrorTextBlock" HorizontalAlignment="Center"
+				 AcceptsReturn="True"/>
+		<TextBlock
+			x:Name="DescriptionValidationErrorTextBlock"
+			Margin="5"
                 Foreground="Red" />
-		<CalendarDatePicker x:Name="StartDatePicker" Header="Start date" HorizontalAlignment="Center" Margin="0,0,0,10" Width="200"/>
-		<TextBlock x:Name="StartDateValidationErrorTextBlock" HorizontalAlignment="Center"
-                Foreground="Red" />
-		<CalendarDatePicker x:Name="EndDatePicker" Header="End date" HorizontalAlignment="Center" Width="200" />
-		<TextBlock x:Name="EndDateValidationErrorTextBlock" HorizontalAlignment="Center"
-                Foreground="Red" />
-		<TextBlock x:Name="DateValidationErrorTextBlock" HorizontalAlignment="Center"
-                Foreground="Red" />
-		<StackPanel Orientation="Horizontal" Margin="0,20,0,0" HorizontalAlignment="Center">
-			<SymbolIcon Symbol="Delete" IsTapEnabled="False" Tapped="DeleteIcon_Tapped" Margin="0,0,30,0" />
-			<SymbolIcon Symbol="Save" IsTapEnabled="True" Tapped="SymbolIcon_Tapped"/>
+		<StackPanel
+			Orientation="Horizontal"
+			HorizontalAlignment="Center"
+			Margin="10">
+			<CalendarDatePicker 
+			x:Name="StartDatePicker"
+			Header="Start date"
+			HorizontalAlignment="Center" 
+			Width="130"
+			Margin="5,0,5,0"/>
+			<CalendarDatePicker
+			x:Name="EndDatePicker" 
+			Header="End date" 
+			HorizontalAlignment="Center"
+			Width="130"
+			Margin="5,0,5,0"/>
+		</StackPanel>
+		<TextBlock 
+			x:Name="StartDateValidationErrorTextBlock"
+			Margin="5"
+			Foreground="Red" />
+		<TextBlock 
+			x:Name="EndDateValidationErrorTextBlock"
+            Foreground="Red" />
+		<TextBlock
+			x:Name="DateValidationErrorTextBlock"
+            Foreground="Red" />
+		<StackPanel Orientation="Horizontal" 
+					HorizontalAlignment="Center"
+					Margin="10,0,0,10">
+			<SymbolIcon 
+				Symbol="Delete" 
+				IsTapEnabled="False"
+				Tapped="DeleteIcon_Tapped"
+				Margin="10"/>
+			<SymbolIcon
+				Symbol="Save"
+				IsTapEnabled="True"
+				Tapped="SymbolIcon_Tapped"
+				Margin="10"/>
 		</StackPanel>
 	</StackPanel>
 </Page>
