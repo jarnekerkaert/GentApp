@@ -79,7 +79,7 @@ namespace GentWebApi.Controllers {
 		[HttpGet("{id}/subscribedbranches")]
 		public IEnumerable<Branch> GetSubscribedBranchesOfUser(string id)
 		{
-			IEnumerable<Subscription> subscriptions = _context.Subscriptions.Where(s => s.UserId.Equals(id));
+			List<Subscription> subscriptions = _context.Subscriptions.Where(s => s.UserId.Equals(id)).Include(s => s.Branch).ToList();
 			List<Branch> branches = new List<Branch>();
 			foreach(Subscription subscription in subscriptions)
 			{
@@ -88,7 +88,7 @@ namespace GentWebApi.Controllers {
 					.Include(b => b.Events)
 					.Include(b => b.Promotions)
 					//.Include(b => b.Company)
-					.FirstOrDefault(b => b.Id == subscription.BranchId));
+					.FirstOrDefault(b => b.Id == subscription.Branch.Id));
 			}
 			return branches;
 		}

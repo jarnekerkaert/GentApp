@@ -1,4 +1,7 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Ioc;
+using GentApp.DataModel;
+using GentApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +28,14 @@ namespace GentApp.Views
 		public SubscriptionsPage()
 		{
 			this.InitializeComponent();
+		}
+
+		private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+		{
+			Subscription selectedSubscription = e.ClickedItem as Subscription;
+			SimpleIoc.Default.GetInstance<BranchesViewModel>().SelectedBranch = selectedSubscription.Branch;
+			Frame.Navigate(typeof(BranchDetailsPage));
+
 		}
 	}
 }

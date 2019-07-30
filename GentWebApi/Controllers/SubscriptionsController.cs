@@ -25,7 +25,7 @@ namespace GentWebApi.Controllers
         public IEnumerable<Subscription> GetSubscribers(string id)
         {
 			return _context.Subscriptions
-				.Where(s => s.BranchId.Equals(id));
+				.Where(s => s.Branch.Id.Equals(id));
         }
 
 		// GET: api/Subscriptions/user/5
@@ -33,7 +33,7 @@ namespace GentWebApi.Controllers
 		public IEnumerable<Subscription> GetSubscriptions(string id)
 		{
 			return _context.Subscriptions
-				.Where(s => s.UserId.Equals(id));
+				.Where(s => s.UserId.Equals(id)).Include(s => s.Branch);
 		}
 
 		// POST: api/Subscriptions

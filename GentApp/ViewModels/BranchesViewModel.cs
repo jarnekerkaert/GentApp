@@ -113,14 +113,14 @@ namespace GentApp.ViewModels {
 			get {
 				return _subscribeCommand = new RelayCommand(async () => {
 					if ( SubscribedTo ) {
-						Subscription subscription = Subscriptions.FirstOrDefault(s => s.BranchId.Equals(SelectedBranch.Id));
+						Subscription subscription = Subscriptions.FirstOrDefault(s => s.Branch.Id.Equals(SelectedBranch.Id));
 						Subscriptions.Remove(subscription);
 						RaisePropertyChanged(nameof(Subscriptions));
 						RaisePropertyChanged(nameof(SubscribedTo));
 						await _subscriptionService.Unsubscribe(subscription.Id);
 					}
 					else {
-						Subscription subscription = new Subscription() { BranchId = SelectedBranch.Id, UserId = UserViewModel.CurrentUser.Id };
+						Subscription subscription = new Subscription() { Branch = SelectedBranch, UserId = UserViewModel.CurrentUser.Id };
 						Subscriptions.Add(subscription);
 						RaisePropertyChanged(nameof(Subscriptions));
 						RaisePropertyChanged(nameof(SubscribedTo));
@@ -139,6 +139,21 @@ namespace GentApp.ViewModels {
 			set {
 				_subscriptions = value;
 				RaisePropertyChanged(nameof(Subscriptions));
+			}
+		}
+
+		private ObservableCollection<Subscription> _fullSubscriptions;
+		public ObservableCollection<Subscription> FullSubscriptions
+		{
+			get
+			{
+				return _fullSubscriptions;
+			}
+
+			set
+			{
+				_fullSubscriptions = value;
+				RaisePropertyChanged(nameof(FullSubscriptions));
 			}
 		}
 
@@ -168,22 +183,8 @@ namespace GentApp.ViewModels {
 								await _subscriptionService.GetSubscriptions(UserViewModel.CurrentUser.Id));
 							SubscribedBranches = new ObservableCollection<Branch>(
 								await _userService.GetSubscribedBranches(UserViewModel.CurrentUser.Id));
-							FullSubscribedBranches = new List<SubscribedBranch>();
-							foreach (Branch branch in SubscribedBranches)
-							{
-								var formattedBranch = new SubscribedBranch(branch);
-								foreach (Subscription subscription in Subscriptions)
-								{
-									if (subscription.BranchId.Equals(branch.Id))
-									{
-										formattedBranch.AmountEvents = subscription.AmountEvents;
-										formattedBranch.AmountPromotions = subscription.AmountPromotions;
-										FullSubscribedBranches.Add(formattedBranch);
-									}
-								}
-							}
-							// of bij getsubscriptions include branch en dan heb je maar 1 foreach nodig
-							// maar vergeet dan niet al de oude dingen aan te passen => branch.Id ipv BranchId
+							FullSubscriptions = new ObservableCollection<Subscription>(
+								await _subscriptionService.GetSubscriptions(UserViewModel.CurrentUser.Id));
 						});
 			}
 		}
@@ -193,7 +194,7 @@ namespace GentApp.ViewModels {
 				if ( SelectedBranch == null ) {
 					return false;
 				}
-				Subscription subscription = Subscriptions.Where(s => s.BranchId.Equals(SelectedBranch.Id)).DefaultIfEmpty(null).First();
+				Subscription subscription = Subscriptions.Where(s => s.Branch.Id.Equals(SelectedBranch.Id)).DefaultIfEmpty(null).First();
 				return subscription != null;
 			}
 		}
@@ -270,5 +271,6 @@ namespace GentApp.ViewModels {
 				RaisePropertyChanged(nameof(CurrentPromotions));
 			}
 		}
+
 	}
 }

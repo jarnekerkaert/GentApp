@@ -70,7 +70,7 @@ namespace GentWebApi.Controllers
 		[HttpPut("{id}/notifysubscribers")]
 		public IActionResult UpdateSubscriptionsEvent([FromBody] bool isEvent, string id)
 		{
-			var subscriptions = _context.Subscriptions.Where(s => s.BranchId.Equals(id));
+			var subscriptions = _context.Subscriptions.Where(s => s.Branch.Id.Equals(id));
 			foreach (Subscription subscription in subscriptions)
 			{
 				if (isEvent)
