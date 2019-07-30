@@ -12,7 +12,7 @@
 	<interactivity:Interaction.Behaviors>
 		<core:EventTriggerBehavior EventName="Loaded">
 			<core:InvokeCommandAction Command="{Binding Path=LoadBranchesCommand}" />
-			<core:InvokeCommandAction Command="{Binding Path=LoadSubscriptionsCommand}" />
+			<core:InvokeCommandAction Command="{Binding Path=LoadFullSubscriptionsCommand}" />
 		</core:EventTriggerBehavior>
 	</interactivity:Interaction.Behaviors>
 
@@ -33,11 +33,11 @@
 		</StackPanel>
 		<ListView
 					x:Name="BranchesList"
-					ItemsSource="{Binding Path=SubscribedBranches}" 
-					SelectedItem="{Binding Path=SelectedBranch, Mode=TwoWay}">
+					ItemsSource="{Binding Path=FullSubscribedBranches}" 
+					SelectedItem="{Binding Path=FullSelectedBranch, Mode=TwoWay}">
 			<interactivity:Interaction.Behaviors>
 				<core:EventTriggerBehavior EventName="SelectionChanged">
-					<core:InvokeCommandAction Command="{Binding Path=BranchSelectedCommand}" />
+					<core:InvokeCommandAction Command="{Binding Path=FullBranchSelectedCommand}" />
 				</core:EventTriggerBehavior>
 			</interactivity:Interaction.Behaviors>
 			<ListView.ItemTemplate>
@@ -45,6 +45,8 @@
 					<StackPanel>
 						<TextBlock FontSize="18" Text="{Binding Path=Name}" />
 						<TextBlock FontSize="10" Text="{Binding Path=Address}" />
+						<TextBlock FontSize="8" Text="{Binding Path=AmountPromotions}" />
+						<TextBlock FontSize="8" Text="{Binding Path=AmountEvents}" />
 					</StackPanel>
 				</DataTemplate>
 			</ListView.ItemTemplate>

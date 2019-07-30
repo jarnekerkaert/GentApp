@@ -156,6 +156,38 @@ namespace GentApp.ViewModels {
 			}
 		}
 
+		private RelayCommand _loadFullSubscriptionsCommand;
+
+		public RelayCommand LoadFullSubscriptionsCommand
+		{
+			get
+			{
+				return _loadFullSubscriptionsCommand = new RelayCommand(
+						async () => {
+							Subscriptions = new ObservableCollection<Subscription>(
+								await _subscriptionService.GetSubscriptions(UserViewModel.CurrentUser.Id));
+							SubscribedBranches = new ObservableCollection<Branch>(
+								await _userService.GetSubscribedBranches(UserViewModel.CurrentUser.Id));
+							FullSubscribedBranches = new List<SubscribedBranch>();
+							foreach (Branch branch in SubscribedBranches)
+							{
+								var formattedBranch = new SubscribedBranch(branch);
+								foreach (Subscription subscription in Subscriptions)
+								{
+									if (subscription.BranchId.Equals(branch.Id))
+									{
+										formattedBranch.AmountEvents = subscription.AmountEvents;
+										formattedBranch.AmountPromotions = subscription.AmountPromotions;
+										FullSubscribedBranches.Add(formattedBranch);
+									}
+								}
+							}
+							// of bij getsubscriptions include branch en dan heb je maar 1 foreach nodig
+							// maar vergeet dan niet al de oude dingen aan te passen => branch.Id ipv BranchId
+						});
+			}
+		}
+
 		public bool SubscribedTo {
 			get {
 				if ( SelectedBranch == null ) {
@@ -178,7 +210,21 @@ namespace GentApp.ViewModels {
 			}
 		}
 
-		
+		private List<SubscribedBranch> _fullSubscribedBranches;
+		public List<SubscribedBranch> FullSubscribedBranches
+		{
+			get
+			{
+				return _fullSubscribedBranches;
+			}
+
+			set
+			{
+				_fullSubscribedBranches = value;
+				RaisePropertyChanged(nameof(FullSubscribedBranches));
+			}
+		}
+
 		private RelayCommand _loadPromotionsCommand;
 
 		public RelayCommand LoadPromotionsCommand
