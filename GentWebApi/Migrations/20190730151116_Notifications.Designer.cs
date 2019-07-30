@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GentWebApi.Migrations
 {
     [DbContext(typeof(GentDbContext))]
-    [Migration("20190712211235_Users")]
-    partial class Users
+    [Migration("20190730151116_Notifications")]
+    partial class Notifications
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,8 +29,7 @@ namespace GentWebApi.Migrations
                     b.Property<string>("Address")
                         .IsRequired();
 
-                    b.Property<string>("CompanyId")
-                        .IsRequired();
+                    b.Property<string>("CompanyId");
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -75,6 +74,8 @@ namespace GentWebApi.Migrations
 
                     b.Property<string>("Password");
 
+                    b.Property<string>("UserName");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId");
@@ -82,12 +83,22 @@ namespace GentWebApi.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("GentWebApi.Models.Promotion", b =>
+            modelBuilder.Entity("GentWebApi.Models.Coupon", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<bool>("AllBranches");
+                    b.Property<string>("ImageUrl");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Coupon");
+                });
+
+            modelBuilder.Entity("GentWebApi.Models.Event", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("BranchId");
 
@@ -103,15 +114,62 @@ namespace GentWebApi.Migrations
 
                     b.HasIndex("BranchId");
 
+                    b.ToTable("Events");
+                });
+
+            modelBuilder.Entity("GentWebApi.Models.Promotion", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("AllBranches");
+
+                    b.Property<string>("BranchId");
+
+                    b.Property<string>("CouponId");
+
+                    b.Property<string>("Description");
+
+                    b.Property<DateTime>("EndDate");
+
+                    b.Property<DateTime>("StartDate");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BranchId");
+
+                    b.HasIndex("CouponId");
+
                     b.ToTable("Promotions");
+                });
+
+            modelBuilder.Entity("GentWebApi.Models.Subscription", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AmountEvents");
+
+                    b.Property<int>("AmountPromotions");
+
+                    b.Property<string>("BranchId")
+                        .IsRequired();
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Subscriptions");
                 });
 
             modelBuilder.Entity("GentApp.Models.Branch", b =>
                 {
-                    b.HasOne("GentApp.Models.Company")
+                    b.HasOne("GentApp.Models.Company", "Company")
                         .WithMany("Branches")
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CompanyId");
                 });
 
             modelBuilder.Entity("GentApp.Models.User", b =>
@@ -121,11 +179,22 @@ namespace GentWebApi.Migrations
                         .HasForeignKey("CompanyId");
                 });
 
+            modelBuilder.Entity("GentWebApi.Models.Event", b =>
+                {
+                    b.HasOne("GentApp.Models.Branch", "Branch")
+                        .WithMany("Events")
+                        .HasForeignKey("BranchId");
+                });
+
             modelBuilder.Entity("GentWebApi.Models.Promotion", b =>
                 {
-                    b.HasOne("GentApp.Models.Branch")
+                    b.HasOne("GentApp.Models.Branch", "Branch")
                         .WithMany("Promotions")
                         .HasForeignKey("BranchId");
+
+                    b.HasOne("GentWebApi.Models.Coupon", "Coupon")
+                        .WithMany()
+                        .HasForeignKey("CouponId");
                 });
 #pragma warning restore 612, 618
         }

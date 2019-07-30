@@ -67,6 +67,25 @@ namespace GentWebApi.Controllers
 			}
 		}
 
+		[HttpPut("{id}/notifysubscribers")]
+		public IActionResult UpdateSubscriptionsEvent([FromBody] bool isEvent, string id)
+		{
+			var subscriptions = _context.Subscriptions.Where(s => s.BranchId.Equals(id));
+			foreach (Subscription subscription in subscriptions)
+			{
+				if (isEvent)
+				{
+					subscription.AmountEvents++;
+				}
+				else
+				{
+					subscription.AmountPromotions++;
+				}
+			}
+			_context.SaveChanges();
+			return Ok();
+		}
+
 		// GET: api/branches/2/promotions
 		[HttpGet("{id}/promotions", Name = "GetPromotions")]
 		public IEnumerable<Promotion> GetPromotions(string id)
