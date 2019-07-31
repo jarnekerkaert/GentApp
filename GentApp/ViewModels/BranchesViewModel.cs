@@ -211,21 +211,6 @@ namespace GentApp.ViewModels {
 			}
 		}
 
-		private List<SubscribedBranch> _fullSubscribedBranches;
-		public List<SubscribedBranch> FullSubscribedBranches
-		{
-			get
-			{
-				return _fullSubscribedBranches;
-			}
-
-			set
-			{
-				_fullSubscribedBranches = value;
-				RaisePropertyChanged(nameof(FullSubscribedBranches));
-			}
-		}
-
 		private RelayCommand _loadPromotionsCommand;
 
 		public RelayCommand LoadPromotionsCommand
@@ -270,6 +255,14 @@ namespace GentApp.ViewModels {
 				_currentPromotions = value;
 				RaisePropertyChanged(nameof(CurrentPromotions));
 			}
+		}
+
+		public async void ClearSubscriptionAmounts(Subscription subscription)
+		{
+			subscription.AmountEvents = 0;
+			subscription.AmountPromotions = 0;
+			// subscription.Branch = null;
+			await _subscriptionService.Update(subscription);
 		}
 
 	}

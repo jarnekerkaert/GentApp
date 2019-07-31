@@ -40,9 +40,27 @@
 				<DataTemplate>
 					<StackPanel>
 						<TextBlock FontSize="18" Text="{Binding Path=Branch.Name}" />
-						<TextBlock FontSize="10" Text="{Binding Path=Branch.Address}" />
-						<TextBlock FontSize="8" Text="{Binding Path=AmountPromotions}" />
-						<TextBlock FontSize="8" Text="{Binding Path=AmountEvents}" />
+						<TextBlock FontSize="16" Text="{Binding Path=Branch.Address}" />
+						<StackPanel Orientation="Horizontal">
+							<TextBlock FontSize="12" Text="P:">
+								<ToolTipService.ToolTip>
+									<ToolTip Content="The amount of new promotions of this branch"
+									Placement="Right"
+									HorizontalOffset="20"/>
+								</ToolTipService.ToolTip>
+							</TextBlock>
+							<TextBlock FontSize="12" Text="{Binding Path=AmountPromotions}" />
+						</StackPanel>
+						<StackPanel Orientation="Horizontal">
+							<TextBlock FontSize="12" Text="E:">
+								<ToolTipService.ToolTip>
+									<ToolTip Content="The amount of new events of this branch"
+									Placement="Right"
+									HorizontalOffset="20"/>
+								</ToolTipService.ToolTip>
+							</TextBlock>
+							<TextBlock FontSize="12" Text="{Binding Path=AmountEvents}" />
+						</StackPanel>
 					</StackPanel>
 				</DataTemplate>
 			</ListView.ItemTemplate>

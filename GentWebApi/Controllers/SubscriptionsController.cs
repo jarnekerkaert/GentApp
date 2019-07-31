@@ -53,8 +53,24 @@ namespace GentWebApi.Controllers
 			}
 		}
 
-        // DELETE: api/Subscriptions/5
-        [HttpDelete("{id}")]
+		// PUT: api/Subscriptions/5
+		[HttpPut("{id}")]
+		public IActionResult Put([FromBody] Subscription subscription)
+		{
+			if (ModelState.IsValid)
+			{
+				_context.Subscriptions.Update(subscription);
+				_context.SaveChanges();
+				return Ok();
+			}
+			else
+			{
+				return BadRequest();
+			}
+		}
+
+		// DELETE: api/Subscriptions/5
+		[HttpDelete("{id}")]
         public IActionResult Delete(string id)
         {
 			Subscription subscription = _context.Subscriptions.Find(id);
