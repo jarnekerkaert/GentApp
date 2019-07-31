@@ -45,6 +45,8 @@ namespace GentApp.ViewModels
 			navigationService.Configure(nameof(CompanyDetailsPage), typeof(CompanyDetailsPage));
 			navigationService.Configure(nameof(MyCompanyPage), typeof(MyCompanyPage));
 			navigationService.Configure(nameof(BranchDetailsPage), typeof(BranchDetailsPage));
+			navigationService.Configure(nameof(BranchEventsPage), typeof(BranchEventsPage));
+			navigationService.Configure(nameof(BranchPromotionsPage), typeof(BranchPromotionsPage));
 			navigationService.Configure(nameof(AddBranchPage), typeof(AddBranchPage));
 			navigationService.Configure(nameof(AddPromotionPage), typeof(AddPromotionPage));
 			navigationService.Configure(nameof(EditBranchPage), typeof(EditBranchPage));

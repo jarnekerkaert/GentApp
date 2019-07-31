@@ -22,6 +22,10 @@ namespace GentWebApi.Controllers {
 			User response = _context.Users
 				.Include(u => u.Company)
 				.ThenInclude(c => c.Branches)
+				.ThenInclude(b => b.Events)
+				.Include(u => u.Company)
+				.ThenInclude(c => c.Branches)
+				.ThenInclude(b => b.Promotions)
 				.Where(u => u.UserName == userName)
 				.SingleOrDefault();
 			return response != null ? (ActionResult<User>) response : (ActionResult<User>) NotFound();
@@ -40,7 +44,7 @@ namespace GentWebApi.Controllers {
 				User newUser = new User(user.UserName, user.FirstName, user.LastName, user.Password);
 				_context.Users
 				.Add(newUser);
-				_context.SaveChanges();
+				_context.SaveChangesAsync();
 				return Created(newUser.Id, newUser);
 			}
 			else {
@@ -53,7 +57,7 @@ namespace GentWebApi.Controllers {
 		public IActionResult Put(string id, [FromBody]User value) {
 			if (ModelState.IsValid) {
 				_context.Users.Update(value);
-				_context.SaveChanges();
+				_context.SaveChangesAsync();
 				return Ok();
 			}
 			else {

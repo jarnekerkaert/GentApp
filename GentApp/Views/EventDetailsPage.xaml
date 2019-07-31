@@ -27,22 +27,29 @@
 		<StackPanel
 				Orientation="Horizontal"
 				Margin="10">
-			<TextBlock FontWeight="SemiBold">Type:</TextBlock>
-			<TextBlock Text="{Binding Path=SelectedEvent.Type, TargetNullValue='Empty'}"/>
+			<TextBlock 
+				Margin="0,0,10,0"
+				FontWeight="SemiBold">Location:</TextBlock>
+			<TextBlock Text="{Binding Path=SelectedEvent.Branch.Name, TargetNullValue='Empty'}"/>
 		</StackPanel>
 
 		<StackPanel
 				Orientation="Horizontal"
 				Margin="10">
-			<TextBlock FontWeight="SemiBold">Starts:</TextBlock>
+			<TextBlock 
+				Margin="0,0,10,0"
+				FontWeight="SemiBold">Starts:</TextBlock>
 			<TextBlock Text="{Binding Path=SelectedEvent.StartDate, TargetNullValue='Empty'}"/>
 		</StackPanel>
 
 		<StackPanel
 				Orientation="Horizontal"
 				Margin="10">
-			<TextBlock FontWeight="SemiBold">Ends:</TextBlock>
-			<TextBlock Text="{Binding Path=SelectedEvent.EndDate, TargetNullValue='Empty'}"/>
+			<TextBlock 
+				Margin="0,0,10,0"
+				FontWeight="SemiBold">Ends:</TextBlock>
+			<TextBlock 
+				Text="{Binding Path=SelectedEvent.EndDate, TargetNullValue='Empty'}"/>
 		</StackPanel>
 	</StackPanel>
 </Page>

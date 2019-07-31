@@ -5,20 +5,29 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+	DataContext="{Binding BranchViewModelInstance, Source={StaticResource Locator}}">
 
 	<StackPanel
 		Margin="14"
 		HorizontalAlignment="Center"
 		VerticalAlignment="Center">
-		<StackPanel Orientation="Horizontal" x:Name="horStackPanel" HorizontalAlignment="Center" Margin="0,0,0,20">
+		<StackPanel Orientation="Horizontal"
+					HorizontalAlignment="Center"
+					Margin="20">
 			<TextBlock 
 				HorizontalAlignment="Center"
-				Margin="10"
+				Margin="5"
 				FontSize="25dp"
 				FontWeight="SemiBold"
-				Text="Schedule an event"/>
-			<TextBlock Text="{Binding Name}"/>
+				Text="Schedule an event at"
+				TextWrapping="WrapWholeWords"/>
+			<TextBlock 
+				Text="{Binding Name}"
+				Margin="5"
+				FontSize="25dp"
+				FontWeight="SemiBold"
+				TextWrapping="WrapWholeWords"/>
 		</StackPanel>
 
 		<TextBox Width="200" x:Name="Title" Header= "Title" 

@@ -5,11 +5,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+	xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+	xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding UserViewModelInstance, Source={StaticResource Locator}}">
 
-    <Grid 
-        Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    <Grid
         VerticalAlignment="Center">
         <StackPanel 
             Orientation="Vertical">
@@ -39,13 +40,13 @@
                 PlaceholderText="Username"
                 Margin="4" 
                 Width="250"/>
-			<TextBox 
+			<PasswordBox 
                 x:Name="PasswordTextBox"
-				Text="{Binding LoginModel.Password, Mode=TwoWay}"
+				Password="{Binding LoginModel.Password, Mode=TwoWay}"
                 PlaceholderText="Password"
                 Margin="4, 10" 
                 Width="250"/>
-            <Button 
+			<Button 
                 x:Name="LoginButton"
                 Content="Login" 
 				Command="{Binding Path=LoginCommand}"
@@ -68,5 +69,5 @@
                 VerticalAlignment="Center"
                 FontSize="16"/>
         </StackPanel>
-    </Grid>
+	</Grid>
 </Page>

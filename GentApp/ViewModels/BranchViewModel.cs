@@ -93,6 +93,7 @@ namespace GentApp.ViewModels {
 
 			SaveBranchCommand.Execute("Promotion");
 			RaisePropertyChanged(nameof(Promotions));
+			_navigationService.NavigateTo(nameof(BranchPromotionsPage));
 		}
 
 		public void EditPromotion(string title, string description, DateTime startdate, DateTime enddate) {
@@ -105,12 +106,14 @@ namespace GentApp.ViewModels {
 
 			SaveBranchCommand.Execute("Promotion");
 			RaisePropertyChanged(nameof(Promotions));
+			_navigationService.NavigateTo(nameof(BranchPromotionsPage));
 		}
 
 		public void DeletePromotion() {
 			Promotions.RemoveAt(Promotions.FindIndex(p => p.Id.Equals(MySelectedPromotion.Id)));
 			SaveBranchCommand.Execute("Branch");
 			RaisePropertyChanged(nameof(Promotions));
+			_navigationService.NavigateTo(nameof(BranchPromotionsPage));
 		}
 
 		private RelayCommand _loadPromotionsCommand;
@@ -120,10 +123,11 @@ namespace GentApp.ViewModels {
 				return _loadPromotionsCommand ?? ( _loadPromotionsCommand = new RelayCommand(() => {
 					Promotions = CompanyViewModel.SelectedBranch.Promotions;
 					var currentDate = DateTime.Today.Date;
-					CurrentPromotions = Promotions.Where(p => p.StartDate <= currentDate && p.EndDate >= currentDate).ToList();
-					NonCurrentPromotions = Promotions.Except(CurrentPromotions).ToList();
-				}
-				) );
+					if ( Promotions != null && Promotions.Count != 0 ) {
+						CurrentPromotions = Promotions.Where(p => p.StartDate <= currentDate && p.EndDate >= currentDate).ToList();
+						NonCurrentPromotions = Promotions.Except(CurrentPromotions).ToList();
+					}
+				}));
 			}
 		}
 
@@ -171,17 +175,20 @@ namespace GentApp.ViewModels {
 			SelectedEvent.Description = description;
 			SelectedEvent.StartDate = startDate;
 			SelectedEvent.EndDate = endDate;
+			SelectedEvent.Id = Guid.NewGuid().ToString();
 
 			Events[Events.FindIndex(e => e.Id.Equals(SelectedEvent.Id))] = SelectedEvent;
 
 			SaveBranchCommand.Execute("Event");
 			RaisePropertyChanged(nameof(Events));
+			_navigationService.NavigateTo(nameof(BranchEventsPage));
 		}
 
 		public void DeleteEvent() {
 			Events.RemoveAt(Events.FindIndex(e => e.Id.Equals(SelectedEvent.Id)));
 			SaveBranchCommand.Execute("Branch");
 			RaisePropertyChanged(nameof(Events));
+			_navigationService.NavigateTo(nameof(BranchEventsPage));
 		}
 
 		private RelayCommand _toAddEventCommand;

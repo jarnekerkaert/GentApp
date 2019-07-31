@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 	xmlns:triggers="using:WindowsStateTriggers"
 	mc:Ignorable="d"
+	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding BranchesViewModelInstance, Source={StaticResource Locator}}">
 
 	<Grid>
@@ -54,26 +55,30 @@
 				FontSize="25dp"
 				FontWeight="SemiBold"
 				HorizontalAlignment="Center"
+				Margin="20"
 				Text="{Binding Path=SelectedBranch.Name}"/>
 
 			<StackPanel
 				Orientation="Horizontal"
 				Margin="10">
-				<TextBlock FontWeight="SemiBold">Address:</TextBlock>
+				<TextBlock FontWeight="SemiBold"
+						   Margin="0,0,10,0">Address:</TextBlock>
 				<TextBlock Text="{Binding Path=SelectedBranch.Address, TargetNullValue='Empty'}"/>
 			</StackPanel>
 
 			<StackPanel
 				Orientation="Horizontal"
 				Margin="10">
-				<TextBlock FontWeight="SemiBold">Type:</TextBlock>
+				<TextBlock FontWeight="SemiBold"
+						   Margin="0,0,10,0">Type:</TextBlock>
 				<TextBlock Text="{Binding Path=SelectedBranch.Type, TargetNullValue='Empty'}"/>
 			</StackPanel>
 
 			<StackPanel
 				Orientation="Horizontal"
 				Margin="10">
-				<TextBlock FontWeight="SemiBold">Opening hours:</TextBlock>
+				<TextBlock FontWeight="SemiBold"
+						   Margin="0,0,10,0">Opening hours:</TextBlock>
 				<TextBlock Text="{Binding Path=SelectedBranch.OpeningHours, TargetNullValue='Empty'}"/>
 			</StackPanel>
 

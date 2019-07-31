@@ -1,6 +1,7 @@
 ﻿using GalaSoft.MvvmLight.Ioc;
 using GentApp.DataModel;
 using GentApp.ViewModels;
+using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -16,8 +17,6 @@ namespace GentApp.Views
 		public AddPromotionPage()
 		{
 			InitializeComponent();
-			horStackPanel.DataContext = SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch;
-			DataContext = SimpleIoc.Default.GetInstance<BranchViewModel>();
 		}
 
 		private void SavePromotionBtn_Click(object sender, RoutedEventArgs e)

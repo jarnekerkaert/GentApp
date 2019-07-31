@@ -58,7 +58,7 @@
 			</GridView.ItemsPanel>
 			<GridView.ItemTemplate>
 				<DataTemplate x:DataType="datamodel:Event">
-					<Grid Margin="10,0">
+					<Grid Margin="10">
 						<Grid.RowDefinitions>
 							<RowDefinition Height="150" />
 							<RowDefinition />

@@ -5,8 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GentWebApi.Models {
 	public class Promotion {
-
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+		
 		public string Id { get; set; }
 		public DateTime StartDate { get; set; }
 		public DateTime EndDate { get; set; }

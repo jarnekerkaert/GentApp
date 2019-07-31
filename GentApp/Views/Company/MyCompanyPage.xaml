@@ -8,6 +8,7 @@
 	xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
 	xmlns:core="using:Microsoft.Xaml.Interactions.Core"
 	mc:Ignorable="d"
+	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding CompanyViewModelInstance, Source={StaticResource Locator}}">
 
 	<interactivity:Interaction.Behaviors>
@@ -43,18 +44,22 @@
 			Orientation="Horizontal"
 			Margin="10">
 			<TextBlock 
-				FontWeight="SemiBold">Address:</TextBlock>
+				FontWeight="SemiBold"
+				Margin="0,0,10,0">Address:</TextBlock>
 			<TextBlock 
-				Text="{Binding Path=SelectedCompany.Address, TargetNullValue='Empty'}"/>
+				Margin="0,0,10,0"
+				Text="{Binding Path=MyCompany.Address, TargetNullValue='Empty'}"/>
 		</StackPanel>
 
 		<StackPanel
 			Orientation="Horizontal"
 			Margin="10">
 			<TextBlock
-				FontWeight="SemiBold">Opening hours:</TextBlock>
+				FontWeight="SemiBold"
+				Margin="0,0,10,0">Opening hours:</TextBlock>
 			<TextBlock
-				Text="{Binding Path=SelectedCompany.OpeningHours, TargetNullValue='Empty'}"/>
+				Margin="0,0,10,0"
+				Text="{Binding Path=MyCompany.OpeningHours, TargetNullValue='Empty'}"/>
 		</StackPanel>
 		
 

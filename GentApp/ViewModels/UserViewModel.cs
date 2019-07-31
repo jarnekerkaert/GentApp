@@ -6,6 +6,7 @@ using GentApp.Services;
 using GentApp.Views;
 using MetroLog;
 using System;
+using System.Threading.Tasks;
 using Windows.UI.Popups;
 
 namespace GentApp.ViewModels {
@@ -53,10 +54,13 @@ namespace GentApp.ViewModels {
 			}
 		}
 
-		public async void SaveUser(string name) {
-			try {
+		public async Task SaveUser(string name) {
+			try {		
 				await _userService.Update(CurrentUser);
+				CurrentUser = await _userService.GetUser(CurrentUser.Id);
+
 				RaisePropertyChanged(nameof(IsEntrepreneur));
+				RaisePropertyChanged(nameof(CurrentUser));
 
 				if( name?.Equals("") != false )
 					name = "User";

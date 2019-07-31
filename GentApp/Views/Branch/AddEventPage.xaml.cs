@@ -11,8 +11,6 @@ namespace GentApp.Views {
 	public sealed partial class AddEventPage : Page {
 		public AddEventPage() {
 			InitializeComponent();
-			horStackPanel.DataContext = SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch;
-			DataContext = SimpleIoc.Default.GetInstance<BranchViewModel>();
 		}
 
 		private void SaveEventBtn_Click(object sender, RoutedEventArgs e) {

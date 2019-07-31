@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GentWebApi.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GentWebApi.Controllers
 {
@@ -19,7 +20,9 @@ namespace GentWebApi.Controllers
 
 		[HttpGet]
 		public ActionResult<IEnumerable<Event>> Get() {
-			return _context.Events;
+			return _context.Events
+				.Include(e => e.Branch)
+				.ToList();
 		}
 
 		[HttpGet("{id}")]

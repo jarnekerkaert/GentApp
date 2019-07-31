@@ -6,7 +6,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace GentApp.Models {
 	public class Branch
 	{
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public string Id { get; set; }
 		public Company Company { get; set; }
 		[Required]

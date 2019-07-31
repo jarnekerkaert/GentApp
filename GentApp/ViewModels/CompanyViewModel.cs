@@ -42,9 +42,9 @@ namespace GentApp.ViewModels {
 
 		public RelayCommand<string> SaveCompanyCommand {
 			get {
-				return _saveCompanyCommand = new RelayCommand<string>(name => {
+				return _saveCompanyCommand = new RelayCommand<string>(async name => {
 					UserViewModel.CurrentUser.Company = MyCompany;
-					UserViewModel.SaveUser(name);
+					await UserViewModel.SaveUser(name);
 					RaisePropertyChanged(nameof(MyCompany));
 				});
 			}
@@ -90,6 +90,7 @@ namespace GentApp.ViewModels {
 
 			SaveCompanyCommand.Execute("Branch");
 			_navigationService.NavigateTo(nameof(MyCompanyPage));
+			RaisePropertyChanged(nameof(MyCompany.Branches));
 		}
 
 		public void EditBranch(string name, string address, string openingHours, BranchType type) {
@@ -101,6 +102,7 @@ namespace GentApp.ViewModels {
 			MyCompany.Branches[MyCompany.Branches.FindIndex(i => i.Equals(SelectedBranch))] = SelectedBranch;
 			SaveCompanyCommand.Execute("Branch");
 			_navigationService.NavigateTo(nameof(MyCompanyPage));
+			RaisePropertyChanged(nameof(MyCompany.Branches));
 		}
 
 		public void EditBranch(List<Event> events, List<Promotion> promotions, string name) {
@@ -109,7 +111,7 @@ namespace GentApp.ViewModels {
 
 			MyCompany.Branches[MyCompany.Branches.FindIndex(i => i.Equals(SelectedBranch))] = SelectedBranch;
 			SaveCompanyCommand.Execute(name);
-			_navigationService.NavigateTo(nameof(EditBranchPage));
+			RaisePropertyChanged(nameof(MyCompany.Branches));
 		}
 
 		public void DeleteBranch() {
@@ -117,17 +119,26 @@ namespace GentApp.ViewModels {
 
 			SaveCompanyCommand.Execute("Company");
 			_navigationService.NavigateTo(nameof(MyCompanyPage));
+			RaisePropertyChanged(nameof(MyCompany.Branches));
 		}
 
 		private RelayCommand _loadCompanyCommand;
 
 		public RelayCommand LoadCompanyCommand {
 			get {
-				return _loadCompanyCommand = new RelayCommand(async () => {
-					MyCompany = await _companyService.GetMyCompany(UserViewModel.CurrentUser.Company.Id);
+				return _loadCompanyCommand = new RelayCommand(() => {
+					MyCompany = UserViewModel.CurrentUser.Company;
 					isNavigated = true;
 					RaisePropertyChanged(nameof(MyCompany));
 				});
+			}
+		}
+
+		private RelayCommand _navigateToCompany;
+
+		public RelayCommand NavigateToCompany {
+			get {
+				return _navigateToCompany = new RelayCommand(() => _navigationService.NavigateTo(nameof(MyCompanyPage)));
 			}
 		}
 	}

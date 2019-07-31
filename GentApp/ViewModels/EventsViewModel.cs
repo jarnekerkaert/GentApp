@@ -42,9 +42,9 @@ namespace GentApp.ViewModels {
 			}
 		}
 
-		private Branch _selectedEvent;
+		private Event _selectedEvent;
 
-		public Branch SelectedEvent {
+		public Event SelectedEvent {
 			get { return _selectedEvent; }
 			set {
 				_selectedEvent = value;
@@ -57,13 +57,13 @@ namespace GentApp.ViewModels {
 		public RelayCommand EventSelectedCommand {
 			get {
 				return _eventSelectedCommand = new RelayCommand(() => {
-					//if ( isNavigated && SelectedEvent == null ) {
-					//	isNavigated = false;
-					//}
-					//else {
-					//	isNavigated = true;
-						_navigationService.NavigateTo(nameof(EventDetailsPage));
-					//}
+				if ( isNavigated && SelectedEvent == null ) {
+					isNavigated = false;
+				}
+				else {
+					isNavigated = true;
+					_navigationService.NavigateTo(nameof(EventDetailsPage));
+					}
 				});
 			}
 		}

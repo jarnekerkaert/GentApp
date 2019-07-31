@@ -6,7 +6,6 @@ namespace GentWebApi.Models
 {
 	public class Event
 	{
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public string Id { get; set; }
 		public DateTime StartDate { get; set; }
 		public DateTime EndDate { get; set; }

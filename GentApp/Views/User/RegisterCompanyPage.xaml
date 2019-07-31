@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding CompanyViewModelInstance, Source={StaticResource Locator}}">
 
 	<Grid
@@ -12,7 +13,8 @@
 		<StackPanel
             Orientation="Vertical">
 			<TextBlock 
-                Text="Your Company"
+                Text="Register your Company"
+				TextWrapping="WrapWholeWords"
                 FontSize="36" 
                 Margin="4" 
                 TextAlignment="Center"/>
@@ -53,8 +55,8 @@
                 Margin="4,10" 
                 Width="250"/>
 			<Button 
-                Content="Finish" 
-				Command="{Binding Path=SaveCompanyCommand}"
+                Content="Save"
+				Click="Save_Company"
                 Background="DodgerBlue" 
                 Foreground="White"
                 Width="80" 
