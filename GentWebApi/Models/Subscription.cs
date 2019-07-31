@@ -8,8 +8,9 @@ namespace GentWebApi.Models
 	{
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public string Id { get; set; }
-		[Required]
+		//[Required]
 		public Branch Branch { get; set; }
+		public string BranchId { get; set; }
 		[Required]
 		public string UserId { get; set; }
 

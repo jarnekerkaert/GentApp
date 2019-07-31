@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GentApp.Models;
 using GentWebApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -42,8 +43,12 @@ namespace GentWebApi.Controllers
         {
 			if (ModelState.IsValid)
 			{
-				_context.Subscriptions
-				.Add(subscription);
+				Branch branch = subscription.Branch;
+				subscription.AmountEvents = 0;
+				subscription.AmountPromotions = 0;
+				subscription.Branch = null;
+				subscription.BranchId = branch.Id;
+				_context.Subscriptions.Add(subscription);
 				_context.SaveChanges();
 				return Created(subscription.Id, subscription);
 			}
