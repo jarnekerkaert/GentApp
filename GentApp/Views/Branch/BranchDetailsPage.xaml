@@ -56,20 +56,33 @@
 				HorizontalAlignment="Center"
 				Text="{Binding Path=SelectedBranch.Name}"/>
 
-			<TextBlock FontWeight="Bold">Address:</TextBlock>
-			<TextBlock Text="{Binding Path=SelectedBranch.Address, Mode=OneWay, TargetNullValue='Empty'}"></TextBlock>
-			<TextBlock FontWeight="Bold">Type:</TextBlock>
-			<TextBlock Text="{Binding Path=SelectedBranch.Type, Mode=OneWay, TargetNullValue='Empty'}"></TextBlock>
-			<TextBlock FontWeight="Bold">Opening hours:</TextBlock>
-			<TextBlock Text="{Binding Path=SelectedBranch.OpeningHours, Mode=OneWay, TargetNullValue='Empty'}"></TextBlock>
+			<StackPanel
+				Orientation="Horizontal"
+				Margin="10">
+				<TextBlock FontWeight="SemiBold">Address:</TextBlock>
+				<TextBlock Text="{Binding Path=SelectedBranch.Address, TargetNullValue='Empty'}"/>
+			</StackPanel>
 
-			<Button x:Name="SubscribeButton" 
-					Background="DodgerBlue" 
+			<StackPanel
+				Orientation="Horizontal"
+				Margin="10">
+				<TextBlock FontWeight="SemiBold">Type:</TextBlock>
+				<TextBlock Text="{Binding Path=SelectedBranch.Type, TargetNullValue='Empty'}"/>
+			</StackPanel>
+
+			<StackPanel
+				Orientation="Horizontal"
+				Margin="10">
+				<TextBlock FontWeight="SemiBold">Opening hours:</TextBlock>
+				<TextBlock Text="{Binding Path=SelectedBranch.OpeningHours, TargetNullValue='Empty'}"/>
+			</StackPanel>
+
+			<Button
+				x:Name="SubscribeButton" 
+				Background="DodgerBlue" 
                 Foreground="White"
-					Command="{Binding Path=SubscribeCommand}"
-					HorizontalAlignment="Center"/>
-
+				Command="{Binding Path=SubscribeCommand}"
+				HorizontalAlignment="Center"/>
 		</StackPanel>
 	</Grid>
-
 </Page>
