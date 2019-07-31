@@ -144,7 +144,7 @@ namespace GentApp.ViewModels {
 		public RelayCommand LoadEventsCommand {
 			get {
 				return _loadEventsCommand =
-					new RelayCommand(async () => Events = (List<Event>) await _eventService.GetByBranchId(CompanyViewModel.SelectedBranch.Id));
+					new RelayCommand(() => Events = CompanyViewModel.SelectedBranch.Events);
 			}
 		}
 
