@@ -43,11 +43,6 @@ namespace GentWebApi.Controllers
         {
 			if (ModelState.IsValid)
 			{
-				Branch branch = subscription.Branch;
-				subscription.AmountEvents = 0;
-				subscription.AmountPromotions = 0;
-				subscription.Branch = null;
-				subscription.BranchId = branch.Id;
 				_context.Subscriptions.Add(subscription);
 				_context.SaveChanges();
 				return Created(subscription.Id, subscription);
