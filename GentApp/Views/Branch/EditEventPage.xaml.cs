@@ -41,7 +41,7 @@ namespace GentApp.Views
 			ValidateInput();
 		}
 
-		private void ValidateInput()
+		private async void ValidateInput()
 		{
 			var isValid = true;
 			if ( Title.Text?.Length == 0 )
@@ -76,7 +76,7 @@ namespace GentApp.Views
 			}
 			if ( isValid )
 			{
-				SimpleIoc.Default.GetInstance<BranchViewModel>().EditEvent(
+				await SimpleIoc.Default.GetInstance<BranchViewModel>().EditEvent(
 					Title.Text, 
 					Description.Text,
 					StartDatePicker.Date.Value.DateTime, 
@@ -96,7 +96,7 @@ namespace GentApp.Views
 			ContentDialogResult result = await deleteEventDialog.ShowAsync();
 			if (result == ContentDialogResult.Primary)
 			{
-				SimpleIoc.Default.GetInstance<BranchViewModel>().DeleteEvent();
+				await SimpleIoc.Default.GetInstance<BranchViewModel>().DeleteEvent();
 			}
 		}
 	}

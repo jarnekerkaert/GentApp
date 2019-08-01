@@ -68,9 +68,9 @@
 								BorderBrush="White" 
 								BorderThickness="0"/>
 						<Image x:Name="Image" 
-                                   HorizontalAlignment="Left"
-                                   Stretch="UniformToFill" Height="100" Width="100"
-									Source="{x:Bind ImageUri}">
+                               HorizontalAlignment="Left"
+                               Stretch="UniformToFill" Height="100" Width="100"
+								Source="{x:Bind ImageUri}">
 						</Image>
 						<StackPanel VerticalAlignment="Bottom"
 									Grid.Row="0"

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using GentApp.Models;
 using GentWebApi.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -28,8 +29,7 @@ namespace GentAppWebApi.Controllers {
 		// GET: api/Companies/5
 		[HttpGet("{id}", Name = "Get")]
 		public ActionResult<Company> Get(string id) {
-			if (_context.Companies.Find(id) != null)
-			{
+			if ( _context.Companies.Find(id) != null ) {
 				return _context.Companies
 					.Include(c => c.Branches)
 					.ThenInclude(b => b.Promotions)
@@ -37,8 +37,7 @@ namespace GentAppWebApi.Controllers {
 					.ThenInclude(b => b.Events)
 					.FirstOrDefault(c => c.Id.Equals(id));
 			}
-			else
-			{
+			else {
 				return NotFound();
 			}
 		}
@@ -46,7 +45,7 @@ namespace GentAppWebApi.Controllers {
 		// POST: api/Companies
 		[HttpPost]
 		public IActionResult Post([FromBody] Company company) {
-			if (ModelState.IsValid) {
+			if ( ModelState.IsValid ) {
 				_context.Companies
 				.Add(company);
 				_context.SaveChanges();
@@ -59,10 +58,12 @@ namespace GentAppWebApi.Controllers {
 
 		// PUT: api/Companies/5
 		[HttpPut("{id}")]
-		public IActionResult Put([FromBody] Company company) {
-			if (ModelState.IsValid) {
+		public async Task<IActionResult> Put([FromBody] Company company) {
+			if ( ModelState.IsValid ) {
 				_context.Companies.Update(company);
-				_context.SaveChanges();
+
+				await _context.SaveChangesAsync();
+
 				return Ok();
 			}
 			else {
@@ -73,7 +74,7 @@ namespace GentAppWebApi.Controllers {
 		// DELETE: api/Companies
 		[HttpDelete]
 		public IActionResult Delete([FromBody] Company company) {
-			if (_context.Companies.Contains(company)) {
+			if ( _context.Companies.Contains(company) ) {
 				_context.Companies.Remove(company);
 				_context.SaveChanges();
 				return Ok();
@@ -85,8 +86,7 @@ namespace GentAppWebApi.Controllers {
 
 		// GET: api/companies/5/branches
 		[HttpGet("{id}/branches", Name = "GetBranches")]
-		public IEnumerable<Branch> GetBranches(string id)
-		{
+		public IEnumerable<Branch> GetBranches(string id) {
 			return _context.Branches.Where(b => b.Company.Id.Equals(id));
 		}
 	}

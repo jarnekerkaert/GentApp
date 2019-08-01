@@ -55,7 +55,7 @@ namespace GentApp.ViewModels {
 		}
 
 		public async Task SaveUser(string name) {
-			try {		
+			try {
 				await _userService.Update(CurrentUser);
 				CurrentUser = await _userService.GetUser(CurrentUser.Id);
 

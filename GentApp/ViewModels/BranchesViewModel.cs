@@ -44,10 +44,6 @@ namespace GentApp.ViewModels {
 			}
 		}
 
-		public async void RetrieveBranchesOfCompany(string id) {
-			Branches = new ObservableCollection<Branch>(await _branchService.GetBranchesOfCompany(id));
-		}
-
 		public void AddBranch(Branch newBranch) {
 			Branches.Add(newBranch);
 		}
@@ -97,7 +93,7 @@ namespace GentApp.ViewModels {
 		public RelayCommand LoadBranchesCommand {
 			get {
 				return _loadBranchesCommand = new RelayCommand(async () => {
-					Branches = new ObservableCollection<Branch>(await _branchService.GetBranches());
+					Branches = new ObservableCollection<Branch>(await _branchService.GetAll());
 					isNavigated = true;
 					RaisePropertyChanged(nameof(Branches));
 				});

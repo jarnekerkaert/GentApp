@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using GentWebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -26,8 +27,8 @@ namespace GentWebApi.Controllers
 		}
 
 		[HttpGet("{id}")]
-		public ActionResult<IEnumerable<Event>> GetByBranchId(string branchId) {
-			return _context.Events.Where(b => b.Branch.Id == branchId).ToList();
+		public ActionResult<IEnumerable<Event>> GetByBranchId(string id) {
+			return _context.Events.Where(b => b.Branch.Id == id).ToList();
 		}
 
 		// POST: api/events
@@ -48,12 +49,12 @@ namespace GentWebApi.Controllers
 
 		// PUT: api/events/5
 		[HttpPut("{id}")]
-		public IActionResult Put([FromBody] Event updatedEvent)
+		public async Task<IActionResult> Put([FromBody] Event updatedEvent)
 		{
 			if (ModelState.IsValid)
 			{
 				_context.Events.Update(updatedEvent);
-				_context.SaveChanges();
+				await _context.SaveChangesAsync();
 				return Ok();
 			}
 			else

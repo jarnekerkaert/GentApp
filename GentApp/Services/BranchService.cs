@@ -22,9 +22,8 @@ namespace GentApp.Services
 			HttpClient = new HttpClient();
 		}
 
-		public async Task<IEnumerable<Branch>> GetBranches()
+		public async Task<IEnumerable<Branch>> GetAll()
 		{
-			// TODO: aanpassen
 			HttpResponseMessage response = await HttpClient.GetAsync(apiUrl);
 			if (response.IsSuccessStatusCode)
 			{
@@ -33,24 +32,38 @@ namespace GentApp.Services
 			return Enumerable.Empty<Branch>();
 		}
 
-		public async Task<IEnumerable<Branch>> GetBranchesOfCompany(string id) {
-			// TODO: aanpassen
-			HttpResponseMessage response = await HttpClient.GetAsync(apiUrl);
-			if ( response.IsSuccessStatusCode ) {
-				return JsonConvert.DeserializeObject<IEnumerable<Branch>>(await response.Content.ReadAsStringAsync());
-			}
-			return Enumerable.Empty<Branch>();
-		}
-
-		public async Task Save(Branch branch)
+		public async Task<Branch> Save(Branch branch)
 		{
 			try
 			{
-				var response = await HttpClient.PostAsync(apiUrl, new StringContent(JsonConvert.SerializeObject(branch), Encoding.UTF8, "application/json"));
-				Console.WriteLine("test");
+				var request = new HttpRequestMessage {
+					Method = HttpMethod.Post,
+					RequestUri = new Uri(apiUrl),
+					Content = new StringContent(JsonConvert.SerializeObject(branch), Encoding.UTF8, "application/json")
+				};
+
+				var response = await HttpClient.SendAsync(request);
+
+				return JsonConvert.DeserializeObject<Branch>(response.Content.ToString());
 			}
 			catch (Exception ex)
 			{
+				await new MessageDialog(ex.Message).ShowAsync();
+			}
+
+			return null;
+		}
+
+		public async Task Update(Branch branch) {
+			try {
+				var request = new HttpRequestMessage {
+					Method = HttpMethod.Put,
+					RequestUri = new Uri(apiUrl + "/" + branch.Id),
+					Content = new StringContent(JsonConvert.SerializeObject(branch), Encoding.UTF8, "application/json")
+				};
+				await HttpClient.SendAsync(request);
+
+			} catch ( Exception ex ) {
 				await new MessageDialog(ex.Message).ShowAsync();
 			}
 		}
@@ -66,32 +79,11 @@ namespace GentApp.Services
 					Content = new StringContent(JsonConvert.SerializeObject(branch), Encoding.UTF8, "application/json")
 				};
 				HttpResponseMessage responseMsg = await HttpClient.SendAsync(request);
-				//var response = await HttpClient.DeleteAsync(apiUrl + "/" + branch.Id);
 			}
 			catch (Exception ex)
 			{
 				await new MessageDialog(ex.Message).ShowAsync();
 			}
-		}
-
-		public async Task<IEnumerable<Promotion>> GetPromotions(string id)
-		{
-			HttpResponseMessage response = await HttpClient.GetAsync(apiUrl + "/" + id + "/promotions");
-			if (response.IsSuccessStatusCode)
-			{
-				return JsonConvert.DeserializeObject<IEnumerable<Promotion>>(await response.Content.ReadAsStringAsync());
-			}
-			return Enumerable.Empty<Promotion>();
-		}
-
-		public async Task<IEnumerable<Event>> GetEvents(string id)
-		{
-			HttpResponseMessage response = await HttpClient.GetAsync(apiUrl + "/" + id + "/events");
-			if (response.IsSuccessStatusCode)
-			{
-				return JsonConvert.DeserializeObject<IEnumerable<Event>>(await response.Content.ReadAsStringAsync());
-			}
-			return Enumerable.Empty<Event>();
 		}
 	}
 }

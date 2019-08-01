@@ -30,7 +30,7 @@ namespace GentApp.Views
 			ValidateInput();
 		}
 
-		private void ValidateInput()
+		private async void ValidateInput()
 		{
 			var isValid = true;
 			if (Name.Text?.Length == 0)
@@ -65,7 +65,7 @@ namespace GentApp.Views
 			}
 			if (isValid)
 			{
-				SimpleIoc.Default.GetInstance<CompanyViewModel>().EditCompany(Name.Text, Address.Text, OpeningHours.Text);
+				await SimpleIoc.Default.GetInstance<CompanyViewModel>().EditCompany(Name.Text, Address.Text, OpeningHours.Text);
 				Frame.Navigate(typeof(MyCompanyPage));
 			}
 		}

@@ -29,7 +29,7 @@ namespace GentApp.Views {
 			validateInput();
 		}
 
-		private void validateInput() {
+		private async void validateInput() {
 			var comboBoxItem = Type.SelectedValue;
 			var isValid = true;
 			if ( Name.Text?.Length == 0 ) {
@@ -61,7 +61,7 @@ namespace GentApp.Views {
 				isValid = false;
 			}
 			if ( isValid ) {
-				SimpleIoc.Default.GetInstance<CompanyViewModel>().EditBranch(
+				await SimpleIoc.Default.GetInstance<CompanyViewModel>().EditBranch(
 					Name.Text,
 					Address.Text,
 					OpeningHours.Text,
@@ -78,7 +78,7 @@ namespace GentApp.Views {
 			};
 			ContentDialogResult result = await deleteBranchDialog.ShowAsync();
 			if ( result == ContentDialogResult.Primary ) {
-				SimpleIoc.Default.GetInstance<CompanyViewModel>().DeleteBranch();
+				await SimpleIoc.Default.GetInstance<CompanyViewModel>().DeleteBranch();
 			}
 		}
 

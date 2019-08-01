@@ -10,15 +10,19 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
 using GentApp.Views;
+using System.Threading.Tasks;
+using Windows.UI.Popups;
 
 namespace GentApp.ViewModels {
 	public class BranchViewModel : ViewModelBase {
 		private readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<BranchViewModel>();
 		private readonly INavigationService _navigationService;
 		private readonly EventService _eventService;
+		private readonly PromotionService _promotionService;
 
 		public BranchViewModel(INavigationService navigationService) {
 			_eventService = new EventService();
+			_promotionService = new PromotionService();
 			_navigationService = navigationService;
 		}
 
@@ -28,23 +32,16 @@ namespace GentApp.ViewModels {
 			}
 		}
 
-		private RelayCommand<string> _saveBranchCommand;
-
-		public RelayCommand<string> SaveBranchCommand {
-			get {
-				return _saveBranchCommand = new RelayCommand<string>(name => {
-					CompanyViewModel.EditBranch(Events, Promotions, name);
-
-					RaisePropertyChanged(nameof(Events));
-					RaisePropertyChanged(nameof(Promotions));
-				});
-			}
+		public async Task SaveBranch() {
+			await CompanyViewModel.UpdateBranch(Events, Promotions);
+			RaisePropertyChanged(nameof(Events));
+			RaisePropertyChanged(nameof(Promotions));
 		}
 
-		private List<Promotion> _promotions;
+		private List<Promotion> _promotions = new List<Promotion>();
 		public List<Promotion> Promotions {
 			get {
-				return _promotions;
+				return _promotions ?? new List<Promotion>();
 			}
 
 			set {
@@ -88,30 +85,28 @@ namespace GentApp.ViewModels {
 			}
 		}
 
-		public void AddPromotion(Promotion promotion) {
+		public async void AddPromotion(Promotion promotion) {
 			Promotions.Add(promotion);
-
-			SaveBranchCommand.Execute("Promotion");
-			RaisePropertyChanged(nameof(Promotions));
+			await SaveBranch();
 			_navigationService.NavigateTo(nameof(BranchPromotionsPage));
 		}
 
-		public void EditPromotion(string title, string description, DateTime startdate, DateTime enddate) {
+		public async void EditPromotion(string title, string description, DateTime startdate, DateTime enddate) {
 			MySelectedPromotion.Title = title;
 			MySelectedPromotion.Description = description;
 			MySelectedPromotion.StartDate = startdate;
 			MySelectedPromotion.EndDate = enddate;
 
-			Promotions[Promotions.FindIndex(p => p.Id.Equals(MySelectedPromotion.Id))] = MySelectedPromotion;
+			CompanyViewModel.SelectedBranch.Promotions[Promotions.FindIndex(p => p.Id.Equals(MySelectedPromotion.Id))] = MySelectedPromotion;
 
-			SaveBranchCommand.Execute("Promotion");
+			await _promotionService.Update(MySelectedPromotion);
 			RaisePropertyChanged(nameof(Promotions));
 			_navigationService.NavigateTo(nameof(BranchPromotionsPage));
 		}
 
-		public void DeletePromotion() {
-			Promotions.RemoveAt(Promotions.FindIndex(p => p.Id.Equals(MySelectedPromotion.Id)));
-			SaveBranchCommand.Execute("Branch");
+		public async void DeletePromotion() {
+			CompanyViewModel.SelectedBranch.Promotions.RemoveAt(Promotions.FindIndex(p => p.Id.Equals(MySelectedPromotion.Id)));
+			await _promotionService.Delete(MySelectedPromotion);
 			RaisePropertyChanged(nameof(Promotions));
 			_navigationService.NavigateTo(nameof(BranchPromotionsPage));
 		}
@@ -131,10 +126,10 @@ namespace GentApp.ViewModels {
 			}
 		}
 
-		private List<Event> _events;
+		private List<Event> _events = new List<Event>();
 		public List<Event> Events {
 			get {
-				return _events;
+				return _events ?? new List<Event>();
 			}
 
 			set {
@@ -163,30 +158,29 @@ namespace GentApp.ViewModels {
 			}
 		}
 
-		public void AddEvent(Event newEvent) {
+		public async void AddEvent(Event newEvent) {
 			Events.Add(newEvent);
-
-			SaveBranchCommand.Execute("Event");
+			await SaveBranch();
 			_navigationService.NavigateTo(nameof(BranchEventsPage));
 		}
 
-		public void EditEvent(string title, string description, DateTime startDate, DateTime endDate) {
+		public async Task EditEvent(string title, string description, DateTime startDate, DateTime endDate) {
 			SelectedEvent.Title = title;
 			SelectedEvent.Description = description;
 			SelectedEvent.StartDate = startDate;
 			SelectedEvent.EndDate = endDate;
 			SelectedEvent.Id = Guid.NewGuid().ToString();
 
-			Events[Events.FindIndex(e => e.Id.Equals(SelectedEvent.Id))] = SelectedEvent;
+			CompanyViewModel.SelectedBranch.Events[Events.FindIndex(e => e.Id.Equals(SelectedEvent.Id))] = SelectedEvent;
 
-			SaveBranchCommand.Execute("Event");
+			await _eventService.Update(SelectedEvent);
 			RaisePropertyChanged(nameof(Events));
 			_navigationService.NavigateTo(nameof(BranchEventsPage));
 		}
 
-		public void DeleteEvent() {
-			Events.RemoveAt(Events.FindIndex(e => e.Id.Equals(SelectedEvent.Id)));
-			SaveBranchCommand.Execute("Branch");
+		public async Task DeleteEvent() {
+			CompanyViewModel.SelectedBranch.Events.RemoveAt(Events.FindIndex(e => e.Id.Equals(SelectedEvent.Id)));
+			await _eventService.Delete(SelectedEvent);
 			RaisePropertyChanged(nameof(Events));
 			_navigationService.NavigateTo(nameof(BranchEventsPage));
 		}
