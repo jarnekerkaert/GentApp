@@ -65,7 +65,9 @@
 		</VisualStateManager.VisualStateGroups>
 		<NavigationView
 			Header="{Binding Path=UserViewModel.CurrentUser.UserName}"
-			IsBackEnabled="False">
+			IsBackEnabled="False"
+			IsBackButtonVisible="Collapsed"
+			IsSettingsVisible="False">
 			<interactivity:Interaction.Behaviors>
 				<core:EventTriggerBehavior EventName="ItemInvoked">
 					<core:EventTriggerBehavior.Actions>

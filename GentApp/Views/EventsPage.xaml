@@ -9,7 +9,8 @@
 	xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
 	xmlns:triggers="using:WindowsStateTriggers"
 	xmlns:core="using:Microsoft.Xaml.Interactions.Core"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+	xmlns:local="using:GentApp.Helpers"
+	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding EventsViewModelInstance, Source={StaticResource Locator}}">
 
 	<interactivity:Interaction.Behaviors>
@@ -18,8 +19,13 @@
 			<core:InvokeCommandAction Command="{Binding Path=LoadUpcomingEventsCommand}" />
 		</core:EventTriggerBehavior>
 	</interactivity:Interaction.Behaviors>
-	
-    <Grid>
+
+	<Page.Resources>
+		<local:StringFormatConverter x:Key="StringFormatConverter"/>
+	</Page.Resources>
+
+	<Grid
+		Margin="10">
 		<VisualStateManager.VisualStateGroups>
 			<VisualStateGroup>
 				<VisualState x:Name="HasSubscriptions">
@@ -28,6 +34,7 @@
 					</VisualState.StateTriggers>
 					<VisualState.Setters>
 						<Setter Target="SubscribedEvents.Visibility" Value="Collapsed"/>
+						<Setter Target="ComingUp.Visibility" Value="Collapsed"/>
 					</VisualState.Setters>
 				</VisualState>
 			</VisualStateGroup>
@@ -37,6 +44,7 @@
 			<RowDefinition Height="310"></RowDefinition>
 		</Grid.RowDefinitions>
 		<TextBlock
+			x:Name="ComingUp"
 			Grid.Row="1" 
 			VerticalAlignment="Top" 
 			FontWeight="Medium" 
@@ -53,14 +61,14 @@
 			</interactivity:Interaction.Behaviors>
 			<GridView.ItemsPanel>
 				<ItemsPanelTemplate>
-					<ItemsWrapGrid MaximumRowsOrColumns="3"/>
+					<ItemsWrapGrid MaximumRowsOrColumns="2"/>
 				</ItemsPanelTemplate>
 			</GridView.ItemsPanel>
 			<GridView.ItemTemplate>
 				<DataTemplate x:DataType="datamodel:Event">
 					<Grid Margin="10">
 						<Grid.RowDefinitions>
-							<RowDefinition Height="150" />
+							<RowDefinition Height="200" />
 							<RowDefinition />
 						</Grid.RowDefinitions>
 						<Border Grid.RowSpan="1"
@@ -69,19 +77,34 @@
 								BorderThickness="0"/>
 						<Image x:Name="Image" 
                                HorizontalAlignment="Left"
-                               Stretch="UniformToFill" Height="100" Width="100"
+							   VerticalAlignment="Bottom"
+                               Stretch="UniformToFill" 
+							   Height="140" 
+							   Width="140"
 								Source="{x:Bind ImageUri}">
 						</Image>
-						<StackPanel VerticalAlignment="Bottom"
+						<StackPanel VerticalAlignment="Top"
 									Grid.Row="0"
 									Margin="5,0,5,0"
-									Width="120">
+									Width="200">
 							<TextBlock Text="{x:Bind Title}"
 									   FontWeight="Medium" 
                                        Style="{ThemeResource BodyTextBlockStyle}"
 									   TextWrapping="NoWrap"
                                        HorizontalAlignment="Left" />
-							<TextBlock Text="{x:Bind Description}"  />
+							<StackPanel
+								Orientation="Horizontal"
+								VerticalAlignment="Top"
+								Margin="5">
+								<TextBlock 
+										Text="{x:Bind StartDate}" 
+										TextWrapping="WrapWholeWords"/>
+								<TextBlock 
+									Margin="5,0,5,0"
+									Text="-" />
+								<TextBlock Text="{x:Bind EndDate}"
+										   TextWrapping="WrapWholeWords"/>
+							</StackPanel>
 						</StackPanel>
 					</Grid>
 				</DataTemplate>
@@ -128,11 +151,26 @@
                                        Style="{ThemeResource BodyTextBlockStyle}"
 									   TextWrapping="NoWrap"
                                        HorizontalAlignment="Left" />
-							<TextBlock Text="{x:Bind Description}"  />
+
+							<StackPanel
+								Orientation="Horizontal"
+								VerticalAlignment="Top"
+								Margin="5">
+								<TextBlock 
+									Text="{x:Bind StartDate}"
+									TextWrapping="WrapWholeWords"/>
+								<TextBlock 
+									Margin="5,0,5,0"
+									Text="-"/>
+								<TextBlock 
+									Text="{x:Bind EndDate}" 
+									TextWrapping="WrapWholeWords"/>
+
+							</StackPanel>
 						</StackPanel>
 					</Grid>
 				</DataTemplate>
 			</GridView.ItemTemplate>
 		</GridView>
-    </Grid>
+	</Grid>
 </Page>
