@@ -62,5 +62,14 @@ namespace GentApp.ViewModels {
 					});
 			}
 		}
+
+		private RelayCommand _backCommand;
+
+		public RelayCommand BackCommand {
+			get {
+				return _backCommand =
+					new RelayCommand(() => _navigationService.GoBack());
+			}
+		}
 	}
 }

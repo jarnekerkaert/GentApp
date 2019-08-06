@@ -65,13 +65,17 @@
 		</VisualStateManager.VisualStateGroups>
 		<NavigationView
 			Header="{Binding Path=UserViewModel.CurrentUser.UserName}"
-			IsBackEnabled="False"
-			IsBackButtonVisible="Collapsed"
+			IsBackEnabled="True"
 			IsSettingsVisible="False">
 			<interactivity:Interaction.Behaviors>
 				<core:EventTriggerBehavior EventName="ItemInvoked">
 					<core:EventTriggerBehavior.Actions>
 						<core:InvokeCommandAction Command="{Binding NavigateCommand}" />
+					</core:EventTriggerBehavior.Actions>
+				</core:EventTriggerBehavior>
+				<core:EventTriggerBehavior EventName="BackRequested">
+					<core:EventTriggerBehavior.Actions>
+						<core:InvokeCommandAction Command="{Binding BackCommand}" />
 					</core:EventTriggerBehavior.Actions>
 				</core:EventTriggerBehavior>
 			</interactivity:Interaction.Behaviors>

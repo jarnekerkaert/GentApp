@@ -95,7 +95,7 @@
 							<StackPanel
 								Orientation="Horizontal"
 								VerticalAlignment="Top"
-								Margin="5">
+								Margin="0,5">
 								<TextBlock 
 										Text="{Binding Path=StartDate.Date, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:dd/MM/yyy}'}"
 										TextWrapping="WrapWholeWords"/>
