@@ -56,6 +56,7 @@ namespace GentApp.Views {
 					StartDate = StartDatePicker.Date.Value.DateTime,
 					EndDate = EndDatePicker.Date.Value.DateTime
 				});
+				SimpleIoc.Default.GetInstance<CompanyViewModel>().NotifySubscribers(true);
 			}
 		}
 	}

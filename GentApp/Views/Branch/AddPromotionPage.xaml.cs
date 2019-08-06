@@ -71,6 +71,7 @@ namespace GentApp.Views
 					EndDate = EndDatePicker.Date.Value.DateTime,
 					AllBranches = false };
 				SimpleIoc.Default.GetInstance<BranchViewModel>().AddPromotion(newPromotion);
+				SimpleIoc.Default.GetInstance<CompanyViewModel>().NotifySubscribers(false);
 			}
 		}
 	}

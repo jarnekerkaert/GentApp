@@ -85,5 +85,37 @@ namespace GentApp.Services
 				await new MessageDialog(ex.Message).ShowAsync();
 			}
 		}
+
+		public async Task NotifySubscribersEvents(string id, bool isEvent)
+		{
+			try
+			{
+				var response = await HttpClient.PutAsync(apiUrl + "/" + id + "/notifysubscribers", new StringContent(JsonConvert.SerializeObject(isEvent), System.Text.Encoding.UTF8, "application/json"));
+			}
+			catch (Exception ex)
+			{
+				await new MessageDialog(ex.Message).ShowAsync();
+			}
+		}
+
+		public async Task<IEnumerable<Promotion>> GetPromotions(string id)
+		{
+			HttpResponseMessage response = await HttpClient.GetAsync(apiUrl + "/" + id + "/promotions");
+			if (response.IsSuccessStatusCode)
+			{
+				return JsonConvert.DeserializeObject<IEnumerable<Promotion>>(await response.Content.ReadAsStringAsync());
+			}
+			return Enumerable.Empty<Promotion>();
+		}
+
+		public async Task<IEnumerable<Event>> GetEvents(string id)
+		{
+			HttpResponseMessage response = await HttpClient.GetAsync(apiUrl + "/" + id + "/events");
+			if (response.IsSuccessStatusCode)
+			{
+				return JsonConvert.DeserializeObject<IEnumerable<Event>>(await response.Content.ReadAsStringAsync());
+			}
+			return Enumerable.Empty<Event>();
+		}
 	}
 }

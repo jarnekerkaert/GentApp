@@ -6,6 +6,8 @@ using GentApp.Helpers;
 using GentApp.Services;
 using GentApp.Views;
 using MetroLog;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -168,6 +170,93 @@ namespace GentApp.ViewModels {
 			set {
 				_subscribedBranches = value;
 				RaisePropertyChanged(nameof(SubscribedBranches));
+			}
+		}
+
+		public async void ClearSubscriptionAmounts(Subscription subscription)
+		{
+			subscription.AmountEvents = 0;
+			subscription.AmountPromotions = 0;
+			// subscription.Branch = null;
+			await _subscriptionService.Update(subscription);
+		}
+
+		private RelayCommand _loadPromotionsCommand;
+
+		public RelayCommand LoadPromotionsCommand
+		{
+			get
+			{
+				return _loadPromotionsCommand ?? (_loadPromotionsCommand = new RelayCommand(async () => {
+					Promotions = await _branchService.GetPromotions(SelectedBranch.Id);
+					isNavigated = true;
+					var currentDate = DateTime.Today.Date;
+					CurrentPromotions = Promotions.Where(p => p.StartDate <= currentDate && p.EndDate >= currentDate).ToList();
+				}
+				));
+			}
+		}
+
+		private IEnumerable<Promotion> _promotions;
+		public IEnumerable<Promotion> Promotions
+		{
+			get
+			{
+				return _promotions;
+			}
+
+			set
+			{
+				_promotions = value;
+				RaisePropertyChanged(nameof(Promotions));
+			}
+		}
+
+		private IEnumerable<Promotion> _currentPromotions;
+		public IEnumerable<Promotion> CurrentPromotions
+		{
+			get
+			{
+				return _currentPromotions;
+			}
+
+			set
+			{
+				_currentPromotions = value;
+				RaisePropertyChanged(nameof(CurrentPromotions));
+			}
+		}
+
+		private RelayCommand _loadFullSubscriptionsCommand;
+
+		public RelayCommand LoadFullSubscriptionsCommand
+		{
+			get
+			{
+				return _loadFullSubscriptionsCommand = new RelayCommand(
+						async () => {
+							Subscriptions = new ObservableCollection<Subscription>(
+								await _subscriptionService.GetSubscriptions(UserViewModel.CurrentUser.Id));
+							SubscribedBranches = new ObservableCollection<Branch>(
+								await _userService.GetSubscribedBranches(UserViewModel.CurrentUser.Id));
+							FullSubscriptions = new ObservableCollection<Subscription>(
+								await _subscriptionService.GetSubscriptions(UserViewModel.CurrentUser.Id));
+						});
+			}
+		}
+
+		private ObservableCollection<Subscription> _fullSubscriptions;
+		public ObservableCollection<Subscription> FullSubscriptions
+		{
+			get
+			{
+				return _fullSubscriptions;
+			}
+
+			set
+			{
+				_fullSubscriptions = value;
+				RaisePropertyChanged(nameof(FullSubscriptions));
 			}
 		}
 	}
