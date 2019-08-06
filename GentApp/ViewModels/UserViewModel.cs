@@ -6,16 +6,17 @@ using GentApp.Services;
 using GentApp.Views;
 using MetroLog;
 using System;
+using System.Threading.Tasks;
 using Windows.UI.Popups;
 
 namespace GentApp.ViewModels {
 	public class UserViewModel : ViewModelBase {
-		private readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<CompaniesViewModel>();
+		private readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<UserViewModel>();
 		private readonly INavigationService _navigationService;
 		private readonly UserService _userService;
 
 		private RegisterModel _registerModel = new RegisterModel();
-		private bool _registerCompany = false;
+		private bool _registerCompany;
 
 		public RegisterModel RegisterModel {
 			get {
@@ -53,10 +54,17 @@ namespace GentApp.ViewModels {
 			}
 		}
 
-		public async void SaveUser() {
+		public async Task SaveUser(string name) {
 			try {
-				await _userService.Update(CurrentUser).ContinueWith(p => RaisePropertyChanged(nameof(IsEntrepreneur)));			
-				await new MessageDialog("User saved!").ShowAsync();
+				await _userService.Update(CurrentUser);
+				CurrentUser = await _userService.GetUser(CurrentUser.Id);
+
+				RaisePropertyChanged(nameof(IsEntrepreneur));
+				RaisePropertyChanged(nameof(CurrentUser));
+
+				if( name?.Equals("") != false )
+					name = "User";
+				await new MessageDialog(name + " saved!").ShowAsync();
 			} catch(Exception e) {
 				await new MessageDialog("Error saving user: "+e.Message).ShowAsync();
 			}

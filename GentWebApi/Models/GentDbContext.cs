@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-using GentApp.Models;
-
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using GentApp.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace GentWebApi.Models {
@@ -24,5 +17,6 @@ namespace GentWebApi.Models {
 
 		public DbSet<Subscription> Subscriptions { get; set; }
 
+		public DbSet<Event> Events { get; set; }
 	}
 }

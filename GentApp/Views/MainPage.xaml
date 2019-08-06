@@ -65,11 +65,17 @@
 		</VisualStateManager.VisualStateGroups>
 		<NavigationView
 			Header="{Binding Path=UserViewModel.CurrentUser.UserName}"
-			IsBackEnabled="False">
+			IsBackEnabled="True"
+			IsSettingsVisible="False">
 			<interactivity:Interaction.Behaviors>
 				<core:EventTriggerBehavior EventName="ItemInvoked">
 					<core:EventTriggerBehavior.Actions>
 						<core:InvokeCommandAction Command="{Binding NavigateCommand}" />
+					</core:EventTriggerBehavior.Actions>
+				</core:EventTriggerBehavior>
+				<core:EventTriggerBehavior EventName="BackRequested">
+					<core:EventTriggerBehavior.Actions>
+						<core:InvokeCommandAction Command="{Binding BackCommand}" />
 					</core:EventTriggerBehavior.Actions>
 				</core:EventTriggerBehavior>
 			</interactivity:Interaction.Behaviors>
@@ -78,12 +84,13 @@
 					Content="Home"
 					Icon="Home" />
 				<NavigationViewItem
-					Content="Companies"
-					Icon="List" />
-				<NavigationViewItem
 					x:Name="YourCompanyItem"
 					Content="Your Company"
 					Icon="Edit" />
+				<NavigationViewItem
+					x:Name="EventsItem"
+					Content="Events"
+					Icon="Calendar" />
 				<NavigationViewItem
 					x:Name="YourSubscriptionsItem"
 					Content="Your Subscriptions"
@@ -91,7 +98,7 @@
 				<NavigationViewItem
 					x:Name="LoginItem"
 					Content="Login"
-					Icon="GoToStart"/>
+					Icon="OtherUser"/>
 				<NavigationViewItem
 					x:Name="LogoutItem"
 					Content="Logout"

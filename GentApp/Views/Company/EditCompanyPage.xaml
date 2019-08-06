@@ -1,0 +1,61 @@
+﻿<Page
+    x:Class="GentApp.Views.EditCompanyPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+	DataContext="{Binding CompanyViewModelInstance, Source={StaticResource Locator}}">
+
+	<StackPanel
+		HorizontalAlignment="Center"
+		VerticalAlignment="Center"
+		Margin="10"
+		MinWidth="300">
+		<TextBlock 
+			HorizontalAlignment="Center"
+			FontSize="25dp"
+			FontWeight="SemiBold"
+			Margin="14"
+			Text="{Binding Path=MyCompany.Name, TargetNullValue='Empty'}"/>
+
+		<TextBox 
+			Width="200" 
+			x:Name="Name" 
+			Header= "Name"
+			MaxLength="300" 
+			InputScope="Text" 
+			Text="{Binding Path=MyCompany.Name, Mode=TwoWay, TargetNullValue='Empty'}"/>
+		<TextBlock x:Name="NameValidationErrorTextBlock" 
+				   Margin="3,1,3,1"
+				Foreground="Red" />
+		<TextBox
+			Width="200"
+			x:Name="Address"
+			Header= "Address"
+			MaxLength="300"
+			InputScope="Text" 
+			Text="{Binding Path=MyCompany.Address, Mode=OneWay, TargetNullValue='Empty'}"/>
+		<TextBlock
+			x:Name="AddressValidationErrorTextBlock" 
+			Margin="3,1,3,1"
+            Foreground="Red" />
+		<TextBox
+			Width="200"
+			x:Name="OpeningHours"
+			Header= "Opening hours"
+			MaxLength="300"
+			InputScope="Text" 
+			Text="{Binding Path=MyCompany.OpeningHours, Mode=OneWay, TargetNullValue='Empty'}"/>
+		<TextBlock 
+			x:Name="OpeningHoursValidationErrorTextBlock"
+			Margin="3,1,3,1"
+            Foreground="Red" />
+		<SymbolIcon 
+			Symbol="Save" 
+			IsTapEnabled="True"
+			Margin="10"
+			Tapped="SymbolIcon_Tapped"/>
+	</StackPanel>
+</Page>

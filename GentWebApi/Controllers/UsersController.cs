@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using GentApp.Models;
 using GentWebApi.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +20,13 @@ namespace GentWebApi.Controllers {
 		// GET api/<controller>/5
 		[HttpGet("login/{username}")]
 		public ActionResult<User> Login(string userName) {
-			User response = _context.Users.Include(u => u.Company.Branches)
+			User response = _context.Users
+				.Include(u => u.Company)
+				.ThenInclude(c => c.Branches)
+				.ThenInclude(b => b.Events)
+				.Include(u => u.Company)
+				.ThenInclude(c => c.Branches)
+				.ThenInclude(b => b.Promotions)
 				.Where(u => u.UserName == userName)
 				.SingleOrDefault();
 			return response != null ? (ActionResult<User>) response : (ActionResult<User>) NotFound();
@@ -27,8 +34,8 @@ namespace GentWebApi.Controllers {
 
 		// GET api/<controller>/5
 		[HttpGet("{id}")]
-		public ActionResult<User> GetById(string id) {
-			return _context.Users.Find(id) ?? (ActionResult<User>) NotFound();
+		public async Task<ActionResult<User>> GetById(string id) {
+			return await _context.Users.FindAsync(id);
 		}
 
 		// POST api/<controller>
@@ -38,7 +45,7 @@ namespace GentWebApi.Controllers {
 				User newUser = new User(user.UserName, user.FirstName, user.LastName, user.Password);
 				_context.Users
 				.Add(newUser);
-				_context.SaveChanges();
+				_context.SaveChangesAsync();
 				return Created(newUser.Id, newUser);
 			}
 			else {
@@ -48,10 +55,10 @@ namespace GentWebApi.Controllers {
 
 		// PUT api/<controller>/5
 		[HttpPut("{id}")]
-		public IActionResult Put(string id, [FromBody]User value) {
+		public async Task<IActionResult> Put(string id, [FromBody]User value) {
 			if (ModelState.IsValid) {
 				_context.Users.Update(value);
-				_context.SaveChanges();
+				await _context.SaveChangesAsync();
 				return Ok();
 			}
 			else {
@@ -80,7 +87,12 @@ namespace GentWebApi.Controllers {
 			List<Branch> branches = new List<Branch>();
 			foreach(Subscription subscription in subscriptions)
 			{
-				branches.Add(_context.Branches.Find(subscription.BranchId));
+				branches.Add(
+					_context.Branches
+					.Include(b => b.Events)
+					.Include(b => b.Promotions)
+					//.Include(b => b.Company)
+					.FirstOrDefault(b => b.Id == subscription.BranchId));
 			}
 			return branches;
 		}

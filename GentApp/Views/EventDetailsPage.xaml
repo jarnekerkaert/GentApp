@@ -1,0 +1,55 @@
+﻿<Page
+    x:Class="GentApp.Views.EventDetailsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+	DataContext="{Binding EventsViewModelInstance, Source={StaticResource Locator}}">
+
+	<StackPanel
+			HorizontalAlignment="Center"
+			VerticalAlignment="Center"
+			Margin="10"
+			MinWidth="300">
+		<TextBlock
+				FontSize="25dp"
+				FontWeight="SemiBold"
+				HorizontalAlignment="Center"
+				Text="{Binding Path=SelectedEvent.Title}"/>
+
+		<TextBlock
+				HorizontalAlignment="Center"
+				FontStyle="Italic"
+				FontWeight="SemiLight"/>
+
+		<StackPanel
+				Orientation="Horizontal"
+				Margin="10">
+			<TextBlock 
+				Margin="0,0,10,0"
+				FontWeight="SemiBold">Location:</TextBlock>
+			<TextBlock Text="{Binding Path=SelectedEvent.Branch.Name, TargetNullValue='Empty'}"/>
+		</StackPanel>
+
+		<StackPanel
+				Orientation="Horizontal"
+				Margin="10">
+			<TextBlock 
+				Margin="0,0,10,0"
+				FontWeight="SemiBold">Starts:</TextBlock>
+			<TextBlock Text="{Binding Path=SelectedEvent.StartDate, TargetNullValue='Empty'}"/>
+		</StackPanel>
+
+		<StackPanel
+				Orientation="Horizontal"
+				Margin="10">
+			<TextBlock 
+				Margin="0,0,10,0"
+				FontWeight="SemiBold">Ends:</TextBlock>
+			<TextBlock 
+				Text="{Binding Path=SelectedEvent.EndDate, TargetNullValue='Empty'}"/>
+		</StackPanel>
+	</StackPanel>
+</Page>
