@@ -8,6 +8,7 @@
 	xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
 	xmlns:core="using:Microsoft.Xaml.Interactions.Core"
 	mc:Ignorable="d"
+	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding BranchViewModelInstance, Source={StaticResource Locator}}">
 
 	<interactivity:Interaction.Behaviors>
@@ -16,15 +17,31 @@
 		</core:EventTriggerBehavior>
 	</interactivity:Interaction.Behaviors>
 
-	<StackPanel>
-		<StackPanel Orientation="Horizontal" x:Name="horStackPanel">
-			<TextBlock Text="Manage the promotions of" Margin="0,0,5,0"></TextBlock>
-			<TextBlock Text="{Binding Name}"></TextBlock>
-			<TextBlock Text=":" />
+	<StackPanel
+		HorizontalAlignment="Center"
+		MinWidth="300"
+		VerticalAlignment="Center">
+		<StackPanel Orientation="Horizontal"
+					x:Name="horStackPanel"
+					Margin="14"
+					HorizontalAlignment="Center">
+			<TextBlock Text="Promotions of "
+					   FontSize="25dp"
+					   FontWeight="SemiBold"
+					   Margin="5,0,5,0"/>
+			<TextBlock Text="{Binding Name}"
+					   Margin="5,0,5,0"
+					   FontSize="25dp"
+					   FontWeight="SemiBold"/>
 		</StackPanel>
-		<TextBlock>Your current promotions:</TextBlock>
-		<TextBlock x:Name="NoCurrentPromotionsTextBlock"></TextBlock>
-		<ListView ItemsSource="{Binding Path=CurrentPromotions}" IsItemClickEnabled="True" ItemClick="PromotionsListView_ItemClick" x:Name="currentPromotionsListView" Margin="0,0,0,20">
+		<TextBlock
+			HorizontalAlignment="Center"
+			Margin="10">Current promotions</TextBlock>
+		<TextBlock x:Name="NoCurrentPromotionsTextBlock"/>
+		<ListView ItemsSource="{Binding Path=CurrentPromotions}"
+				  IsItemClickEnabled="True" 
+				  ItemClick="PromotionsListView_ItemClick"
+				  x:Name="currentPromotionsListView">
 			<ListView.ItemTemplate>
 				<DataTemplate>
 					<StackPanel>
@@ -33,9 +50,15 @@
 				</DataTemplate>
 			</ListView.ItemTemplate>
 		</ListView>
-		<TextBlock>Non current promotions:</TextBlock>
+		
+		<TextBlock
+			HorizontalAlignment="Center"
+			Margin="10">Non current promotions</TextBlock>
 		<TextBlock x:Name="NoPromotionsTextBlock"></TextBlock>
-		<ListView ItemsSource="{Binding Path=NonCurrentPromotions}" IsItemClickEnabled="True" ItemClick="PromotionsListView_ItemClick" x:Name="promotionsListView">
+		<ListView ItemsSource="{Binding Path=NonCurrentPromotions}" 
+				  IsItemClickEnabled="True" 
+				  ItemClick="PromotionsListView_ItemClick"
+				  x:Name="promotionsListView">
 			<ListView.ItemTemplate>
 				<DataTemplate x:DataType="local:Promotion">
 					<StackPanel>
@@ -44,7 +67,9 @@
 				</DataTemplate>
 			</ListView.ItemTemplate>
 		</ListView>
-
-		<SymbolIcon Symbol="Add" IsTapEnabled="True" Tapped="AddIcon_Tapped"></SymbolIcon>
+		<SymbolIcon Symbol="Add" 
+					IsTapEnabled="True"
+					Margin="10"
+					Tapped="AddIcon_Tapped"/>
 	</StackPanel>
 </Page>

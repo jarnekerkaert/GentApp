@@ -8,6 +8,7 @@
 	xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
 	xmlns:core="using:Microsoft.Xaml.Interactions.Core"
 	mc:Ignorable="d"
+	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding CompanyViewModelInstance, Source={StaticResource Locator}}">
 
 	<interactivity:Interaction.Behaviors>
@@ -16,21 +17,57 @@
 		</core:EventTriggerBehavior>
 	</interactivity:Interaction.Behaviors>
 
-	<StackPanel>
-		<TextBlock Margin="0,50,0,50" HorizontalAlignment="Center">Details of your company:</TextBlock>
+	<StackPanel
+		HorizontalAlignment="Center"
+		VerticalAlignment="Center"
+		Margin="10"
+		MinWidth="300">
+		
+		<StackPanel
+			Orientation="Horizontal"
+			HorizontalAlignment="Center"
+			Margin="10">
+			<TextBlock 
+			HorizontalAlignment="Center"
+			FontSize="25dp"
+			FontWeight="SemiBold"
+			Margin="14"
+			Text="{Binding Path=MyCompany.Name, TargetNullValue='Empty'}"/>
+			<SymbolIcon 
+				Symbol="Edit"
+				IsTapEnabled="True"
+				Margin="10"
+				Tapped="SymbolIcon_Tapped"/>
+		</StackPanel>
+		
+		<StackPanel
+			Orientation="Horizontal"
+			Margin="10">
+			<TextBlock 
+				FontWeight="SemiBold"
+				Margin="0,0,10,0">Address:</TextBlock>
+			<TextBlock 
+				Margin="0,0,10,0"
+				Text="{Binding Path=MyCompany.Address, TargetNullValue='Empty'}"/>
+		</StackPanel>
 
-		<TextBlock FontWeight="Bold">Name:</TextBlock>
-		<TextBlock Text="{Binding Path=MyCompany.Name, Mode=OneWay, TargetNullValue='Empty'}"></TextBlock>
-		<TextBlock FontWeight="Bold">Address:</TextBlock>
-		<TextBlock Text="{Binding Path=MyCompany.Address, Mode=OneWay, TargetNullValue='Empty'}"></TextBlock>
-		<TextBlock FontWeight="Bold">Opening hours:</TextBlock>
-		<TextBlock Text="{Binding Path=MyCompany.OpeningHours, Mode=OneWay, TargetNullValue='Empty'}"></TextBlock>
+		<StackPanel
+			Orientation="Horizontal"
+			Margin="10">
+			<TextBlock
+				FontWeight="SemiBold"
+				Margin="0,0,10,0">Opening hours:</TextBlock>
+			<TextBlock
+				Margin="0,0,10,0"
+				Text="{Binding Path=MyCompany.OpeningHours, TargetNullValue='Empty'}"/>
+		</StackPanel>
+		
 
-		<SymbolIcon Symbol="Edit"
-					IsTapEnabled="True"
-					Tapped="SymbolIcon_Tapped"></SymbolIcon>
-
-		<TextBlock Margin="0,50,0,0">Branches:</TextBlock>
+		<TextBlock
+			HorizontalAlignment="Center"
+			FontSize="20dp"
+			Margin="14"
+			FontWeight="SemiBold">Branches</TextBlock>
 		<ListView ItemsSource="{Binding Path=MyCompany.Branches}" 
 				  SelectedItem="{Binding Path=SelectedBranch, Mode=TwoWay}">
 			<interactivity:Interaction.Behaviors>
@@ -48,6 +85,9 @@
 			</ListView.ItemTemplate>
 		</ListView>
 
-		<SymbolIcon Symbol="Add" IsTapEnabled="True" Tapped="AddIcon_Tapped"></SymbolIcon>
+		<SymbolIcon Symbol="Add" 
+					IsTapEnabled="True" 
+					Margin="10"
+					Tapped="AddIcon_Tapped"/>
 	</StackPanel>
 </Page>

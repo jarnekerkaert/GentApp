@@ -4,6 +4,7 @@ using GalaSoft.MvvmLight.Ioc;
 using GentApp.DataModel;
 using GentApp.Helpers;
 using GentApp.Services;
+using GentApp.Views;
 using MetroLog;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,6 +16,7 @@ namespace GentApp.ViewModels {
 		private readonly INavigationService _navigationService;
 		private readonly EventService _eventService;
 		private readonly UserService _userService;
+		private bool isNavigated;
 
 		public EventsViewModel(INavigationService navigationService) {
 			_navigationService = navigationService;
@@ -39,6 +41,33 @@ namespace GentApp.ViewModels {
 				RaisePropertyChanged(nameof(Events));
 			}
 		}
+
+		private Event _selectedEvent;
+
+		public Event SelectedEvent {
+			get { return _selectedEvent; }
+			set {
+				_selectedEvent = value;
+				RaisePropertyChanged(nameof(SelectedEvent));
+			}
+		}
+
+		private RelayCommand _eventSelectedCommand;
+
+		public RelayCommand EventSelectedCommand {
+			get {
+				return _eventSelectedCommand = new RelayCommand(() => {
+				if ( isNavigated && SelectedEvent == null ) {
+					isNavigated = false;
+				}
+				else {
+					isNavigated = true;
+					_navigationService.NavigateTo(nameof(EventDetailsPage));
+					}
+				});
+			}
+		}
+
 		private ObservableCollection<Event> _subscribedEvents;
 		public ObservableCollection<Event> SubscribedEvents {
 			get {
@@ -57,6 +86,7 @@ namespace GentApp.ViewModels {
 			get {
 				return _loadEventsCommand = new RelayCommand(async () => {
 					Events = new ObservableCollection<Event>(await _eventService.GetAll());
+					isNavigated = true;
 					RaisePropertyChanged(nameof(Events));
 				});
 			}

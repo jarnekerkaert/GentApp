@@ -26,7 +26,7 @@ namespace GentApp.Views
 	{
 		public EditEventPage()
 		{
-			this.InitializeComponent();
+			InitializeComponent();
 			StartDatePicker.Date = SimpleIoc.Default.GetInstance<BranchViewModel>().SelectedEvent.StartDate;
 			EndDatePicker.Date = SimpleIoc.Default.GetInstance<BranchViewModel>().SelectedEvent.EndDate;
 		}
@@ -38,13 +38,13 @@ namespace GentApp.Views
 			StartDateValidationErrorTextBlock.Text = "";
 			EndDateValidationErrorTextBlock.Text = "";
 			DateValidationErrorTextBlock.Text = "";
-			validateInput();
+			ValidateInput();
 		}
 
-		private void validateInput()
+		private async void ValidateInput()
 		{
 			var isValid = true;
-			if (Title.Text == "")
+			if ( Title.Text?.Length == 0 )
 			{
 				TitleValidationErrorTextBlock.Text = "This field is required.";
 				isValid = false;
@@ -54,7 +54,7 @@ namespace GentApp.Views
 				TitleValidationErrorTextBlock.Text = "The maximum length of this field is 600 characters.";
 				isValid = false;
 			}
-			if (Description.Text == "")
+			if ( Description.Text?.Length == 0 )
 			{
 				DescriptionValidationErrorTextBlock.Text = "This field is required.";
 				isValid = false;
@@ -74,10 +74,13 @@ namespace GentApp.Views
 				EndDateValidationErrorTextBlock.Text = "This field is required.";
 				isValid = false;
 			}
-			if (isValid == true)
+			if ( isValid )
 			{
-				SimpleIoc.Default.GetInstance<BranchViewModel>().EditEvent(Title.Text, Description.Text, StartDatePicker.Date.Value.DateTime, EndDatePicker.Date.Value.DateTime);
-				Frame.Navigate(typeof(BranchEventsPage));
+				await SimpleIoc.Default.GetInstance<BranchViewModel>().EditEvent(
+					Title.Text, 
+					Description.Text,
+					StartDatePicker.Date.Value.DateTime, 
+					EndDatePicker.Date.Value.DateTime);
 			}
 		}
 
@@ -93,10 +96,8 @@ namespace GentApp.Views
 			ContentDialogResult result = await deleteEventDialog.ShowAsync();
 			if (result == ContentDialogResult.Primary)
 			{
-				SimpleIoc.Default.GetInstance<BranchViewModel>().DeleteEvent();
-				Frame.Navigate(typeof(BranchEventsPage));
+				await SimpleIoc.Default.GetInstance<BranchViewModel>().DeleteEvent();
 			}
-			//else if(result == ContentDialogResult.Secondary){ /* ... */}
 		}
 	}
 }

@@ -1,0 +1,72 @@
+﻿<Page
+    x:Class="GentApp.Views.AddPromotionPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+	DataContext="{Binding BranchViewModelInstance, Source={StaticResource Locator}}">
+
+	<StackPanel
+		HorizontalAlignment="Center"
+		VerticalAlignment="Center"
+		Margin="10"
+		MinWidth="300">
+		<StackPanel
+			Orientation="Horizontal"
+			DataContext="{Binding CompanyViewModelInstance, Source={StaticResource Locator}}"
+			Margin="14"
+			HorizontalAlignment="Center">
+			<TextBlock
+				Text="Promotion for"
+				FontSize="25dp"
+				Margin="0,0,5,0"
+				FontWeight="SemiBold"/>
+			<TextBlock 
+				FontSize="25dp"
+				FontWeight="SemiBold"
+				Margin="5,0,0,0"
+				Text="{Binding SelectedBranch.Name}"/>
+		</StackPanel>
+
+		<TextBox Width="200" 
+				 x:Name="Title"
+				 Header="Title" 
+				 MaxLength="300"
+				 InputScope="Text"
+				 PlaceholderText="Title"/>
+		<TextBlock x:Name="TitleValidationErrorTextBlock"
+                Foreground="Red" />
+		<TextBox Width="200"
+				 x:Name="Description" 
+				 Header= "Description" 
+				 MaxLength="300" 
+				 InputScope="Text"
+				 PlaceholderText="Description"/>
+		<TextBlock x:Name="DescriptionValidationErrorTextBlock"
+                Foreground="Red" />
+		<CalendarDatePicker x:Name="StartDatePicker" 
+							Header="Start date"
+							HorizontalAlignment="Center"
+							Margin="0,0,0,10"
+							Width="200"/>
+		<TextBlock x:Name="StartDateValidationErrorTextBlock"
+                Foreground="Red" />
+		<CalendarDatePicker x:Name="EndDatePicker" 
+							Header="End date"
+							HorizontalAlignment="Center" 
+							Width="200" />
+		<TextBlock x:Name="EndDateValidationErrorTextBlock"
+                Foreground="Red" />
+		<TextBlock x:Name="DateValidationErrorTextBlock"
+                Foreground="Red" />
+		<Button Content="Save" 
+				MinWidth="100"
+				Background="DodgerBlue" 
+                Foreground="White"
+				Click="SavePromotionBtn_Click" 
+				x:Name="savePromotionBtn" 
+				HorizontalAlignment="Center"/>
+	</StackPanel>
+</Page>

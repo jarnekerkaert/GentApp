@@ -30,16 +30,34 @@ namespace GentApp.Services
 			return Enumerable.Empty<Event>();
 		}
 
-		public async Task Add(Event newEvent)
+		public async Task<IEnumerable<Event>> GetByBranchId(string branchId) {
+			HttpResponseMessage response = await HttpClient.GetAsync(apiUrl + "/" + branchId);
+			if ( response.IsSuccessStatusCode ) {
+				return JsonConvert.DeserializeObject<IEnumerable<Event>>(await response.Content.ReadAsStringAsync());
+			}
+			return Enumerable.Empty<Event>();
+		}
+
+		public async Task<Event> Add(Event newEvent)
 		{
 			try
 			{
-				var response = await HttpClient.PostAsync(apiUrl, new StringContent(JsonConvert.SerializeObject(newEvent), System.Text.Encoding.UTF8, "application/json"));
+				var request = new HttpRequestMessage {
+					Method = HttpMethod.Post,
+					RequestUri = new Uri(apiUrl),
+					Content = new StringContent(JsonConvert.SerializeObject(newEvent), Encoding.UTF8, "application/json")
+				};
+
+				var response = await HttpClient.SendAsync(request);
+
+				return JsonConvert.DeserializeObject<Event>(response.Content.ToString());
 			}
 			catch (Exception ex)
 			{
 				await new MessageDialog(ex.Message).ShowAsync();
 			}
+
+			return null;
 		}
 
 		public async Task Delete(Event eve)
@@ -64,7 +82,12 @@ namespace GentApp.Services
 		{
 			try
 			{
-				var response = await HttpClient.PutAsync(apiUrl + "/" + updatedEvent.Id, new StringContent(JsonConvert.SerializeObject(updatedEvent), System.Text.Encoding.UTF8, "application/json"));
+				var request = new HttpRequestMessage {
+					Method = HttpMethod.Put,
+					RequestUri = new Uri(apiUrl + "/" + updatedEvent.Id),
+					Content = new StringContent(JsonConvert.SerializeObject(updatedEvent), Encoding.UTF8, "application/json")
+				};
+				await HttpClient.SendAsync(request);
 			}
 			catch (Exception ex)
 			{

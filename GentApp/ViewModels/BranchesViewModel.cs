@@ -6,8 +6,6 @@ using GentApp.Helpers;
 using GentApp.Services;
 using GentApp.Views;
 using MetroLog;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -18,7 +16,7 @@ namespace GentApp.ViewModels {
 		private readonly BranchService _branchService;
 		private readonly SubscriptionService _subscriptionService;
 		private readonly UserService _userService;
-		private bool isNavigated = false;
+		private bool isNavigated;
 
 		public ObservableCollection<Branch> Branches { get; set; }
 
@@ -44,10 +42,6 @@ namespace GentApp.ViewModels {
 			get {
 				return SimpleIoc.Default.GetInstance<UserViewModel>();
 			}
-		}
-
-		public async void RetrieveBranchesOfCompany(string id) {
-			Branches = new ObservableCollection<Branch>(await _branchService.GetBranchesOfCompany(id));
 		}
 
 		public void AddBranch(Branch newBranch) {
@@ -79,12 +73,10 @@ namespace GentApp.ViewModels {
 		public RelayCommand BranchSelectedCommand {
 			get {
 				return _branchSelectedCommand = new RelayCommand(() => {
-					if (isNavigated && SelectedBranch == null)
-					{
+					if ( isNavigated && SelectedBranch == null ) {
 						isNavigated = false;
 					}
-					else
-					{
+					else {
 						isNavigated = true;
 						_navigationService.NavigateTo(nameof(BranchDetailsPage));
 					}
@@ -101,7 +93,8 @@ namespace GentApp.ViewModels {
 		public RelayCommand LoadBranchesCommand {
 			get {
 				return _loadBranchesCommand = new RelayCommand(async () => {
-					Branches = new ObservableCollection<Branch>(await _branchService.GetBranches());
+					Branches = new ObservableCollection<Branch>(await _branchService.GetAll());
+					isNavigated = true;
 					RaisePropertyChanged(nameof(Branches));
 				});
 			}
@@ -113,14 +106,14 @@ namespace GentApp.ViewModels {
 			get {
 				return _subscribeCommand = new RelayCommand(async () => {
 					if ( SubscribedTo ) {
-						Subscription subscription = Subscriptions.FirstOrDefault(s => s.Branch.Id.Equals(SelectedBranch.Id));
+						Subscription subscription = Subscriptions.FirstOrDefault(s => s.BranchId.Equals(SelectedBranch.Id));
 						Subscriptions.Remove(subscription);
 						RaisePropertyChanged(nameof(Subscriptions));
 						RaisePropertyChanged(nameof(SubscribedTo));
 						await _subscriptionService.Unsubscribe(subscription.Id);
 					}
 					else {
-						Subscription subscription = new Subscription() { BranchId = SelectedBranch.Id, UserId = UserViewModel.CurrentUser.Id, AmountEvents = 0, AmountPromotions = 0};
+						Subscription subscription = new Subscription() { BranchId = SelectedBranch.Id, UserId = UserViewModel.CurrentUser.Id };
 						Subscriptions.Add(subscription);
 						RaisePropertyChanged(nameof(Subscriptions));
 						RaisePropertyChanged(nameof(SubscribedTo));
@@ -142,21 +135,6 @@ namespace GentApp.ViewModels {
 			}
 		}
 
-		private ObservableCollection<Subscription> _fullSubscriptions;
-		public ObservableCollection<Subscription> FullSubscriptions
-		{
-			get
-			{
-				return _fullSubscriptions;
-			}
-
-			set
-			{
-				_fullSubscriptions = value;
-				RaisePropertyChanged(nameof(FullSubscriptions));
-			}
-		}
-
 		private RelayCommand _loadSubscriptionsCommand;
 
 		public RelayCommand LoadSubscriptionsCommand {
@@ -167,24 +145,6 @@ namespace GentApp.ViewModels {
 								await _subscriptionService.GetSubscriptions(UserViewModel.CurrentUser.Id));
 							SubscribedBranches = new ObservableCollection<Branch>(
 								await _userService.GetSubscribedBranches(UserViewModel.CurrentUser.Id));
-						});
-			}
-		}
-
-		private RelayCommand _loadFullSubscriptionsCommand;
-
-		public RelayCommand LoadFullSubscriptionsCommand
-		{
-			get
-			{
-				return _loadFullSubscriptionsCommand = new RelayCommand(
-						async () => {
-							Subscriptions = new ObservableCollection<Subscription>(
-								await _subscriptionService.GetSubscriptions(UserViewModel.CurrentUser.Id));
-							SubscribedBranches = new ObservableCollection<Branch>(
-								await _userService.GetSubscribedBranches(UserViewModel.CurrentUser.Id));
-							FullSubscriptions = new ObservableCollection<Subscription>(
-								await _subscriptionService.GetSubscriptions(UserViewModel.CurrentUser.Id));
 						});
 			}
 		}
@@ -210,60 +170,5 @@ namespace GentApp.ViewModels {
 				RaisePropertyChanged(nameof(SubscribedBranches));
 			}
 		}
-
-		private RelayCommand _loadPromotionsCommand;
-
-		public RelayCommand LoadPromotionsCommand
-		{
-			get
-			{
-				return _loadPromotionsCommand ?? (_loadPromotionsCommand = new RelayCommand(async () => {
-					Promotions = await _branchService.GetPromotions(SelectedBranch.Id);
-					isNavigated = true;
-					var currentDate = DateTime.Today.Date;
-					CurrentPromotions = Promotions.Where(p => p.StartDate <= currentDate && p.EndDate >= currentDate).ToList();
-				}
-				));
-			}
-		}
-
-		private IEnumerable<Promotion> _promotions;
-		public IEnumerable<Promotion> Promotions
-		{
-			get
-			{
-				return _promotions;
-			}
-
-			set
-			{
-				_promotions = value;
-				RaisePropertyChanged(nameof(Promotions));
-			}
-		}
-
-		private IEnumerable<Promotion> _currentPromotions;
-		public IEnumerable<Promotion> CurrentPromotions
-		{
-			get
-			{
-				return _currentPromotions;
-			}
-
-			set
-			{
-				_currentPromotions = value;
-				RaisePropertyChanged(nameof(CurrentPromotions));
-			}
-		}
-
-		public async void ClearSubscriptionAmounts(Subscription subscription)
-		{
-			subscription.AmountEvents = 0;
-			subscription.AmountPromotions = 0;
-			// subscription.Branch = null;
-			await _subscriptionService.Update(subscription);
-		}
-
 	}
 }

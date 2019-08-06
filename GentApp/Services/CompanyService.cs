@@ -27,20 +27,35 @@ namespace GentApp.Services {
 			return Enumerable.Empty<Company>();
 		}
 
-		public async Task Save(Company company) {
+		public async Task<Company> Save(Company company) {
 			try {
-				await HttpClient.PostAsync(apiUrl, new StringContent(JsonConvert.SerializeObject(company)));
+				var request = new HttpRequestMessage {
+					Method = HttpMethod.Post,
+					RequestUri = new Uri(apiUrl),
+					Content = new StringContent(JsonConvert.SerializeObject(company), Encoding.UTF8, "application/json")
+				};
+
+				var response = await HttpClient.SendAsync(request);
+
+				return JsonConvert.DeserializeObject<Company>(response.Content.ToString());
 			}
 			catch (Exception ex) {
 				await new MessageDialog(ex.Message).ShowAsync();
 			}
+
+			return null;
 		}
 
 		public async Task Update(Company company)
 		{
 			try
 			{
-				var response = await HttpClient.PutAsync(apiUrl + "/" + company.Id, new StringContent(JsonConvert.SerializeObject(company), System.Text.Encoding.UTF8, "application/json"));
+				var request = new HttpRequestMessage {
+					Method = HttpMethod.Put,
+					RequestUri = new Uri(apiUrl + "/" + company.Id),
+					Content = new StringContent(JsonConvert.SerializeObject(company), Encoding.UTF8, "application/json")
+				};
+				await HttpClient.SendAsync(request);
 			}
 			catch (Exception ex)
 			{
@@ -55,7 +70,7 @@ namespace GentApp.Services {
 			{
 				return JsonConvert.DeserializeObject<Company>(await response.Content.ReadAsStringAsync());
 			}
-			return DummyDataSource.Companies[0];
+			return new Company();
 		}
 	}
 }

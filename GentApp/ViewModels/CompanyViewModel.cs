@@ -6,18 +6,23 @@ using GentApp.Helpers;
 using GentApp.Services;
 using GentApp.Views;
 using MetroLog;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Windows.UI.Popups;
 
 namespace GentApp.ViewModels {
 	public class CompanyViewModel : ViewModelBase {
 		private INavigationService _navigationService;
 		private readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<CompanyViewModel>();
-		private readonly CompanyService _companyService = new CompanyService();
-		private readonly BranchService _branchService = new BranchService();
+		private readonly CompanyService _companyService;
+		private readonly BranchService _branchService;
 		private bool isNavigated;
 
 		public CompanyViewModel(INavigationService navigationService) {
 			_navigationService = navigationService;
 			_companyService = new CompanyService();
+			_branchService = new BranchService();
 			_myCompany = new Company();
 		}
 
@@ -37,16 +42,12 @@ namespace GentApp.ViewModels {
 			}
 		}
 
-		private RelayCommand _saveCompanyCommand;
-
-		public RelayCommand SaveCompanyCommand {
-			get {
-				return _saveCompanyCommand = new RelayCommand(() => {
-					UserViewModel.CurrentUser.Company = MyCompany;
-					UserViewModel.SaveUser();
-					RaisePropertyChanged(nameof(MyCompany));
-					_navigationService.NavigateTo(nameof(HomePage));
-				});
+		public async Task SaveCompany() {
+			try {
+				await _companyService.Update(MyCompany);
+				MyCompany = await _companyService.GetMyCompany(UserViewModel.CurrentUser.Company.Id);
+			} catch ( Exception e ) {
+				await new MessageDialog("Error saving company: " + e.Message).ShowAsync();
 			}
 		}
 
@@ -65,7 +66,7 @@ namespace GentApp.ViewModels {
 		public RelayCommand BranchSelectedCommand {
 			get {
 				return _branchSelectedCommand = new RelayCommand(() => {
-					if ( isNavigated && SelectedBranch == null) {
+					if ( isNavigated && SelectedBranch == null ) {
 						isNavigated = false;
 					}
 					else {
@@ -76,27 +77,51 @@ namespace GentApp.ViewModels {
 			}
 		}
 
-		public async void EditCompany(string name, string address, string openingHours) {
+		public async Task EditCompany(string name, string address, string openingHours) {
 			MyCompany.Name = name;
 			MyCompany.Address = address;
 			MyCompany.OpeningHours = openingHours;
 
 			await _companyService.Update(MyCompany);
 			RaisePropertyChanged(nameof(MyCompany));
+			_navigationService.NavigateTo(nameof(MyCompanyPage));
 		}
 
-		public async void EditBranch(string name, string address, string openingHours, BranchType type) {
+		public async Task AddBranch(Branch branch) {
+			MyCompany.Branches.Add(branch);
+			await _companyService.Update(MyCompany);
+			_navigationService.NavigateTo(nameof(MyCompanyPage));
+			RaisePropertyChanged(nameof(MyCompany.Branches));
+		}
+
+		public async Task EditBranch(string name, string address, string openingHours, BranchType type) {
 			SelectedBranch.Name = name;
 			SelectedBranch.Address = address;
 			SelectedBranch.OpeningHours = openingHours;
 			SelectedBranch.Type = type;
-			await _companyService.Update(MyCompany);
-			RaisePropertyChanged(nameof(MyCompany));
+
+			MyCompany.Branches[MyCompany.Branches.FindIndex(i => i.Id.Equals(SelectedBranch.Id))] = SelectedBranch;
+			await _branchService.Update(SelectedBranch);
+			_navigationService.NavigateTo(nameof(MyCompanyPage));
+			RaisePropertyChanged(nameof(MyCompany.Branches));
 		}
 
-		public async void AddBranch(Branch branch) {
-			await _branchService.Save(branch);
+		public async Task UpdateBranch(List<Event> events, List<Promotion> promotions) {
+			string branchId = SelectedBranch.Id;
+			SelectedBranch.Events = events;
+			SelectedBranch.Promotions = promotions;
+
+			MyCompany.Branches[MyCompany.Branches.FindIndex(i => i.Id.Equals(SelectedBranch.Id))] = SelectedBranch;
+			await SaveCompany();
+			SelectedBranch = MyCompany.Branches.Find(b => b.Id.Equals(branchId));
+		}
+
+		public async Task DeleteBranch() {
+			MyCompany.Branches.RemoveAt(MyCompany.Branches.FindIndex(i => i.Id.Equals(SelectedBranch.Id)));
+
+			await _branchService.Delete(SelectedBranch);
 			_navigationService.NavigateTo(nameof(MyCompanyPage));
+			RaisePropertyChanged(nameof(MyCompany.Branches));
 		}
 
 		private RelayCommand _loadCompanyCommand;
@@ -111,9 +136,12 @@ namespace GentApp.ViewModels {
 			}
 		}
 
-		public async void DeleteBranch() {
-			await _branchService.Delete(SelectedBranch);
-			RaisePropertyChanged(nameof(MyCompany));
+		private RelayCommand _navigateToCompany;
+
+		public RelayCommand NavigateToCompany {
+			get {
+				return _navigateToCompany = new RelayCommand(() => _navigationService.NavigateTo(nameof(MyCompanyPage)));
+			}
 		}
 
 		public async void NotifySubscribers(bool isEvent)

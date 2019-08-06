@@ -5,31 +5,81 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding CompanyViewModelInstance, Source={StaticResource Locator}}">
 
-	<StackPanel>
-		<TextBlock Margin="0,50,0,50" HorizontalAlignment="Center">Details of branch:</TextBlock>
-
-		<TextBox Width="200" x:Name="Name" Header= "Name" MaxLength="300" InputScope="Text" Text="{Binding Path=SelectedBranch.Name, Mode=OneWay, TargetNullValue='Empty'}"></TextBox>
-		<TextBlock x:Name="NameValidationErrorTextBlock" HorizontalAlignment="Center"
-                Foreground="Red" />
-		<TextBox Width="200" x:Name="Address" Header= "Address" MaxLength="300" InputScope="Text" Text="{Binding Path=SelectedBranch.Address, Mode=OneWay, TargetNullValue='Empty'}"></TextBox>
-		<TextBlock x:Name="AddressValidationErrorTextBlock" HorizontalAlignment="Center"
-                Foreground="Red" />
+	<StackPanel
+		HorizontalAlignment="Center"
+		VerticalAlignment="Center"
+		Margin="10"
+		MinWidth="300">
 		
-		<TextBlock Text="Type of branch:" HorizontalAlignment="Center" Width="200" />
-		<ComboBox x:Name="Type" Width="200" HorizontalAlignment="Center" Margin="0,20,0,0" />
-		<TextBlock x:Name="TypeValidationErrorTextBlock" HorizontalAlignment="Center" Margin="0,10,0,0"
-                Foreground="Red" />
+		<TextBlock
+			FontSize="25dp"
+			FontWeight="SemiBold"
+			HorizontalAlignment="Center"
+			Margin="14">Edit branch</TextBlock>
 
-		<TextBox Width="200" x:Name="OpeningHours" Header= "Opening hours" MaxLength="300" InputScope="Text" Text="{Binding Path=SelectedBranch.OpeningHours, Mode=OneWay, TargetNullValue='Empty'}"></TextBox>
-		<TextBlock x:Name="OpeningHoursValidationErrorTextBlock" HorizontalAlignment="Center"
+		<TextBox Width="200"
+				 x:Name="Name" 
+				 Header= "Name" 
+				 MaxLength="300" 
+				 InputScope="Text" 
+				 Text="{Binding Path=SelectedBranch.Name, TargetNullValue='Empty'}"/>
+		<TextBlock x:Name="NameValidationErrorTextBlock"
+                Foreground="Red"/>
+		<TextBox Width="200" 
+				 x:Name="Address"
+				 Header= "Address"
+				 MaxLength="300" 
+				 InputScope="Text" 
+				 Text="{Binding Path=SelectedBranch.Address, TargetNullValue='Empty'}"/>
+		<TextBlock 
+			x:Name="AddressValidationErrorTextBlock"
                 Foreground="Red" />
-		<StackPanel Orientation="Horizontal" Margin="0,20,0,0" HorizontalAlignment="Center">
-			<SymbolIcon Symbol="Delete" IsTapEnabled="False" Tapped="DeleteIcon_Tapped" Margin="0,0,30,0" />
-			<SymbolIcon Symbol="Save" IsTapEnabled="True" Tapped="SymbolIcon_Tapped"/>
+		<TextBlock Text="Type of branch:" Width="200" />
+		<ComboBox x:Name="Type"
+				  Width="200" 
+				  HorizontalAlignment="Center"/>
+		<TextBlock x:Name="TypeValidationErrorTextBlock"
+                Foreground="Red"/>
+		<TextBox Width="200" 
+				 x:Name="OpeningHours"
+				 Header="Opening hours"
+				 MaxLength="300" 
+				 InputScope="Text"
+				 Text="{Binding Path=SelectedBranch.OpeningHours, TargetNullValue='Empty'}"/>
+		<TextBlock x:Name="OpeningHoursValidationErrorTextBlock"
+                Foreground="Red" />
+		<StackPanel Orientation="Horizontal"
+					Margin="10"
+					HorizontalAlignment="Center">
+			<SymbolIcon Symbol="Delete" 
+						IsTapEnabled="False"
+						Tapped="DeleteIcon_Tapped"
+						Margin="10"/>
+			<SymbolIcon Symbol="Save"
+						IsTapEnabled="True" 
+						Tapped="SymbolIcon_Tapped"
+						Margin="10"/>
 		</StackPanel>
-		<Button Content="Manage promotions" Width="200" HorizontalAlignment="Center" Margin="0,20,0,0" Click="Promotions_Click"></Button>
-		<Button Content="Manage events" Width="200" HorizontalAlignment="Center" Margin="0,20,0,0" Click="Events_Click"></Button>
+		<StackPanel
+			Orientation="Horizontal"
+			HorizontalAlignment="Center">
+			<Button Content="Promotions" 
+				Width="100" 
+				HorizontalAlignment="Center"
+					Background="DodgerBlue" 
+                Foreground="White"
+				Margin="10"
+				Click="Promotions_Click"/>
+			<Button Content="Events" 
+					Background="DodgerBlue" 
+                Foreground="White"
+				Width="100" 
+				Margin="10"
+				HorizontalAlignment="Center"
+				Click="Events_Click"/>
+		</StackPanel>
 	</StackPanel>
 </Page>

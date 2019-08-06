@@ -17,7 +17,7 @@ namespace GentApp.Views
 		public BranchPromotionsPage()
 		{
 			InitializeComponent();
-			horStackPanel.DataContext = SimpleIoc.Default.GetInstance<BranchesViewModel>().SelectedBranch;
+			horStackPanel.DataContext = SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch;
 		}
 
 		private void PromotionsListView_ItemClick(object sender, ItemClickEventArgs e)

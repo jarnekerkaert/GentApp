@@ -6,6 +6,7 @@ using GentApp.Services;
 using GentApp.Views;
 using MetroLog;
 using System;
+using System.Threading.Tasks;
 using Windows.UI.Popups;
 
 namespace GentApp.ViewModels {
@@ -53,11 +54,17 @@ namespace GentApp.ViewModels {
 			}
 		}
 
-		public async void SaveUser() {
+		public async Task SaveUser(string name) {
 			try {
 				await _userService.Update(CurrentUser);
+				CurrentUser = await _userService.GetUser(CurrentUser.Id);
+
 				RaisePropertyChanged(nameof(IsEntrepreneur));
-				await new MessageDialog("User saved!").ShowAsync();
+				RaisePropertyChanged(nameof(CurrentUser));
+
+				if( name?.Equals("") != false )
+					name = "User";
+				await new MessageDialog(name + " saved!").ShowAsync();
 			} catch(Exception e) {
 				await new MessageDialog("Error saving user: "+e.Message).ShowAsync();
 			}

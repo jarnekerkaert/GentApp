@@ -96,7 +96,6 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="DataModel\Coupon.cs" />
-    <Compile Include="DataModel\DummyDataSource.cs" />
     <Compile Include="DataModel\Event.cs" />
     <Compile Include="DataModel\LoginModel.cs" />
     <Compile Include="DataModel\StringFormatConverter.cs" />
@@ -128,10 +127,10 @@
     <Compile Include="Views\Branch\AddBranchPage.xaml.cs">
       <DependentUpon>AddBranchPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Company\AddEventPage.xaml.cs">
+    <Compile Include="Views\Branch\AddEventPage.xaml.cs">
       <DependentUpon>AddEventPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Company\AddPromotionPage.xaml.cs">
+    <Compile Include="Views\Branch\AddPromotionPage.xaml.cs">
       <DependentUpon>AddPromotionPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Branch\BranchDetailsPage.xaml.cs">
@@ -152,11 +151,14 @@
     <Compile Include="Views\Company\EditCompanyPage.xaml.cs">
       <DependentUpon>EditCompanyPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Company\EditEventPage.xaml.cs">
+    <Compile Include="Views\Branch\EditEventPage.xaml.cs">
       <DependentUpon>EditEventPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Company\EditPromotionPage.xaml.cs">
+    <Compile Include="Views\Branch\EditPromotionPage.xaml.cs">
       <DependentUpon>EditPromotionPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EventDetailsPage.xaml.cs">
+      <DependentUpon>EventDetailsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EventsPage.xaml.cs">
       <DependentUpon>EventsPage.xaml</DependentUpon>
@@ -220,11 +222,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Company\AddEventPage.xaml">
+    <Page Include="Views\Branch\AddEventPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Company\AddPromotionPage.xaml">
+    <Page Include="Views\Branch\AddPromotionPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -252,11 +254,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Company\EditEventPage.xaml">
+    <Page Include="Views\Branch\EditEventPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Company\EditPromotionPage.xaml">
+    <Page Include="Views\Branch\EditPromotionPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EventDetailsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
