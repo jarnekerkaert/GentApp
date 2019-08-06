@@ -113,14 +113,14 @@ namespace GentApp.ViewModels {
 			get {
 				return _subscribeCommand = new RelayCommand(async () => {
 					if ( SubscribedTo ) {
-						Subscription subscription = Subscriptions.FirstOrDefault(s => s.BranchId.Equals(SelectedBranch.Id));
+						Subscription subscription = Subscriptions.FirstOrDefault(s => s.Branch.Id.Equals(SelectedBranch.Id));
 						Subscriptions.Remove(subscription);
 						RaisePropertyChanged(nameof(Subscriptions));
 						RaisePropertyChanged(nameof(SubscribedTo));
 						await _subscriptionService.Unsubscribe(subscription.Id);
 					}
 					else {
-						Subscription subscription = new Subscription() { BranchId = SelectedBranch.Id, UserId = UserViewModel.CurrentUser.Id };
+						Subscription subscription = new Subscription() { BranchId = SelectedBranch.Id, UserId = UserViewModel.CurrentUser.Id, AmountEvents = 0, AmountPromotions = 0};
 						Subscriptions.Add(subscription);
 						RaisePropertyChanged(nameof(Subscriptions));
 						RaisePropertyChanged(nameof(SubscribedTo));
@@ -142,6 +142,21 @@ namespace GentApp.ViewModels {
 			}
 		}
 
+		private ObservableCollection<Subscription> _fullSubscriptions;
+		public ObservableCollection<Subscription> FullSubscriptions
+		{
+			get
+			{
+				return _fullSubscriptions;
+			}
+
+			set
+			{
+				_fullSubscriptions = value;
+				RaisePropertyChanged(nameof(FullSubscriptions));
+			}
+		}
+
 		private RelayCommand _loadSubscriptionsCommand;
 
 		public RelayCommand LoadSubscriptionsCommand {
@@ -152,6 +167,24 @@ namespace GentApp.ViewModels {
 								await _subscriptionService.GetSubscriptions(UserViewModel.CurrentUser.Id));
 							SubscribedBranches = new ObservableCollection<Branch>(
 								await _userService.GetSubscribedBranches(UserViewModel.CurrentUser.Id));
+						});
+			}
+		}
+
+		private RelayCommand _loadFullSubscriptionsCommand;
+
+		public RelayCommand LoadFullSubscriptionsCommand
+		{
+			get
+			{
+				return _loadFullSubscriptionsCommand = new RelayCommand(
+						async () => {
+							Subscriptions = new ObservableCollection<Subscription>(
+								await _subscriptionService.GetSubscriptions(UserViewModel.CurrentUser.Id));
+							SubscribedBranches = new ObservableCollection<Branch>(
+								await _userService.GetSubscribedBranches(UserViewModel.CurrentUser.Id));
+							FullSubscriptions = new ObservableCollection<Subscription>(
+								await _subscriptionService.GetSubscriptions(UserViewModel.CurrentUser.Id));
 						});
 			}
 		}
@@ -178,7 +211,6 @@ namespace GentApp.ViewModels {
 			}
 		}
 
-		
 		private RelayCommand _loadPromotionsCommand;
 
 		public RelayCommand LoadPromotionsCommand
@@ -224,5 +256,14 @@ namespace GentApp.ViewModels {
 				RaisePropertyChanged(nameof(CurrentPromotions));
 			}
 		}
+
+		public async void ClearSubscriptionAmounts(Subscription subscription)
+		{
+			subscription.AmountEvents = 0;
+			subscription.AmountPromotions = 0;
+			// subscription.Branch = null;
+			await _subscriptionService.Update(subscription);
+		}
+
 	}
 }

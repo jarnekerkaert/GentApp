@@ -93,5 +93,17 @@ namespace GentApp.Services
 			}
 			return Enumerable.Empty<Event>();
 		}
+
+		public async Task NotifySubscribersEvents(string id, bool isEvent)
+		{
+			try
+			{
+				var response = await HttpClient.PutAsync(apiUrl + "/" + id + "/notifysubscribers", new StringContent(JsonConvert.SerializeObject(isEvent), System.Text.Encoding.UTF8, "application/json"));
+			}
+			catch (Exception ex)
+			{
+				await new MessageDialog(ex.Message).ShowAsync();
+			}
+		}
 	}
 }

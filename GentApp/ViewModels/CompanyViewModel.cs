@@ -115,5 +115,10 @@ namespace GentApp.ViewModels {
 			await _branchService.Delete(SelectedBranch);
 			RaisePropertyChanged(nameof(MyCompany));
 		}
+
+		public async void NotifySubscribers(bool isEvent)
+		{
+			await _branchService.NotifySubscribersEvents(SelectedBranch.Id, isEvent);
+		}
 	}
 }

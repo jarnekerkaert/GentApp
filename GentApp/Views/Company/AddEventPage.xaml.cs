@@ -77,6 +77,7 @@ namespace GentApp.Views
 				SimpleIoc.Default.GetInstance<CompanyViewModel>().MyCompany.Branches[company.Branches.FindIndex(i => i.Equals(branch))] = branch;
 
 				SimpleIoc.Default.GetInstance<CompanyViewModel>().SaveCompanyCommand.Execute(null);
+				SimpleIoc.Default.GetInstance<CompanyViewModel>().NotifySubscribers(true);
 				Frame.Navigate(typeof(BranchEventsPage));
 			}
 		}

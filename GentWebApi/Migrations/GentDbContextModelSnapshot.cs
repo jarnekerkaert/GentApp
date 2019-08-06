@@ -27,8 +27,7 @@ namespace GentWebApi.Migrations
                     b.Property<string>("Address")
                         .IsRequired();
 
-                    b.Property<string>("CompanyId")
-                        .IsRequired();
+                    b.Property<string>("CompanyId");
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -149,6 +148,10 @@ namespace GentWebApi.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("AmountEvents");
+
+                    b.Property<int>("AmountPromotions");
+
                     b.Property<string>("BranchId")
                         .IsRequired();
 
@@ -157,10 +160,6 @@ namespace GentWebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BranchId");
-
-                    b.HasIndex("UserId");
-
                     b.ToTable("Subscriptions");
                 });
 
@@ -168,8 +167,7 @@ namespace GentWebApi.Migrations
                 {
                     b.HasOne("GentApp.Models.Company", "Company")
                         .WithMany("Branches")
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CompanyId");
                 });
 
             modelBuilder.Entity("GentApp.Models.User", b =>
@@ -195,19 +193,6 @@ namespace GentWebApi.Migrations
                     b.HasOne("GentWebApi.Models.Coupon", "Coupon")
                         .WithMany()
                         .HasForeignKey("CouponId");
-                });
-
-            modelBuilder.Entity("GentWebApi.Models.Subscription", b =>
-                {
-                    b.HasOne("GentApp.Models.Branch", "Branch")
-                        .WithMany()
-                        .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("GentApp.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
