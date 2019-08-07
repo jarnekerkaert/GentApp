@@ -13,7 +13,7 @@
 	<interactivity:Interaction.Behaviors>
 		<core:EventTriggerBehavior EventName="Loaded">
 			<core:InvokeCommandAction Command="{Binding Path=LoadBranchesCommand}" />
-			<core:InvokeCommandAction Command="{Binding Path=LoadFullSubscriptionsCommand}" />
+			<core:InvokeCommandAction Command="{Binding Path=LoadSubscriptionsCommand}" />
 		</core:EventTriggerBehavior>
 	</interactivity:Interaction.Behaviors>
 
@@ -34,7 +34,7 @@
 		</StackPanel>
 		<ListView
 					x:Name="BranchesList"
-					ItemsSource="{Binding Path=FullSubscriptions}" 
+					ItemsSource="{Binding Path=Subscriptions}" 
 					IsItemClickEnabled="True" ItemClick="ListView_ItemClick"
 					>
 			<ListView.ItemTemplate>

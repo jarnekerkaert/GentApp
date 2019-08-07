@@ -227,37 +227,35 @@ namespace GentApp.ViewModels {
 			}
 		}
 
-		private RelayCommand _loadFullSubscriptionsCommand;
+		//private RelayCommand _loadFullSubscriptionsCommand;
 
-		public RelayCommand LoadFullSubscriptionsCommand
-		{
-			get
-			{
-				return _loadFullSubscriptionsCommand = new RelayCommand(
-						async () => {
-							Subscriptions = new ObservableCollection<Subscription>(
-								await _subscriptionService.GetSubscriptions(UserViewModel.CurrentUser.Id));
-							SubscribedBranches = new ObservableCollection<Branch>(
-								await _userService.GetSubscribedBranches(UserViewModel.CurrentUser.Id));
-							FullSubscriptions = new ObservableCollection<Subscription>(
-								await _subscriptionService.GetSubscriptions(UserViewModel.CurrentUser.Id));
-						});
-			}
-		}
+		//public RelayCommand LoadFullSubscriptionsCommand
+		//{
+		//	get
+		//	{
+		//		return _loadFullSubscriptionsCommand = new RelayCommand(
+		//				async () => {
+		//					SubscribedBranches = new ObservableCollection<Branch>(
+		//						await _userService.GetSubscribedBranches(UserViewModel.CurrentUser.Id));
+		//					FullSubscriptions = new ObservableCollection<Subscription>(
+		//						await _subscriptionService.GetSubscriptions(UserViewModel.CurrentUser.Id));
+		//				});
+		//	}
+		//}
 
-		private ObservableCollection<Subscription> _fullSubscriptions;
-		public ObservableCollection<Subscription> FullSubscriptions
-		{
-			get
-			{
-				return _fullSubscriptions;
-			}
+		//private ObservableCollection<Subscription> _fullSubscriptions;
+		//public ObservableCollection<Subscription> FullSubscriptions
+		//{
+		//	get
+		//	{
+		//		return _fullSubscriptions;
+		//	}
 
-			set
-			{
-				_fullSubscriptions = value;
-				RaisePropertyChanged(nameof(FullSubscriptions));
-			}
-		}
+		//	set
+		//	{
+		//		_fullSubscriptions = value;
+		//		RaisePropertyChanged(nameof(FullSubscriptions));
+		//	}
+		//}
 	}
 }
