@@ -98,6 +98,7 @@
     <Compile Include="DataModel\Coupon.cs" />
     <Compile Include="DataModel\Event.cs" />
     <Compile Include="DataModel\LoginModel.cs" />
+    <Compile Include="DataModel\StringFormatConverter.cs" />
     <Compile Include="DataModel\Subscription.cs" />
     <Compile Include="Helpers\INavigationService.cs" />
     <Compile Include="Helpers\Logger.cs" />

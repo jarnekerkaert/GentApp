@@ -34,18 +34,34 @@
 		</StackPanel>
 		<ListView
 					x:Name="BranchesList"
-					ItemsSource="{Binding Path=SubscribedBranches}" 
-					SelectedItem="{Binding Path=SelectedBranch, Mode=TwoWay}">
-			<interactivity:Interaction.Behaviors>
-				<core:EventTriggerBehavior EventName="SelectionChanged">
-					<core:InvokeCommandAction Command="{Binding Path=BranchSelectedCommand}" />
-				</core:EventTriggerBehavior>
-			</interactivity:Interaction.Behaviors>
+					ItemsSource="{Binding Path=Subscriptions}" 
+					IsItemClickEnabled="True" ItemClick="ListView_ItemClick"
+					>
 			<ListView.ItemTemplate>
 				<DataTemplate>
 					<StackPanel>
-						<TextBlock FontSize="18" Text="{Binding Path=Name}" />
-						<TextBlock FontSize="10" Text="{Binding Path=Address}" />
+						<TextBlock FontSize="18" Text="{Binding Path=Branch.Name}" />
+						<TextBlock FontSize="16" Text="{Binding Path=Branch.Address}" />
+						<StackPanel Orientation="Horizontal">
+							<TextBlock FontSize="12" Text="P:">
+								<ToolTipService.ToolTip>
+									<ToolTip Content="The amount of new promotions of this branch"
+									Placement="Right"
+									HorizontalOffset="20"/>
+								</ToolTipService.ToolTip>
+							</TextBlock>
+							<TextBlock FontSize="12" Text="{Binding Path=AmountPromotions}" />
+						</StackPanel>
+						<StackPanel Orientation="Horizontal">
+							<TextBlock FontSize="12" Text="E:">
+								<ToolTipService.ToolTip>
+									<ToolTip Content="The amount of new events of this branch"
+									Placement="Right"
+									HorizontalOffset="20"/>
+								</ToolTipService.ToolTip>
+							</TextBlock>
+							<TextBlock FontSize="12" Text="{Binding Path=AmountEvents}" />
+						</StackPanel>
 					</StackPanel>
 				</DataTemplate>
 			</ListView.ItemTemplate>

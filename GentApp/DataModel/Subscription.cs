@@ -6,17 +6,20 @@ namespace GentApp.DataModel
 	{
 		public string Id { get; set; }
 		[Required]
+		public Branch Branch { get; set; }
 		public string BranchId { get; set; }
 		[Required]
 		public string UserId { get; set; }
+		public int AmountPromotions { get; set; }
+		public int AmountEvents { get; set; }
 
 		public Subscription()
 		{
 		}
 
-		public Subscription(string branchId, string userId)
+		public Subscription(Branch branch, string userId)
 		{
-			BranchId = branchId;
+			Branch = branch;
 			UserId = userId;
 		}
 	}

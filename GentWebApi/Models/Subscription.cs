@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using GentApp.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GentWebApi.Models
@@ -7,11 +8,13 @@ namespace GentWebApi.Models
 	{
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public string Id { get; set; }
-		[Required]
+		//[Required]
+		public Branch Branch { get; set; }
 		public string BranchId { get; set; }
 		[Required]
 		public string UserId { get; set; }
-		public int AmountEvents { get; set; }
+
 		public int AmountPromotions { get; set; }
+		public int AmountEvents { get; set; }
 	}
 }

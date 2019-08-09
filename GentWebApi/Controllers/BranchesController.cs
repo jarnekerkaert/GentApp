@@ -67,6 +67,39 @@ namespace GentWebApi.Controllers
 			}
 		}
 
+		[HttpPut("{id}/notifysubscribers")]
+		public IActionResult UpdateSubscriptionsEvent([FromBody] bool isEvent, string id)
+		{
+			var subscriptions = _context.Subscriptions.Where(s => s.Branch.Id.Equals(id));
+			foreach (Subscription subscription in subscriptions)
+			{
+				if (isEvent)
+				{
+					subscription.AmountEvents++;
+				}
+				else
+				{
+					subscription.AmountPromotions++;
+				}
+			}
+			_context.SaveChanges();
+			return Ok();
+		}
+
+		// GET: api/branches/2/promotions
+		[HttpGet("{id}/promotions", Name = "GetPromotions")]
+		public IEnumerable<Promotion> GetPromotions(string id)
+		{
+			return _context.Promotions.Where(p => p.Branch.Id.Equals(id));
+		}
+
+		// GET: api/branches/2/events
+		[HttpGet("{id}/events", Name = "GetEvents")]
+		public IEnumerable<Event> GetEvents(string id)
+		{
+			return _context.Events.Where(p => p.Branch.Id.Equals(id));
+		}
+
 		// DELETE: api/branches
 		[HttpDelete]
 		public IActionResult Delete([FromBody] Branch branch)

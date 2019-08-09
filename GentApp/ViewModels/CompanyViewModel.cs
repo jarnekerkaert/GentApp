@@ -143,5 +143,10 @@ namespace GentApp.ViewModels {
 				return _navigateToCompany = new RelayCommand(() => _navigationService.NavigateTo(nameof(MyCompanyPage)));
 			}
 		}
+
+		public async void NotifySubscribers(bool isEvent)
+		{
+			await _branchService.NotifySubscribersEvents(SelectedBranch.Id, isEvent);
+		}
 	}
 }

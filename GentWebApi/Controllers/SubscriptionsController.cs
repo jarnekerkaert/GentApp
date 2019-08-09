@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GentApp.Models;
 using GentWebApi.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,7 @@ namespace GentWebApi.Controllers
         public IEnumerable<Subscription> GetSubscribers(string id)
         {
 			return _context.Subscriptions
-				.Where(s => s.BranchId.Equals(id));
+				.Where(s => s.Branch.Id.Equals(id));
         }
 
 		// GET: api/Subscriptions/user/5
@@ -33,7 +34,7 @@ namespace GentWebApi.Controllers
 		public IEnumerable<Subscription> GetSubscriptions(string id)
 		{
 			return _context.Subscriptions
-				.Where(s => s.UserId.Equals(id));
+				.Where(s => s.UserId.Equals(id)).Include(s => s.Branch);
 		}
 
 		// POST: api/Subscriptions
@@ -42,8 +43,7 @@ namespace GentWebApi.Controllers
         {
 			if (ModelState.IsValid)
 			{
-				_context.Subscriptions
-				.Add(subscription);
+				_context.Subscriptions.Add(subscription);
 				_context.SaveChanges();
 				return Created(subscription.Id, subscription);
 			}
@@ -53,8 +53,24 @@ namespace GentWebApi.Controllers
 			}
 		}
 
-        // DELETE: api/Subscriptions/5
-        [HttpDelete("{id}")]
+		// PUT: api/Subscriptions/5
+		[HttpPut("{id}")]
+		public IActionResult Put([FromBody] Subscription subscription)
+		{
+			if (ModelState.IsValid)
+			{
+				_context.Subscriptions.Update(subscription);
+				_context.SaveChanges();
+				return Ok();
+			}
+			else
+			{
+				return BadRequest();
+			}
+		}
+
+		// DELETE: api/Subscriptions/5
+		[HttpDelete("{id}")]
         public IActionResult Delete(string id)
         {
 			Subscription subscription = _context.Subscriptions.Find(id);

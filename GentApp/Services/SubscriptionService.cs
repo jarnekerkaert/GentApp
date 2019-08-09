@@ -55,5 +55,17 @@ namespace GentApp.Services
 				await new MessageDialog(ex.Message).ShowAsync();
 			}
 		}
+
+		public async Task Update(Subscription subscription)
+		{
+			try
+			{
+				var response = await HttpClient.PutAsync(apiUrl + "/" + subscription.Id, new StringContent(JsonConvert.SerializeObject(subscription), System.Text.Encoding.UTF8, "application/json"));
+			}
+			catch (Exception ex)
+			{
+				await new MessageDialog(ex.Message).ShowAsync();
+			}
+		}
 	}
 }
