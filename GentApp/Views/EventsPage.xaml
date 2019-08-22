@@ -97,12 +97,12 @@
 								VerticalAlignment="Top"
 								Margin="5">
 								<TextBlock 
-										Text="{x:Bind StartDate}" 
+										Text="{x:Bind Path=StartDate.Date, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:dd/MM/yyy}'}" 
 										TextWrapping="WrapWholeWords"/>
 								<TextBlock 
 									Margin="5,0,5,0"
 									Text="-" />
-								<TextBlock Text="{x:Bind EndDate}"
+								<TextBlock Text="{x:Bind Path=EndDate.Date, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:dd/MM/yyy}'}"
 										   TextWrapping="WrapWholeWords"/>
 							</StackPanel>
 						</StackPanel>
@@ -157,13 +157,13 @@
 								VerticalAlignment="Top"
 								Margin="5">
 								<TextBlock 
-									Text="{x:Bind StartDate}"
+									Text="{x:Bind Path=StartDate.Date, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:dd/MM/yyy}'}"
 									TextWrapping="WrapWholeWords"/>
 								<TextBlock 
 									Margin="5,0,5,0"
 									Text="-"/>
 								<TextBlock 
-									Text="{x:Bind EndDate}" 
+									Text="{x:Bind Path=EndDate.Date, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:dd/MM/yyy}'}" 
 									TextWrapping="WrapWholeWords"/>
 
 							</StackPanel>
