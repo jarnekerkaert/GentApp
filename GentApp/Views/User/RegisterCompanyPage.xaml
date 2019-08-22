@@ -38,8 +38,9 @@
                 PlaceholderText="Company name"
                 Margin="4,10" 
                 Width="250"/>
-			<StackPanel Orientation="Horizontal"
-						Width="250">
+			<StackPanel 
+				Orientation="Horizontal"
+				Width="250">
 				<TextBox 
 				Text="{Binding Path=MyCompany.Address, Mode=TwoWay}"
                 PlaceholderText="Street"
