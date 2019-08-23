@@ -37,10 +37,14 @@
 			<ComboBox x:Name="companyTypeComboBox"
 					  PlaceholderText="Filter by sort"
 					  Margin="2"/>
-			<AutoSuggestBox PlaceholderText="Search a company"
+			<AutoSuggestBox x:Name="autoSuggestBoxBranch"
+							PlaceholderText="Search a company"
 							Width="200"
 							Margin="2"
-							QueryIcon="Find"/>
+							QueryIcon="Find"
+							TextChanged="AutoSuggestBoxBranch_TextChanged"
+							QuerySubmitted="AutoSuggestBoxBranch_QuerySubmitted"
+							/>
 		</StackPanel>
 		<TextBlock
 			Grid.Row="1" 
