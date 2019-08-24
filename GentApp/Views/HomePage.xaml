@@ -47,7 +47,7 @@
 							QuerySubmitted="AutoSuggestBoxBranch_QuerySubmitted"
 							/>
 			<CheckBox x:Name="checkBoxOngoingPromotions" 
-					  Content="Lopende promoties"
+					  Content="Ongoing promotions"
 					  Click="CheckBoxOngoingPromotions_Click"
 					  />
 		</StackPanel>
