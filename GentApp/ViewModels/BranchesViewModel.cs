@@ -30,6 +30,7 @@ namespace GentApp.ViewModels {
 				if (branchesFilteredOnName == null)
 				{
 					branchesFilteredOnName = new List<Branch>();
+					branchesFilteredOnName = Branches.ToList();
 				}
 				return branchesFilteredOnName;
 			}
@@ -51,6 +52,7 @@ namespace GentApp.ViewModels {
 				if (branchesFilteredOnType == null)
 				{
 					branchesFilteredOnType = new List<Branch>();
+					branchesFilteredOnType = Branches.ToList();
 				}
 				return branchesFilteredOnType;
 			}
@@ -142,10 +144,8 @@ namespace GentApp.ViewModels {
 					Branches = new ObservableCollection<Branch>(await _branchService.GetAll());
 					FilteredBranches = Branches.ToList();
 					BranchesFilteredOnType = Branches.ToList();
-					branchesFilteredOnName = Branches.ToList();
 					isNavigated = true;
 					RaisePropertyChanged(nameof(Branches));
-					RaisePropertyChanged(nameof(FilteredBranches));
 				});
 			}
 		}

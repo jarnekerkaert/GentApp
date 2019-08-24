@@ -15,7 +15,7 @@ namespace GentApp.Views {
 	public sealed partial class HomePage : Page {
 		public HomePage() {
 			InitializeComponent();
-			companyTypeComboBox.ItemsSource = Enum.GetValues(typeof(BranchType));
+			 companyTypeComboBox.ItemsSource = Enum.GetValues(typeof(BranchType));
 			//Branches = new List<Branch>(SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches);
 			//autoSuggestBoxBranch.ItemsSource = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches;
 			//autoSuggestBoxBranch.ItemsSource = Branches;
