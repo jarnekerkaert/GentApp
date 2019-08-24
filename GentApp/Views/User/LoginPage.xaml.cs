@@ -1,4 +1,7 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Ioc;
+using GentApp.DataModel;
+using GentApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -33,9 +36,12 @@ namespace GentApp.Views
             Frame.Navigate(typeof(RegistrationPage));
         }
 
-        void Login_Click(object sender, RoutedEventArgs args)
-        {
-            Frame.Navigate(typeof(MainPage));
-        }
-    }
+		//private void LoginButton_Click(object sender, RoutedEventArgs e)
+		//{
+		//	if (!UsernameTextBox.Text.Equals("") && !PasswordTextBox.Password.Equals(""))
+		//	{
+		//		SimpleIoc.Default.GetInstance<UserViewModel>().Login();
+		//	}
+		//}
+	}
 }

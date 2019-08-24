@@ -32,6 +32,10 @@ namespace GentApp.Services {
 		}
 
 		public async Task<User> Login(LoginModel loginModel) {
+			byte[] usernamePasswordBytes = System.Text.Encoding.UTF8.GetBytes(loginModel.UserName + ":" + loginModel.Password);
+			var authToken = Convert.ToBase64String(usernamePasswordBytes);
+
+			HttpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", authToken);
 			HttpResponseMessage response = await HttpClient.GetAsync(apiUrl + "/login/" + loginModel.UserName);
 			response.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());
