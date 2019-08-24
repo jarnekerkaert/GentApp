@@ -63,7 +63,7 @@
             ScrollViewer.VerticalScrollBarVisibility="Hidden"
             VerticalAlignment="Stretch"
             Margin="0,40,0,0"
-			ItemsSource="{Binding Path=Branches}" 
+			ItemsSource="{Binding Path=FilteredBranches}" 
 			SelectedItem="{Binding Path=SelectedBranch, Mode=TwoWay}">
 			<interactivity:Interaction.Behaviors>
 				<core:EventTriggerBehavior EventName="SelectionChanged">

@@ -24,22 +24,19 @@ namespace GentApp.Views {
 		//public List<Branch> Branches { get; set; }
 		//public List<string> BranchNames { get; set; }
 
-		public List<Branch> FilteredBranches { get; set; }
-
 		private void AutoSuggestBoxBranch_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
 		{
 			if (args.CheckCurrent())
 			{
 				var search_term = autoSuggestBoxBranch.Text;
-				if (SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches != null)
+				if (SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches != null)
 				{
 					autoSuggestBoxBranch.ItemsSource = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches;
-					var results = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.Where(b => b.Name.Contains(search_term)).ToList();
+					SimpleIoc.Default.GetInstance<BranchesViewModel>().BranchesFilteredOnName = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.Where(b => b.Name.Contains(search_term)).ToList();
 					//autoSuggestBoxBranch.ItemsSource = results;
 					List<string> name_results = new List<string>();
-					results.ForEach(b => name_results.Add(b.Name));
+					SimpleIoc.Default.GetInstance<BranchesViewModel>().BranchesFilteredOnName.ForEach(b => name_results.Add(b.Name));
 					autoSuggestBoxBranch.ItemsSource = name_results;
-					HomeFeedGrid.ItemsSource = results;
 				}
 			}
 
@@ -48,11 +45,10 @@ namespace GentApp.Views {
 		private void AutoSuggestBoxBranch_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
 		{
 			var search_term = args.QueryText;
-			if (SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches != null)
+			if (SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches != null)
 			{
-				var results = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.Where(b => b.Name.Contains(search_term)).ToList();
+				SimpleIoc.Default.GetInstance<BranchesViewModel>().BranchesFilteredOnName = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.Where(b => b.Name.Contains(search_term)).ToList();
 				//autoSuggestBoxBranch.ItemsSource = results;
-				HomeFeedGrid.ItemsSource = results;
 			}
 		}
 
@@ -61,14 +57,12 @@ namespace GentApp.Views {
 			string selectedItem = companyTypeComboBox.SelectedItem.ToString();
 			if (selectedItem.Equals("UNFILTERED"))
 			{
-				var results = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.ToList();
-				HomeFeedGrid.ItemsSource = results;
+				SimpleIoc.Default.GetInstance<BranchesViewModel>().BranchesFilteredOnType = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.ToList();
+
 			}
 			else
 			{
-				var results = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.Where(b => b.Type.ToString().Equals(selectedItem)).ToList();
-				// ook nog checken ofda de results minder zijn, doordat er tekst staat in de autosuggestbox
-				HomeFeedGrid.ItemsSource = results;
+				SimpleIoc.Default.GetInstance<BranchesViewModel>().BranchesFilteredOnType = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.Where(b => b.Type.ToString().Equals(selectedItem)).ToList();
 			}
 
 		}

@@ -22,6 +22,50 @@ namespace GentApp.ViewModels {
 
 		public ObservableCollection<Branch> Branches { get; set; }
 
+		private List<Branch> branchesFilteredOnName;
+
+		public List<Branch> BranchesFilteredOnName
+		{
+			get {
+				if (branchesFilteredOnName == null)
+				{
+					branchesFilteredOnName = new List<Branch>();
+				}
+				return branchesFilteredOnName;
+			}
+			set
+			{
+				branchesFilteredOnName = value;
+				FilteredBranches.Clear();
+				FilteredBranches = BranchesFilteredOnType.Where(x => branchesFilteredOnName.Contains(x)).ToList();
+				FilteredBranches = FilteredBranches.Distinct().ToList();
+				RaisePropertyChanged(nameof(BranchesFilteredOnName));
+				RaisePropertyChanged(nameof(FilteredBranches));
+			}
+		}
+		private List<Branch> branchesFilteredOnType;
+
+		public List<Branch> BranchesFilteredOnType
+		{
+			get {
+				if (branchesFilteredOnType == null)
+				{
+					branchesFilteredOnType = new List<Branch>();
+				}
+				return branchesFilteredOnType;
+			}
+			set
+			{
+				branchesFilteredOnType = value;
+				FilteredBranches.Clear();
+				FilteredBranches = BranchesFilteredOnName.Where(x => branchesFilteredOnType.Contains(x)).ToList();
+				FilteredBranches = FilteredBranches.Distinct().ToList();
+				RaisePropertyChanged(nameof(BranchesFilteredOnType));
+				RaisePropertyChanged(nameof(FilteredBranches));
+			}
+		}
+		public List<Branch> FilteredBranches { get; set; }
+
 		private Branch mySelectedBranch;
 		public Branch MySelectedBranch {
 			get { return mySelectedBranch; }
@@ -96,8 +140,12 @@ namespace GentApp.ViewModels {
 			get {
 				return _loadBranchesCommand = new RelayCommand(async () => {
 					Branches = new ObservableCollection<Branch>(await _branchService.GetAll());
+					FilteredBranches = Branches.ToList();
+					BranchesFilteredOnType = Branches.ToList();
+					branchesFilteredOnName = Branches.ToList();
 					isNavigated = true;
 					RaisePropertyChanged(nameof(Branches));
+					RaisePropertyChanged(nameof(FilteredBranches));
 				});
 			}
 		}
