@@ -28,7 +28,7 @@ namespace GentApp.Views {
 				if (SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches != null)
 				{
 					autoSuggestBoxBranch.ItemsSource = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches;
-					filterListOfBranches(SearchTerm, SelectedItemComboBox);
+					filterListOfBranches();
 					List<string> name_results = new List<string>();
 					SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches.ForEach(b => name_results.Add(b.Name));
 					autoSuggestBoxBranch.ItemsSource = name_results;
@@ -41,7 +41,7 @@ namespace GentApp.Views {
 			SearchTerm = args.QueryText;
 			if (SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches != null)
 			{
-				filterListOfBranches(SearchTerm, SelectedItemComboBox);
+				filterListOfBranches();
 			}
 		}
 
@@ -50,36 +50,98 @@ namespace GentApp.Views {
 			SelectedItemComboBox = companyTypeComboBox.SelectedItem.ToString();
 			if (SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches != null)
 			{
-				filterListOfBranches(SearchTerm, SelectedItemComboBox);
+				filterListOfBranches();
 			}
 		}
 
 		public string SearchTerm { get; set; }
 		public string SelectedItemComboBox { get; set; }
 
-		private void filterListOfBranches(string search_term, string selectedItem)
+		private void filterListOfBranches()
 		{
-			if (selectedItem == null || selectedItem.Equals("UNFILTERED"))
+			switch (checkBoxOngoingPromotions.IsChecked)
 			{
-				if (search_term.Equals(""))
+				case true:
+					filterBranchesWithOngoingPromotions();
+					break;
+				case false:
+					filterAllBranches();
+					break;
+				default:
+					filterAllBranches();
+					break;
+			}
+		}
+
+		private void filterAllBranches()
+		{
+			if (SelectedItemComboBox == null || SelectedItemComboBox.Equals("UNFILTERED"))
+			{
+				if (SearchTerm == null || SearchTerm.Equals(""))
 				{
 					SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.ToList();
 				}
 				else
 				{
-					SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.Where(b => b.Name.Contains(search_term)).ToList();
+					SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.Where(b => b.Name.ToLower().Contains(SearchTerm.ToLower())).ToList();
 				}
 			}
 			else
 			{
-				if (search_term == null || search_term.Equals(""))
+				if (SearchTerm == null || SearchTerm.Equals(""))
 				{
-					SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.Where(b => b.Type.ToString().Equals(selectedItem)).ToList();
+					SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.Where(b => b.Type.ToString().Equals(SelectedItemComboBox)).ToList();
 				}
 				else
 				{
-					SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.Where(b => b.Name.Contains(search_term) && b.Type.ToString().Equals(selectedItem)).ToList();
+					SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.Where(b => b.Name.ToLower().Contains(SearchTerm.ToLower()) && b.Type.ToString().Equals(SelectedItemComboBox)).ToList();
 				}
+			}
+		}
+
+		private void filterBranchesWithOngoingPromotions()
+		{
+			if (SelectedItemComboBox == null || SelectedItemComboBox.Equals("UNFILTERED"))
+			{
+				if (SearchTerm == null || SearchTerm.Equals(""))
+				{
+					SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.Where(b => b.hasOngoingPromotions() == true).ToList();
+				}
+				else
+				{
+					SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.Where(b => b.Name.ToLower().Contains(SearchTerm.ToLower()) && b.hasOngoingPromotions() == true).ToList();
+				}
+			}
+			else
+			{
+				if (SearchTerm == null || SearchTerm.Equals(""))
+				{
+					SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.Where(b => b.Type.ToString().Equals(SelectedItemComboBox) && b.hasOngoingPromotions() == true).ToList();
+				}
+				else
+				{
+					SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.Where(b => b.Name.ToLower().Contains(SearchTerm.ToLower()) && b.Type.ToString().Equals(SelectedItemComboBox) && b.hasOngoingPromotions() == true).ToList();
+				}
+			}
+		}
+
+		private void CheckBoxOngoingPromotions_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+		{
+			//if (checkBoxOngoingPromotions.IsChecked == true)
+			//{
+			//	SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.Where(b => b.hasOngoingPromotions() == true).ToList();
+			//}
+			//else
+			//{
+			//	SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.ToList();
+			//}
+			if (checkBoxOngoingPromotions.IsChecked == true)
+			{
+				filterBranchesWithOngoingPromotions();
+			}
+			else
+			{
+				filterAllBranches();
 			}
 		}
 	}

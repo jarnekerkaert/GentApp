@@ -46,6 +46,10 @@
 							TextChanged="AutoSuggestBoxBranch_TextChanged"
 							QuerySubmitted="AutoSuggestBoxBranch_QuerySubmitted"
 							/>
+			<CheckBox x:Name="checkBoxOngoingPromotions" 
+					  Content="Lopende promoties"
+					  Click="CheckBoxOngoingPromotions_Click"
+					  />
 		</StackPanel>
 		<TextBlock
 			Grid.Row="1" 
