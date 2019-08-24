@@ -35,6 +35,7 @@
 					Margin="24,68,24,310"
 					Grid.Row="0" Grid.RowSpan="2">
 			<ComboBox x:Name="companyTypeComboBox"
+					  SelectionChanged="CompanyTypeComboBox_SelectionChanged" 
 					  PlaceholderText="Filter by sort"
 					  Margin="2"/>
 			<AutoSuggestBox x:Name="autoSuggestBoxBranch"

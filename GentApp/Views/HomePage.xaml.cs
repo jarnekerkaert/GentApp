@@ -24,6 +24,8 @@ namespace GentApp.Views {
 		//public List<Branch> Branches { get; set; }
 		//public List<string> BranchNames { get; set; }
 
+		public List<Branch> FilteredBranches { get; set; }
+
 		private void AutoSuggestBoxBranch_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
 		{
 			if (args.CheckCurrent())
@@ -54,5 +56,21 @@ namespace GentApp.Views {
 			}
 		}
 
+		private void CompanyTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			string selectedItem = companyTypeComboBox.SelectedItem.ToString();
+			if (selectedItem.Equals("UNFILTERED"))
+			{
+				var results = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.ToList();
+				HomeFeedGrid.ItemsSource = results;
+			}
+			else
+			{
+				var results = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.Where(b => b.Type.ToString().Equals(selectedItem)).ToList();
+				// ook nog checken ofda de results minder zijn, doordat er tekst staat in de autosuggestbox
+				HomeFeedGrid.ItemsSource = results;
+			}
+
+		}
 	}
 }
