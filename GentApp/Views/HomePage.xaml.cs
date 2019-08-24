@@ -25,7 +25,7 @@ namespace GentApp.Views {
 			if (args.CheckCurrent())
 			{
 				SearchTerm = autoSuggestBoxBranch.Text;
-				if (SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches != null)
+				if (isFilteredBranchesNull() == false)
 				{
 					autoSuggestBoxBranch.ItemsSource = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches;
 					filterListOfBranches();
@@ -36,22 +36,21 @@ namespace GentApp.Views {
 			}
 		}
 
+		private bool isFilteredBranchesNull()
+		{
+			return SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches == null;
+		}
+
 		private void AutoSuggestBoxBranch_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
 		{
 			SearchTerm = args.QueryText;
-			if (SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches != null)
-			{
-				filterListOfBranches();
-			}
+			filterListOfBranches();
 		}
 
 		private void CompanyTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			SelectedItemComboBox = companyTypeComboBox.SelectedItem.ToString();
-			if (SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches != null)
-			{
-				filterListOfBranches();
-			}
+			filterListOfBranches();
 		}
 
 		public string SearchTerm { get; set; }
@@ -59,19 +58,22 @@ namespace GentApp.Views {
 
 		private void filterListOfBranches()
 		{
-			switch (checkBoxOngoingPromotions.IsChecked)
+			if (isFilteredBranchesNull() == false)
 			{
-				case true:
-					filterBranchesWithOngoingPromotions();
-					break;
-				case false:
-					filterAllBranches();
-					break;
-				default:
-					filterAllBranches();
-					break;
-			}
+				switch (checkBoxOngoingPromotions.IsChecked)
+				{
+					case true:
+						filterBranchesWithOngoingPromotions();
+						break;
+					case false:
+						filterAllBranches();
+						break;
+					default:
+						filterAllBranches();
+						break;
+				}
 		}
+	}
 
 		private void filterAllBranches()
 		{
@@ -127,14 +129,6 @@ namespace GentApp.Views {
 
 		private void CheckBoxOngoingPromotions_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
 		{
-			//if (checkBoxOngoingPromotions.IsChecked == true)
-			//{
-			//	SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.Where(b => b.hasOngoingPromotions() == true).ToList();
-			//}
-			//else
-			//{
-			//	SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.ToList();
-			//}
 			if (checkBoxOngoingPromotions.IsChecked == true)
 			{
 				filterBranchesWithOngoingPromotions();
