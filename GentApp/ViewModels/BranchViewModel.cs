@@ -1,7 +1,5 @@
-﻿
-using GentApp.DataModel;
+﻿using GentApp.DataModel;
 using GentApp.Services;
-using MetroLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +9,9 @@ using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
 using GentApp.Views;
 using System.Threading.Tasks;
-using Windows.UI.Popups;
 
 namespace GentApp.ViewModels {
 	public class BranchViewModel : ViewModelBase {
-		private readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<BranchViewModel>();
 		private readonly INavigationService _navigationService;
 		private readonly EventService _eventService;
 		private readonly PromotionService _promotionService;

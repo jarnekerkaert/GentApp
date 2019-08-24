@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GentApp.Models;
@@ -38,10 +39,22 @@ namespace GentWebApi.Controllers {
 			return await _context.Users.FindAsync(id);
 		}
 
+		// GET api/<controller>/5
+		[HttpGet("checkuser/{name}")]
+		public async Task<ActionResult<User>> CheckUsername(string name) {
+			var result = await _context.Users.Where(u => u.UserName.Equals(name)).FirstOrDefaultAsync();
+			if ( result != null ) {
+				return result;
+			}
+			else {
+				return NotFound();
+			}
+		}
+
 		// POST api/<controller>
 		[HttpPost("register")]
 		public ActionResult<string> Register([FromBody] RegisterModel user) {
-			if (ModelState.IsValid) {
+			if ( ModelState.IsValid ) {
 				User newUser = new User(user.UserName, user.FirstName, user.LastName, user.Password);
 				_context.Users
 				.Add(newUser);
@@ -56,7 +69,7 @@ namespace GentWebApi.Controllers {
 		// PUT api/<controller>/5
 		[HttpPut("{id}")]
 		public async Task<IActionResult> Put(string id, [FromBody]User value) {
-			if (ModelState.IsValid) {
+			if ( ModelState.IsValid ) {
 				_context.Users.Update(value);
 				await _context.SaveChangesAsync();
 				return Ok();
@@ -69,7 +82,7 @@ namespace GentWebApi.Controllers {
 		// DELETE api/<controller>/5
 		[HttpDelete("{id}")]
 		public IActionResult Delete(User user) {
-			if (ModelState.IsValid) {
+			if ( ModelState.IsValid ) {
 				_context.Users
 					.Remove(user);
 				_context.SaveChanges();
@@ -81,17 +94,14 @@ namespace GentWebApi.Controllers {
 		}
 
 		[HttpGet("{id}/subscribedbranches")]
-		public IEnumerable<Branch> GetSubscribedBranchesOfUser(string id)
-		{
+		public IEnumerable<Branch> GetSubscribedBranchesOfUser(string id) {
 			List<Subscription> subscriptions = _context.Subscriptions.Where(s => s.UserId.Equals(id)).Include(s => s.Branch).ToList();
 			List<Branch> branches = new List<Branch>();
-			foreach(Subscription subscription in subscriptions)
-			{
+			foreach ( Subscription subscription in subscriptions ) {
 				branches.Add(
 					_context.Branches
 					.Include(b => b.Events)
 					.Include(b => b.Promotions)
-					//.Include(b => b.Company)
 					.FirstOrDefault(b => b.Id == subscription.Branch.Id));
 			}
 			return branches;

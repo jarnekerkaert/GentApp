@@ -5,7 +5,6 @@ using GentApp.DataModel;
 using GentApp.Helpers;
 using GentApp.Services;
 using GentApp.Views;
-using MetroLog;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,7 +12,6 @@ using System.Linq;
 
 namespace GentApp.ViewModels {
 	public class BranchesViewModel : ViewModelBase {
-		private ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<BranchesViewModel>();
 		private readonly INavigationService _navigationService;
 		private readonly BranchService _branchService;
 		private readonly SubscriptionService _subscriptionService;

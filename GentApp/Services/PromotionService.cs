@@ -1,9 +1,6 @@
 ﻿using GentApp.DataModel;
-using MetroLog;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +10,6 @@ namespace GentApp.Services
 {
 	class PromotionService
 	{
-		private ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<PromotionService>();
 		private readonly string apiUrl = "http://localhost:50957/api/promotions";
 		private HttpClient HttpClient;
 

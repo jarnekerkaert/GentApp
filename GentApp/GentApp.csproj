@@ -101,7 +101,6 @@
     <Compile Include="DataModel\StringFormatConverter.cs" />
     <Compile Include="DataModel\Subscription.cs" />
     <Compile Include="Helpers\INavigationService.cs" />
-    <Compile Include="Helpers\Logger.cs" />
     <Compile Include="DataModel\Branch.cs" />
     <Compile Include="DataModel\BranchType.cs" />
     <Compile Include="DataModel\Company.cs" />
@@ -109,6 +108,7 @@
     <Compile Include="DataModel\RegisterModel.cs" />
     <Compile Include="DataModel\User.cs" />
     <Compile Include="Helpers\NavigationService.cs" />
+    <Compile Include="Helpers\PdfHelper.cs" />
     <Compile Include="Helpers\RandomAsset.cs" />
     <Compile Include="Helpers\StringFormatConverter.cs" />
     <Compile Include="Services\AccountService.cs" />
@@ -200,6 +200,7 @@
     <None Include="GentApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\barcode.png" />
     <Content Include="Assets\company1.jpg" />
     <Content Include="Assets\company2.jpg" />
     <Content Include="Assets\company3.jpg" />
@@ -309,8 +310,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MetroLog">
-      <Version>1.0.1</Version>
+    <PackageReference Include="itext7">
+      <Version>7.1.7</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.8</Version>

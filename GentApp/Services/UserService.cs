@@ -31,6 +31,16 @@ namespace GentApp.Services {
 			}
 		}
 
+		public async Task<bool> CheckUsername(string userName) {
+			using ( var request = new HttpRequestMessage(HttpMethod.Get, apiUrl + "/checkuser/" + userName) ) {
+				using ( var response = await HttpClient
+						.SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
+						.ConfigureAwait(false) ) {
+					return !response.IsSuccessStatusCode;
+				}
+			}
+		}
+
 		public async Task<User> Login(LoginModel loginModel) {
 			HttpResponseMessage response = await HttpClient.GetAsync(apiUrl + "/login/" + loginModel.UserName);
 			response.EnsureSuccessStatusCode();
@@ -58,11 +68,9 @@ namespace GentApp.Services {
 			}
 		}
 
-		public async Task<IEnumerable<Branch>> GetSubscribedBranches(string id)
-		{
+		public async Task<IEnumerable<Branch>> GetSubscribedBranches(string id) {
 			HttpResponseMessage response = await HttpClient.GetAsync(apiUrl + "/" + id + "/subscribedbranches");
-			if (response.IsSuccessStatusCode)
-			{
+			if ( response.IsSuccessStatusCode ) {
 				return JsonConvert.DeserializeObject<IEnumerable<Branch>>(await response.Content.ReadAsStringAsync());
 			}
 			return Enumerable.Empty<Branch>();

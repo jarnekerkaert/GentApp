@@ -15,8 +15,7 @@ namespace GentApp.Views
         }
 
 		public async void Save_Company(object sender, RoutedEventArgs e) {
-			await SimpleIoc.Default.GetInstance<CompanyViewModel>().SaveCompany();
-			SimpleIoc.Default.GetInstance<CompanyViewModel>().NavigateToCompany.Execute(null);
+			await SimpleIoc.Default.GetInstance<CompanyViewModel>().CreateCompany();
 		}	
 	}
 }

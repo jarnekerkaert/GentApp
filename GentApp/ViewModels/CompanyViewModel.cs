@@ -5,7 +5,6 @@ using GentApp.DataModel;
 using GentApp.Helpers;
 using GentApp.Services;
 using GentApp.Views;
-using MetroLog;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,15 +13,16 @@ using Windows.UI.Popups;
 namespace GentApp.ViewModels {
 	public class CompanyViewModel : ViewModelBase {
 		private INavigationService _navigationService;
-		private readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<CompanyViewModel>();
 		private readonly CompanyService _companyService;
 		private readonly BranchService _branchService;
+		private readonly UserService _userService;
 		private bool isNavigated;
 
 		public CompanyViewModel(INavigationService navigationService) {
 			_navigationService = navigationService;
 			_companyService = new CompanyService();
 			_branchService = new BranchService();
+			_userService = new UserService();
 			_myCompany = new Company();
 		}
 
@@ -45,7 +45,16 @@ namespace GentApp.ViewModels {
 		public async Task SaveCompany() {
 			try {
 				await _companyService.Update(MyCompany);
-				MyCompany = await _companyService.GetMyCompany(UserViewModel.CurrentUser.Company.Id);
+				MyCompany = await _companyService.GetCompany(UserViewModel.CurrentUser.Company.Id);
+			} catch ( Exception e ) {
+				await new MessageDialog("Error saving company: " + e.Message).ShowAsync();
+			}
+		}
+		public async Task CreateCompany() {
+			try {
+				UserViewModel.CurrentUser.Company = MyCompany;
+				await UserViewModel.SaveUser("Company");
+				_navigationService.NavigateTo(nameof(MyCompanyPage));
 			} catch ( Exception e ) {
 				await new MessageDialog("Error saving company: " + e.Message).ShowAsync();
 			}
@@ -129,7 +138,7 @@ namespace GentApp.ViewModels {
 		public RelayCommand LoadCompanyCommand {
 			get {
 				return _loadCompanyCommand = new RelayCommand(async () => {
-					MyCompany = await _companyService.GetMyCompany(UserViewModel.CurrentUser.Company.Id);
+					MyCompany = await _companyService.GetCompany(UserViewModel.CurrentUser.Company.Id);
 					isNavigated = true;
 					RaisePropertyChanged(nameof(MyCompany));
 				});
