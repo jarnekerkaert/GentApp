@@ -175,7 +175,6 @@ namespace GentApp.ViewModels {
 		{
 			subscription.AmountEvents = 0;
 			subscription.AmountPromotions = 0;
-			// subscription.Branch = null;
 			await _subscriptionService.Update(subscription);
 		}
 
@@ -224,36 +223,5 @@ namespace GentApp.ViewModels {
 				RaisePropertyChanged(nameof(CurrentPromotions));
 			}
 		}
-
-		//private RelayCommand _loadFullSubscriptionsCommand;
-
-		//public RelayCommand LoadFullSubscriptionsCommand
-		//{
-		//	get
-		//	{
-		//		return _loadFullSubscriptionsCommand = new RelayCommand(
-		//				async () => {
-		//					SubscribedBranches = new ObservableCollection<Branch>(
-		//						await _userService.GetSubscribedBranches(UserViewModel.CurrentUser.Id));
-		//					FullSubscriptions = new ObservableCollection<Subscription>(
-		//						await _subscriptionService.GetSubscriptions(UserViewModel.CurrentUser.Id));
-		//				});
-		//	}
-		//}
-
-		//private ObservableCollection<Subscription> _fullSubscriptions;
-		//public ObservableCollection<Subscription> FullSubscriptions
-		//{
-		//	get
-		//	{
-		//		return _fullSubscriptions;
-		//	}
-
-		//	set
-		//	{
-		//		_fullSubscriptions = value;
-		//		RaisePropertyChanged(nameof(FullSubscriptions));
-		//	}
-		//}
 	}
 }
