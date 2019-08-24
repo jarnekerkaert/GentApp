@@ -15,56 +15,72 @@ namespace GentApp.Views {
 	public sealed partial class HomePage : Page {
 		public HomePage() {
 			InitializeComponent();
-			 companyTypeComboBox.ItemsSource = Enum.GetValues(typeof(BranchType));
-			//Branches = new List<Branch>(SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches);
-			//autoSuggestBoxBranch.ItemsSource = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches;
-			//autoSuggestBoxBranch.ItemsSource = Branches;
+			SearchTerm = null;
+			SelectedItemComboBox = null;
+			companyTypeComboBox.ItemsSource = Enum.GetValues(typeof(BranchType));
 		}
-
-		//public List<Branch> Branches { get; set; }
-		//public List<string> BranchNames { get; set; }
 
 		private void AutoSuggestBoxBranch_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
 		{
 			if (args.CheckCurrent())
 			{
-				var search_term = autoSuggestBoxBranch.Text;
+				SearchTerm = autoSuggestBoxBranch.Text;
 				if (SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches != null)
 				{
 					autoSuggestBoxBranch.ItemsSource = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches;
-					SimpleIoc.Default.GetInstance<BranchesViewModel>().BranchesFilteredOnName = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.Where(b => b.Name.Contains(search_term)).ToList();
-					//autoSuggestBoxBranch.ItemsSource = results;
+					filterListOfBranches(SearchTerm, SelectedItemComboBox);
 					List<string> name_results = new List<string>();
-					SimpleIoc.Default.GetInstance<BranchesViewModel>().BranchesFilteredOnName.ForEach(b => name_results.Add(b.Name));
+					SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches.ForEach(b => name_results.Add(b.Name));
 					autoSuggestBoxBranch.ItemsSource = name_results;
 				}
 			}
-
 		}
 
 		private void AutoSuggestBoxBranch_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
 		{
-			var search_term = args.QueryText;
+			SearchTerm = args.QueryText;
 			if (SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches != null)
 			{
-				SimpleIoc.Default.GetInstance<BranchesViewModel>().BranchesFilteredOnName = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.Where(b => b.Name.Contains(search_term)).ToList();
-				//autoSuggestBoxBranch.ItemsSource = results;
+				filterListOfBranches(SearchTerm, SelectedItemComboBox);
 			}
 		}
 
 		private void CompanyTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			string selectedItem = companyTypeComboBox.SelectedItem.ToString();
-			if (selectedItem.Equals("UNFILTERED"))
+			SelectedItemComboBox = companyTypeComboBox.SelectedItem.ToString();
+			if (SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches != null)
 			{
-				SimpleIoc.Default.GetInstance<BranchesViewModel>().BranchesFilteredOnType = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.ToList();
+				filterListOfBranches(SearchTerm, SelectedItemComboBox);
+			}
+		}
 
+		public string SearchTerm { get; set; }
+		public string SelectedItemComboBox { get; set; }
+
+		private void filterListOfBranches(string search_term, string selectedItem)
+		{
+			if (selectedItem == null || selectedItem.Equals("UNFILTERED"))
+			{
+				if (search_term.Equals(""))
+				{
+					SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.ToList();
+				}
+				else
+				{
+					SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.Where(b => b.Name.Contains(search_term)).ToList();
+				}
 			}
 			else
 			{
-				SimpleIoc.Default.GetInstance<BranchesViewModel>().BranchesFilteredOnType = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.Where(b => b.Type.ToString().Equals(selectedItem)).ToList();
+				if (search_term == null || search_term.Equals(""))
+				{
+					SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.Where(b => b.Type.ToString().Equals(selectedItem)).ToList();
+				}
+				else
+				{
+					SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredBranches = SimpleIoc.Default.GetInstance<BranchesViewModel>().Branches.Where(b => b.Name.Contains(search_term) && b.Type.ToString().Equals(selectedItem)).ToList();
+				}
 			}
-
 		}
 	}
 }
