@@ -123,7 +123,7 @@ namespace GentApp.ViewModels {
 			}
 		}
 
-		private ObservableCollection<Subscription> _subscriptions;
+		private ObservableCollection<Subscription> _subscriptions = new ObservableCollection<Subscription>();
 		public ObservableCollection<Subscription> Subscriptions {
 			get {
 				return _subscriptions;
