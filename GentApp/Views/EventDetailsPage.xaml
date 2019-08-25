@@ -4,10 +4,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:datamodel="using:GentApp.DataModel"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding EventsViewModelInstance, Source={StaticResource Locator}}">
 
+	<Page.Resources>
+		<datamodel:StringFormatConverter x:Key="StringFormatConverter" />
+	</Page.Resources>
+	
 	<ScrollViewer>
 	<StackPanel
 			HorizontalAlignment="Center"
@@ -40,7 +45,7 @@
 			<TextBlock 
 				Margin="0,0,10,0"
 				FontWeight="SemiBold">Starts:</TextBlock>
-			<TextBlock Text="{Binding Path=SelectedEvent.StartDate, TargetNullValue='Empty'}"/>
+				<TextBlock Text="{Binding Path=SelectedEvent.StartDate, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:dd/MM/yyy}', TargetNullValue='Empty'}"/>
 		</StackPanel>
 
 		<StackPanel
@@ -50,7 +55,7 @@
 				Margin="0,0,10,0"
 				FontWeight="SemiBold">Ends:</TextBlock>
 			<TextBlock 
-				Text="{Binding Path=SelectedEvent.EndDate, TargetNullValue='Empty'}"/>
+				Text="{Binding Path=SelectedEvent.EndDate, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:dd/MM/yyy}', TargetNullValue='Empty'}"/>
 		</StackPanel>
 	</StackPanel>
 	</ScrollViewer>

@@ -5,8 +5,10 @@ using GentApp.DataModel;
 using GentApp.Helpers;
 using GentApp.Services;
 using GentApp.Views;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace GentApp.ViewModels {
 	public class EventsViewModel : ViewModelBase {
@@ -101,7 +103,7 @@ namespace GentApp.ViewModels {
 							if( branch.Events.Count != 0)
 								events.AddRange(branch.Events);
 						}
-						SubscribedEvents = new ObservableCollection<Event>(events);
+						SubscribedEvents = new ObservableCollection<Event>(events.Where(e => e.StartDate >= DateTime.Now));
 					}
 					else {
 						SubscribedEvents = new ObservableCollection<Event>();
