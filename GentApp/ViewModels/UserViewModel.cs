@@ -116,7 +116,7 @@ namespace GentApp.ViewModels {
 			get {
 				return _loginCommand = new RelayCommand(async () => {
 					try {
-						if ( LoginModel.UserName?.Trim().Equals("") != false || LoginModel.Password == null)
+						if ((LoginModel.UserName == null || LoginModel.UserName.Trim().Equals("")) || LoginModel.Password == null)
 						{
 							await new MessageDialog("The fields can't be empty.").ShowAsync();
 						}
