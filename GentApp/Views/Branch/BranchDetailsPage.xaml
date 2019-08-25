@@ -88,12 +88,10 @@
 				<TextBlock Text="{Binding Path=SelectedBranch.Type, TargetNullValue='Empty'}"/>
 			</StackPanel>
 
-			<StackPanel
-				Orientation="Horizontal"
-				Margin="10">
-				<TextBlock FontWeight="SemiBold"
-						   Margin="0,0,10,0">Opening hours:</TextBlock>
-				<TextBlock Text="{Binding Path=SelectedBranch.OpeningHours, TargetNullValue='Empty'}"/>
+			<StackPanel Margin="10">
+				<TextBlock FontWeight="SemiBold" 
+						   >Opening hours:</TextBlock>
+				<TextBlock Height="200" Width="200" TextWrapping="Wrap" Text="{Binding Path=SelectedBranch.OpeningHours, TargetNullValue='Empty'}"/>
 			</StackPanel>
 
 			<TextBlock FontWeight="Bold">Current promotions:</TextBlock>
