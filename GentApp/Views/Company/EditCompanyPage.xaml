@@ -41,17 +41,6 @@
 			x:Name="AddressValidationErrorTextBlock" 
 			Margin="3,1,3,1"
             Foreground="Red" />
-		<TextBox
-			Width="200"
-			x:Name="OpeningHours"
-			Header= "Opening hours"
-			MaxLength="300"
-			InputScope="Text" 
-			Text="{Binding Path=MyCompany.OpeningHours, Mode=OneWay, TargetNullValue='Empty'}"/>
-		<TextBlock 
-			x:Name="OpeningHoursValidationErrorTextBlock"
-			Margin="3,1,3,1"
-            Foreground="Red" />
 		<SymbolIcon 
 			Symbol="Save" 
 			IsTapEnabled="True"

@@ -60,11 +60,22 @@
 					</VisualState.Setters>
 				</VisualState>
 			</VisualStateGroup>
+			<VisualStateGroup>
+				<VisualState x:Name="HasCurrentPromotions">
+					<VisualState.StateTriggers>
+						<triggers:IsNullOrEmptyStateTrigger Value="{Binding Path=CurrentPromotions}" />
+					</VisualState.StateTriggers>
+					<VisualState.Setters>
+						<Setter Target="OngoingPromotions.Visibility" Value="Collapsed"/>
+					</VisualState.Setters>
+				</VisualState>
+			</VisualStateGroup>
 		</VisualStateManager.VisualStateGroups>
+		<StackPanel HorizontalAlignment="Center"
+			VerticalAlignment="Center">
 		<StackPanel
-			HorizontalAlignment="Center"
-			VerticalAlignment="Center"
-			MinWidth="300">
+			
+			>
 			<TextBlock
 				FontSize="25dp"
 				FontWeight="SemiBold"
@@ -88,15 +99,17 @@
 				<TextBlock Text="{Binding Path=SelectedBranch.Type, TargetNullValue='Empty'}"/>
 			</StackPanel>
 
-			<StackPanel
-				Orientation="Horizontal"
-				Margin="10">
-				<TextBlock FontWeight="SemiBold"
-						   Margin="0,0,10,0">Opening hours:</TextBlock>
-				<TextBlock Text="{Binding Path=SelectedBranch.OpeningHours, TargetNullValue='Empty'}"/>
+			<StackPanel Margin="10">
+				<TextBlock FontWeight="SemiBold" 
+						   >Opening hours:</TextBlock>
+				<TextBlock Height="200" Width="200" TextWrapping="Wrap" Text="{Binding Path=SelectedBranch.OpeningHours, TargetNullValue='Empty'}"/>
 			</StackPanel>
-
-			<TextBlock FontWeight="Bold">Current promotions:</TextBlock>
+			</StackPanel>
+		
+			<StackPanel x:Name="OngoingPromotions" Margin="0,0,0,10"
+			>
+				<TextBlock FontWeight="Bold" x:Name="TxtCurrentPromos">Current promotions:</TextBlock>
+			<TextBlock x:Name="NoCurrentPromotionsTxtBlock"></TextBlock>
 			<ListView ItemsSource="{Binding Path=CurrentPromotions}" x:Name="currentPromotionsListView">
 				<ListView.ItemTemplate>
 					<DataTemplate>
@@ -111,13 +124,15 @@
 					</DataTemplate>
 				</ListView.ItemTemplate>
 			</ListView>
-			
-			<Button
+		</StackPanel>
+		<StackPanel>
+		<Button
 				x:Name="SubscribeButton" 
 				Background="DodgerBlue" 
                 Foreground="White"
 				Command="{Binding Path=SubscribeCommand}"
 				HorizontalAlignment="Center"/>
+		</StackPanel>
 		</StackPanel>
 	</Grid>
 </Page>

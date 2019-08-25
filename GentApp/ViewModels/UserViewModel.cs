@@ -113,12 +113,30 @@ namespace GentApp.ViewModels {
 			get {
 				return _loginCommand = new RelayCommand(async () => {
 					try {
-						CurrentUser = await _userService.Login(LoginModel);
-						_navigationService.NavigateTo(nameof(HomePage));
-						RaisePropertyChanged(nameof(LoggedIn));
-						await new MessageDialog("Logged in!").ShowAsync();
+						if ((LoginModel.UserName == null || LoginModel.UserName.Trim().Equals("")) || LoginModel.Password == null)
+						{
+							await new MessageDialog("The fields can't be empty.").ShowAsync();
+						}
+						else
+						{
+							CurrentUser = await _userService.Login(LoginModel);
+							_navigationService.NavigateTo(nameof(HomePage));
+							RaisePropertyChanged(nameof(LoggedIn));
+							await new MessageDialog("Logged in!").ShowAsync();
+						}
 					} catch ( Exception e ) {
-						await new MessageDialog(e.Message).ShowAsync();
+						if (e.Message.Contains("Unauthorized"))
+						{
+							await new MessageDialog("The login was incorrect.").ShowAsync();
+						}
+						else if (e.Message.Contains("Found"))
+						{
+							await new MessageDialog("The user was not found.").ShowAsync();
+						}
+						else
+						{
+							await new MessageDialog("Something went wrong..").ShowAsync();
+						}
 					}
 				});
 			}
@@ -151,7 +169,11 @@ namespace GentApp.ViewModels {
 
 		public RelayCommand ToClientRegistration {
 			get {
-				return new RelayCommand(() => _navigationService.NavigateTo(nameof(RegisterClientPage)));
+				return new RelayCommand(() =>
+				{
+					_registerCompany = false;
+					_navigationService.NavigateTo(nameof(RegisterClientPage));
+				});
 			}
 		}
 

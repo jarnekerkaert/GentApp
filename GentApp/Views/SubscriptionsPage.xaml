@@ -28,13 +28,16 @@
 		<StackPanel Orientation="Horizontal"
 					HorizontalAlignment="Center">
 			<AutoSuggestBox PlaceholderText="Search"
+							x:Name="autoSuggestBoxSubscription"
 							QueryIcon="Find" 
 							Width="200"
+							TextChanged="AutoSuggestBoxSubscription_TextChanged"
+							QuerySubmitted="AutoSuggestBoxSubscription_QuerySubmitted"
 							Margin="14"/>
 		</StackPanel>
 		<ListView
 					x:Name="BranchesList"
-					ItemsSource="{Binding Path=Subscriptions}" 
+					ItemsSource="{Binding Path=FilteredSubscriptions}" 
 					IsItemClickEnabled="True" ItemClick="ListView_ItemClick"
 					>
 			<ListView.ItemTemplate>

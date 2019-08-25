@@ -107,6 +107,8 @@ namespace GentWebApi.Controllers
 			if (_context.Branches.Contains(branch))
 			{
 				_context.Branches.Remove(branch);
+				List<Subscription> subscriptionsToDelete = _context.Subscriptions.Where(s => s.BranchId.Equals(branch.Id)).ToList();
+				subscriptionsToDelete.ForEach(s => _context.Subscriptions.Remove(s));
 				_context.SaveChanges();
 				return Ok();
 			}

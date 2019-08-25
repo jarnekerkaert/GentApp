@@ -36,7 +36,7 @@
 					Grid.Row="0" Grid.RowSpan="2">
 			<ComboBox x:Name="companyTypeComboBox"
 					  SelectionChanged="CompanyTypeComboBox_SelectionChanged" 
-					  PlaceholderText="Filter by sort"
+					  PlaceholderText="Filter by type"
 					  Margin="2"/>
 			<AutoSuggestBox x:Name="autoSuggestBoxBranch"
 							PlaceholderText="Search a company"
@@ -47,7 +47,7 @@
 							QuerySubmitted="AutoSuggestBoxBranch_QuerySubmitted"
 							/>
 			<CheckBox x:Name="checkBoxOngoingPromotions" 
-					  Content="Lopende promoties"
+					  Content="Ongoing promotions"
 					  Click="CheckBoxOngoingPromotions_Click"
 					  />
 		</StackPanel>

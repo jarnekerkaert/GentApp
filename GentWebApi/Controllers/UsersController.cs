@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using GentApp.Models;
 using GentWebApi.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,16 +22,58 @@ namespace GentWebApi.Controllers {
 		// GET api/<controller>/5
 		[HttpGet("login/{username}")]
 		public ActionResult<User> Login(string userName) {
-			User response = _context.Users
-				.Include(u => u.Company)
-				.ThenInclude(c => c.Branches)
-				.ThenInclude(b => b.Events)
-				.Include(u => u.Company)
-				.ThenInclude(c => c.Branches)
-				.ThenInclude(b => b.Promotions)
-				.Where(u => u.UserName == userName)
-				.SingleOrDefault();
-			return response != null ? (ActionResult<User>) response : (ActionResult<User>) NotFound();
+			string authHeader = HttpContext.Request.Headers["Authorization"];
+			string username = "";
+			string password = "";
+			if (authHeader != null && authHeader.StartsWith("Basic"))
+			{
+				string encodedUsernamePassword = authHeader.Substring("Basic ".Length).Trim();
+				byte[] usernamePasswordBytes = System.Convert.FromBase64String(encodedUsernamePassword);
+				var usernamePassword = System.Text.ASCIIEncoding.ASCII.GetString(usernamePasswordBytes);
+				int index = usernamePassword.IndexOf(':');
+				username = usernamePassword.Substring(0, index);
+				password = usernamePassword.Substring(index + 1);
+
+				byte[] decryptedPasswordBytes = System.Text.Encoding.UTF8.GetBytes(password);
+				password = Convert.ToBase64String(decryptedPasswordBytes);
+
+			}
+			else
+			{
+				return BadRequest("The authorization header is either empty or isn't Basic.");
+			}
+
+			if (!username.Equals("") && !password.Equals(""))
+			{
+				User response = _context.Users
+					.Include(u => u.Company)
+					.ThenInclude(c => c.Branches)
+					.ThenInclude(b => b.Events)
+					.Include(u => u.Company)
+					.ThenInclude(c => c.Branches)
+					.ThenInclude(b => b.Promotions)
+					.Where(u => u.UserName == userName)
+					.SingleOrDefault();
+
+				if(response == null)
+				{
+					return NotFound("There is not an account in our database with given username and password.");
+				}
+
+				if(response.UserName.Equals(username) && response.Password.Equals(password))
+				{
+					return response;
+				}
+				else
+				{
+					return Unauthorized("Bad credentials");
+				}
+			}
+			else
+			{
+				return BadRequest("Username and password in the authorization header can't be empty.");
+			}
+			//return response != null ? (ActionResult<User>) response : (ActionResult<User>) NotFound();
 		}
 
 		// GET api/<controller>/5

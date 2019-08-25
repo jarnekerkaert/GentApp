@@ -34,15 +34,6 @@
 				Text="{Binding Path=SelectedCompany.Address, TargetNullValue='Empty'}"/>
 		</StackPanel>
 
-		<StackPanel
-			Orientation="Horizontal"
-			Margin="10">
-			<TextBlock
-				FontWeight="SemiBold">Opening hours:</TextBlock>
-			<TextBlock
-				Text="{Binding Path=SelectedCompany.OpeningHours, TargetNullValue='Empty'}"/>
-		</StackPanel>
-		
 		<ProgressRing 
 			x:Name="progressBranches"/>
 
