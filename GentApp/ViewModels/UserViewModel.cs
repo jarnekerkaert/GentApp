@@ -54,8 +54,7 @@ namespace GentApp.ViewModels {
 
 		public async Task SaveUser(string name) {
 			try {
-				await _userService.Update(CurrentUser);
-				CurrentUser = await _userService.GetUser(CurrentUser.Id);
+				CurrentUser = await _userService.Update(CurrentUser);
 
 				RaisePropertyChanged(nameof(IsEntrepreneur));
 				RaisePropertyChanged(nameof(CurrentUser));
@@ -117,7 +116,7 @@ namespace GentApp.ViewModels {
 			get {
 				return _loginCommand = new RelayCommand(async () => {
 					try {
-						if ((LoginModel.UserName == null || LoginModel.UserName.Trim().Equals("")) || LoginModel.Password == null)
+						if ( LoginModel.UserName?.Trim().Equals("") != false || LoginModel.Password == null)
 						{
 							await new MessageDialog("The fields can't be empty.").ShowAsync();
 						}

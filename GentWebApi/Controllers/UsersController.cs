@@ -83,12 +83,7 @@ namespace GentWebApi.Controllers {
 		[HttpGet("checkuser/{name}")]
 		public async Task<ActionResult<User>> CheckUsername(string name) {
 			var result = await _context.Users.Where(u => u.UserName.Equals(name)).FirstOrDefaultAsync();
-			if ( result != null ) {
-				return result;
-			}
-			else {
-				return NotFound();
-			}
+			return result != null ? (ActionResult<User>) result : (ActionResult<User>) NotFound();
 		}
 
 		// POST api/<controller>
@@ -108,11 +103,11 @@ namespace GentWebApi.Controllers {
 
 		// PUT api/<controller>/5
 		[HttpPut("{id}")]
-		public async Task<IActionResult> Put(string id, [FromBody]User value) {
+		public async Task<ActionResult<User>> Put(string id, [FromBody]User user) {
 			if ( ModelState.IsValid ) {
-				_context.Users.Update(value);
+				_context.Users.Update(user);
 				await _context.SaveChangesAsync();
-				return Ok();
+				return user;
 			}
 			else {
 				return BadRequest();
