@@ -153,7 +153,7 @@
 								BorderThickness="0"/>
 							<Image x:Name="Image" 
                                    HorizontalAlignment="Left"
-                                   Stretch="UniformToFill" Height="190" Width="190"
+                                   Stretch="UniformToFill" Height="160" Width="160"
 									Source="{x:Bind ImageUri}">
 							</Image>
 							<StackPanel VerticalAlignment="Bottom"

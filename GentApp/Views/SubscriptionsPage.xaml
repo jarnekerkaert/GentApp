@@ -36,38 +36,65 @@
 							QuerySubmitted="AutoSuggestBoxSubscription_QuerySubmitted"
 							Margin="14"/>
 		</StackPanel>
-		<ListView
-					x:Name="BranchesList"
+		<ListView	x:Name="BranchesList"
 					ItemsSource="{Binding Path=FilteredSubscriptions}" 
 					IsItemClickEnabled="True" ItemClick="ListView_ItemClick"
-					>
+					HorizontalAlignment="Center">
 			<ListView.ItemTemplate>
 				<DataTemplate>
-					<StackPanel>
-						<TextBlock FontSize="18" Text="{Binding Path=Branch.Name}" />
-						<TextBlock FontSize="16" Text="{Binding Path=Branch.Address}" />
-						<StackPanel Orientation="Horizontal">
-							<TextBlock FontSize="12" Text="P:">
+						<StackPanel
+							Margin="6"
+							Orientation="Horizontal"
+							HorizontalAlignment="Center">
+							<StackPanel
+								Width="200"
+								VerticalAlignment="Center">
+								<TextBlock 
+									FontWeight="SemiBold"
+									FontSize="18" Text="{Binding Path=Branch.Name}" />
+								<TextBlock FontSize="16" Text="{Binding Path=Branch.Address}" />
+							</StackPanel>
+							<StackPanel
+								VerticalAlignment="Center">
+								<StackPanel 
+								Margin="2"
+								Orientation="Horizontal">
+									<TextBlock
+									Margin="0,0,5,0"
+									FontSize="17" 
+									FontWeight="SemiLight"
+									Text="New promotions: ">
 								<ToolTipService.ToolTip>
 									<ToolTip Content="The amount of new promotions of this branch"
 									Placement="Right"
 									HorizontalOffset="20"/>
 								</ToolTipService.ToolTip>
-							</TextBlock>
-							<TextBlock FontSize="12" Text="{Binding Path=AmountPromotions}" />
-						</StackPanel>
-						<StackPanel Orientation="Horizontal">
-							<TextBlock FontSize="12" Text="E:">
+									</TextBlock>
+									<TextBlock 
+										FontWeight="SemiLight"
+										FontSize="17" Text="{Binding Path=AmountPromotions}" />
+								</StackPanel>
+								<StackPanel
+								Margin="2"
+								Orientation="Horizontal">
+									<TextBlock 
+									Margin="0,0,5,0"
+									FontSize="17"
+									FontWeight="SemiLight"
+									Text="New events: ">
 								<ToolTipService.ToolTip>
 									<ToolTip Content="The amount of new events of this branch"
 									Placement="Right"
 									HorizontalOffset="20"/>
 								</ToolTipService.ToolTip>
-							</TextBlock>
-							<TextBlock FontSize="12" Text="{Binding Path=AmountEvents}" />
+									</TextBlock>
+									<TextBlock 
+										FontWeight="SemiLight"
+										FontSize="17" Text="{Binding Path=AmountEvents}" />
+								</StackPanel>
+							</StackPanel>
 						</StackPanel>
-					</StackPanel>
-				</DataTemplate>
+					</DataTemplate>
 			</ListView.ItemTemplate>
 		</ListView>
 	</StackPanel>
