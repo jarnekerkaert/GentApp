@@ -101,7 +101,7 @@ namespace GentApp.ViewModels {
 							await new MessageDialog("Registered!").ShowAsync();
 						}
 						else {
-							await new MessageDialog("User already exists!").ShowAsync();
+							await new MessageDialog("User already taken!").ShowAsync();
 						}
 					} catch ( Exception e ) {
 						await new MessageDialog(e.Message).ShowAsync();

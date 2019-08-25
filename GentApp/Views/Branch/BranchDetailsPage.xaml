@@ -74,9 +74,7 @@
 		</VisualStateManager.VisualStateGroups>
 		<StackPanel HorizontalAlignment="Center"
 			VerticalAlignment="Center">
-		<StackPanel
-			
-			>
+		<StackPanel>
 			<TextBlock
 				FontSize="25dp"
 				FontWeight="SemiBold"
@@ -108,7 +106,7 @@
 			</StackPanel>
 		
 			<StackPanel x:Name="OngoingPromotions" Margin="0,0,0,10">	
-				<TextBlock HorizontalAlignment="Center"	Margin="5" FontWeight="Bold" x:Name="TxtCurrentPromos">Running promotions</TextBlock>
+				<TextBlock HorizontalAlignment="Center"	Margin="5" FontWeight="Bold" x:Name="TxtCurrentPromos">Ongoing promotions</TextBlock>
 			<TextBlock x:Name="NoCurrentPromotionsTxtBlock"></TextBlock>
 			<ListView
 				ItemClick="Promotion_Clicked"
