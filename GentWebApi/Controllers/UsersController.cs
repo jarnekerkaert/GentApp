@@ -8,8 +8,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace GentWebApi.Controllers {
 	[Route("api/[controller]")]
 	public class UsersController : Controller {
@@ -25,11 +23,11 @@ namespace GentWebApi.Controllers {
 			string authHeader = HttpContext.Request.Headers["Authorization"];
 			string username = "";
 			string password = "";
-			if (authHeader != null && authHeader.StartsWith("Basic"))
+			if ( authHeader?.StartsWith("Basic") == true )
 			{
 				string encodedUsernamePassword = authHeader.Substring("Basic ".Length).Trim();
-				byte[] usernamePasswordBytes = System.Convert.FromBase64String(encodedUsernamePassword);
-				var usernamePassword = System.Text.ASCIIEncoding.ASCII.GetString(usernamePasswordBytes);
+				byte[] usernamePasswordBytes = Convert.FromBase64String(encodedUsernamePassword);
+				string usernamePassword = System.Text.Encoding.ASCII.GetString(usernamePasswordBytes);
 				int index = usernamePassword.IndexOf(':');
 				username = usernamePassword.Substring(0, index);
 				password = usernamePassword.Substring(index + 1);
@@ -73,7 +71,6 @@ namespace GentWebApi.Controllers {
 			{
 				return BadRequest("Username and password in the authorization header can't be empty.");
 			}
-			//return response != null ? (ActionResult<User>) response : (ActionResult<User>) NotFound();
 		}
 
 		// GET api/<controller>/5

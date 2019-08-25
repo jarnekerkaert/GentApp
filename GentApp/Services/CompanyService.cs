@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using Windows.UI.Popups;
 
 namespace GentApp.Services {
-	class CompanyService {
+	internal class CompanyService {
 		private readonly string apiUrl = "http://localhost:50957/api/companies";
-		private HttpClient HttpClient;
+		private readonly HttpClient HttpClient;
 
 		public CompanyService() {
 			HttpClient = new HttpClient();
