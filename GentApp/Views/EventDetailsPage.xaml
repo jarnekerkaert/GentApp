@@ -8,6 +8,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding EventsViewModelInstance, Source={StaticResource Locator}}">
 
+	<ScrollViewer>
 	<StackPanel
 			HorizontalAlignment="Center"
 			VerticalAlignment="Center"
@@ -52,4 +53,5 @@
 				Text="{Binding Path=SelectedEvent.EndDate, TargetNullValue='Empty'}"/>
 		</StackPanel>
 	</StackPanel>
+	</ScrollViewer>
 </Page>

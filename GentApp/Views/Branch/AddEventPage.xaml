@@ -8,6 +8,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding BranchViewModelInstance, Source={StaticResource Locator}}">
 
+	<ScrollViewer>
 	<StackPanel
 		Margin="14"
 		HorizontalAlignment="Center"
@@ -60,4 +61,5 @@
 				MinWidth="100"
 				HorizontalAlignment="Center" Click="SaveEventBtn_Click" x:Name="saveEventBtn"/>
 	</StackPanel>
+	</ScrollViewer>
 </Page>
