@@ -17,6 +17,7 @@
 		</core:EventTriggerBehavior>
 	</interactivity:Interaction.Behaviors>
 
+	<ScrollViewer>
 	<StackPanel
 		HorizontalAlignment="Center"
 		MinWidth="300"
@@ -72,4 +73,5 @@
 					Margin="10"
 					Tapped="AddIcon_Tapped"/>
 	</StackPanel>
+	</ScrollViewer>
 </Page>

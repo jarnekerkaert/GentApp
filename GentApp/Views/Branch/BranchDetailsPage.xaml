@@ -72,6 +72,7 @@
 				</VisualState>
 			</VisualStateGroup>
 		</VisualStateManager.VisualStateGroups>
+		<ScrollViewer>
 		<StackPanel HorizontalAlignment="Center"
 			VerticalAlignment="Center">
 		<StackPanel>
@@ -145,5 +146,6 @@
 				HorizontalAlignment="Center"/>
 		</StackPanel>
 		</StackPanel>
+		</ScrollViewer>
 	</Grid>
 </Page>
