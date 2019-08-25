@@ -15,6 +15,7 @@ namespace GentApp.Views
 			InitializeComponent();
 			StartDatePicker.Date = SimpleIoc.Default.GetInstance<BranchViewModel>().MySelectedPromotion.StartDate;
 			EndDatePicker.Date = SimpleIoc.Default.GetInstance<BranchViewModel>().MySelectedPromotion.EndDate;
+			usesCouponCheckBox.IsChecked = SimpleIoc.Default.GetInstance<BranchViewModel>().MySelectedPromotion.UsesCoupon;
 		}
 
 		private void SymbolIcon_Tapped(object sender, TappedRoutedEventArgs e)

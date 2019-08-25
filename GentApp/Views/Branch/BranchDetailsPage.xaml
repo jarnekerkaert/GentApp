@@ -15,6 +15,7 @@
 
 	<Page.Resources>
 		<local:StringFormatConverter x:Key="StringFormatConverter" />
+		<local:CouponToVisibilityConverter x:Key="UsesCouponToVisibilityConverter" />
 	</Page.Resources>
 
 	<interactivity:Interaction.Behaviors>
@@ -107,7 +108,7 @@
 			</StackPanel>
 		
 			<StackPanel x:Name="OngoingPromotions" Margin="0,0,0,10">	
-				<TextBlock HorizontalAlignment="Center"	Margin="5" FontWeight="Bold" x:Name="TxtCurrentPromos">Running promotions:</TextBlock>
+				<TextBlock HorizontalAlignment="Center"	Margin="5" FontWeight="Bold" x:Name="TxtCurrentPromos">Running promotions</TextBlock>
 			<TextBlock x:Name="NoCurrentPromotionsTxtBlock"></TextBlock>
 			<ListView
 				ItemClick="Promotion_Clicked"
@@ -116,15 +117,23 @@
 				x:Name="currentPromotionsListView">
 				<ListView.ItemTemplate>
 					<DataTemplate>
-						<StackPanel>
-							<TextBlock FontSize="14" Text="{Binding Path=Title}" />
-							<TextBlock FontSize="12" Text="{Binding Path=Description}" TextWrapping="Wrap"/>
-							<StackPanel Orientation="Horizontal">
-								<TextBlock FontSize="10" Text="Ends on" Margin="0,0,5,0"/>
-								<TextBlock FontSize="10" Text="{Binding Path=EndDate.Date, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:dd/MM/yyy}'}" />
+							<StackPanel
+								Orientation="Horizontal">
+								<StackPanel
+									Width="200">
+									<TextBlock FontSize="14" Text="{Binding Path=Title}" />
+									<TextBlock FontSize="12" Text="{Binding Path=Description}" TextWrapping="Wrap"/>
+									<StackPanel Orientation="Horizontal">
+										<TextBlock FontSize="10" Text="Ends on" Margin="0,0,5,0"/>
+										<TextBlock FontSize="10" Text="{Binding Path=EndDate.Date, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:dd/MM/yyy}'}" />
+									</StackPanel>
+								</StackPanel>
+								<SymbolIcon
+									Margin="2"
+									Symbol="OutlineStar"
+									Visibility="{Binding Path=UsesCoupon, Converter={StaticResource UsesCouponToVisibilityConverter}}"/>
 							</StackPanel>
-						</StackPanel>
-					</DataTemplate>
+						</DataTemplate>
 				</ListView.ItemTemplate>
 			</ListView>
 		</StackPanel>

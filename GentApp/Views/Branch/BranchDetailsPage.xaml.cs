@@ -15,20 +15,25 @@ namespace GentApp.Views {
 		}
 
 		public async void Promotion_Clicked(object sender, ItemClickEventArgs e) {
+			var promotion = e.ClickedItem as Promotion;
 
-			ContentDialog noWifiDialog = new ContentDialog() {
-				Title = "Save coupon?",
-				Content = "Save coupon for " + ( e.ClickedItem as Promotion )?.Title + " as PDF",
-				IsPrimaryButtonEnabled = true,
-				PrimaryButtonText = "Save",
-				CloseButtonText = "Cancel",
-			};
+			if (promotion.UsesCoupon) {
+				ContentDialog noWifiDialog = new ContentDialog() {
+					Title = "Save coupon?",
+					Content = "Save coupon for " + promotion.Title + " as PDF",
+					IsPrimaryButtonEnabled = true,
+					PrimaryButtonText = "Save",
+					CloseButtonText = "Cancel",
+				};
 
-			var result = await noWifiDialog.ShowAsync();
+				var result = await noWifiDialog.ShowAsync();
 
-			if ( result == ContentDialogResult.Primary ) {
-				GeneratePdf(e.ClickedItem as Promotion);
+				if ( result == ContentDialogResult.Primary ) {
+					GeneratePdf(promotion);
+				}
 			}
+
+			currentPromotionsListView.SelectedItem = null;
 		}
 
 		public async void GeneratePdf(Promotion promotion) {
