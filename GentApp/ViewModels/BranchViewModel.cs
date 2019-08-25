@@ -115,7 +115,7 @@ namespace GentApp.ViewModels {
 					Promotions = CompanyViewModel.SelectedBranch.Promotions;
 					var currentDate = DateTime.Today.Date;
 					if ( Promotions != null && Promotions.Count != 0 ) {
-						CurrentPromotions = Promotions.Where(p => p.StartDate <= currentDate && p.EndDate >= currentDate).ToList();
+						CurrentPromotions = Promotions.Where(p => p.StartDate.Date <= currentDate.Date && p.EndDate.Date >= currentDate.Date).ToList();
 						NonCurrentPromotions = Promotions.Except(CurrentPromotions).ToList();
 					}
 				}));

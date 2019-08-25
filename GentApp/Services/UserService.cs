@@ -1,4 +1,6 @@
-﻿using GentApp.DataModel;
+﻿using GalaSoft.MvvmLight.Ioc;
+using GentApp.DataModel;
+using GentApp.ViewModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -17,6 +19,9 @@ namespace GentApp.Services {
 		}
 
 		public async Task<User> Register(RegisterModel content) {
+			byte[] passwordBytes = System.Text.Encoding.UTF8.GetBytes(content.Password);
+			content.Password = Convert.ToBase64String(passwordBytes);
+
 			using ( var request = new HttpRequestMessage(HttpMethod.Post, apiUrl + "/register") ) {
 				var json = JsonConvert.SerializeObject(content);
 				using ( var stringContent = new StringContent(json, Encoding.UTF8, "application/json") ) {
@@ -42,6 +47,10 @@ namespace GentApp.Services {
 		}
 
 		public async Task<User> Login(LoginModel loginModel) {
+			byte[] usernamePasswordBytes = System.Text.Encoding.UTF8.GetBytes(loginModel.UserName + ":" + loginModel.Password);
+			var authHeader = Convert.ToBase64String(usernamePasswordBytes);
+			HttpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", authHeader);
+
 			HttpResponseMessage response = await HttpClient.GetAsync(apiUrl + "/login/" + loginModel.UserName);
 			response.EnsureSuccessStatusCode();
 			return JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());

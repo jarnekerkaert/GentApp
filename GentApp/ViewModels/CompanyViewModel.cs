@@ -86,10 +86,9 @@ namespace GentApp.ViewModels {
 			}
 		}
 
-		public async Task EditCompany(string name, string address, string openingHours) {
+		public async Task EditCompany(string name, string address) {
 			MyCompany.Name = name;
 			MyCompany.Address = address;
-			MyCompany.OpeningHours = openingHours;
 
 			await _companyService.Update(MyCompany);
 			RaisePropertyChanged(nameof(MyCompany));

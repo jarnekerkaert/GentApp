@@ -1,4 +1,5 @@
 ﻿using GentApp.Helpers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -28,6 +29,20 @@ namespace GentApp.DataModel {
 			Company = company;
 			Address = address;
 			OpeningHours = openingHours;
+		}
+
+		public bool hasOngoingPromotions()
+		{
+			var result = false;
+			var currentDate = DateTime.Today.Date;
+			Promotions.ForEach(p =>
+			{
+				if (p.StartDate <= currentDate && p.EndDate >= currentDate)
+				{
+					result = true;
+				}
+			});
+			return result;
 		}
 	}
 }

@@ -34,6 +34,7 @@
                 VerticalAlignment="Center" 
                 FontSize="16"/>
 			<TextBox
+				x:Name="CompanyNameTextBox"
 				Text="{Binding Path=MyCompany.Name, Mode=TwoWay}"
                 PlaceholderText="Company name"
                 Margin="4,10" 
@@ -43,18 +44,11 @@
 				Width="250">
 				<TextBox 
 				Text="{Binding Path=MyCompany.Address, Mode=TwoWay}"
-                PlaceholderText="Street"
+				x:Name="CompanyAddressTextBox"
+                PlaceholderText="Address"
                 Margin="0,0,2,0" 
-                Width="173"/>
-				<TextBox 
-                x:Name="LastNameTextBox"
-                PlaceholderText="Number"/>
-			</StackPanel>
-			<TextBox 
-				Text="{Binding Path=MyCompany.OpeningHours, Mode=TwoWay}"
-                PlaceholderText="Opening hours"
-                Margin="4,10" 
                 Width="250"/>
+			</StackPanel>
 			<Button 
                 Content="Save"
 				Click="Save_Company"

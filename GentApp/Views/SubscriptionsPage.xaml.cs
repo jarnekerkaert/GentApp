@@ -28,7 +28,10 @@ namespace GentApp.Views
 		public SubscriptionsPage()
 		{
 			this.InitializeComponent();
+			SearchTerm = null;
 		}
+
+		public string SearchTerm { get; set; }
 
 		private void ListView_ItemClick(object sender, ItemClickEventArgs e)
 		{
@@ -37,6 +40,48 @@ namespace GentApp.Views
 			SimpleIoc.Default.GetInstance<BranchesViewModel>().SelectedBranch = selectedSubscription.Branch;
 			Frame.Navigate(typeof(BranchDetailsPage));
 
+		}
+
+		private void AutoSuggestBoxSubscription_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+		{
+			if (args.CheckCurrent())
+			{
+				SearchTerm = autoSuggestBoxSubscription.Text;
+				if (isFilteredSubscriptionsNull() == false)
+				{
+					autoSuggestBoxSubscription.ItemsSource = SimpleIoc.Default.GetInstance<BranchesViewModel>().Subscriptions;
+					filterListOfSubscriptions();
+					List<string> name_results = new List<string>();
+					SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredSubscriptions.ForEach(s => name_results.Add(s.Branch.Name));
+					autoSuggestBoxSubscription.ItemsSource = name_results;
+				}
+			}
+		}
+
+		private void AutoSuggestBoxSubscription_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+		{
+			SearchTerm = args.QueryText;
+			if (isFilteredSubscriptionsNull() == false)
+			{
+				filterListOfSubscriptions();
+			}
+		}
+
+		private bool isFilteredSubscriptionsNull()
+		{
+			return SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredSubscriptions == null;
+		}
+
+		private void filterListOfSubscriptions()
+		{
+			if (SearchTerm == null || SearchTerm.Equals(""))
+			{
+				SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredSubscriptions = SimpleIoc.Default.GetInstance<BranchesViewModel>().Subscriptions.ToList();
+			}
+			else
+			{
+				SimpleIoc.Default.GetInstance<BranchesViewModel>().FilteredSubscriptions = SimpleIoc.Default.GetInstance<BranchesViewModel>().Subscriptions.Where(b => b.Branch.Name.ToLower().Contains(SearchTerm.ToLower())).ToList();
+			}
 		}
 	}
 }

@@ -15,7 +15,22 @@ namespace GentApp.Views
         }
 
 		public async void Save_Company(object sender, RoutedEventArgs e) {
-			await SimpleIoc.Default.GetInstance<CompanyViewModel>().CreateCompany();
+			ErrorMessage.Text = "";
+			var isValid = true;
+			if (CompanyNameTextBox.Text?.Length == 0 || CompanyAddressTextBox.Text?.Length == 0)
+			{
+				ErrorMessage.Text = "All fields must be filled in.";
+				isValid = false;
+			}
+			else if (CompanyNameTextBox.Text.Length > 600 || CompanyAddressTextBox.Text.Length > 600)
+			{
+				ErrorMessage.Text = "The maximum length of these fields is 600 characters.";
+				isValid = false;
+			}
+			if (isValid)
+			{
+				await SimpleIoc.Default.GetInstance<CompanyViewModel>().CreateCompany();
+			}
 		}	
 	}
 }

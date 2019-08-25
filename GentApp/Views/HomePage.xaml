@@ -34,12 +34,21 @@
 					Margin="24,68,24,310"
 					Grid.Row="0" Grid.RowSpan="2">
 			<ComboBox x:Name="companyTypeComboBox"
-					  PlaceholderText="Filter by sort"
+					  SelectionChanged="CompanyTypeComboBox_SelectionChanged" 
+					  PlaceholderText="Filter by type"
 					  Margin="2"/>
-			<AutoSuggestBox PlaceholderText="Search a company"
+			<AutoSuggestBox x:Name="autoSuggestBoxBranch"
+							PlaceholderText="Search a company"
 							Width="200"
 							Margin="2"
-							QueryIcon="Find"/>
+							QueryIcon="Find"
+							TextChanged="AutoSuggestBoxBranch_TextChanged"
+							QuerySubmitted="AutoSuggestBoxBranch_QuerySubmitted"
+							/>
+			<CheckBox x:Name="checkBoxOngoingPromotions" 
+					  Content="Ongoing promotions"
+					  Click="CheckBoxOngoingPromotions_Click"
+					  />
 		</StackPanel>
 		<TextBlock
 			Grid.Row="1" 
@@ -57,7 +66,7 @@
             ScrollViewer.VerticalScrollBarVisibility="Hidden"
             VerticalAlignment="Stretch"
             Margin="0,40,0,0"
-			ItemsSource="{Binding Path=Branches}" 
+			ItemsSource="{Binding Path=FilteredBranches}" 
 			SelectedItem="{Binding Path=SelectedBranch, Mode=TwoWay}">
 			<interactivity:Interaction.Behaviors>
 				<core:EventTriggerBehavior EventName="SelectionChanged">

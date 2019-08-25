@@ -62,7 +62,7 @@
 			<Button 
                 x:Name="RegisterButton"
                 Content="Register" 
-				Command="{Binding RegisterCommand}"
+				Click="RegisterButton_Click"
                 Background="DodgerBlue" 
                 Foreground="White"
                 Width="80" 

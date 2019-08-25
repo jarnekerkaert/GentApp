@@ -43,16 +43,6 @@ namespace GentApp.Views
 				NameValidationErrorTextBlock.Text = "The maximum length of this field is 200 characters.";
 				isValid = false;
 			}
-			if (OpeningHours.Text?.Length == 0)
-			{
-				OpeningHoursValidationErrorTextBlock.Text = "This field is required.";
-				isValid = false;
-			}
-			else if (OpeningHours.Text.Length > 200)
-			{
-				OpeningHoursValidationErrorTextBlock.Text = "The maximum length of this field is 200 characters.";
-				isValid = false;
-			}
 			if (Address.Text?.Length == 0)
 			{
 				AddressValidationErrorTextBlock.Text = "This field is required.";
@@ -65,7 +55,7 @@ namespace GentApp.Views
 			}
 			if (isValid)
 			{
-				await SimpleIoc.Default.GetInstance<CompanyViewModel>().EditCompany(Name.Text, Address.Text, OpeningHours.Text);
+				await SimpleIoc.Default.GetInstance<CompanyViewModel>().EditCompany(Name.Text, Address.Text);
 				Frame.Navigate(typeof(MyCompanyPage));
 			}
 		}
