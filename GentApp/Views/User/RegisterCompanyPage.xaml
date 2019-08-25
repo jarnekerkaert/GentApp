@@ -45,16 +45,10 @@
 				<TextBox 
 				Text="{Binding Path=MyCompany.Address, Mode=TwoWay}"
 				x:Name="CompanyAddressTextBox"
-                PlaceholderText="Adres"
+                PlaceholderText="Address"
                 Margin="0,0,2,0" 
                 Width="250"/>
 			</StackPanel>
-			<TextBox 
-				Text="{Binding Path=MyCompany.OpeningHours, Mode=TwoWay}"
-				x:Name="CompanyOpeningHoursTextBox"
-                PlaceholderText="Opening hours"
-                Margin="4,10" 
-                Width="250"/>
 			<Button 
                 Content="Save"
 				Click="Save_Company"

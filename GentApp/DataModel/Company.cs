@@ -6,16 +6,14 @@ namespace GentApp.DataModel {
     {
 		public string Name { get; set; }
 		public string Address { get; set; }
-		public string OpeningHours { get; set; }
 		public string Id { get; set; }
 		public List<Branch> Branches { get; set; }
 		public string ImageUri { get; set; }
 
-		public Company(string name, string address, string openingHours) 
+		public Company(string name, string address) 
 			: this() {
 			Name = name;
 			Address = address;
-			OpeningHours = openingHours;
 		}
 
 		public Company() {
