@@ -21,6 +21,5 @@ namespace GentApp.Views
 			SimpleIoc.Default.GetInstance<BranchViewModel>().SelectedEvent = e.ClickedItem as Event;
 			Frame.Navigate(typeof(EditEventPage));
 		}
-
 	}
 }
