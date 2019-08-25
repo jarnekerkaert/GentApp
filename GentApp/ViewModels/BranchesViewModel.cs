@@ -219,7 +219,7 @@ namespace GentApp.ViewModels {
 					Promotions = await _branchService.GetPromotions(SelectedBranch.Id);
 					isNavigated = true;
 					var currentDate = DateTime.Today.Date;
-					CurrentPromotions = Promotions.Where(p => p.StartDate <= currentDate && p.EndDate >= currentDate).ToList();
+					CurrentPromotions = Promotions.Where(p => p.StartDate.Date <= currentDate.Date && p.EndDate.Date >= currentDate.Date).ToList();
 				}
 				));
 			}
