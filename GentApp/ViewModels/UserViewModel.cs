@@ -125,7 +125,6 @@ namespace GentApp.ViewModels {
 							await new MessageDialog("Logged in!").ShowAsync();
 						}
 					} catch ( Exception e ) {
-						var test = e.Message;
 						if (e.Message.Contains("Unauthorized"))
 						{
 							await new MessageDialog("The login was incorrect.").ShowAsync();

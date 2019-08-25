@@ -35,13 +35,5 @@ namespace GentApp.Views
         {
             Frame.Navigate(typeof(RegistrationPage));
         }
-
-		//private void LoginButton_Click(object sender, RoutedEventArgs e)
-		//{
-		//	if (!UsernameTextBox.Text.Equals("") && !PasswordTextBox.Password.Equals(""))
-		//	{
-		//		SimpleIoc.Default.GetInstance<UserViewModel>().Login();
-		//	}
-		//}
 	}
 }
