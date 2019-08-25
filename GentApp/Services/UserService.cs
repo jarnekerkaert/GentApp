@@ -17,6 +17,9 @@ namespace GentApp.Services {
 		}
 
 		public async Task<User> Register(RegisterModel content) {
+			byte[] passwordBytes = System.Text.Encoding.UTF8.GetBytes(content.Password);
+			content.Password = Convert.ToBase64String(passwordBytes);
+
 			using ( var request = new HttpRequestMessage(HttpMethod.Post, apiUrl + "/register") ) {
 				var json = JsonConvert.SerializeObject(content);
 				using ( var stringContent = new StringContent(json, Encoding.UTF8, "application/json") ) {

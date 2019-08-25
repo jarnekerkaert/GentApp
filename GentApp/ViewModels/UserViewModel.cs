@@ -170,7 +170,11 @@ namespace GentApp.ViewModels {
 
 		public RelayCommand ToClientRegistration {
 			get {
-				return new RelayCommand(() => _navigationService.NavigateTo(nameof(RegisterClientPage)));
+				return new RelayCommand(() =>
+				{
+					_registerCompany = false;
+					_navigationService.NavigateTo(nameof(RegisterClientPage));
+				});
 			}
 		}
 
