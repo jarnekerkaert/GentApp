@@ -87,11 +87,12 @@ namespace GentApp.ViewModels {
 			_navigationService.NavigateTo(nameof(BranchPromotionsPage));
 		}
 
-		public async void EditPromotion(string title, string description, DateTime startdate, DateTime enddate) {
+		public async void EditPromotion(string title, string description, DateTime startdate, DateTime enddate, bool usesCoupon) {
 			MySelectedPromotion.Title = title;
 			MySelectedPromotion.Description = description;
 			MySelectedPromotion.StartDate = startdate;
 			MySelectedPromotion.EndDate = enddate;
+			MySelectedPromotion.UsesCoupon = usesCoupon;
 
 			CompanyViewModel.SelectedBranch.Promotions[Promotions.FindIndex(p => p.Id.Equals(MySelectedPromotion.Id))] = MySelectedPromotion;
 
