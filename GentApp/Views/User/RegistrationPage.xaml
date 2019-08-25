@@ -8,20 +8,21 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding UserViewModelInstance, Source={StaticResource Locator}}">
 
-    <Grid 
+	<ScrollViewer>
+		<Grid 
         Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
         VerticalAlignment="Center">
 
-        <StackPanel
+			<StackPanel
             Orientation="Vertical">
 
-            <TextBlock 
+				<TextBlock 
                 Text="Register"
                 FontSize="36" 
                 Margin="4,20" 
                 TextAlignment="Center"/>
 
-            <TextBlock 
+				<TextBlock 
                 Text="Register your account"
                 Margin="0,0,0,20"
                 TextWrapping="Wrap"
@@ -30,21 +31,21 @@
                 VerticalAlignment="Center" 
                 FontSize="16"/>
 
-            <StackPanel
+				<StackPanel
                 Orientation="Horizontal"
                 HorizontalAlignment="Center">
-                
-                <Button
+
+					<Button
                     x:Name="registerClient"
 					Command="{Binding Path=ToClientRegistration}"
-                    Content="I am a client"
+                    Content="I am a customer"
                     FontSize="20"
                     Width="170"
                     Margin="10,0,10,0"
                     Background="DodgerBlue"
                     Foreground="White"/>
 
-                <Button
+					<Button
                     x:Name="registerCompany"
 					Command="{Binding Path=ToCompanyRegistration}"
                     Content="I own a company"
@@ -53,7 +54,8 @@
                     Foreground="White"
                     Width="170"
                     Margin="10,0,10,0"/>
-            </StackPanel>
-        </StackPanel>
-    </Grid>
+				</StackPanel>
+			</StackPanel>
+		</Grid>
+	</ScrollViewer>
 </Page>

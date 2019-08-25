@@ -39,7 +39,8 @@
 				 InputScope="Text"
 				 PlaceholderText="Title"/>
 		<TextBlock x:Name="TitleValidationErrorTextBlock"
-				    Visibility="Collapsed"
+				   HorizontalAlignment="Center"
+				   Visibility="Collapsed"
                 Foreground="Red" />
 		<TextBox Width="200"
 				 x:Name="Description" 
@@ -49,8 +50,9 @@
 				 InputScope="Text"
 				 PlaceholderText="Description"/>
 		<TextBlock x:Name="DescriptionValidationErrorTextBlock"
-				    Visibility="Collapsed"
-                Foreground="Red" />
+				   HorizontalAlignment="Center"
+				   Visibility="Collapsed"
+                   Foreground="Red" />
 		<CalendarDatePicker x:Name="StartDatePicker" 
 							Header="Start date"
 							HorizontalAlignment="Center"
@@ -65,11 +67,13 @@
 							HorizontalAlignment="Center" 
 							Width="200" />
 		<TextBlock x:Name="EndDateValidationErrorTextBlock"
-				    Visibility="Collapsed"
+				   HorizontalAlignment="Center"
+				   Visibility="Collapsed"
                 Foreground="Red" />
 		<TextBlock x:Name="DateValidationErrorTextBlock"
 				   Visibility="Collapsed"
-                Foreground="Red" />
+				   HorizontalAlignment="Center"
+				   Foreground="Red" />
 		<CheckBox 
 			x:Name="usesCouponCheckBox" 
 			HorizontalAlignment="Center"

@@ -8,24 +8,25 @@
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding CompanyViewModelInstance, Source={StaticResource Locator}}">
 
-	<Grid
+	<ScrollViewer>
+		<Grid
         VerticalAlignment="Center">
-		<StackPanel
+			<StackPanel
             Orientation="Vertical">
-			<TextBlock 
+				<TextBlock 
                 Text="Register your Company"
 				TextWrapping="WrapWholeWords"
                 FontSize="36" 
                 Margin="4" 
                 TextAlignment="Center"/>
-			<TextBlock 
+				<TextBlock 
                 x:Name="ErrorMessage"
                 Text=""
                 FontSize="20" 
                 Margin="4"
                 Foreground="Red"
                 TextAlignment="Center"/>
-			<TextBlock 
+				<TextBlock 
                 Text="You can change this later"
                 Margin="0,0,0,20"
                 TextWrapping="Wrap"
@@ -33,23 +34,23 @@
                 TextAlignment="Center"
                 VerticalAlignment="Center" 
                 FontSize="16"/>
-			<TextBox
+				<TextBox
 				x:Name="CompanyNameTextBox"
 				Text="{Binding Path=MyCompany.Name, Mode=TwoWay}"
                 PlaceholderText="Company name"
                 Margin="4,10" 
                 Width="250"/>
-			<StackPanel 
+				<StackPanel 
 				Orientation="Horizontal"
 				Width="250">
-				<TextBox 
+					<TextBox 
 				Text="{Binding Path=MyCompany.Address, Mode=TwoWay}"
 				x:Name="CompanyAddressTextBox"
                 PlaceholderText="Address"
                 Margin="0,0,2,0" 
                 Width="250"/>
-			</StackPanel>
-			<Button 
+				</StackPanel>
+				<Button 
                 Content="Save"
 				Click="Save_Company"
                 Background="DodgerBlue" 
@@ -57,6 +58,7 @@
                 Width="80" 
                 HorizontalAlignment="Center"
                 Margin="0,20"/>
-		</StackPanel>
-	</Grid>
+			</StackPanel>
+		</Grid>
+	</ScrollViewer>
 </Page>
