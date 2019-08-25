@@ -113,6 +113,8 @@ namespace GentApp.ViewModels {
 		public RelayCommand LoadPromotionsCommand {
 			get {
 				return _loadPromotionsCommand ?? ( _loadPromotionsCommand = new RelayCommand(() => {
+					CurrentPromotions = new List<Promotion>();
+					NonCurrentPromotions = new List<Promotion>();
 					Promotions = CompanyViewModel.SelectedBranch.Promotions;
 					var currentDate = DateTime.Today.Date;
 					if ( Promotions != null && Promotions.Count != 0 ) {
