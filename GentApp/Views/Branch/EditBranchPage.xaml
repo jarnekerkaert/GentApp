@@ -8,6 +8,7 @@
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding CompanyViewModelInstance, Source={StaticResource Locator}}">
 
+	<ScrollViewer>
 	<StackPanel
 		HorizontalAlignment="Center"
 		VerticalAlignment="Center"
@@ -86,4 +87,5 @@
 				Click="Events_Click"/>
 		</StackPanel>
 	</StackPanel>
+	</ScrollViewer>
 </Page>

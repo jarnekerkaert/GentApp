@@ -21,6 +21,7 @@
 		</core:EventTriggerBehavior>
 	</interactivity:Interaction.Behaviors>
 
+	<ScrollViewer>
 	<StackPanel
 		HorizontalAlignment="Center"
 		VerticalAlignment="Center"
@@ -78,4 +79,5 @@
 				Command="{Binding ToAddEventCommand}"
 				HorizontalAlignment="Center"/>
 	</StackPanel>
+	</ScrollViewer>
 </Page>

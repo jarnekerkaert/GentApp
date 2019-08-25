@@ -8,6 +8,7 @@
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding BranchViewModelInstance, Source={StaticResource Locator}}">
 
+	<ScrollViewer>
 	<StackPanel
 		HorizontalAlignment="Center"
 		VerticalAlignment="Center"
@@ -87,4 +88,5 @@
 				Margin="10"/>
 		</StackPanel>
 	</StackPanel>
+	</ScrollViewer>
 </Page>

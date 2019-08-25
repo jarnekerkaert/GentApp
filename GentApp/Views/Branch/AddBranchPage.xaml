@@ -7,6 +7,7 @@
 	mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+	<ScrollViewer>
 	<StackPanel
 		HorizontalAlignment="Center"
 		VerticalAlignment="Center"
@@ -73,4 +74,5 @@
 				HorizontalAlignment="Center"
 				x:Name="saveBranchBtn"/>
 	</StackPanel>
+	</ScrollViewer>
 </Page>

@@ -8,6 +8,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding BranchViewModelInstance, Source={StaticResource Locator}}">
 
+	<ScrollViewer>
 	<StackPanel
 		HorizontalAlignment="Center"
 		VerticalAlignment="Center"
@@ -69,4 +70,5 @@
 				x:Name="savePromotionBtn" 
 				HorizontalAlignment="Center"/>
 	</StackPanel>
+	</ScrollViewer>
 </Page>

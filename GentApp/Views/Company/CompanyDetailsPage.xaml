@@ -17,6 +17,7 @@
 		</core:EventTriggerBehavior>
 	</interactivity:Interaction.Behaviors>
 
+	<ScrollViewer>
 	<StackPanel
 		HorizontalAlignment="Center"
 		VerticalAlignment="Center"
@@ -61,4 +62,5 @@
 			</ListView.ItemTemplate>
 		</ListView>
 	</StackPanel>
+	</ScrollViewer>
 </Page>
