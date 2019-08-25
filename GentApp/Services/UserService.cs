@@ -1,6 +1,4 @@
-﻿using GalaSoft.MvvmLight.Ioc;
-using GentApp.DataModel;
-using GentApp.ViewModels;
+﻿using GentApp.DataModel;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,14 +10,14 @@ using System.Threading.Tasks;
 namespace GentApp.Services {
 	public class UserService {
 		private readonly string apiUrl = "http://localhost:50957/api/users";
-		private HttpClient HttpClient;
+		private readonly HttpClient HttpClient;
 
 		public UserService() {
 			HttpClient = new HttpClient();
 		}
 
 		public async Task<User> Register(RegisterModel content) {
-			byte[] passwordBytes = System.Text.Encoding.UTF8.GetBytes(content.Password);
+			byte[] passwordBytes = Encoding.UTF8.GetBytes(content.Password);
 			content.Password = Convert.ToBase64String(passwordBytes);
 
 			using ( var request = new HttpRequestMessage(HttpMethod.Post, apiUrl + "/register") ) {

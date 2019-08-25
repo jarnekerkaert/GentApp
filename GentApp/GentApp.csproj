@@ -110,7 +110,6 @@
     <Compile Include="Helpers\NavigationService.cs" />
     <Compile Include="Helpers\PdfHelper.cs" />
     <Compile Include="Helpers\RandomAsset.cs" />
-    <Compile Include="Helpers\StringFormatConverter.cs" />
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\BranchService.cs" />
     <Compile Include="Services\EventService.cs" />
