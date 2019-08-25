@@ -5,28 +5,27 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-	xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-	xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding UserViewModelInstance, Source={StaticResource Locator}}">
 
-    <Grid
+	<ScrollViewer>
+		<Grid
         VerticalAlignment="Center">
-        <StackPanel 
+			<StackPanel 
             Orientation="Vertical">
-            <TextBlock 
+				<TextBlock 
                 Text="Login"
                 FontSize="36" 
                 Margin="4" 
                 TextAlignment="Center"/>
-            <TextBlock 
+				<TextBlock 
                 x:Name="ErrorMessage"
                 Text=""
                 FontSize="20" 
                 Margin="4"
                 Foreground="Red"
                 TextAlignment="Center"/>
-			<TextBlock 
+				<TextBlock 
                 Text="Enter your username and password below"
                 Margin="0,0,0,20"
                 TextWrapping="Wrap"
@@ -34,19 +33,19 @@
                 TextAlignment="Center"
                 VerticalAlignment="Center" 
                 FontSize="16"/>
-			<TextBox 
+				<TextBox 
                 x:Name="UsernameTextBox"
 				Text="{Binding LoginModel.UserName, Mode=TwoWay}"
                 PlaceholderText="Username"
                 Margin="4" 
                 Width="250"/>
-			<PasswordBox 
+				<PasswordBox 
                 x:Name="PasswordTextBox"
 				Password="{Binding LoginModel.Password, Mode=TwoWay}"
                 PlaceholderText="Password"
                 Margin="4, 10" 
                 Width="250"/>
-			<Button 
+				<Button 
                 x:Name="LoginButton"
                 Content="Login" 
 				Command="{Binding Path=LoginCommand}"
@@ -55,12 +54,12 @@
                 Width="80" 
                 HorizontalAlignment="Center"
                 Margin="0,20"/>
-            <TextBlock 
+				<TextBlock 
                 Text="Don't have an account?"
                 TextAlignment="Center" 
                 VerticalAlignment="Center" 
                 FontSize="16"/>
-            <TextBlock 
+				<TextBlock 
                 x:Name="RegisterButtonTextBlock" 
                 Text="Register now"
                 PointerPressed="Login_To_RegisterPage"
@@ -68,6 +67,7 @@
                 TextAlignment="Center" 
                 VerticalAlignment="Center"
                 FontSize="16"/>
-        </StackPanel>
-	</Grid>
+			</StackPanel>
+		</Grid>
+	</ScrollViewer>
 </Page>

@@ -32,7 +32,8 @@
 		<TextBlock
 			x:Name="TitleValidationErrorTextBlock"
 			Visibility="Collapsed"
-                Foreground="Red"/>
+			HorizontalAlignment="Center"
+            Foreground="Red"/>
 		<TextBox Width="270" 
 				 Height="100" 
 				 x:Name="Description" 
@@ -47,7 +48,8 @@
 		<TextBlock
 			x:Name="DescriptionValidationErrorTextBlock"
 			Visibility="Collapsed"
-                Foreground="Red" />
+			HorizontalAlignment="Center"
+            Foreground="Red" />
 		<StackPanel
 			Orientation="Horizontal"
 			HorizontalAlignment="Center"
@@ -68,14 +70,17 @@
 		<TextBlock 
 			x:Name="StartDateValidationErrorTextBlock"
 			Visibility="Collapsed"
+			HorizontalAlignment="Center"
 			Foreground="Red" />
 		<TextBlock 
 			x:Name="EndDateValidationErrorTextBlock"
 			Visibility="Collapsed"
+			HorizontalAlignment="Center"
             Foreground="Red" />
 		<TextBlock
 			x:Name="DateValidationErrorTextBlock"
 			Visibility="Collapsed"
+			HorizontalAlignment="Center"
             Foreground="Red" />
 		<CheckBox 
 			x:Name="usesCouponCheckBox" 
