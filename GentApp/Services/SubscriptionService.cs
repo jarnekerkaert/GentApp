@@ -1,5 +1,4 @@
 ﻿using GentApp.DataModel;
-using MetroLog;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -13,7 +12,6 @@ namespace GentApp.Services
 {
 	class SubscriptionService
 	{
-		private ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<SubscriptionService>();
 		private readonly string apiUrl = "http://localhost:50957/api/subscriptions";
 		private HttpClient HttpClient;
 
@@ -26,7 +24,7 @@ namespace GentApp.Services
 		{
 			try
 			{
-				var response = await HttpClient.PostAsync(apiUrl, new StringContent(JsonConvert.SerializeObject(subscription), System.Text.Encoding.UTF8, "application/json"));
+				var response = await HttpClient.PostAsync(apiUrl, new StringContent(JsonConvert.SerializeObject(subscription), Encoding.UTF8, "application/json"));
 			}
 			catch (Exception ex)
 			{
@@ -60,7 +58,7 @@ namespace GentApp.Services
 		{
 			try
 			{
-				var response = await HttpClient.PutAsync(apiUrl + "/" + subscription.Id, new StringContent(JsonConvert.SerializeObject(subscription), System.Text.Encoding.UTF8, "application/json"));
+				var response = await HttpClient.PutAsync(apiUrl + "/" + subscription.Id, new StringContent(JsonConvert.SerializeObject(subscription), Encoding.UTF8, "application/json"));
 			}
 			catch (Exception ex)
 			{

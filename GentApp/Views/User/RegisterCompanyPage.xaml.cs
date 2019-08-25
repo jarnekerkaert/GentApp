@@ -29,8 +29,7 @@ namespace GentApp.Views
 			}
 			if (isValid)
 			{
-				await SimpleIoc.Default.GetInstance<CompanyViewModel>().SaveCompany();
-				SimpleIoc.Default.GetInstance<CompanyViewModel>().NavigateToCompany.Execute(null);
+				await SimpleIoc.Default.GetInstance<CompanyViewModel>().CreateCompany();
 			}
 		}	
 	}

@@ -24,17 +24,19 @@
 			x:Name="Title"
 			Header= "Title"
 			MaxLength="150"
+			Margin="5"
 			InputScope="Text" 
 			Text="{Binding Path=MySelectedPromotion.Title}"
 			PlaceholderText="Title"/>
 		<TextBlock
 			x:Name="TitleValidationErrorTextBlock"
-                Foreground="Red"
-			Margin="5"/>
+			Visibility="Collapsed"
+                Foreground="Red"/>
 		<TextBox Width="270" 
 				 Height="100" 
 				 x:Name="Description" 
 				 Header= "Description" 
+				 Margin="5"
 				 MaxLength="1000" 
 				 Text="{Binding Path=MySelectedPromotion.Description}" 
 				 InputScope="Text" 
@@ -43,7 +45,7 @@
 				 AcceptsReturn="True"/>
 		<TextBlock
 			x:Name="DescriptionValidationErrorTextBlock"
-			Margin="5"
+			Visibility="Collapsed"
                 Foreground="Red" />
 		<StackPanel
 			Orientation="Horizontal"
@@ -64,14 +66,21 @@
 		</StackPanel>
 		<TextBlock 
 			x:Name="StartDateValidationErrorTextBlock"
-			Margin="5"
+			Visibility="Collapsed"
 			Foreground="Red" />
 		<TextBlock 
 			x:Name="EndDateValidationErrorTextBlock"
+			Visibility="Collapsed"
             Foreground="Red" />
 		<TextBlock
 			x:Name="DateValidationErrorTextBlock"
+			Visibility="Collapsed"
             Foreground="Red" />
+		<CheckBox 
+			x:Name="usesCouponCheckBox" 
+			HorizontalAlignment="Center"
+			Margin="5,5,5,10"
+          Content="Uses coupon"/>
 		<StackPanel Orientation="Horizontal" 
 					HorizontalAlignment="Center"
 					Margin="10,0,0,10">

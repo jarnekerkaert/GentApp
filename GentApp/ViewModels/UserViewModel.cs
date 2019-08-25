@@ -4,14 +4,12 @@ using GentApp.DataModel;
 using GentApp.Helpers;
 using GentApp.Services;
 using GentApp.Views;
-using MetroLog;
 using System;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
 
 namespace GentApp.ViewModels {
 	public class UserViewModel : ViewModelBase {
-		private readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<UserViewModel>();
 		private readonly INavigationService _navigationService;
 		private readonly UserService _userService;
 
@@ -56,17 +54,16 @@ namespace GentApp.ViewModels {
 
 		public async Task SaveUser(string name) {
 			try {
-				await _userService.Update(CurrentUser);
-				CurrentUser = await _userService.GetUser(CurrentUser.Id);
+				CurrentUser = await _userService.Update(CurrentUser);
 
 				RaisePropertyChanged(nameof(IsEntrepreneur));
 				RaisePropertyChanged(nameof(CurrentUser));
 
-				if( name?.Equals("") != false )
+				if ( name?.Equals("") != false )
 					name = "User";
 				await new MessageDialog(name + " saved!").ShowAsync();
-			} catch(Exception e) {
-				await new MessageDialog("Error saving user: "+e.Message).ShowAsync();
+			} catch ( Exception e ) {
+				await new MessageDialog("Error saving user: " + e.Message).ShowAsync();
 			}
 		}
 
@@ -93,13 +90,19 @@ namespace GentApp.ViewModels {
 			get {
 				return _registerCommand = new RelayCommand(async () => {
 					try {
-						CurrentUser = await _userService.Register(RegisterModel);
-						if(_registerCompany)
-							_navigationService.NavigateTo(nameof(RegisterCompanyPage));
-						else
-							_navigationService.NavigateTo(nameof(HomePage));
-						RaisePropertyChanged(nameof(LoggedIn));
-						await new MessageDialog("Registered!").ShowAsync();
+						if ( await _userService.CheckUsername(RegisterModel.UserName) ) {
+
+							CurrentUser = await _userService.Register(RegisterModel);
+							if ( _registerCompany )
+								_navigationService.NavigateTo(nameof(RegisterCompanyPage));
+							else
+								_navigationService.NavigateTo(nameof(HomePage));
+							RaisePropertyChanged(nameof(LoggedIn));
+							await new MessageDialog("Registered!").ShowAsync();
+						}
+						else {
+							await new MessageDialog("User already taken!").ShowAsync();
+						}
 					} catch ( Exception e ) {
 						await new MessageDialog(e.Message).ShowAsync();
 					}
@@ -113,7 +116,7 @@ namespace GentApp.ViewModels {
 			get {
 				return _loginCommand = new RelayCommand(async () => {
 					try {
-						if ((LoginModel.UserName == null || LoginModel.UserName.Trim().Equals("")) || LoginModel.Password == null)
+						if ( LoginModel.UserName?.Trim().Equals("") != false || LoginModel.Password == null)
 						{
 							await new MessageDialog("The fields can't be empty.").ShowAsync();
 						}

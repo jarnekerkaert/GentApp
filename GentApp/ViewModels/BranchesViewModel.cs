@@ -5,7 +5,6 @@ using GentApp.DataModel;
 using GentApp.Helpers;
 using GentApp.Services;
 using GentApp.Views;
-using MetroLog;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,7 +12,6 @@ using System.Linq;
 
 namespace GentApp.ViewModels {
 	public class BranchesViewModel : ViewModelBase {
-		private ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<BranchesViewModel>();
 		private readonly INavigationService _navigationService;
 		private readonly BranchService _branchService;
 		private readonly SubscriptionService _subscriptionService;
@@ -139,7 +137,7 @@ namespace GentApp.ViewModels {
 			}
 		}
 
-		private ObservableCollection<Subscription> _subscriptions;
+		private ObservableCollection<Subscription> _subscriptions = new ObservableCollection<Subscription>();
 		public ObservableCollection<Subscription> Subscriptions {
 			get {
 				return _subscriptions;
@@ -205,7 +203,6 @@ namespace GentApp.ViewModels {
 		{
 			subscription.AmountEvents = 0;
 			subscription.AmountPromotions = 0;
-			// subscription.Branch = null;
 			await _subscriptionService.Update(subscription);
 		}
 
@@ -254,36 +251,5 @@ namespace GentApp.ViewModels {
 				RaisePropertyChanged(nameof(CurrentPromotions));
 			}
 		}
-
-		//private RelayCommand _loadFullSubscriptionsCommand;
-
-		//public RelayCommand LoadFullSubscriptionsCommand
-		//{
-		//	get
-		//	{
-		//		return _loadFullSubscriptionsCommand = new RelayCommand(
-		//				async () => {
-		//					SubscribedBranches = new ObservableCollection<Branch>(
-		//						await _userService.GetSubscribedBranches(UserViewModel.CurrentUser.Id));
-		//					FullSubscriptions = new ObservableCollection<Subscription>(
-		//						await _subscriptionService.GetSubscriptions(UserViewModel.CurrentUser.Id));
-		//				});
-		//	}
-		//}
-
-		//private ObservableCollection<Subscription> _fullSubscriptions;
-		//public ObservableCollection<Subscription> FullSubscriptions
-		//{
-		//	get
-		//	{
-		//		return _fullSubscriptions;
-		//	}
-
-		//	set
-		//	{
-		//		_fullSubscriptions = value;
-		//		RaisePropertyChanged(nameof(FullSubscriptions));
-		//	}
-		//}
 	}
 }

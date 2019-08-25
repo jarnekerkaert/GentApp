@@ -9,7 +9,7 @@
 	xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
 	xmlns:triggers="using:WindowsStateTriggers"
 	xmlns:core="using:Microsoft.Xaml.Interactions.Core"
-	xmlns:local="using:GentApp.Helpers"
+	xmlns:local="using:GentApp.DataModel"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
 	DataContext="{Binding EventsViewModelInstance, Source={StaticResource Locator}}">
 

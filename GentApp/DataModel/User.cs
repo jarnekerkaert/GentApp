@@ -25,6 +25,7 @@ namespace GentApp.DataModel {
 		public string Firstname { get; set; }
 		public string Lastname { get; set; }
 		public Company Company { get; set; }
+		public string Password { get; set; }
 
 		public bool IsEntrepreneur {
 			get {
