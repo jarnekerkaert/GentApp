@@ -10,7 +10,11 @@
 	mc:Ignorable="d"
 	Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     DataContext="{Binding BranchViewModelInstance, Source={StaticResource Locator}}">
-	
+
+	<Page.Resources>
+		<datamodel:StringFormatConverter x:Key="StringFormatConverter" />
+	</Page.Resources>
+
 	<interactivity:Interaction.Behaviors>
 		<core:EventTriggerBehavior EventName="Loaded">
 			<core:InvokeCommandAction Command="{Binding Path=LoadEventsCommand}" />
@@ -56,11 +60,11 @@
 						<StackPanel
 							Margin="10"
 							Orientation="Horizontal">
-							<TextBlock Text="{Binding Path=StartDate}" />
+							<TextBlock Text="{Binding Path=StartDate.Date, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:dd/MM/yyy}'}" />
 							<TextBlock 
 								Margin="5,0,5,0"
 								Text="-"/>
-							<TextBlock Text="{Binding Path=EndDate}" />
+							<TextBlock Text="{Binding Path=EndDate.Date, Converter={StaticResource StringFormatConverter}, ConverterParameter='{}{0:dd/MM/yyy}'}" />
 						</StackPanel>
 					</StackPanel>
 				</DataTemplate>
