@@ -8,8 +8,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace GentWebApi.Controllers {
 	[Route("api/[controller]")]
 	public class UsersController : Controller {
@@ -25,11 +23,11 @@ namespace GentWebApi.Controllers {
 			string authHeader = HttpContext.Request.Headers["Authorization"];
 			string username = "";
 			string password = "";
-			if (authHeader != null && authHeader.StartsWith("Basic"))
+			if ( authHeader?.StartsWith("Basic") == true )
 			{
 				string encodedUsernamePassword = authHeader.Substring("Basic ".Length).Trim();
-				byte[] usernamePasswordBytes = System.Convert.FromBase64String(encodedUsernamePassword);
-				var usernamePassword = System.Text.ASCIIEncoding.ASCII.GetString(usernamePasswordBytes);
+				byte[] usernamePasswordBytes = Convert.FromBase64String(encodedUsernamePassword);
+				string usernamePassword = System.Text.Encoding.ASCII.GetString(usernamePasswordBytes);
 				int index = usernamePassword.IndexOf(':');
 				username = usernamePassword.Substring(0, index);
 				password = usernamePassword.Substring(index + 1);
@@ -73,7 +71,6 @@ namespace GentWebApi.Controllers {
 			{
 				return BadRequest("Username and password in the authorization header can't be empty.");
 			}
-			//return response != null ? (ActionResult<User>) response : (ActionResult<User>) NotFound();
 		}
 
 		// GET api/<controller>/5
@@ -82,10 +79,17 @@ namespace GentWebApi.Controllers {
 			return await _context.Users.FindAsync(id);
 		}
 
+		// GET api/<controller>/5
+		[HttpGet("checkuser/{name}")]
+		public async Task<ActionResult<User>> CheckUsername(string name) {
+			var result = await _context.Users.Where(u => u.UserName.Equals(name)).FirstOrDefaultAsync();
+			return result != null ? (ActionResult<User>) result : (ActionResult<User>) NotFound();
+		}
+
 		// POST api/<controller>
 		[HttpPost("register")]
 		public ActionResult<string> Register([FromBody] RegisterModel user) {
-			if (ModelState.IsValid) {
+			if ( ModelState.IsValid ) {
 				User newUser = new User(user.UserName, user.FirstName, user.LastName, user.Password);
 				_context.Users
 				.Add(newUser);
@@ -99,11 +103,11 @@ namespace GentWebApi.Controllers {
 
 		// PUT api/<controller>/5
 		[HttpPut("{id}")]
-		public async Task<IActionResult> Put(string id, [FromBody]User value) {
-			if (ModelState.IsValid) {
-				_context.Users.Update(value);
+		public async Task<ActionResult<User>> Put(string id, [FromBody]User user) {
+			if ( ModelState.IsValid ) {
+				_context.Users.Update(user);
 				await _context.SaveChangesAsync();
-				return Ok();
+				return user;
 			}
 			else {
 				return BadRequest();
@@ -113,7 +117,7 @@ namespace GentWebApi.Controllers {
 		// DELETE api/<controller>/5
 		[HttpDelete("{id}")]
 		public IActionResult Delete(User user) {
-			if (ModelState.IsValid) {
+			if ( ModelState.IsValid ) {
 				_context.Users
 					.Remove(user);
 				_context.SaveChanges();
@@ -125,17 +129,14 @@ namespace GentWebApi.Controllers {
 		}
 
 		[HttpGet("{id}/subscribedbranches")]
-		public IEnumerable<Branch> GetSubscribedBranchesOfUser(string id)
-		{
+		public IEnumerable<Branch> GetSubscribedBranchesOfUser(string id) {
 			List<Subscription> subscriptions = _context.Subscriptions.Where(s => s.UserId.Equals(id)).Include(s => s.Branch).ToList();
 			List<Branch> branches = new List<Branch>();
-			foreach(Subscription subscription in subscriptions)
-			{
+			foreach ( Subscription subscription in subscriptions ) {
 				branches.Add(
 					_context.Branches
 					.Include(b => b.Events)
 					.Include(b => b.Promotions)
-					//.Include(b => b.Company)
 					.FirstOrDefault(b => b.Id == subscription.Branch.Id));
 			}
 			return branches;

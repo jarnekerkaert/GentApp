@@ -1,5 +1,4 @@
 ﻿using GentApp.DataModel;
-using MetroLog;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -13,7 +12,6 @@ namespace GentApp.Services
 {
 	class EventService
 	{
-		private ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<EventService>();
 		private readonly string apiUrl = "http://localhost:50957/api/events";
 		private HttpClient HttpClient;
 

@@ -1,5 +1,4 @@
 ﻿using GentApp.DataModel;
-using MetroLog;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -10,10 +9,9 @@ using System.Threading.Tasks;
 using Windows.UI.Popups;
 
 namespace GentApp.Services {
-	class CompanyService {
-		private ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<CompanyService>();
+	internal class CompanyService {
 		private readonly string apiUrl = "http://localhost:50957/api/companies";
-		private HttpClient HttpClient;
+		private readonly HttpClient HttpClient;
 
 		public CompanyService() {
 			HttpClient = new HttpClient();
@@ -37,13 +35,15 @@ namespace GentApp.Services {
 
 				var response = await HttpClient.SendAsync(request);
 
-				return JsonConvert.DeserializeObject<Company>(response.Content.ToString());
+				response.EnsureSuccessStatusCode();
+				company.Id = response.Content.ToString();
+
+				return company;
 			}
 			catch (Exception ex) {
 				await new MessageDialog(ex.Message).ShowAsync();
+				return company;
 			}
-
-			return null;
 		}
 
 		public async Task Update(Company company)
@@ -63,7 +63,7 @@ namespace GentApp.Services {
 			}
 		}
 
-		public async Task<Company> GetMyCompany(string id)
+		public async Task<Company> GetCompany(string id)
 		{
 			HttpResponseMessage response = await HttpClient.GetAsync(apiUrl + "/" + id);
 			if (response.IsSuccessStatusCode)

@@ -5,14 +5,11 @@ using GentApp.DataModel;
 using GentApp.Helpers;
 using GentApp.Services;
 using GentApp.Views;
-using MetroLog;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace GentApp.ViewModels {
 	public class EventsViewModel : ViewModelBase {
-		private readonly ILogger log = LogManagerFactory.DefaultLogManager.GetLogger<UserViewModel>();
 		private readonly INavigationService _navigationService;
 		private readonly EventService _eventService;
 		private readonly UserService _userService;

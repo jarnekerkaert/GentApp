@@ -1,6 +1,4 @@
-﻿using GalaSoft.MvvmLight.Ioc;
-using GentApp.DataModel;
-using GentApp.ViewModels;
+﻿using GentApp.DataModel;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,14 +10,14 @@ using System.Threading.Tasks;
 namespace GentApp.Services {
 	public class UserService {
 		private readonly string apiUrl = "http://localhost:50957/api/users";
-		private HttpClient HttpClient;
+		private readonly HttpClient HttpClient;
 
 		public UserService() {
 			HttpClient = new HttpClient();
 		}
 
 		public async Task<User> Register(RegisterModel content) {
-			byte[] passwordBytes = System.Text.Encoding.UTF8.GetBytes(content.Password);
+			byte[] passwordBytes = Encoding.UTF8.GetBytes(content.Password);
 			content.Password = Convert.ToBase64String(passwordBytes);
 
 			using ( var request = new HttpRequestMessage(HttpMethod.Post, apiUrl + "/register") ) {
@@ -32,6 +30,16 @@ namespace GentApp.Services {
 						response.EnsureSuccessStatusCode();
 						return JsonConvert.DeserializeObject<User>(await response.Content.ReadAsStringAsync());
 					}
+				}
+			}
+		}
+
+		public async Task<bool> CheckUsername(string userName) {
+			using ( var request = new HttpRequestMessage(HttpMethod.Get, apiUrl + "/checkuser/" + userName) ) {
+				using ( var response = await HttpClient
+						.SendAsync(request, HttpCompletionOption.ResponseHeadersRead)
+						.ConfigureAwait(false) ) {
+					return !response.IsSuccessStatusCode;
 				}
 			}
 		}
@@ -67,11 +75,9 @@ namespace GentApp.Services {
 			}
 		}
 
-		public async Task<IEnumerable<Branch>> GetSubscribedBranches(string id)
-		{
+		public async Task<IEnumerable<Branch>> GetSubscribedBranches(string id) {
 			HttpResponseMessage response = await HttpClient.GetAsync(apiUrl + "/" + id + "/subscribedbranches");
-			if (response.IsSuccessStatusCode)
-			{
+			if ( response.IsSuccessStatusCode ) {
 				return JsonConvert.DeserializeObject<IEnumerable<Branch>>(await response.Content.ReadAsStringAsync());
 			}
 			return Enumerable.Empty<Branch>();

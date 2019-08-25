@@ -1,5 +1,4 @@
-﻿using GentWebApi.Models;
-using System;
+﻿using System;
 
 namespace GentApp.DataModel {
 	public class Promotion {
@@ -10,12 +9,14 @@ namespace GentApp.DataModel {
 		public string Description { get; set; }
 		public Branch Branch { get; set; }
 		public bool AllBranches { get; set; }
-		public Coupon Coupon { get; set; }
+		public bool UsesCoupon { get; set; }
 
 		public Promotion() {
+			UsesCoupon = false;
 		}
 
 		public Promotion(DateTime startDate, DateTime endDate, string title, string description) {
+			UsesCoupon = false;
 			StartDate = startDate;
 			EndDate = endDate;
 			Title = title;

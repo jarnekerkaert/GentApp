@@ -95,13 +95,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DataModel\Coupon.cs" />
+    <Compile Include="DataModel\CouponToVisibilityConverter.cs" />
     <Compile Include="DataModel\Event.cs" />
     <Compile Include="DataModel\LoginModel.cs" />
     <Compile Include="DataModel\StringFormatConverter.cs" />
     <Compile Include="DataModel\Subscription.cs" />
     <Compile Include="Helpers\INavigationService.cs" />
-    <Compile Include="Helpers\Logger.cs" />
     <Compile Include="DataModel\Branch.cs" />
     <Compile Include="DataModel\BranchType.cs" />
     <Compile Include="DataModel\Company.cs" />
@@ -109,8 +108,8 @@
     <Compile Include="DataModel\RegisterModel.cs" />
     <Compile Include="DataModel\User.cs" />
     <Compile Include="Helpers\NavigationService.cs" />
+    <Compile Include="Helpers\PdfHelper.cs" />
     <Compile Include="Helpers\RandomAsset.cs" />
-    <Compile Include="Helpers\StringFormatConverter.cs" />
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\BranchService.cs" />
     <Compile Include="Services\EventService.cs" />
@@ -200,6 +199,7 @@
     <None Include="GentApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Assets\barcode.png" />
     <Content Include="Assets\company1.jpg" />
     <Content Include="Assets\company2.jpg" />
     <Content Include="Assets\company3.jpg" />
@@ -309,11 +309,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MetroLog">
-      <Version>1.0.1</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.8</Version>
+      <Version>6.2.9</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications">
       <Version>5.1.1</Version>
@@ -332,6 +329,9 @@
     </PackageReference>
     <PackageReference Include="QueryString.NET">
       <Version>1.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Pdf.UWP">
+      <Version>17.2.0.46</Version>
     </PackageReference>
     <PackageReference Include="WindowsStateTriggers">
       <Version>1.1.0</Version>

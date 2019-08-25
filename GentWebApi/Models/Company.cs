@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GentApp.Models
 {
@@ -8,7 +7,6 @@ namespace GentApp.Models
 		public string Name { get; set; }
 		public string Address { get; set; }
 		public string OpeningHours { get; set; }
-		
 		public string Id { get; set; }
 		public List<Branch> Branches { get; set; }
 
