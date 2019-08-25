@@ -16,7 +16,7 @@ namespace GentApp.Views {
 		public EditBranchPage() {
 			InitializeComponent();
 			var _enumval = Enum.GetValues(typeof(BranchType)).Cast<BranchType>().ToList();
-			_enumval.Remove(BranchType.NONE);
+			_enumval.Remove(BranchType.UNFILTERED);
 			Type.ItemsSource = _enumval;
 			Type.SelectedItem = SimpleIoc.Default.GetInstance<CompanyViewModel>().SelectedBranch.Type;
 		}

@@ -22,6 +22,18 @@ namespace GentApp.ViewModels {
 
 		public ObservableCollection<Branch> Branches { get; set; }
 
+		private List<Branch> filteredBranches;
+
+		public List<Branch> FilteredBranches
+		{
+			get { return filteredBranches; }
+			set
+			{
+				filteredBranches = value;
+				RaisePropertyChanged(nameof(FilteredBranches));
+			}
+		}
+
 		private Branch mySelectedBranch;
 		public Branch MySelectedBranch {
 			get { return mySelectedBranch; }
@@ -96,8 +108,10 @@ namespace GentApp.ViewModels {
 			get {
 				return _loadBranchesCommand = new RelayCommand(async () => {
 					Branches = new ObservableCollection<Branch>(await _branchService.GetAll());
+					FilteredBranches = Branches.ToList();
 					isNavigated = true;
 					RaisePropertyChanged(nameof(Branches));
+					RaisePropertyChanged(nameof(FilteredBranches));
 				});
 			}
 		}
