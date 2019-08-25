@@ -151,6 +151,18 @@ namespace GentApp.ViewModels {
 			}
 		}
 
+		private List<Subscription> filteredSubscriptions;
+
+		public List<Subscription> FilteredSubscriptions
+		{
+			get { return filteredSubscriptions; }
+			set
+			{
+				filteredSubscriptions = value;
+				RaisePropertyChanged(nameof(FilteredSubscriptions));
+			}
+		}
+
 		private RelayCommand _loadSubscriptionsCommand;
 
 		public RelayCommand LoadSubscriptionsCommand {
@@ -159,8 +171,10 @@ namespace GentApp.ViewModels {
 						async () => {
 							Subscriptions = new ObservableCollection<Subscription>(
 								await _subscriptionService.GetSubscriptions(UserViewModel.CurrentUser.Id));
+							FilteredSubscriptions = Subscriptions.ToList();
 							SubscribedBranches = new ObservableCollection<Branch>(
 								await _userService.GetSubscribedBranches(UserViewModel.CurrentUser.Id));
+							RaisePropertyChanged(nameof(FilteredSubscriptions));
 						});
 			}
 		}
