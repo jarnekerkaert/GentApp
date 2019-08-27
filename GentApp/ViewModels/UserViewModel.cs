@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Ioc;
 using GentApp.DataModel;
 using GentApp.Helpers;
 using GentApp.Services;
@@ -151,6 +152,7 @@ namespace GentApp.ViewModels {
 			get {
 				return _logoutCommand = new RelayCommand(async () => {
 					CurrentUser = null;
+					SimpleIoc.Default.GetInstance<CompanyViewModel>().MyCompany = null;
 					RaisePropertyChanged(nameof(LoggedIn));
 					_navigationService.NavigateTo(nameof(HomePage));
 					await new MessageDialog("Logged out").ShowAsync();
